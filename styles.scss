@@ -1,0 +1,533 @@
+// FORM STYLING
+$red: #b80c0c;
+$campus-background-color: #e8bddb;
+$grey: #7a848e;
+$light-grey: #f2f3f4;
+$med-grey: #8e979f;
+$dark-grey: #43484c;
+
+@mixin gc-form--bg {
+  background-color: $campus-background-color;
+}
+
+@mixin gc-form--border {
+  border-color: $campus-background-color;
+}
+
+@mixin gc-form--text {
+  color: $campus-background-color;
+}
+
+.gc-form {
+ width: 100%;
+ text-align: left;
+
+  .gc-form__description {
+    color:#777;
+    font-size: 14px;
+  }
+
+  .gc-form__label {
+    margin-bottom: -16px;
+  }
+
+  .gc-form__error-message {
+    padding: 0.625em 1.25em;
+    margin-bottom: 2.125em;
+    border-radius: 2px;
+    font-size: 12px;
+    background-color: #f59393;
+    color: #fff;
+  }
+
+  .error-msg-container-arrow {
+    background-color: rgba(245, 147, 147, 0.3);
+    color: $red;
+    border-radius: 0;
+    font-size: 12px;
+  }
+
+  // INPUT STYLING
+
+  .gc-input {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    display: block;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    font-size: 16px;
+
+    input {
+      border: none;
+      border-radius: 0;
+      border-bottom: solid 1px #777;
+      font-size: 16px;
+      width: 100%;
+      height: auto;
+      min-height: 25px;
+      z-index: 100;
+      background-color: transparent;
+    }
+
+    input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+      background-color: transparent !important;
+      color: inherit;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="password"],
+    .gc-input__textarea--small,
+    .gc-input__textarea--medium,
+    .gc-input__textarea--large {
+      display: block;
+      width: 100%;
+      position: relative;
+      box-sizing: border-box;
+      background-color: transparent;
+      font-size: 16px;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="password"],
+    input[type="email"],
+    input[type="date"] {
+      padding: 0;
+      padding-bottom: 4px;
+      padding-left: 8px;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      margin-right: 10px;
+    }
+
+    &:focus,
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="url"]:focus,
+    input[type="date"]:focus,
+    input[type="password"]:focus,
+    .gc-input__textarea--small:focus,
+    .gc-input__textarea--medium:focus,
+    .gc-input__textarea--large:focus,
+    input.gc-select__input:focus  {
+      outline: none;
+      @include gc-form--border;
+    }
+
+    &:focus,
+    input[type="text"]:focus + .gc-input__label--inline,
+    input[type="url"]:focus + .gc-input__label--inline,
+    input[type="password"]:focus + .gc-input__label--inline,
+    .gc-input__textarea--small:focus + .gc-input__label--inline,
+    .gc-input__textarea--medium:focus + .gc-input__label--inline,
+    .gc-input__textarea--large:focus + .gc-input__label--inline,
+    input.gc-select__input:focus + .gc-input__label--inline,
+    .gc-select__label--floated {
+      font-size: 14px;
+    }
+
+    &:hover,
+    input[type="text"]:hover,
+    input[type="url"]:hover,
+    input[type="password"]:hover,
+    .gc-input__textarea--small:hover,
+    .gc-input__textarea--medium:hover,
+    .gc-input__textarea--large:hover,
+    input.gc-select__input:hover  {
+
+    }
+
+    input.gc-input--invalid,
+    .gc-select__input.gc-input--invalid {
+      border-color: #f59393 !important;
+    }
+
+    .gc-input--disabled {
+      border-color: #dddddd;
+      background-color: #f4f4f4;
+    }
+
+    .gc-input__error-msg {
+      color: #f59393;
+      font-size: 12px;
+      text-align: right;
+      margin-top: 0.25em;
+      position: absolute;
+      right: 0;
+    }
+
+    // LABEL
+    .gc-input__label {
+      position: absolute;
+      margin-bottom: -24px;
+      top: -22px;
+      left: 8px;
+      font-size: 14px;
+      color: $grey;
+
+      &.gc-input__label--required:after,
+      &.gc-input__label--required::after {
+        content: '*';
+        color: $red;
+        font-size: 1.5em;
+        line-height: 0.5em;
+        position: relative;
+        top: 3px;
+      }
+    }
+
+    .gc-input__label--inline {
+      position: absolute;
+      top: -2px;
+      font-size: 16px;
+      transition: 0.25s ease-in-out;
+    }
+
+    input:focus + .gc-input__label--inline,
+    .gc-select input:focus + .gc-input__label--inline {
+      top: -22px;
+      font-size: 14px;
+      color: $dark-grey;
+    }
+
+    .gc-select__label--floated {
+      color: $grey;
+      top: -8px;
+      font-size: 14px;
+    }
+
+    // TEXT AREA STYLING
+    .gc-input__textarea--small,
+    .gc-input__textarea--medium,
+    .gc-input__textarea--large {
+      padding: 0.625em 1.25em;
+    }
+
+    .gc-input__textarea--small {
+      height: 4em;
+    }
+
+    .gc-input__textarea--medium {
+      height: 8em;
+    }
+
+    .gc-input__textarea--large {
+      height: 20em;
+    }
+
+    // NESTED FORM LIST STYLING
+    .gc-input__list {
+      border-top: solid 1px #eee;
+      border-bottom: solid 1px #eee;
+      display: block;
+      padding: 0.625em 0;
+      margin: 0.625em 0;
+    }
+
+    .gc-input__list__ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    .gc-input__list__ul li {
+      margin: 1.25em 0;
+    }
+
+    .gc-input__list__ul li p {
+      margin: 0.5em 0;
+    }
+
+    //Select
+    .gc-select {
+      position: relative;
+      top: -20px;
+      margin-bottom: -20px;
+
+      &.gc-input--invalid .gc-select__label-container {
+        border-color: #f59393 !important;
+      }
+
+      input.gc-select__input {
+        outline: none;
+        margin-bottom: 0 !important;
+        padding-right: 2em !important;
+      }
+
+      .gc-select__selection-list {
+        padding: 0;
+        padding: 10px 2em 10px 20px;
+        list-style: none;
+        background-color: $grey;
+        min-height: 30px;
+
+        .gc-select__selection-list__item {
+          position: relative;
+          display: inline-block;
+          border: 1px $dark-grey solid;
+          border-radius: 2px;
+          padding: 5px calc(20px + 1em) 5px 10px;
+          color: $dark-grey;
+          margin-right: 0.6325em;
+          background-color: $grey;
+          transition: background-color 0.25s ease-in-out;
+
+          &:hover {
+            cursor: default;
+            background-color: $med-grey;
+          }
+        }
+      }
+
+
+      .gc-select__label-container {
+        padding: 0;
+        padding: 8px 2em 8px 15px;
+        list-style: none;
+        background-color: $grey;
+        min-height: 30px;
+        position: relative;
+
+        .gc-select__option-count {
+          display: inline-block;
+          position: absolute;
+          min-width: 1.25em;
+          border-radius: 2px;
+          padding: 8px 10px;
+          color: #fff;
+          text-align: center;
+          right: 45px;
+          top: 8px;
+
+          @include gc-form--bg;
+        }
+
+        .gc-select__label {
+          top: 16px;
+          left: 10px;
+          font-size: 16px;
+          color: #fafafa;
+        }
+
+        &:hover + .gc-select__label--floated {
+          color:$dark-grey;
+        }
+
+        &.gc-select--inactive {
+          background-color: transparent;
+          border-bottom: 1px solid $med-grey;
+
+          .gc-select__label {
+            color: $med-grey;
+          }
+
+          .gc-select__input-icon--fill {
+            fill: $med-grey;
+          }
+
+          &:hover {
+            border-color: $dark-grey;
+            cursor: pointer;
+
+            .gc-select__label {
+              color: $dark-grey;
+              cursor: pointer;
+            }
+
+            .gc-select__input-icon--fill {
+              fill: $dark-grey;
+            }
+          }
+        }
+      }
+
+      .gc-select__drop-down {
+        position: absolute;
+        z-index: 1000000;
+        width: 100%;
+        max-height: 500px;
+        background-color: #fff;
+        border: #7a848e solid 1px;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        padding: 0 15px;
+      }
+
+      .gc-select__searchbar {
+        margin-top: 10px;
+        input {
+          padding: 0;
+          &:focus {
+            outline: none;
+          }
+
+          &::-webkit-input-placeholder  {
+            color: #ddd;
+            font-weight: 100;
+            font-style: italic;
+            font-family: 'Andale Mono', Tahoma;
+            font-size: 14px;
+            line-height: 1.5em;
+          }
+
+          &::-moz-placeholder {
+            color: #ddd;
+            font-weight: 100;
+            font-style: italic;
+            font-family: 'Andale Mono', Tahoma;
+            font-size: 14px;
+            line-height: 1.5em;
+          }
+
+          &:-ms-input-placeholder {
+            color: #ddd;
+            font-weight: 100;
+            font-style: italic;
+            font-family: 'Andale Mono', Tahoma;
+            font-size: 14px;
+            line-height: 1.5em;
+          }
+
+          &:-moz-placeholder {
+            color: #ddd;
+            font-weight: 100;
+            font-style: italic;
+            font-family: 'Andale Mono', Tahoma;
+            font-size: 14px;
+            line-height: 1.5em;
+          }
+
+          &::placeholder {
+            color: #ddd;
+            font-weight: 100;
+            font-style: italic;
+            font-family: 'Andale Mono', Tahoma;
+            font-size: 14px;
+            line-height: 1.5em;
+          }
+        }
+      }
+
+      .gc-select__drop-down__option {
+        padding: 10px 0;
+        border-bottom: 1px solid $med-grey;
+
+        &.gc-select__drop-down__option--active {
+          position: relative;
+          margin-top: 10px;
+          background-color: transparent;
+          border: 1px solid $dark-grey;
+          padding: 10px 15px;
+          color: $dark-grey;
+
+          .gc-select__option--active__cross {
+            position: absolute;
+            width: 1em;
+            height: 1em;
+            right: 10px;
+            top: 10px;
+
+            &:hover {
+              cursor: pointer;
+            }
+
+            &:before,
+            &::before {
+              content: "";
+              display: block;
+              background-color: $dark-grey;
+              width: 1.25em;
+              height: 1px;
+              position: relative;
+              top: calc(50%);
+              right: 0;
+              transform: rotateZ(45deg);
+            }
+
+            &:after,
+            &::after {
+              content: "";
+              display: block;
+              background-color: $dark-grey;
+              width: 1.25em;
+              height: 1px;
+              position: relative;
+              top: calc(50% - 1px);
+              right: 0;
+              transform: rotateZ(-45deg);
+            }
+          }
+
+          &:hover {
+            background-color: $light-grey;
+            color: $dark-grey;
+          }
+        }
+      }
+
+      li:last-of-type {
+        border-bottom: none;
+      }
+
+      .gc-select__drop-down__option:hover,
+      .gc-select__drop-down__option--hover {
+        cursor: pointer;
+        @include gc-form--text;
+      }
+
+      .gc-select__drop-down__option--no-results {
+        font-style: italic;
+        color: #aaa;
+        font-size: 0.9em;
+      }
+
+      .gc-select__drop-down__option--disabled {
+        color: #aaa;
+        pointer-events: none;
+      }
+
+      // ICON
+      .gc-select__input-icon {
+        content: '';
+        display: block;
+        height: 12px;
+        width: 12px;
+        position: absolute;
+        top: 8px;
+        right: 0;
+        z-index: -1;
+
+        &.gc-multi-select__icon {
+          z-index: 20;
+          top: 1em;
+          right: 15px;
+          height: 20px;
+          width: 20px;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .gc-select__input-icon--fill {
+        fill: #777;
+      }
+
+      .gc-multi-select__icon {
+        .gc-select__input-icon--fill {
+          fill: #fff;
+        }
+      }
+
+
+    }
+  }
+}

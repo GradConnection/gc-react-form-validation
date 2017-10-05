@@ -8,7 +8,9 @@ import GCSelect from './GCSelect';
 import GCMultiSelect from './GCMultiSelect';
 import GCInputLabel from './GCInputLabel';
 
-class GCInput extends Component {
+import '../../styles.css'
+
+class Input extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {

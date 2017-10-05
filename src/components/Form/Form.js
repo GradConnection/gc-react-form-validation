@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import mapValues from 'lodash/mapValues';
 
+import '../../styles.css'
+
 import Input from '../Input/Input';
 
 let GCFormCounter = 0;
 
-class GCForm extends Component {
+class Form extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -24,7 +26,7 @@ class GCForm extends Component {
 
   getFields() {
     return mapValues(this.props.data, d =>
-      (<GCInput
+      (<Input
         {...d}
         onChange={this.props.handleInputChange}
         touchedByParent={this.state.formSubmitted}

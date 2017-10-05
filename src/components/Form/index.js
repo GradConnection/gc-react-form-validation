@@ -1,3 +1,3 @@
-import GCForm from './GCForm';
+import Form from './Form';
 
-export default GCForm;
+export default Form;
