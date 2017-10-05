@@ -5,8 +5,6 @@ import mapValues from 'lodash/mapValues';
 
 import GCInput from '../GCInput/GCInput';
 
-// import './gc-form.css';
-
 let GCFormCounter = 0;
 
 class GCForm extends Component {

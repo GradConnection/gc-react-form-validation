@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 export default function GCInputLabel({title, required, name, value, type, exception, children}) {
-  const inlineClass = _.isEmpty(value) ? 'gc-input__label--inline' : '';
+  const inlineClass = isEmpty(value) ? 'gc-input__label--inline' : '';
   const requiredClass = required ? 'gc-input__label--required' : '';
   const selectClass = exception === 'select' ? 'gc-select__label' : '';
   const floatingLabel = type !== 'radio'
@@ -13,7 +12,7 @@ export default function GCInputLabel({title, required, name, value, type, except
   const staticLabel = type === 'date'
     || type === 'range';
 
-  if (!_.isEmpty(title) && type !== 'select') {
+  if (!isEmpty(title) && type !== 'select') {
     if (staticLabel) {
       return (
         <div>

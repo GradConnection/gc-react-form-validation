@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 
 import GCRadio from './GCRadio';
 import GCCheckbox from './GCCheckbox';

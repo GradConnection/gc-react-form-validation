@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+
+import uniqueId from 'lodash/uniqueId';
+import isArray from 'lodash/isArray';
+import filter from 'lodash/filter';
+import without from 'lodash/without';
 
 import GCInputLabel from './GCInputLabel';
 import GCInputSVG from './GCInputSVG';
@@ -41,7 +45,7 @@ class GCMultiSelect extends Component {
       return (
         <li
           className='gc-select__drop-down__option gc-select__drop-down__option--no-results'
-          key={_.uniqueId()}>
+          key={uniqueId()}>
           <label htmlFor={this.props.name}>
             {this.state.searchActive ? 'There are no matching results' : 'No available options'}
           </label>
@@ -55,7 +59,7 @@ class GCMultiSelect extends Component {
       return (
         <li
           className={`gc-select__drop-down__option ${disabledClass} ${hoveredClass}`}
-          key={_.uniqueId()}
+          key={uniqueId()}
           onClick={() => this.addToArray(opt.value, opt.disabled)}>
           <label htmlFor={this.props.name}>
             {opt.label}
@@ -83,7 +87,7 @@ class GCMultiSelect extends Component {
       return (
         <li
           className={`gc-select__drop-down__option gc-select__drop-down__option--active ${hoveredClass}`}
-          key={_.uniqueId()}
+          key={uniqueId()}
           onClick={() => this.deleteFromArray(opt.value)}>
           <label htmlFor={this.props.name}>
             {opt.label}
@@ -144,12 +148,12 @@ class GCMultiSelect extends Component {
       return options;
     }
     const pattern = new RegExp(searchTxt, 'i');
-    const foo = _.filter(options, o => pattern.test(o.label));
+    const foo = filter(options, o => pattern.test(o.label));
     return foo;
   }
 
   getValue(arr, value) {
-    const valueArray = _.isArray(value) ? value : value.split(", ");
+    const valueArray = isArray(value) ? value : value.split(", ");
     let objArray = [];
     valueArray.forEach(i => {
       arr.forEach(o => {
@@ -231,19 +235,9 @@ class GCMultiSelect extends Component {
   }
 
   deleteFromArray(value) {
-    const newValueArray =_.without(this.props.value, value);
+    const newValueArray = without(this.props.value, value);
     this.handleChange(newValueArray);
   }
-
-  // renderSelection() {
-  //   return this.state.selection.map( s => {
-  //     return (
-  //       <li
-  //       className="gc-select__selection-list__item"
-  //       key={_.uniqueId()}>{s.label} <div className="gc-select__selection-list__cross" onClick={() => this.deleteFromArray(s.value)}/></li>
-  //     )
-  //   });
-  // }
 
   render() {
     const requiredClass = this.props.required ? 'gc-input__label--required' : '';

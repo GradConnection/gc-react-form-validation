@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+
+import uniqueId from 'lodash/uniqueId';
+import isEmpty from 'lodash/isEmpty';
+import filter from 'lodash/filter';
+import without from 'lodash/without';
+import find from 'lodash/find';
 
 import GCInputLabel from './GCInputLabel';
 import GCInputSVG from './GCInputSVG';
@@ -39,14 +44,14 @@ class GCSelect extends Component {
       return (
         <li
           className='gc-select__drop-down__option gc-select__drop-down__option--no-results'
-          key={_.uniqueId()}>
+          key={uniqueId()}>
           <label htmlFor={this.props.name}>
             {this.state.searchActive ? 'There are no matching results' : 'No available options'}
           </label>
         </li>
       );
     }
-    const inactiveItems = _.isEmpty(this.props.value) ? options : _.without(options, _.find(options, o => {
+    const inactiveItems = isEmpty(this.props.value) ? options : without(options, find(options, o => {
       return o.value === this.props.value;
     }));
     return inactiveItems.map((opt, index) => {
@@ -55,7 +60,7 @@ class GCSelect extends Component {
       return (
         <li
           className={`gc-select__drop-down__option ${disabledClass} ${hoveredClass}`}
-          key={_.uniqueId()}
+          key={uniqueId()}
           onClick={() => this.handleChange(opt.value, opt.disabled)}>
           <label htmlFor={this.props.name}>
             {opt.label}
@@ -66,14 +71,14 @@ class GCSelect extends Component {
   }
 
   renderActiveItem() {
-    const ActiveItem = _.find(this.props.options, o => {
+    const ActiveItem = find(this.props.options, o => {
       return o.value === this.props.value;
     });
 
     return (
       <li
         className={`gc-select__drop-down__option gc-select__drop-down__option--active`}
-        key={_.uniqueId()}
+        key={uniqueId()}
         onClick={() => this.handleChange('', this.props.required)}>
         <label htmlFor={this.props.name}>
           {ActiveItem.label}
@@ -96,12 +101,12 @@ class GCSelect extends Component {
       return options;
     }
     const pattern = new RegExp(searchTxt, 'i');
-    return _.filter(options, o => pattern.test(o.label))
+    return filter(options, o => pattern.test(o.label))
   }
 
   getValue(arr, value) {
     const valArray = arr.filter(i => i.value === value);
-    return _.isEmpty(valArray) ? undefined : valArray[0].label;
+    return isEmpty(valArray) ? undefined : valArray[0].label;
   }
 
   handleChange(v, disabled = false) {
@@ -174,7 +179,7 @@ class GCSelect extends Component {
   render() {
     const requiredClass = this.props.required ? 'gc-input__label--required' : '';
     const activeClass = this.state.isActive ? '' : 'gc-select--inactive';
-    const floatLabel = !this.state.isActive && !_.isEmpty(this.props.value);
+    const floatLabel = !this.state.isActive && !isEmpty(this.props.value);
     const requiredLabelClass = !floatLabel ? requiredClass : '';
     return (
       <div
@@ -227,7 +232,7 @@ class GCSelect extends Component {
                   />
               </li>
             )}
-            {!_.isEmpty(this.props.value) && this.renderActiveItem()}
+            {!isEmpty(this.props.value) && this.renderActiveItem()}
             {this.renderOptions(this.props.options)}
           </ul>
         )}
