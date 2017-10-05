@@ -7,13 +7,15 @@ var APP_DIR = path.resolve(__dirname, 'src/');
 var config = {
   entry: './index.js',
   output: {
+    library: 'gc-react-form-validation',
+    libraryTarget: 'umd',
     path: BUILD_DIR,
-    filename: 'bundle.js'
+    filename: 'index.js'
   },
   module : {
     loaders : [
       {
-        test : /\.jsx?/,
+        test : /\.js?/,
         include : APP_DIR,
         loader : 'babel-loader'
       }, {

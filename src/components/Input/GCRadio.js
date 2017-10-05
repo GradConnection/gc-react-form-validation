@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class GCInput extends Component {
+class Input extends Component {
   renderRadioOpts() {
     const props = this.props;
     return props.options.map((opt) => {
@@ -43,7 +43,7 @@ class GCInput extends Component {
   }
 }
 
-GCInput.propTypes = {
+Input.propTypes = {
   extendedClass: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.string,
@@ -60,7 +60,7 @@ GCInput.propTypes = {
   title: PropTypes.string,
 };
 
-GCInput.defaultProps = {
+Input.defaultProps = {
   extendedClass: '',
   value: null,
   disabled: false,
@@ -73,4 +73,4 @@ GCInput.defaultProps = {
   title: null,
 };
 
-export default GCInput;
+export default Input;

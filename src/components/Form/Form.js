@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import mapValues from 'lodash/mapValues';
 
-import '../../styles.css'
-
 import Input from '../Input/Input';
 
 let GCFormCounter = 0;
@@ -82,7 +80,7 @@ class Form extends Component {
   }
 }
 
-GCForm.propTypes = {
+Form.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   children: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
@@ -90,8 +88,8 @@ GCForm.propTypes = {
   submissionErrorMessages: PropTypes.array,
 };
 
-GCForm.defaultProps = {
+Form.defaultProps = {
   submissionErrorMessages: [],
 }
 
-export default GCForm;
+export default Form;

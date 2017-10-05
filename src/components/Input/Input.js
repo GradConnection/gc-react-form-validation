@@ -8,8 +8,6 @@ import GCSelect from './GCSelect';
 import GCMultiSelect from './GCMultiSelect';
 import GCInputLabel from './GCInputLabel';
 
-import '../../styles.css'
-
 class Input extends Component {
   constructor(props, context) {
     super(props, context);
@@ -250,7 +248,7 @@ class Input extends Component {
   }
 }
 
-GCInput.propTypes = {
+Input.propTypes = {
   extendedClassNames: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.string,
@@ -292,7 +290,7 @@ GCInput.propTypes = {
   search: PropTypes.bool,
 };
 
-GCInput.defaultProps = {
+Input.defaultProps = {
   extendedClassNames: '',
   value: null,
   defaultValue: null,
@@ -320,4 +318,4 @@ GCInput.defaultProps = {
   search: false,
 };
 
-export default GCInput;
+export default Input;
