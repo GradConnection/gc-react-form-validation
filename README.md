@@ -1,194 +1,135 @@
-# <b style="color:#dfa4d7">validation-tutorial</b>
-A small little tutorial to get the basics of the GradConnection form validation library
-## Basic Overview
+# GC React form-validation
 
-GCValidation consists out of two parts when used together creates maintainable forms:
-  - GCForm
-  - GCInput
+This library has two components
+1. GCInput
+2. GCForm
 
-**GCForm**
+## Installation
 
-Only concerned with whether _all_ filled fields are filled in correctly and that all the required fields are filled in correctly. Will not allow the form to be submitted unless the above is true.
 
-**GCInput**
 
-Renders different types of input fields, example text, email, select and radio and validates the values individually. Validates value when input loses focus.
+## 1. GCInput
+---
+This is the component that captures user input. It accepts properties that determine the type of input. `GCInput` can also be used outside on the `GCForm`.
 
-Does not have to be used with GCForm
+### Props
+| Property | Definition                             | Required | Options   |
+|----------|:---------------------------------------|:---------|:----------|
+| type     | Determines the type of validation and type of input to render | Required | text, email, password, date, range, name, textarea |
+| stateName | Accepts state variables to change the input | Required | |
+| onChange | Pass function to control value. | Required | |
+| extendedClass | CSS class for adding custom styling. | Not required | |
+| value |  Accepts values for input | Not required | |
+| disabled | When disabled is `false` the input field is disabled | Not required |  true, false|
+| name | Requirement for input element | Not required for component render |  |
+| placeholder | Placeholder text | Not required | |
+| maxLength | Maximum character length | Not required | |
+| minLength | Minimum character length | Not required | |
+| maxDate   | Latest date, accepts date object | Not required  | |
+| minDate   | Earliest date, accepts date object | Not required | |
+| max       | Highest accepted number | Not required | |
+| min       | Lowest accepted number | Not required | |
 
-## Setup
-**Step 1:** Clone repository
+### Custom Regular Expression
+A custom regular expression may be used with input of type `name` and `text`.
 
-**Step 2:** Make sure you're running node 6+
-
-**Step 3:** Run `node fuse`
-
-## Tutorial
-
-The aim of this tutorial is create a basic form that asks a user for their name, email address, birthdate and their favorite animal.
-
-**Form field requirements**
-
-- The _name_ and _email_ fields are compulsory.
-- The user should be older than 5 years old and an appropriate error message should be displayed, e.g. _User must be older than 5_.
-- The _favorite animal_ field should be a select type input and should only be rendered if the _name_ field starts with the letter _F_.
-
-**Instructions**
-
-1. Import 'GCForm' from Components folder
-2. Set up state for form and add handler fn.
-
-```js
-constructor(props) {
-  super(props);
-  this.state = {
-    name: '',
-    email: '',
-    birthdate: '',
-    favoriteAnimal: '',
-  }
-}
-
-handleChange(value, type) {
-  const obj = {};
-  obj[type] = value;
-  this.setState(obj);
-}
+``` js
+<GCInput
+  onChange={val => this.handleChange(val, 'text')}
+  value={this.state.text}
+  name="nameTxt"
+  placeholder="Type something that starts with a 'W'."
+  customRegex={/\bW/g}
+  customErrorMessage="Must start with uppercase W"
+  type="text"
+/>
 ```
-Create function that will run after form is successfully validated.
+### Custom Validation Message
+All input types accepts a `customErrorMessage` property which allows for custom validation messages
 
-```js
-formSubmitted() {
-  alert('Yay! The form was successfully submitted');
-}
+``` js
+<GCInput
+  onChange={val => this.handleChange(val, 'email')}
+  value={this.state.email}
+  name="emailTxt"
+  placeholder="name@domain.com"
+  type="email"
+  customErrorMessage="Please enter a valid email address"
+/>
 ```
 
-3. Create basic form fields object to be passed into the GCForm.
+## 2. GCForm
+---
+Used to wrap GCInput and checks that required and filled inputs are valid. If the check returns true then the form will allow submission.
+
+### Usage
+Forms accepts an object that represents the form fields using the property name of `data`. To control the UI a template in the form of an anonymous function is passed in as a child. In the GCForm component the lodash method `_.mapValues` is used to render the fields.
 
 ```js
-
-const formfields = {
-  name: {
-    name: 'name', // Required
-    stateName: 'name', // Required
-    type: 'text', // Required
-    title: 'Name',
-    value: this.state.name, // Required
-  },
-  email: {
-    name: 'emailAddress',
-    stateName: 'email',
-    type: 'email',
-    title: 'Email Address'
-    value: this.state.email,
-  },
-  birthdate: {
-    name: 'birthdate',
-    stateName: 'birthdate',
-    type: 'date',
-    title: 'Date of Birth'
-    value: this.state.birthdate,
-  },
-  favoriteAnimal: {
-    name: 'favoriteAnimal',
-    stateName: 'favoriteAnimal',
-    type: 'select',
-    title: 'Favorite Animal'
-    value: this.state.favoriteAnimal,
-    options: [
-      {
-        label: 'Unicorn',
-        value: 'unicorn'
-      }, {
-        label: 'Pheonix',
-        value: 'pheonix'
-      }, {
-        label: 'Dragon',
-        value: 'dragon'
-      }, {
-        label: 'Goldfish',
-        value: 'goldfish'
-      }
-    ]
-  }
+handleSubmit() {
+  // Do submit stuff here
 }
 
-```
+handleChange() {
+  // Do stuff here
+}
 
-4. Pass form fields data into _GCForm_ and arrange fields inside the render method.
+render() {
+  // Object with form data
+  const formFields = {
+    name: {
+      value: this.state.name,
+      stateName: 'name',
+      name: 'nameTxt',
+      type: 'name',
+      placeholder: 'Please enter your name',
+      required: true
+    },
+    textarea: {
+      value: this.state.textarea,
+      stateName: 'textarea',
+      name: 'textareaTxt',
+      type: 'textarea',
+      placeholder: 'Tell me more about yourself...',
+      required: true,
+    },
+    email: {
+      value: this.state.email,
+      stateName: 'email',
+      name: 'emailTxt',
+      type: 'email',
+      placeholder: 'name@domain.com'
+    }
+  };
+  return(
+    <GCForm
+      data={formFields}
+      onSubmit={() => this.handleSubmit()}
+      handleInputChange={(v, t) => this.handleChange(v, t)}
+    >
+      {({ fields }) => (
+        <div>
+          <label
+            htmlFor="nameTxt"
+            className="gc-form__label"
+          >Name</label>
+          {fields.name}
 
-```js
-<GCForm
-  data={formFields}
-  onSubmit={() => this.formSubmitted()}
-  handleInputChange={(v, t) => this.handleChange(v, t)}>
-    {({ fields }) => (
-      <div>
-        {fields.name}
-        {fields.email}
-        {fields.birthdate}
-        {fields.favoriteAnimal}
-        <button>Submit Form</button>
-      </div>
-    )}
-</GCForm>
-```
+          <label
+            htmlFor="textareaTxt"
+            className="gc-form__label"
+          >Bio</label>
+        {fields.textarea}
 
-5. Add the requirements for each fields
+          <label
+            htmlFor="emailTxt"
+            className="gc-form__label"
+          >Email</label>
+          {fields.email}
 
-```js
-const today = new Date();
-const thisYear = today.getFullYear();
-const minAgeDate = new Date(thisYear - 5, 1, 1);
-
-const formfields = {
-  name: {
-    name: 'name', // Required
-    stateName: 'name', // Required
-    type: 'text', // Required
-    title: 'Name'
-    value: this.state.name, // Required
-    required: true
-  },
-  email: {
-    name: 'emailAddress',
-    stateName: 'email',
-    type: 'email',
-    title: 'Email Address'
-    value: this.state.email,
-    required: true
-  },
-  birthdate: {
-    name: 'birthdate',
-    stateName: 'birthdate',
-    type: 'date',
-    title: 'Date of Birth'
-    value: this.state.birthdate,
-    customErrorMessage: 'User must be older than 5'
-    maxDate: minAgeDate,
-  },
-  favoriteAnimal: {
-    name: 'favoriteAnimal',
-    stateName: 'favoriteAnimal',
-    type: 'select',
-    title: 'Favorite Animal'
-    value: this.state.favoriteAnimal,
-    isVisible: this.state.name.charAt(0) === 'F' || this.state.name.charAt(0) === 'f',
-    options: [
-      {
-        label: 'Unicorn',
-        value: 'unicorn'
-      }, {
-        label: 'Pheonix',
-        value: 'pheonix'
-      }, {
-        label: 'Dragon',
-        value: 'dragon'
-      }, {
-        label: 'Goldfish',
-        value: 'goldfish'
-      }
-    ]
-  }
+          <button className="gc-form__submit-btn">Submit</button>
+        </div>)}
+    </GCForm>
+  );
 }
 ```
