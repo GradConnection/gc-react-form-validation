@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import mapValues from 'lodash/mapValues';
 
-import GCInput from '../GCInput/GCInput';
+import Input from '../Input/Input';
 
 let GCFormCounter = 0;
 

@@ -1,4 +1,4 @@
-import GCForm from './components/GCForm';
-import GCInput from './components/GCInput';
+import Form from './components/Form';
+import Input from './components/Input';
 
-export { GCForm, GCInput };
+export { Form, Input };
