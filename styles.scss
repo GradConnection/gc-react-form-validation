@@ -1,21 +1,21 @@
 // FORM STYLING
 $red: #b80c0c;
-$campus-background-color: #e8bddb;
+$app-primary-colour: #e8bddb;
 $grey: #7a848e;
 $light-grey: #f2f3f4;
 $med-grey: #8e979f;
 $dark-grey: #43484c;
 
 @mixin gc-form--bg {
-  background-color: $campus-background-color;
+  background-color: $app-primary-colour;
 }
 
 @mixin gc-form--border {
-  border-color: $campus-background-color;
+  border-color: $app-primary-colour;
 }
 
 @mixin gc-form--text {
-  color: $campus-background-color;
+  color: $app-primary-colour;
 }
 
 .gc-form {
@@ -32,12 +32,21 @@ $dark-grey: #43484c;
   }
 
   .gc-form__error-message {
-    padding: 0.625em 1.25em;
+    padding: 0.625em 2em;
     margin-bottom: 2.125em;
     border-radius: 2px;
-    font-size: 12px;
     background-color: #f59393;
     color: #fff;
+
+    &.ul {
+      padding-left: 3em;
+    }
+
+    p,
+    li {
+      font-size: 14px;
+      margin: 0.625em 0;
+    }
   }
 
   .error-msg-container-arrow {
@@ -117,6 +126,7 @@ $dark-grey: #43484c;
     .gc-input__textarea--medium:focus,
     .gc-input__textarea--large:focus,
     input.gc-select__input:focus  {
+      // border-color: $app-primary-colour;
       outline: none;
       @include gc-form--border;
     }
@@ -300,6 +310,7 @@ $dark-grey: #43484c;
           min-width: 1.25em;
           border-radius: 2px;
           padding: 8px 10px;
+          // background-color: $app-primary-colour;
           color: #fff;
           text-align: center;
           right: 45px;
@@ -480,6 +491,7 @@ $dark-grey: #43484c;
       .gc-select__drop-down__option:hover,
       .gc-select__drop-down__option--hover {
         cursor: pointer;
+        // color: $app-primary-colour;
         @include gc-form--text;
       }
 
@@ -526,8 +538,6 @@ $dark-grey: #43484c;
           fill: #fff;
         }
       }
-
-
     }
   }
 }

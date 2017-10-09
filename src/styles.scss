@@ -35,9 +35,18 @@ $dark-grey: #43484c;
     padding: 0.625em 1.25em;
     margin-bottom: 2.125em;
     border-radius: 2px;
-    font-size: 12px;
     background-color: #f59393;
     color: #fff;
+
+    &.ul {
+      padding-left: 3em;
+    }
+
+    p,
+    li {
+      font-size: 14px;
+      margin: 0.625em 0;
+    }
   }
 
   .error-msg-container-arrow {

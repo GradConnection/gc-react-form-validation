@@ -27,6 +27,7 @@ import { Form } from 'gc-react-form-validation';
 constructor(props) {
   super(props);
   this.state = {
+    serverErrors: [],
     name: '',
     email: '',
     birthdate: '',
@@ -49,7 +50,7 @@ render() {
   const thisYear = today.getFullYear();
   const minAgeDate = new Date(thisYear - 5, 1, 1);
 
-  // Form data object. 
+  // Form data object.
   const formFields = {
     name: {
       name: 'name', // Required
@@ -129,6 +130,7 @@ render() {
     <div>
       <Form
         data={formFields}
+        submissionErrorMessages={this.state.serverErrors} // For displaying errors after submission
         onSubmit={() => this.formSubmitted()}
         handleInputChange={(v, t) => this.handleChange(v, t)}>
           {({ fields }) => (
