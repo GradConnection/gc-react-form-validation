@@ -228,7 +228,6 @@ class GCSelect extends Component {
                   onKeyDown={e => this.handleEnter(e)}
                   onKeyUp={e => this.handleKeyPress(e)}
                   onChange={e => this.handleSearch(e)}
-                  autoComplete={false}
                   />
               </li>
             )}
