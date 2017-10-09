@@ -130,6 +130,7 @@ render() {
     <div>
       <Form
         data={formFields}
+        extendedClassNames="custom-classes"
         submissionErrorMessages={this.state.serverErrors} // For displaying errors after submission
         onSubmit={() => this.formSubmitted()}
         handleInputChange={(v, t) => this.handleChange(v, t)}>
@@ -179,7 +180,7 @@ Some more props you can use.
 | type     | Determines the type of validation and type of input to render | Required | text, email, password, date, range, name, textarea, select |
 | stateName | Accepts state variables to change the input | Required | |
 | onChange | Pass function to control value. | Required | |
-| extendedClass | CSS class for adding custom styling. | Not required | |
+| extendedClassNames | CSS class for adding custom styling. | Not required | |
 | value |  Accepts values for input | Not required | |
 | disabled | When disabled is `false` the input field is disabled | Not required |  true, false|
 | name | Requirement for input element | Not required for component render |  |
