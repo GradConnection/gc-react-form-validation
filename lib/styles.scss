@@ -32,7 +32,7 @@ $dark-grey: #43484c;
   }
 
   .gc-form__error-message {
-    padding: 0.625em 2em;
+    padding: 0.625em 1.25em;
     margin-bottom: 2.125em;
     border-radius: 2px;
     background-color: #f59393;
@@ -538,6 +538,8 @@ $dark-grey: #43484c;
           fill: #fff;
         }
       }
+
+
     }
   }
 }
