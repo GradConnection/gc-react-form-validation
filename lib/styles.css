@@ -47,6 +47,8 @@
     .gc-form .gc-input input[type="text"],
     .gc-form .gc-input input[type="url"],
     .gc-form .gc-input input[type="password"],
+    .gc-form .gc-input input[type="date"],
+    .gc-form .gc-input input[type="email"],
     .gc-form .gc-input .gc-input__textarea--small,
     .gc-form .gc-input .gc-input__textarea--medium,
     .gc-form .gc-input .gc-input__textarea--large {
@@ -55,7 +57,8 @@
       position: relative;
       box-sizing: border-box;
       background-color: transparent;
-      font-size: 16px; }
+      font-size: 16px;
+      color: #8e979f; }
     .gc-form .gc-input input[type="text"],
     .gc-form .gc-input input[type="url"],
     .gc-form .gc-input input[type="password"],
@@ -92,6 +95,20 @@
     .gc-form .gc-input input.gc-select__input:focus + .gc-input__label--inline,
     .gc-form .gc-input .gc-select__label--floated {
       font-size: 14px; }
+    .gc-form .gc-input:hover,
+    .gc-form .gc-input input[type="text"]:hover,
+    .gc-form .gc-input input[type="url"]:hover,
+    .gc-form .gc-input input[type="password"]:hover,
+    .gc-form .gc-input input[type="email"]:hover,
+    .gc-form .gc-input input[type="date"]:hover,
+    .gc-form .gc-input .gc-input__textarea--small:hover,
+    .gc-form .gc-input .gc-input__textarea--medium:hover,
+    .gc-form .gc-input .gc-input__textarea--large:hover,
+    .gc-form .gc-input input.gc-select__input:hover {
+      cursor: text;
+      color: #43484c; }
+    .gc-form .gc-input input[type="range"]:hover {
+      cursor: pointer; }
     .gc-form .gc-input input.gc-input--invalid,
     .gc-form .gc-input .gc-select__input.gc-input--invalid {
       border-color: #f59393 !important; }
@@ -158,8 +175,8 @@
       margin: 0.5em 0; }
     .gc-form .gc-input .gc-select {
       position: relative;
-      top: -20px;
-      margin-bottom: -20px; }
+      margin-top: -14px;
+      top: -2px; }
       .gc-form .gc-input .gc-select.gc-input--invalid .gc-select__label-container {
         border-color: #f59393 !important; }
       .gc-form .gc-input .gc-select input.gc-select__input {
@@ -190,26 +207,28 @@
         padding: 8px 2em 8px 15px;
         list-style: none;
         background-color: #7a848e;
-        min-height: 30px;
+        min-height: 40px;
         position: relative; }
         .gc-form .gc-input .gc-select .gc-select__label-container .gc-select__option-count {
           display: inline-block;
           position: absolute;
           min-width: 1.25em;
           border-radius: 2px;
-          padding: 8px 10px;
+          padding: 6px 10px;
           color: #fff;
           text-align: center;
+          font-size: 16px;
           right: 45px;
-          top: 8px;
+          top: 5px;
           background-color: #e8bddb; }
         .gc-form .gc-input .gc-select .gc-select__label-container .gc-select__label {
           top: 16px;
-          left: 10px;
+          left: 8px;
           font-size: 16px;
           color: #fafafa; }
         .gc-form .gc-input .gc-select .gc-select__label-container:hover + .gc-select__label--floated {
-          color: #43484c; }
+          color: #43484c;
+          cursor: pointer; }
         .gc-form .gc-input .gc-select .gc-select__label-container.gc-select--inactive {
           background-color: transparent;
           border-bottom: 1px solid #8e979f; }
@@ -318,11 +337,13 @@
               transform: rotateZ(-45deg); }
           .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active:hover {
             background-color: #f2f3f4;
-            color: #43484c; }
+            color: #43484c;
+            cursor: pointer; }
       .gc-form .gc-input .gc-select li:last-of-type {
         border-bottom: none; }
       .gc-form .gc-input .gc-select .gc-select__drop-down__option:hover,
       .gc-form .gc-input .gc-select .gc-select__drop-down__option--hover {
+        cursor: pointer;
         cursor: pointer;
         color: #e8bddb; }
       .gc-form .gc-input .gc-select .gc-select__drop-down__option--no-results {
@@ -343,7 +364,7 @@
         z-index: -1; }
         .gc-form .gc-input .gc-select .gc-select__input-icon.gc-multi-select__icon {
           z-index: 20;
-          top: 1em;
+          top: 12px;
           right: 15px;
           height: 20px;
           width: 20px; }
