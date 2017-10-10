@@ -1,10 +1,10 @@
 // FORM STYLING
-$red: #b80c0c;
-$app-primary-colour: #e8bddb;
-$grey: #7a848e;
-$light-grey: #f2f3f4;
-$med-grey: #8e979f;
-$dark-grey: #43484c;
+$app-primary-colour: #e8bddb !default;
+$light-grey: #f2f3f4 !default;
+$grey: #7a848e !default;
+$med-grey: #8e979f !default;
+$dark-grey: #43484c !default;
+$red: #b80c0c !default;
 
 @mixin gc-form--bg {
   background-color: $app-primary-colour;
@@ -87,6 +87,8 @@ $dark-grey: #43484c;
     input[type="text"],
     input[type="url"],
     input[type="password"],
+    input[type="date"],
+    input[type="email"],
     .gc-input__textarea--small,
     .gc-input__textarea--medium,
     .gc-input__textarea--large {
@@ -96,6 +98,7 @@ $dark-grey: #43484c;
       box-sizing: border-box;
       background-color: transparent;
       font-size: 16px;
+      color: $med-grey;
     }
 
     input[type="text"],
@@ -147,11 +150,18 @@ $dark-grey: #43484c;
     input[type="text"]:hover,
     input[type="url"]:hover,
     input[type="password"]:hover,
+    input[type="email"]:hover,
+    input[type="date"]:hover,
     .gc-input__textarea--small:hover,
     .gc-input__textarea--medium:hover,
     .gc-input__textarea--large:hover,
     input.gc-select__input:hover  {
+      cursor: text;
+      color: $dark-grey;
+    }
 
+    input[type="range"]:hover {
+      cursor: pointer;
     }
 
     input.gc-input--invalid,
@@ -257,8 +267,8 @@ $dark-grey: #43484c;
     //Select
     .gc-select {
       position: relative;
-      top: -20px;
-      margin-bottom: -20px;
+      margin-top: -14px;
+      top: -2px;
 
       &.gc-input--invalid .gc-select__label-container {
         border-color: #f59393 !important;
@@ -295,13 +305,12 @@ $dark-grey: #43484c;
         }
       }
 
-
       .gc-select__label-container {
         padding: 0;
         padding: 8px 2em 8px 15px;
         list-style: none;
         background-color: $grey;
-        min-height: 30px;
+        min-height: 40px;
         position: relative;
 
         .gc-select__option-count {
@@ -309,25 +318,26 @@ $dark-grey: #43484c;
           position: absolute;
           min-width: 1.25em;
           border-radius: 2px;
-          padding: 8px 10px;
-          // background-color: $app-primary-colour;
+          padding: 6px 10px;
           color: #fff;
           text-align: center;
+          font-size: 16px;
           right: 45px;
-          top: 8px;
+          top: 5px;
 
           @include gc-form--bg;
         }
 
         .gc-select__label {
           top: 16px;
-          left: 10px;
+          left: 8px;
           font-size: 16px;
           color: #fafafa;
         }
 
         &:hover + .gc-select__label--floated {
           color:$dark-grey;
+          cursor: pointer;
         }
 
         &.gc-select--inactive {
@@ -480,6 +490,7 @@ $dark-grey: #43484c;
           &:hover {
             background-color: $light-grey;
             color: $dark-grey;
+            cursor: pointer;
           }
         }
       }
@@ -492,6 +503,7 @@ $dark-grey: #43484c;
       .gc-select__drop-down__option--hover {
         cursor: pointer;
         // color: $app-primary-colour;
+        cursor: pointer;
         @include gc-form--text;
       }
 
@@ -519,7 +531,7 @@ $dark-grey: #43484c;
 
         &.gc-multi-select__icon {
           z-index: 20;
-          top: 1em;
+          top: 12px;
           right: 15px;
           height: 20px;
           width: 20px;
