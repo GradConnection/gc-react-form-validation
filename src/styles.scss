@@ -104,7 +104,7 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
       box-sizing: border-box;
       background-color: transparent;
       font-size: 16px;
-      color: $med-grey;
+      color: $gc-form-med-grey;
     }
 
     input[type="text"],
@@ -307,7 +307,7 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
 
           &:hover {
             cursor: default;
-            background-color: $med-grey;
+            background-color: $gc-form-med-grey;
           }
         }
       }
@@ -349,14 +349,14 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
 
         &.gc-select--inactive {
           background-color: transparent;
-          border-bottom: 1px solid $med-grey;
+          border-bottom: 1px solid $gc-form-med-grey;
 
           .gc-select__label {
-            color: $med-grey;
+            color: $gc-form-med-grey;
           }
 
           .gc-select__input-icon--fill {
-            fill: $med-grey;
+            fill: $gc-form-med-grey;
           }
 
           &:hover {
@@ -446,7 +446,7 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
 
       .gc-select__drop-down__option {
         padding: 10px 0;
-        border-bottom: 1px solid $med-grey;
+        border-bottom: 1px solid $gc-form-med-grey;
 
         &.gc-select__drop-down__option--active {
           position: relative;

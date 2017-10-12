@@ -1,29 +1,33 @@
 // FORM STYLING
-$app-primary-colour: #e8bddb !default;
-$light-grey: #f2f3f4 !default;
-$grey: #7a848e !default;
-$med-grey: #8e979f !default;
-$dark-grey: #43484c !default;
-$red: #b80c0c !default;
+$gc-form-primary-colour: #e8bddb !default;
+$gc-form-light-grey: #f2f3f4 !default;
+$gc-form-grey: #7a848e !default;
+$gc-form-med-grey: #8e979f !default;
+$gc-form-dark-grey: #43484c !default;
+$gc-form-red: #b80c0c !default;
+$gc-form-light-red: #f59393 !default;
+
+$gc-form-font: 'Andale Mono', Tahoma !default;
 
 @mixin gc-form--bg {
-  background-color: $app-primary-colour;
+  background-color: $gc-form-primary-colour;
 }
 
 @mixin gc-form--border {
-  border-color: $app-primary-colour;
+  border-color: $gc-form-primary-colour;
 }
 
 @mixin gc-form--text {
-  color: $app-primary-colour;
+  color: $gc-form-primary-colour;
 }
 
 .gc-form {
  width: 100%;
  text-align: left;
+ font-family: $gc-form-font;
 
   .gc-form__description {
-    color:#777;
+    color: $gc-form-grey;
     font-size: 14px;
   }
 
@@ -35,8 +39,9 @@ $red: #b80c0c !default;
     padding: 0.625em 1.25em;
     margin-bottom: 2.125em;
     border-radius: 2px;
-    background-color: #f59393;
+    background-color: $gc-form-light-red;
     color: #fff;
+    font-family: $gc-form-font;
 
     &.ul {
       padding-left: 3em;
@@ -51,9 +56,10 @@ $red: #b80c0c !default;
 
   .error-msg-container-arrow {
     background-color: rgba(245, 147, 147, 0.3);
-    color: $red;
+    color: $gc-form-red;
     border-radius: 0;
     font-size: 12px;
+    font-family: $gc-form-font;
   }
 
   // INPUT STYLING
@@ -70,7 +76,7 @@ $red: #b80c0c !default;
     input {
       border: none;
       border-radius: 0;
-      border-bottom: solid 1px #777;
+      border-bottom: solid 1px $gc-form-grey;
       font-size: 16px;
       width: 100%;
       height: auto;
@@ -98,7 +104,7 @@ $red: #b80c0c !default;
       box-sizing: border-box;
       background-color: transparent;
       font-size: 16px;
-      color: $med-grey;
+      color: $gc-form-med-grey;
     }
 
     input[type="text"],
@@ -129,7 +135,7 @@ $red: #b80c0c !default;
     .gc-input__textarea--medium:focus,
     .gc-input__textarea--large:focus,
     input.gc-select__input:focus  {
-      // border-color: $app-primary-colour;
+      // border-color: $gc-form-primary-colour;
       outline: none;
       @include gc-form--border;
     }
@@ -157,7 +163,7 @@ $red: #b80c0c !default;
     .gc-input__textarea--large:hover,
     input.gc-select__input:hover  {
       cursor: text;
-      color: $dark-grey;
+      color: $gc-form-dark-grey;
     }
 
     input[type="range"]:hover {
@@ -166,16 +172,16 @@ $red: #b80c0c !default;
 
     input.gc-input--invalid,
     .gc-select__input.gc-input--invalid {
-      border-color: #f59393 !important;
+      border-color: $gc-form-light-red !important;
     }
 
     .gc-input--disabled {
-      border-color: #dddddd;
-      background-color: #f4f4f4;
+      border-color: $gc-form-med-grey;
+      background-color: $gc-form-light-grey;
     }
 
     .gc-input__error-msg {
-      color: #f59393;
+      color: $gc-form-light-red;
       font-size: 12px;
       text-align: right;
       margin-top: 0.25em;
@@ -190,12 +196,12 @@ $red: #b80c0c !default;
       top: -22px;
       left: 8px;
       font-size: 14px;
-      color: $grey;
+      color: $gc-form-grey;
 
       &.gc-input__label--required:after,
       &.gc-input__label--required::after {
         content: '*';
-        color: $red;
+        color: $gc-form-red;
         font-size: 1.5em;
         line-height: 0.5em;
         position: relative;
@@ -214,11 +220,11 @@ $red: #b80c0c !default;
     .gc-select input:focus + .gc-input__label--inline {
       top: -22px;
       font-size: 14px;
-      color: $dark-grey;
+      color: $gc-form-dark-grey;
     }
 
     .gc-select__label--floated {
-      color: $grey;
+      color: $gc-form-grey;
       top: -8px;
       font-size: 14px;
     }
@@ -228,6 +234,7 @@ $red: #b80c0c !default;
     .gc-input__textarea--medium,
     .gc-input__textarea--large {
       padding: 0.625em 1.25em;
+      width: 100%;
     }
 
     .gc-input__textarea--small {
@@ -271,7 +278,7 @@ $red: #b80c0c !default;
       top: -2px;
 
       &.gc-input--invalid .gc-select__label-container {
-        border-color: #f59393 !important;
+        border-color: $gc-form-light-red !important;
       }
 
       input.gc-select__input {
@@ -284,23 +291,23 @@ $red: #b80c0c !default;
         padding: 0;
         padding: 10px 2em 10px 20px;
         list-style: none;
-        background-color: $grey;
+        background-color: $gc-form-grey;
         min-height: 30px;
 
         .gc-select__selection-list__item {
           position: relative;
           display: inline-block;
-          border: 1px $dark-grey solid;
+          border: 1px $gc-form-dark-grey solid;
           border-radius: 2px;
           padding: 5px calc(20px + 1em) 5px 10px;
-          color: $dark-grey;
+          color: $gc-form-dark-grey;
           margin-right: 0.6325em;
-          background-color: $grey;
+          background-color: $gc-form-grey;
           transition: background-color 0.25s ease-in-out;
 
           &:hover {
             cursor: default;
-            background-color: $med-grey;
+            background-color: $gc-form-med-grey;
           }
         }
       }
@@ -309,7 +316,7 @@ $red: #b80c0c !default;
         padding: 0;
         padding: 8px 2em 8px 15px;
         list-style: none;
-        background-color: $grey;
+        background-color: $gc-form-grey;
         min-height: 40px;
         position: relative;
 
@@ -336,33 +343,33 @@ $red: #b80c0c !default;
         }
 
         &:hover + .gc-select__label--floated {
-          color:$dark-grey;
+          color:$gc-form-dark-grey;
           cursor: pointer;
         }
 
         &.gc-select--inactive {
           background-color: transparent;
-          border-bottom: 1px solid $med-grey;
+          border-bottom: 1px solid $gc-form-med-grey;
 
           .gc-select__label {
-            color: $med-grey;
+            color: $gc-form-med-grey;
           }
 
           .gc-select__input-icon--fill {
-            fill: $med-grey;
+            fill: $gc-form-med-grey;
           }
 
           &:hover {
-            border-color: $dark-grey;
+            border-color: $gc-form-dark-grey;
             cursor: pointer;
 
             .gc-select__label {
-              color: $dark-grey;
+              color: $gc-form-dark-grey;
               cursor: pointer;
             }
 
             .gc-select__input-icon--fill {
-              fill: $dark-grey;
+              fill: $gc-form-dark-grey;
             }
           }
         }
@@ -374,7 +381,7 @@ $red: #b80c0c !default;
         width: 100%;
         max-height: 500px;
         background-color: #fff;
-        border: #7a848e solid 1px;
+        border: $gc-form-grey solid 1px;
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -394,7 +401,7 @@ $red: #b80c0c !default;
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: 'Andale Mono', Tahoma;
+            font-family: $gc-form-font;
             font-size: 14px;
             line-height: 1.5em;
           }
@@ -403,7 +410,7 @@ $red: #b80c0c !default;
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: 'Andale Mono', Tahoma;
+            font-family: $gc-form-font;
             font-size: 14px;
             line-height: 1.5em;
           }
@@ -412,7 +419,7 @@ $red: #b80c0c !default;
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: 'Andale Mono', Tahoma;
+            font-family: $gc-form-font;
             font-size: 14px;
             line-height: 1.5em;
           }
@@ -421,7 +428,7 @@ $red: #b80c0c !default;
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: 'Andale Mono', Tahoma;
+            font-family: $gc-form-font;
             font-size: 14px;
             line-height: 1.5em;
           }
@@ -430,7 +437,7 @@ $red: #b80c0c !default;
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: 'Andale Mono', Tahoma;
+            font-family:$gc-form-font;
             font-size: 14px;
             line-height: 1.5em;
           }
@@ -439,15 +446,15 @@ $red: #b80c0c !default;
 
       .gc-select__drop-down__option {
         padding: 10px 0;
-        border-bottom: 1px solid $med-grey;
+        border-bottom: 1px solid $gc-form-med-grey;
 
         &.gc-select__drop-down__option--active {
           position: relative;
           margin-top: 10px;
           background-color: transparent;
-          border: 1px solid $dark-grey;
+          border: 1px solid $gc-form-dark-grey;
           padding: 10px 15px;
-          color: $dark-grey;
+          color: $gc-form-dark-grey;
 
           .gc-select__option--active__cross {
             position: absolute;
@@ -464,7 +471,7 @@ $red: #b80c0c !default;
             &::before {
               content: "";
               display: block;
-              background-color: $dark-grey;
+              background-color: $gc-form-dark-grey;
               width: 1.25em;
               height: 1px;
               position: relative;
@@ -477,7 +484,7 @@ $red: #b80c0c !default;
             &::after {
               content: "";
               display: block;
-              background-color: $dark-grey;
+              background-color: $gc-form-dark-grey;
               width: 1.25em;
               height: 1px;
               position: relative;
@@ -488,8 +495,8 @@ $red: #b80c0c !default;
           }
 
           &:hover {
-            background-color: $light-grey;
-            color: $dark-grey;
+            background-color: $gc-form-light-grey;
+            color: $gc-form-dark-grey;
             cursor: pointer;
           }
         }
@@ -502,7 +509,7 @@ $red: #b80c0c !default;
       .gc-select__drop-down__option:hover,
       .gc-select__drop-down__option--hover {
         cursor: pointer;
-        // color: $app-primary-colour;
+        // color: $gc-form-primary-colour;
         cursor: pointer;
         @include gc-form--text;
       }
@@ -542,7 +549,7 @@ $red: #b80c0c !default;
       }
 
       .gc-select__input-icon--fill {
-        fill: #777;
+        fill: $gc-form-grey;
       }
 
       .gc-multi-select__icon {

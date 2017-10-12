@@ -7,7 +7,7 @@ class GCInputSVG extends Component {
     switch (type) {
       case 'chevronDown':
       return (
-        <svg id="layer_chevronDown" className={className} style={{maxHeight: '60px'} viewBox="0 0 100 100" onClick={e => this.props.onClick(e)}>
+        <svg id="layer_chevronDown" className={className} style={{maxHeight: '60px'}} viewBox="0 0 100 100" onClick={e => this.props.onClick(e)}>
           <title id={type}>
             {type}
           </title>
@@ -21,7 +21,7 @@ class GCInputSVG extends Component {
         </svg>);
       case 'chevronUp':
       return (
-        <svg id="layer_chevronUp" className={className} style={{maxHeight: '60px'} viewBox="0 0 100 100" onClick={e => this.props.onClick(e)}>
+        <svg id="layer_chevronUp" className={className} style={{maxHeight: '60px'}} viewBox="0 0 100 100" onClick={e => this.props.onClick(e)}>
           <title id={type}>
             {type}
           </title>

@@ -1,8 +1,9 @@
 .gc-form {
   width: 100%;
-  text-align: left; }
+  text-align: left;
+  font-family: "Andale Mono", Tahoma; }
   .gc-form .gc-form__description {
-    color: #777;
+    color: #7a848e;
     font-size: 14px; }
   .gc-form .gc-form__label {
     margin-bottom: -16px; }
@@ -11,7 +12,8 @@
     margin-bottom: 2.125em;
     border-radius: 2px;
     background-color: #f59393;
-    color: #fff; }
+    color: #fff;
+    font-family: "Andale Mono", Tahoma; }
     .gc-form .gc-form__error-message.ul {
       padding-left: 3em; }
     .gc-form .gc-form__error-message p,
@@ -22,7 +24,8 @@
     background-color: rgba(245, 147, 147, 0.3);
     color: #b80c0c;
     border-radius: 0;
-    font-size: 12px; }
+    font-size: 12px;
+    font-family: "Andale Mono", Tahoma; }
   .gc-form .gc-input {
     margin-top: 20px;
     margin-bottom: 50px;
@@ -34,7 +37,7 @@
     .gc-form .gc-input input {
       border: none;
       border-radius: 0;
-      border-bottom: solid 1px #777;
+      border-bottom: solid 1px #7a848e;
       font-size: 16px;
       width: 100%;
       height: auto;
@@ -113,8 +116,8 @@
     .gc-form .gc-input .gc-select__input.gc-input--invalid {
       border-color: #f59393 !important; }
     .gc-form .gc-input .gc-input--disabled {
-      border-color: #dddddd;
-      background-color: #f4f4f4; }
+      border-color: #8e979f;
+      background-color: #f2f3f4; }
     .gc-form .gc-input .gc-input__error-msg {
       color: #f59393;
       font-size: 12px;
@@ -153,7 +156,8 @@
     .gc-form .gc-input .gc-input__textarea--small,
     .gc-form .gc-input .gc-input__textarea--medium,
     .gc-form .gc-input .gc-input__textarea--large {
-      padding: 0.625em 1.25em; }
+      padding: 0.625em 1.25em;
+      width: 100%; }
     .gc-form .gc-input .gc-input__textarea--small {
       height: 4em; }
     .gc-form .gc-input .gc-input__textarea--medium {
@@ -266,35 +270,35 @@
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: 'Andale Mono', Tahoma;
+            font-family: "Andale Mono", Tahoma;
             font-size: 14px;
             line-height: 1.5em; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input::-moz-placeholder {
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: 'Andale Mono', Tahoma;
+            font-family: "Andale Mono", Tahoma;
             font-size: 14px;
             line-height: 1.5em; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input:-ms-input-placeholder {
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: 'Andale Mono', Tahoma;
+            font-family: "Andale Mono", Tahoma;
             font-size: 14px;
             line-height: 1.5em; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input:-moz-placeholder {
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: 'Andale Mono', Tahoma;
+            font-family: "Andale Mono", Tahoma;
             font-size: 14px;
             line-height: 1.5em; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input::placeholder {
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: 'Andale Mono', Tahoma;
+            font-family: "Andale Mono", Tahoma;
             font-size: 14px;
             line-height: 1.5em; }
       .gc-form .gc-input .gc-select .gc-select__drop-down__option {
@@ -371,6 +375,6 @@
           .gc-form .gc-input .gc-select .gc-select__input-icon.gc-multi-select__icon:hover {
             cursor: pointer; }
       .gc-form .gc-input .gc-select .gc-select__input-icon--fill {
-        fill: #777; }
+        fill: #7a848e; }
       .gc-form .gc-input .gc-select .gc-multi-select__icon .gc-select__input-icon--fill {
         fill: #fff; }
