@@ -86,7 +86,7 @@ class GCSelect extends Component {
         {!this.props.required && (
           <div
             className="gc-select__option--active__cross"
-             />
+          />
         )}
       </li>
     );
@@ -191,7 +191,8 @@ class GCSelect extends Component {
           <label
             className={`gc-input__label gc-select__label ${requiredLabelClass}`}
             htmlFor={this.props.name}>
-            {floatLabel ? this.props.value : this.props.title}
+
+            {floatLabel ? this.getValue(this.props.options, this.props.value) : this.props.title}
           </label>
 
           {this.state.isActive ? (
