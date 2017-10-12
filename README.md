@@ -22,14 +22,20 @@ npm install gc-react-form-validation
 
 gc-react-form-validation exposes the stylesheets as both the original scss form (`lib/styles.scss`) and the processed css form (`lib/styles.css`). Import either in whichever way makes sense for your own project (e.g. via a webpack loader, or via a scss entry point).
 
-Below are variables available to override:
+Below are variables available to override colour pallette:
 ```scss
-$app-primary-colour: #e8bddb;
-$light-grey: #f2f3f4;
-$grey: #7a848e;
-$med-grey: #8e979f;
-$dark-grey: #43484c;
-$red: #b80c0c;
+$gc-form-primary-colour: #e8bddb;
+$gc-form-light-grey: #f2f3f4;
+$gc-form-grey: #7a848e;
+$gc-form-med-grey: #8e979f;
+$gc-form-dark-grey: #43484c;
+$gc-form-red: #b80c0c;
+$gc-form-light-red: #f59393;
+```
+
+To change the font edit this variable:
+```scss
+$gc-form-font: 'Andale Mono', Tahoma !default;
 ```
 
 ### Scripts
