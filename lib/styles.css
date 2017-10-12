@@ -4,44 +4,44 @@
   font-family: "Andale Mono", Tahoma; }
   .gc-form .gc-form__description {
     color: #7a848e;
-    font-size: 14px; }
+    font-size: 0.875rem; }
   .gc-form .gc-form__label {
-    margin-bottom: -16px; }
+    margin-bottom: -1rem; }
   .gc-form .gc-form__error-message {
-    padding: 0.625em 1.25em;
-    margin-bottom: 2.125em;
-    border-radius: 2px;
+    padding: 0.625rem 1.25rem;
+    margin-bottom: 2.125rem;
+    border-radius: 0.125rem;
     background-color: #f59393;
     color: #fff;
     font-family: "Andale Mono", Tahoma; }
     .gc-form .gc-form__error-message.ul {
-      padding-left: 3em; }
+      padding-left: 3rem; }
     .gc-form .gc-form__error-message p,
     .gc-form .gc-form__error-message li {
-      font-size: 14px;
-      margin: 0.625em 0; }
+      font-size: 0.875rem;
+      margin: 0.625rem 0; }
   .gc-form .error-msg-container-arrow {
     background-color: rgba(245, 147, 147, 0.3);
     color: #b80c0c;
     border-radius: 0;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-family: "Andale Mono", Tahoma; }
   .gc-form .gc-input {
-    margin-top: 20px;
-    margin-bottom: 50px;
+    margin-top: 1.25rem;
+    margin-bottom: 3.125rem;
     display: block;
     width: 100%;
     position: relative;
     box-sizing: border-box;
-    font-size: 16px; }
+    font-size: 1rem; }
     .gc-form .gc-input input {
       border: none;
       border-radius: 0;
-      border-bottom: solid 1px #7a848e;
-      font-size: 16px;
+      border-bottom: solid 0.063rem #7a848e;
+      font-size: 1rem;
       width: 100%;
       height: auto;
-      min-height: 25px;
+      min-height: 1.563rem;
       z-index: 100;
       background-color: transparent; }
     .gc-form .gc-input input:-webkit-autofill, .gc-form .gc-input textarea:-webkit-autofill, .gc-form .gc-input select:-webkit-autofill {
@@ -60,7 +60,7 @@
       position: relative;
       box-sizing: border-box;
       background-color: transparent;
-      font-size: 16px;
+      font-size: 1rem;
       color: #8e979f; }
     .gc-form .gc-input input[type="text"],
     .gc-form .gc-input input[type="url"],
@@ -68,14 +68,14 @@
     .gc-form .gc-input input[type="email"],
     .gc-form .gc-input input[type="date"] {
       padding: 0;
-      padding-bottom: 4px;
-      padding-left: 8px; }
+      padding-bottom: 0.25rem;
+      padding-left: 0.5rem; }
     .gc-form .gc-input input[type="radio"],
     .gc-form .gc-input input[type="checkbox"] {
       display: inline-block;
-      width: 1em;
-      height: 1em;
-      margin-right: 10px; }
+      width: 1rem;
+      height: 1rem;
+      margin-right: 0.625rem; }
     .gc-form .gc-input:focus,
     .gc-form .gc-input input[type="text"]:focus,
     .gc-form .gc-input input[type="email"]:focus,
@@ -97,7 +97,7 @@
     .gc-form .gc-input .gc-input__textarea--large:focus + .gc-input__label--inline,
     .gc-form .gc-input input.gc-select__input:focus + .gc-input__label--inline,
     .gc-form .gc-input .gc-select__label--floated {
-      font-size: 14px; }
+      font-size: 0.875rem; }
     .gc-form .gc-input:hover,
     .gc-form .gc-input input[type="text"]:hover,
     .gc-form .gc-input input[type="url"]:hover,
@@ -120,56 +120,56 @@
       background-color: #f2f3f4; }
     .gc-form .gc-input .gc-input__error-msg {
       color: #f59393;
-      font-size: 12px;
+      font-size: 0.75rem;
       text-align: right;
-      margin-top: 0.25em;
+      margin-top: 0.25rem;
       position: absolute;
       right: 0; }
     .gc-form .gc-input .gc-input__label {
       position: absolute;
-      margin-bottom: -24px;
-      top: -22px;
-      left: 8px;
-      font-size: 14px;
+      margin-bottom: -1.5rem;
+      top: -1.375rem;
+      left: 0.5rem;
+      font-size: 0.875rem;
       color: #7a848e; }
       .gc-form .gc-input .gc-input__label.gc-input__label--required:after, .gc-form .gc-input .gc-input__label.gc-input__label--required::after {
         content: '*';
         color: #b80c0c;
-        font-size: 1.5em;
-        line-height: 0.5em;
+        font-size: 1.5rem;
+        line-height: 0.5rem;
         position: relative;
-        top: 3px; }
+        top: 0.188rem; }
     .gc-form .gc-input .gc-input__label--inline {
       position: absolute;
-      top: -2px;
-      font-size: 16px;
+      top: -0.125rem;
+      font-size: 1rem;
       transition: 0.25s ease-in-out; }
     .gc-form .gc-input input:focus + .gc-input__label--inline,
     .gc-form .gc-input .gc-select input:focus + .gc-input__label--inline {
-      top: -22px;
-      font-size: 14px;
+      top: -1.375rem;
+      font-size: 0.875rem;
       color: #43484c; }
     .gc-form .gc-input .gc-select__label--floated {
       color: #7a848e;
-      top: -8px;
-      font-size: 14px; }
+      top: -0.5rem;
+      font-size: 0.875rem; }
     .gc-form .gc-input .gc-input__textarea--small,
     .gc-form .gc-input .gc-input__textarea--medium,
     .gc-form .gc-input .gc-input__textarea--large {
-      padding: 0.625em 1.25em;
+      padding: 0.625rem 0.938rem;
       width: 100%; }
     .gc-form .gc-input .gc-input__textarea--small {
-      height: 4em; }
+      height: 4rem; }
     .gc-form .gc-input .gc-input__textarea--medium {
-      height: 8em; }
+      height: 8rem; }
     .gc-form .gc-input .gc-input__textarea--large {
-      height: 20em; }
+      height: 20rem; }
     .gc-form .gc-input .gc-input__list {
-      border-top: solid 1px #eee;
-      border-bottom: solid 1px #eee;
+      border-top: solid 0.063rem #eee;
+      border-bottom: solid 0.063rem #eee;
       display: block;
-      padding: 0.625em 0;
-      margin: 0.625em 0; }
+      padding: 0.625rem 0;
+      margin: 0.625rem 0; }
     .gc-form .gc-input .gc-input__list__ul {
       padding: 0;
       list-style: none; }
@@ -179,8 +179,8 @@
       margin: 0.5em 0; }
     .gc-form .gc-input .gc-select {
       position: relative;
-      margin-top: -14px;
-      top: -2px; }
+      margin-top: -0.875rem;
+      top: -0.125rem; }
       .gc-form .gc-input .gc-select.gc-input--invalid .gc-select__label-container {
         border-color: #f59393 !important; }
       .gc-form .gc-input .gc-select input.gc-select__input {
@@ -189,18 +189,18 @@
         padding-right: 2em !important; }
       .gc-form .gc-input .gc-select .gc-select__selection-list {
         padding: 0;
-        padding: 10px 2em 10px 20px;
+        padding: 0.625rem 2em 0.625rem 1.25rem;
         list-style: none;
         background-color: #7a848e;
-        min-height: 30px; }
+        min-height: 1.875rem; }
         .gc-form .gc-input .gc-select .gc-select__selection-list .gc-select__selection-list__item {
           position: relative;
           display: inline-block;
-          border: 1px #43484c solid;
-          border-radius: 2px;
-          padding: 5px calc(20px + 1em) 5px 10px;
+          border: 0.063rem #43484c solid;
+          border-radius: 0.125rem;
+          padding: 0.313em calc(1.25rem + 1em) 0.313em 0.625rem;
           color: #43484c;
-          margin-right: 0.6325em;
+          margin-right: 0.6325rem;
           background-color: #7a848e;
           transition: background-color 0.25s ease-in-out; }
           .gc-form .gc-input .gc-select .gc-select__selection-list .gc-select__selection-list__item:hover {
@@ -208,34 +208,34 @@
             background-color: #8e979f; }
       .gc-form .gc-input .gc-select .gc-select__label-container {
         padding: 0;
-        padding: 8px 2em 8px 15px;
+        padding: 0.5rem 2em 0.5rem 0.938rem;
         list-style: none;
         background-color: #7a848e;
-        min-height: 40px;
+        min-height: 1.5rem;
         position: relative; }
         .gc-form .gc-input .gc-select .gc-select__label-container .gc-select__option-count {
           display: inline-block;
           position: absolute;
-          min-width: 1.25em;
-          border-radius: 2px;
-          padding: 6px 10px;
+          min-width: 1.25rem;
+          border-radius: 0.125rem;
+          padding: 0.375rem 0.625rem;
           color: #fff;
           text-align: center;
-          font-size: 16px;
-          right: 45px;
-          top: 5px;
+          font-size: 1rem;
+          right: 2.813rem;
+          top: 0.313em;
           background-color: #e8bddb; }
         .gc-form .gc-input .gc-select .gc-select__label-container .gc-select__label {
-          top: 16px;
-          left: 8px;
-          font-size: 16px;
+          top: 1rem;
+          left: 0.5rem;
+          font-size: 1rem;
           color: #fafafa; }
         .gc-form .gc-input .gc-select .gc-select__label-container:hover + .gc-select__label--floated {
           color: #43484c;
           cursor: pointer; }
         .gc-form .gc-input .gc-select .gc-select__label-container.gc-select--inactive {
           background-color: transparent;
-          border-bottom: 1px solid #8e979f; }
+          border-bottom: 0.063rem solid #8e979f; }
           .gc-form .gc-input .gc-select .gc-select__label-container.gc-select--inactive .gc-select__label {
             color: #8e979f; }
           .gc-form .gc-input .gc-select .gc-select__label-container.gc-select--inactive .gc-select__input-icon--fill {
@@ -254,14 +254,14 @@
         width: 100%;
         max-height: 500px;
         background-color: #fff;
-        border: #7a848e solid 1px;
+        border: #7a848e solid 0.063rem;
         box-sizing: border-box;
         margin: 0;
         padding: 0;
         list-style: none;
-        padding: 0 15px; }
+        padding: 0 0.938rem; }
       .gc-form .gc-input .gc-select .gc-select__searchbar {
-        margin-top: 10px; }
+        margin-top: 0.625rem; }
         .gc-form .gc-input .gc-select .gc-select__searchbar input {
           padding: 0; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input:focus {
@@ -271,60 +271,60 @@
             font-weight: 100;
             font-style: italic;
             font-family: "Andale Mono", Tahoma;
-            font-size: 14px;
-            line-height: 1.5em; }
+            font-size: 0.875rem;
+            line-height: 1.5rem; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input::-moz-placeholder {
             color: #ddd;
             font-weight: 100;
             font-style: italic;
             font-family: "Andale Mono", Tahoma;
-            font-size: 14px;
-            line-height: 1.5em; }
+            font-size: 0.875rem;
+            line-height: 1.5rem; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input:-ms-input-placeholder {
             color: #ddd;
             font-weight: 100;
             font-style: italic;
             font-family: "Andale Mono", Tahoma;
-            font-size: 14px;
-            line-height: 1.5em; }
+            font-size: 0.875rem;
+            line-height: 1.5rem; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input:-moz-placeholder {
             color: #ddd;
             font-weight: 100;
             font-style: italic;
             font-family: "Andale Mono", Tahoma;
-            font-size: 14px;
-            line-height: 1.5em; }
+            font-size: 0.875rem;
+            line-height: 1.5rem; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input::placeholder {
             color: #ddd;
             font-weight: 100;
             font-style: italic;
             font-family: "Andale Mono", Tahoma;
-            font-size: 14px;
-            line-height: 1.5em; }
+            font-size: 0.875rem;
+            line-height: 1.5rem; }
       .gc-form .gc-input .gc-select .gc-select__drop-down__option {
-        padding: 10px 0;
-        border-bottom: 1px solid #8e979f; }
+        padding: 0.625rem 0;
+        border-bottom: 0.063rem solid #8e979f; }
         .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active {
           position: relative;
-          margin-top: 10px;
+          margin-top: 0.625rem;
           background-color: transparent;
-          border: 1px solid #43484c;
-          padding: 10px 15px;
+          border: 0.063rem solid #43484c;
+          padding: 0.625rem 0.938rem;
           color: #43484c; }
           .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active .gc-select__option--active__cross {
             position: absolute;
-            width: 1em;
-            height: 1em;
-            right: 10px;
-            top: 10px; }
+            width: 1rem;
+            height: 1rem;
+            right: 0.625rem;
+            top: 0.625rem; }
             .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active .gc-select__option--active__cross:hover {
               cursor: pointer; }
             .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active .gc-select__option--active__cross:before, .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active .gc-select__option--active__cross::before {
               content: "";
               display: block;
               background-color: #43484c;
-              width: 1.25em;
-              height: 1px;
+              width: 1.25rem;
+              height: 0.063rem;
               position: relative;
               top: calc(50%);
               right: 0;
@@ -333,10 +333,10 @@
               content: "";
               display: block;
               background-color: #43484c;
-              width: 1.25em;
-              height: 1px;
+              width: 1.25rem;
+              height: 0.063rem;
               position: relative;
-              top: calc(50% - 1px);
+              top: calc(50% - 0.063rem);
               right: 0;
               transform: rotateZ(-45deg); }
           .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active:hover {
@@ -353,25 +353,25 @@
       .gc-form .gc-input .gc-select .gc-select__drop-down__option--no-results {
         font-style: italic;
         color: #aaa;
-        font-size: 0.9em; }
+        font-size: 0.9rem; }
       .gc-form .gc-input .gc-select .gc-select__drop-down__option--disabled {
         color: #aaa;
         pointer-events: none; }
       .gc-form .gc-input .gc-select .gc-select__input-icon {
         content: '';
         display: block;
-        height: 12px;
-        width: 12px;
+        height: 0.75rem;
+        width: 0.75rem;
         position: absolute;
-        top: 8px;
+        top: 0.5rem;
         right: 0;
         z-index: -1; }
         .gc-form .gc-input .gc-select .gc-select__input-icon.gc-multi-select__icon {
           z-index: 20;
-          top: 12px;
-          right: 15px;
-          height: 20px;
-          width: 20px; }
+          top: 0.75rem;
+          right: 0.938rem;
+          height: 1.25rem;
+          width: 1.25rem; }
           .gc-form .gc-input .gc-select .gc-select__input-icon.gc-multi-select__icon:hover {
             cursor: pointer; }
       .gc-form .gc-input .gc-select .gc-select__input-icon--fill {

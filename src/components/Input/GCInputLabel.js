@@ -8,9 +8,11 @@ export default function GCInputLabel({title, required, name, value, type, except
   const floatingLabel = type !== 'radio'
     && type !== 'date'
     && type !== 'range'
-    && type !== 'select';
+    && type !== 'select'
+    && type !== 'textarea';
   const staticLabel = type === 'date'
-    || type === 'range';
+    || type === 'range'
+    || type === 'textarea';
 
   if (!isEmpty(title) && type !== 'select') {
     if (staticLabel) {

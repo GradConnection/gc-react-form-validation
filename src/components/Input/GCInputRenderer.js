@@ -8,7 +8,7 @@ import GCInputLabel from './GCInputLabel';
 
 export default function GCInputRenderer({validationMessage, validateInput, handleChange}, ...props) {
   const hat = arguments[0];
-  const { name, disabled, type, value, min, max, title, multi} = arguments[0];
+  const { name, disabled, type, value, min, max, title, multi, size} = arguments[0];
   const determineType = (type) => {
     let inputType;
     switch (type) {
