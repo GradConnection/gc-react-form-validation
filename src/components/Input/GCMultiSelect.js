@@ -169,7 +169,6 @@ class GCMultiSelect extends Component {
     if (!disabled) {
       this.props.onChange(v);
       this.setState({
-        isActive: false,
         index: -1,
         searchTxt: '',
       }, () => this.props.validateInput());
@@ -244,8 +243,7 @@ class GCMultiSelect extends Component {
     const activeClass = this.state.isActive ? '' : 'gc-select--inactive';
     return (
       <div
-        className={`gc-select ${this.props.dynamicClasses}`}
-        onBlur={() => this.dropDownList(!this.state.isActive)}>
+        className={`gc-select ${this.props.dynamicClasses}`}>
 
         <div className={`gc-select__label-container ${activeClass}`}
           onMouseDown={() => this.dropDownList(!this.state.isActive)}>
