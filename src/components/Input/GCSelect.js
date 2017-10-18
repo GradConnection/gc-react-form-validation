@@ -119,7 +119,8 @@ class GCSelect extends Component {
     }
   }
 
-  dropDownList(shouldOpen) {
+  dropDownList(shouldOpen, e) {
+    e.preventDefault();
     if (!shouldOpen) {
       setTimeout(() => this.setState({ isActive: false }, () => this.props.validateInput()), 50);
     } else {
@@ -187,7 +188,7 @@ class GCSelect extends Component {
         onBlur={() => this.dropDownList(false)}>
 
         <div className={`gc-select__label-container ${activeClass}`}
-          onMouseDown={() => this.dropDownList(!this.state.isActive)}>
+          onMouseDown={(e) => this.dropDownList(!this.state.isActive, e)}>
           <label
             className={`gc-input__label gc-select__label ${requiredLabelClass}`}
             htmlFor={this.props.name}>
