@@ -60,7 +60,7 @@ class GCMultiSelect extends Component {
         <li
           className={`gc-select__drop-down__option ${disabledClass} ${hoveredClass}`}
           key={uniqueId()}
-          onClick={() => this.addToArray(opt.value, opt.disabled)}>
+          onMouseDown={() => this.addToArray(opt.value, opt.disabled)}>
           <label htmlFor={this.props.name}>
             {opt.label}
           </label>
@@ -88,11 +88,11 @@ class GCMultiSelect extends Component {
         <li
           className={`gc-select__drop-down__option gc-select__drop-down__option--active ${hoveredClass}`}
           key={uniqueId()}
-          onClick={() => this.deleteFromArray(opt.value)}>
+          onMouseDown={() => this.deleteFromArray(opt.value)}>
           <label htmlFor={this.props.name}>
             {opt.label}
           </label>
-            <div className="gc-select__option--active__cross" onClick={() => this.deleteFromArray(opt.value)}/>
+            <div className="gc-select__option--active__cross" onMouseDown={() => this.deleteFromArray(opt.value)}/>
         </li>
       );
     });
@@ -248,7 +248,7 @@ class GCMultiSelect extends Component {
         onBlur={() => this.dropDownList(!this.state.isActive)}>
 
         <div className={`gc-select__label-container ${activeClass}`}
-          onClick={() => this.dropDownList(!this.state.isActive)}>
+          onMouseDown={() => this.dropDownList(!this.state.isActive)}>
           <label
             className={`gc-input__label gc-select__label ${requiredClass}`}
             htmlFor={this.props.name}>
@@ -261,16 +261,15 @@ class GCMultiSelect extends Component {
             </div>
           )}
 
-
           {this.state.isActive ? (
             <GCInputSVG
               type="chevronUp"
-              onClick={() => this.dropDownList(false)}
+              onMouseDown={() => this.dropDownList(false)}
               className="gc-select__input-icon gc-multi-select__icon"/>
           ) : (
             <GCInputSVG
               type="chevronDown"
-              onClick={() => this.dropDownList(true)}
+              onMouseDown={() => this.dropDownList(true)}
               className="gc-select__input-icon gc-multi-select__icon"/>
           )}
         </div>

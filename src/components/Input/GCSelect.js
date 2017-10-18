@@ -61,7 +61,7 @@ class GCSelect extends Component {
         <li
           className={`gc-select__drop-down__option ${disabledClass} ${hoveredClass}`}
           key={uniqueId()}
-          onClick={() => this.handleChange(opt.value, opt.disabled)}>
+          onMouseDown={() => this.handleChange(opt.value, opt.disabled)}>
           <label htmlFor={this.props.name}>
             {opt.label}
           </label>
@@ -79,7 +79,7 @@ class GCSelect extends Component {
       <li
         className={`gc-select__drop-down__option gc-select__drop-down__option--active`}
         key={uniqueId()}
-        onClick={() => this.handleChange('', this.props.required)}>
+        onMouseDown={() => this.handleChange('', this.props.required)}>
         <label htmlFor={this.props.name}>
           {ActiveItem.label}
         </label>
@@ -187,7 +187,7 @@ class GCSelect extends Component {
         onBlur={() => this.dropDownList(false)}>
 
         <div className={`gc-select__label-container ${activeClass}`}
-          onClick={() => this.dropDownList(!this.state.isActive)}>
+          onMouseDown={() => this.dropDownList(!this.state.isActive)}>
           <label
             className={`gc-input__label gc-select__label ${requiredLabelClass}`}
             htmlFor={this.props.name}>
@@ -198,12 +198,12 @@ class GCSelect extends Component {
           {this.state.isActive ? (
             <GCInputSVG
               type="chevronUp"
-              onClick={() => this.dropDownList(false)}
+              onMouseDown={() => this.dropDownList(false)}
               className="gc-select__input-icon gc-multi-select__icon"/>
           ) : (
             <GCInputSVG
               type="chevronDown"
-              onClick={() => this.dropDownList(true)}
+              onMouseDown={() => this.dropDownList(true)}
               className="gc-select__input-icon gc-multi-select__icon"/>
           )}
         </div>
