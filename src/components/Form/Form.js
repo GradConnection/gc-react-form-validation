@@ -89,6 +89,7 @@ class Form extends Component {
   render() {
     return (
       <form
+        ref={form => { this.gcForm = form; }}
         className={`gc-form ${this.props.extendedClassNames}`}
         onSubmit={e => this.submitForm(e)}
       >

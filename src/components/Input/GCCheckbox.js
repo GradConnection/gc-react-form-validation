@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 class GCCheckbox extends Component {
   matchValues(arr, value) {
+    if(this.props.options.length === 0){
+      return this.props.value;
+    }
     return arr.includes(value);
   }
 
@@ -22,12 +25,13 @@ class GCCheckbox extends Component {
     }
   }
 
-  handleChange(e) {
+  handleChange(e, value) {
+    e.preventDefault();
     const props = this.props;
     if (props.options.length === 0) {
       this.props.onChange(!props.value);
     } else {
-      const selectedValue = e.target.value;
+      const selectedValue = value;
       const prevValue = typeof props.value === 'string' ? this.convertToArray(props.value) : props.value.map(i => i);
       let newArray = prevValue;
 
@@ -42,21 +46,26 @@ class GCCheckbox extends Component {
 
   renderCheckboxOpts() {
     const props = this.props;
+
     return props.options.map((opt, i) => {
+      const activeClass = this.matchValues(props.value, opt.value) ? 'gc-form__checkbox--checked' : '';
       const d = new Date();
       const uid = d.getTime() + i;
       return (
         <div>
-          <input
-            type="checkbox"
-            value={opt.value}
-            key={uid}
-            name={props.name}
-            title={props.title}
-            onChange={e => this.handleChange(e)}
-            checked={this.matchValues(props.value, opt.value)}
-            disabled={this.props.disabled}
+          <div onClick={(e, v) => this.handleChange(e, opt.value)}>
+            <input
+              type="checkbox"
+              value={opt.value}
+              key={uid}
+              name={props.name}
+              title={props.title}
+              onChange={(e, v) => this.handleChange(e, opt.value)}
+              checked={this.matchValues(props.value, opt.value)}
+              disabled={this.props.disabled}
           />
+          </div>
+
           {opt.label}
         </div>
       );
@@ -73,16 +82,20 @@ class GCCheckbox extends Component {
         </div>
       );
     } else {
+      const activeClass = props.value ? 'gc-form__checkbox--checked' : '';
       return (
-        <input
-          className={`${disabledClass} ${props.extendedClass}`}
-          type="checkbox"
-          name={props.name}
-          title={props.title}
-          onChange={e => this.handleChange(e)}
-          checked={props.value}
-          disabled={this.props.disabled}
-        />);
+        <div
+          className="gc-form__checkbox"
+          onClick={(e, v) => this.handleChange(e, !props.value)}>
+          <input
+            className={`${activeClass} ${disabledClass} ${props.extendedClass} ${this.props.invalidClass}`}
+            type="checkbox"
+            name={props.name}
+            title={props.title}
+            checked={props.value}
+            disabled={this.props.disabled}
+          />
+        </div>);
     }
   }
 }

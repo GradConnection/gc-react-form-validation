@@ -72,7 +72,7 @@ export default function GCInputRenderer({validationMessage, validateInput, handl
     } else if (type === 'radio') {
       return (<GCRadio {...arguments[0]} onChange={v => handleChange(v)} />);
     } else if (type === 'checkbox') {
-      return (<GCCheckbox {...arguments[0]} onChange={v => handleChange(v)} />);
+      return (<GCCheckbox {...arguments[0]} invalidClass={`${invalidClass}`} onChange={v => handleChange(v)} />);
     } else if (type === 'select' && multi) {
       return (
         <GCMultiSelect

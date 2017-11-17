@@ -127,7 +127,8 @@ class Input extends Component {
   }
 
   validateCheckbox(value) {
-    let res = null;
+    let res = '';
+
     if (this.props.options.length > 0) {
       const minL = this.props.minLength;
       const maxL = this.props.maxLength;
@@ -218,6 +219,7 @@ class Input extends Component {
   }
 
   render() {
+    const errorMsgClass = this.props.type === 'checkbox' ? 'gc-input__error-msg--checkbox' : '';
     if (this.props.isVisible) {
       return (
         <div className={`gc-input ${this.props.extendedClassNames}`}>
@@ -236,7 +238,7 @@ class Input extends Component {
           </GCInputLabel>
 
           {this.state.validationMessage && (
-            <p className="gc-input__error-msg">
+            <p className={`gc-input__error-msg ${errorMsgClass}`}>
               {this.state.validationMessage}
             </p>
           )}

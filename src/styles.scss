@@ -6,6 +6,7 @@ $gc-form-med-grey: #8e979f !default;
 $gc-form-dark-grey: #43484c !default;
 $gc-form-red: #b80c0c !default;
 $gc-form-light-red: #f59393 !default;
+$gc-form-input-bg: #ffffff !default;
 
 $gc-form-font: 'Andale Mono', Tahoma !default;
 
@@ -24,6 +25,7 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
 .gc-form {
  width: 100%;
  text-align: left;
+ font-size: 100%;
  font-family: $gc-form-font;
 
   .gc-form__description {
@@ -40,7 +42,7 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
     margin-bottom: 2.125rem;
     border-radius: 0.125rem;
     background-color: $gc-form-light-red;
-    color: #fff;
+    color: $gc-form-input-bg;
     font-family: $gc-form-font;
 
     &.ul {
@@ -123,6 +125,46 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
       width: 1rem;
       height: 1rem;
       margin-right: 0.625rem;
+      position: relative;
+    }
+    .gc-form__checkbox {
+      display: inline;
+    }
+    input[type="checkbox"] {
+      width: 0.5rem;
+      height: 0.5rem;
+      vertical-align: middle;
+      z-index: 2;
+
+      &.gc-form__checkbox--checked:before,
+      &.gc-form__checkbox--checked::before {
+        content: '\2714';
+        display: block;
+        position: absolute;
+        left: 4px;
+        top: 1px;
+        z-index: 10;
+      }
+    }
+
+    input[type="checkbox"]:after,
+    input[type="checkbox"]::after {
+      content: '';
+      display: block;
+      position: relative;
+      left: 0;
+      top: 0;
+      height: 1.2rem;
+      width: 1.2rem;
+      border: solid 1px $gc-form-grey;
+      border-radius: 2px;
+      background-color: $gc-form-input-bg;
+      z-index: 5;
+
+      &:hover {
+        cursor: pointer;
+        border-color: $gc-form-dark-grey;
+      }
     }
 
     &:focus,
@@ -169,6 +211,7 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
       cursor: pointer;
     }
 
+    input[type=checkbox].gc-input--invalid:after,
     input.gc-input--invalid,
     .gc-select__input.gc-input--invalid {
       border-color: $gc-form-light-red !important;
@@ -186,6 +229,13 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
       margin-top: 0.25rem;
       position: absolute;
       right: 0;
+
+      &.gc-input__error-msg--checkbox {
+        text-align: left;
+        left: 2.5rem;
+        right: auto;
+        margin-top: 0;
+      }
     }
 
     // LABEL
@@ -205,6 +255,17 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
         line-height: 0.5rem;
         position: relative;
         top: 0.188rem;
+      }
+
+      &.gc-input__label--checkbox {
+        font-size: 0.875rem;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        top: auto;
+        margin: 0;
+        margin-left: 0.625rem;
+        max-width: calc(100% - 4rem);
       }
     }
 
@@ -325,7 +386,7 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
           min-width: 1.25rem;
           border-radius: 0.125rem;
           padding: 0.375rem 0.625rem;
-          color: #fff;
+          color: $gc-form-input-bg;
           text-align: center;
           font-size: 1rem;
           right: 2.813rem;
@@ -379,7 +440,7 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
         z-index: 1000000;
         width: 100%;
         max-height: 500px;
-        background-color: #fff;
+        background-color: $gc-form-input-bg;
         border: $gc-form-grey solid 0.063rem;
         box-sizing: border-box;
         margin: 0;
@@ -553,7 +614,7 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
 
       .gc-multi-select__icon {
         .gc-select__input-icon--fill {
-          fill: #fff;
+          fill: $gc-form-input-bg;
         }
       }
 

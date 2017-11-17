@@ -9,7 +9,8 @@ export default function GCInputLabel({title, required, name, value, type, except
     && type !== 'date'
     && type !== 'range'
     && type !== 'select'
-    && type !== 'textarea';
+    && type !== 'textarea'
+    && type !== 'checkbox';
   const staticLabel = type === 'date'
     || type === 'range'
     || type === 'textarea';
@@ -32,6 +33,17 @@ export default function GCInputLabel({title, required, name, value, type, except
           {children}
           <label
             className={`gc-input__label ${inlineClass} ${requiredClass}`}
+            htmlFor={name}>
+            {title}
+          </label>
+        </div>
+      );
+    } else if (type === 'checkbox') {
+      return(
+        <div>
+          {children}
+          <label
+            className={`gc-input__label gc-input__label--checkbox ${requiredClass} ${selectClass}`}
             htmlFor={name}>
             {title}
           </label>

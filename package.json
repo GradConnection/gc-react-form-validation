@@ -15,7 +15,8 @@
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "react-html-parser": "^2.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
