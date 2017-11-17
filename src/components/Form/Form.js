@@ -79,7 +79,7 @@ class Form extends Component {
         });
       }
       GCFormCounter = 0;
-    }, 500);
+    }, 300);
   }
 
   validateForm(results) {

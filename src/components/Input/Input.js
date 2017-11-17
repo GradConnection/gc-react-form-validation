@@ -36,7 +36,8 @@ class Input extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.type === 'checkbox' || this.props.type === 'radio') {
+    if (!this.props.touchedByParent && this.props.type === 'checkbox'
+    || !this.props.touchedByParent && this.props.type === 'radio') {
       this.validateInput();
     }
   }
@@ -129,7 +130,7 @@ class Input extends Component {
   }
 
   validateCheckbox(value) {
-    let res = '';
+    let res = null;
 
     if (this.props.options.length > 0) {
       const minL = this.props.minLength;

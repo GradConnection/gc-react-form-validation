@@ -2,7 +2,8 @@
   width: 100%;
   text-align: left;
   font-size: 100%;
-  font-family: "Andale Mono", Tahoma; }
+  font-family: "Andale Mono", Tahoma;
+  padding-top: 1px; }
   .gc-form .gc-form__description {
     color: #7a848e;
     font-size: 0.875rem; }
