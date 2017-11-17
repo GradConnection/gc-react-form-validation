@@ -5,6 +5,8 @@ import isArray from 'lodash/isArray';
 import mapValues from 'lodash/mapValues';
 import uniqueId from 'lodash/uniqueId';
 
+import ReactHtmlParser from 'react-html-parser';
+
 import Input from '../Input/Input';
 
 let GCFormCounter = 0;
@@ -38,14 +40,14 @@ class Form extends Component {
     if(!isEmpty(this.state.errorMessage)) {
       return (
         <div className="gc-form__error-message">
-          <p>{this.state.errorMessage}</p>
+          <p>{ReactHtmlParser(this.state.errorMessage)}</p>
         </div>
       )
     } else if (!isEmpty(this.props.submissionErrorMessages) && this.state.displayErrorMessage) {
 
       if (isArray(this.props.submissionErrorMessages)) {
         const errorList = this.props.submissionErrorMessages.map( err => {
-          return <li key={uniqueId()}>{err}</li>
+          return <li key={uniqueId()}>{ReactHtmlParser(err)}</li>
         });
         return (
           <ul className="gc-form__error-message">

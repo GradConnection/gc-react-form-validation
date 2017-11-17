@@ -8,6 +8,8 @@ import GCSelect from './GCSelect';
 import GCMultiSelect from './GCMultiSelect';
 import GCInputLabel from './GCInputLabel';
 
+import ReactHtmlParser from 'react-html-parser';
+
 class Input extends Component {
   constructor(props, context) {
     super(props, context);
@@ -239,7 +241,7 @@ class Input extends Component {
 
           {this.state.validationMessage && (
             <p className={`gc-input__error-msg ${errorMsgClass}`}>
-              {this.state.validationMessage}
+              {ReactHtmlParser(this.state.validationMessage)}
             </p>
           )}
         </div>

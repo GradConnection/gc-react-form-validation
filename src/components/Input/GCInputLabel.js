@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import isEmpty from 'lodash/isEmpty';
 
+import ReactHtmlParser from 'react-html-parser';
+
 export default function GCInputLabel({title, required, name, value, type, exception, children}) {
   const inlineClass = isEmpty(value) ? 'gc-input__label--inline' : '';
   const requiredClass = required ? 'gc-input__label--required' : '';
@@ -22,7 +24,7 @@ export default function GCInputLabel({title, required, name, value, type, except
           <label
             className={`gc-input__label ${requiredClass} ${selectClass}`}
             htmlFor={name}>
-            {title}
+            {ReactHtmlParser(title)}
           </label>
           {children}
         </div>
@@ -34,7 +36,7 @@ export default function GCInputLabel({title, required, name, value, type, except
           <label
             className={`gc-input__label ${inlineClass} ${requiredClass}`}
             htmlFor={name}>
-            {title}
+            {ReactHtmlParser(title)}
           </label>
         </div>
       );
@@ -45,7 +47,7 @@ export default function GCInputLabel({title, required, name, value, type, except
           <label
             className={`gc-input__label gc-input__label--checkbox ${requiredClass} ${selectClass}`}
             htmlFor={name}>
-            {title}
+            {ReactHtmlParser(title)}
           </label>
         </div>
       );
