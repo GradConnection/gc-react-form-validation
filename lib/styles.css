@@ -1,3 +1,6 @@
+html {
+  font-size: 100%; }
+
 .gc-form {
   width: 100%;
   text-align: left;
@@ -80,7 +83,8 @@
       margin-right: 0.625rem;
       position: relative; }
     .gc-form .gc-input .gc-form__checkbox {
-      display: inline; }
+      display: inline;
+      margin-right: 1.2rem; }
     .gc-form .gc-input input[type="checkbox"] {
       width: 0.5rem;
       height: 0.5rem;
@@ -185,6 +189,7 @@
         display: inline-block;
         vertical-align: middle;
         top: auto;
+        left: 0;
         margin: 0;
         margin-left: 0.625rem;
         max-width: calc(100% - 4rem); }

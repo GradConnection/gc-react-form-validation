@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import uniqueId from 'lodash/uniqueId';
+
 class GCCheckbox extends Component {
   matchValues(arr, value) {
     if(this.props.options.length === 0){
@@ -46,27 +48,29 @@ class GCCheckbox extends Component {
 
   renderCheckboxOpts() {
     const props = this.props;
-
+    // TODO: Add disabledClass
     return props.options.map((opt, i) => {
       const activeClass = this.matchValues(props.value, opt.value) ? 'gc-form__checkbox--checked' : '';
-      const d = new Date();
-      const uid = d.getTime() + i;
       return (
-        <div>
-          <div onClick={(e, v) => this.handleChange(e, opt.value)}>
+        <div
+          className="gc-form__checkbox"
+          onClick={(e, v) => this.handleChange(e, opt.value)}>
             <input
+            className={activeClass}
               type="checkbox"
               value={opt.value}
-              key={uid}
+              key={uniqueId()}
               name={props.name}
               title={props.title}
               onChange={(e, v) => this.handleChange(e, opt.value)}
               checked={this.matchValues(props.value, opt.value)}
               disabled={this.props.disabled}
           />
-          </div>
-
-          {opt.label}
+          <label
+            className={`gc-input__label gc-input__label--checkbox`}
+            htmlFor={props.name}>
+            {opt.label}
+          </label>
         </div>
       );
     });
