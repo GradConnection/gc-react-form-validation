@@ -1,10 +1,6 @@
-html {
-  font-size: 100%; }
-
 .gc-form {
   width: 100%;
   text-align: left;
-  font-size: 100%;
   font-family: "Andale Mono", Tahoma;
   padding-top: 1px; }
   .gc-form .gc-form__description {

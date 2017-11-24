@@ -22,14 +22,9 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
   color: $gc-form-primary-colour;
 }
 
-html {
-  font-size: 100%;
-}
-
 .gc-form {
  width: 100%;
  text-align: left;
- font-size: 100%;
  font-family: $gc-form-font;
  padding-top: 1px;
 
