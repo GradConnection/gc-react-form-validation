@@ -64,6 +64,22 @@ class Input extends Component {
     }
   }
 
+  validateText(value) {
+    const pattern = this.handleRegExp('');
+    const maxL = this.props.maxLength;
+    let valid;
+
+    if ((maxL && value.length < maxL) || !maxL) {
+      valid = pattern.test(value);
+      if (!this.props.customRegex) {
+        valid = !valid;
+      }
+      return this.handleErrorMessage(valid);
+    } else {
+      return this.handleErrorMessage(valid, `May not contain more than ${maxL} characters`);
+    }
+  }
+
   validateUrl(value) {
     let usableUrl = '';
     if ((/^(https:\/\/|http:\/\/)/).test(value)) {
@@ -160,8 +176,10 @@ class Input extends Component {
           error = this.validatePassword(props.value);
           break;
         case 'name':
-        case 'text':
           error = this.validateName(props.value);
+          break;
+        case 'text':
+          error = this.validateText(props.value);
           break;
         case 'date':
           error = this.validateDate(props.value);
