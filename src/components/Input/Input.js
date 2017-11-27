@@ -71,9 +71,6 @@ class Input extends Component {
 
     if ((maxL && value.length < maxL) || !maxL) {
       valid = pattern.test(value);
-      if (!this.props.customRegex) {
-        valid = !valid;
-      }
       return this.handleErrorMessage(valid);
     } else {
       return this.handleErrorMessage(valid, `May not contain more than ${maxL} characters`);

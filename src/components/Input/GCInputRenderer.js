@@ -13,7 +13,7 @@ export default function GCInputRenderer({validationMessage, validateInput, handl
     let inputType;
     switch (type) {
       case 'name':
-        inputType = 'text';
+        inputType = 'name';
         break;
       case 'text':
       case 'url':
