@@ -1,58 +1,57 @@
 .gc-form {
   width: 100%;
   text-align: left;
-  font-family: "Andale Mono", Tahoma;
   padding-top: 1px; }
   .gc-form .gc-form__description {
     color: #7a848e;
-    font-size: 0.875rem; }
+    font-size: 1.4rem; }
   .gc-form .gc-form__label {
-    margin-bottom: -1rem; }
+    margin-bottom: -1.6rem; }
   .gc-form .gc-form__error-message {
-    padding: 0.625rem 1.25rem;
-    margin-bottom: 2.125rem;
-    border-radius: 0.125rem;
+    padding: 1rem 2rem;
+    margin-bottom: 3.4rem;
+    border-radius: 0.2rem;
     background-color: #f59393;
-    color: #ffffff;
-    font-family: "Andale Mono", Tahoma; }
+    color: #ffffff; }
     .gc-form .gc-form__error-message.ul {
       padding-left: 3rem; }
     .gc-form .gc-form__error-message p,
     .gc-form .gc-form__error-message li {
-      font-size: 0.875rem;
-      margin: 0.625rem 0; }
+      font-size: 1.4rem;
+      margin: 1rem 0; }
   .gc-form .error-msg-container-arrow {
     background-color: rgba(245, 147, 147, 0.3);
     color: #b80c0c;
     border-radius: 0;
-    font-size: 0.75rem;
-    font-family: "Andale Mono", Tahoma; }
+    font-size: 1.2rem; }
   .gc-form .gc-input {
-    margin-top: 1.25rem;
-    margin-bottom: 3.125rem;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
     display: block;
     width: 100%;
     position: relative;
     box-sizing: border-box;
-    font-size: 1rem; }
+    font-size: 1.4rem; }
     .gc-form .gc-input input {
       border: none;
       border-radius: 0;
-      border-bottom: solid 0.063rem #7a848e;
-      font-size: 1rem;
+      border-bottom: solid 0.1rem #7a848e;
+      font-size: 1.4rem;
       width: 100%;
       height: auto;
-      min-height: 1.563rem;
+      min-height: 2.5rem;
       z-index: 100;
       background-color: transparent; }
-    .gc-form .gc-input input:-webkit-autofill, .gc-form .gc-input textarea:-webkit-autofill, .gc-form .gc-input select:-webkit-autofill {
+    .gc-form .gc-input input:-webkit-autofill,
+    .gc-form .gc-input textarea:-webkit-autofill,
+    .gc-form .gc-input select:-webkit-autofill {
       background-color: transparent !important;
       color: inherit; }
-    .gc-form .gc-input input[type="text"],
-    .gc-form .gc-input input[type="url"],
-    .gc-form .gc-input input[type="password"],
-    .gc-form .gc-input input[type="date"],
-    .gc-form .gc-input input[type="email"],
+    .gc-form .gc-input input[type='text'],
+    .gc-form .gc-input input[type='url'],
+    .gc-form .gc-input input[type='password'],
+    .gc-form .gc-input input[type='date'],
+    .gc-form .gc-input input[type='email'],
     .gc-form .gc-input .gc-input__textarea--small,
     .gc-form .gc-input .gc-input__textarea--medium,
     .gc-form .gc-input .gc-input__textarea--large {
@@ -61,61 +60,63 @@
       position: relative;
       box-sizing: border-box;
       background-color: transparent;
-      font-size: 1rem;
+      font-size: 1.4rem;
       color: #8e979f; }
-    .gc-form .gc-input input[type="text"],
-    .gc-form .gc-input input[type="url"],
-    .gc-form .gc-input input[type="password"],
-    .gc-form .gc-input input[type="email"],
-    .gc-form .gc-input input[type="date"] {
+    .gc-form .gc-input input[type='text'],
+    .gc-form .gc-input input[type='url'],
+    .gc-form .gc-input input[type='password'],
+    .gc-form .gc-input input[type='email'],
+    .gc-form .gc-input input[type='date'] {
       padding: 0;
       padding-bottom: 0.25rem;
       padding-left: 0.5rem; }
-    .gc-form .gc-input input[type="radio"],
-    .gc-form .gc-input input[type="checkbox"] {
+    .gc-form .gc-input input[type='radio'],
+    .gc-form .gc-input input[type='checkbox'] {
       display: inline-block;
-      width: 1rem;
-      height: 1rem;
-      margin-right: 0.625rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      margin-right: 1rem;
       position: relative; }
     .gc-form .gc-input .gc-form__checkbox {
       display: inline;
-      margin-right: 1.2rem; }
-    .gc-form .gc-input input[type="checkbox"] {
-      width: 0.5rem;
-      height: 0.5rem;
+      margin-right: 2rem; }
+    .gc-form .gc-input input[type='checkbox'] {
+      width: 1.2rem;
+      height: 1.2rem;
+      margin-top: 0;
+      margin-bottom: 0;
       vertical-align: middle;
       z-index: 2; }
-      .gc-form .gc-input input[type="checkbox"].gc-form__checkbox--checked:before, .gc-form .gc-input input[type="checkbox"].gc-form__checkbox--checked::before {
+      .gc-form .gc-input input[type='checkbox'].gc-form__checkbox--checked:before, .gc-form .gc-input input[type='checkbox'].gc-form__checkbox--checked::before {
         content: '\2714';
         display: block;
         position: absolute;
         left: 4px;
         top: 1px;
         z-index: 10; }
-    .gc-form .gc-input input[type="checkbox"]:after,
-    .gc-form .gc-input input[type="checkbox"]::after {
+    .gc-form .gc-input input[type='checkbox']:after,
+    .gc-form .gc-input input[type='checkbox']::after {
       content: '';
       display: block;
       position: relative;
       left: 0;
       top: 0;
-      height: 1.2rem;
-      width: 1.2rem;
+      height: 2rem;
+      width: 2rem;
       border: solid 1px #7a848e;
       border-radius: 2px;
       background-color: #ffffff;
       z-index: 5; }
-      .gc-form .gc-input input[type="checkbox"]:after:hover,
-      .gc-form .gc-input input[type="checkbox"]::after:hover {
+      .gc-form .gc-input input[type='checkbox']:after:hover,
+      .gc-form .gc-input input[type='checkbox']::after:hover {
         cursor: pointer;
         border-color: #43484c; }
     .gc-form .gc-input:focus,
-    .gc-form .gc-input input[type="text"]:focus,
-    .gc-form .gc-input input[type="email"]:focus,
-    .gc-form .gc-input input[type="url"]:focus,
-    .gc-form .gc-input input[type="date"]:focus,
-    .gc-form .gc-input input[type="password"]:focus,
+    .gc-form .gc-input input[type='text']:focus,
+    .gc-form .gc-input input[type='email']:focus,
+    .gc-form .gc-input input[type='url']:focus,
+    .gc-form .gc-input input[type='date']:focus,
+    .gc-form .gc-input input[type='password']:focus,
     .gc-form .gc-input .gc-input__textarea--small:focus,
     .gc-form .gc-input .gc-input__textarea--medium:focus,
     .gc-form .gc-input .gc-input__textarea--large:focus,
@@ -123,30 +124,31 @@
       outline: none;
       border-color: #e8bddb; }
     .gc-form .gc-input:focus,
-    .gc-form .gc-input input[type="text"]:focus + .gc-input__label--inline,
-    .gc-form .gc-input input[type="url"]:focus + .gc-input__label--inline,
-    .gc-form .gc-input input[type="password"]:focus + .gc-input__label--inline,
+    .gc-form .gc-input input[type='text']:focus + .gc-input__label--inline,
+    .gc-form .gc-input input[type='url']:focus + .gc-input__label--inline,
+    .gc-form .gc-input input[type='email']:focus + .gc-input__label--inline,
+    .gc-form .gc-input input[type='password']:focus + .gc-input__label--inline,
     .gc-form .gc-input .gc-input__textarea--small:focus + .gc-input__label--inline,
     .gc-form .gc-input .gc-input__textarea--medium:focus + .gc-input__label--inline,
     .gc-form .gc-input .gc-input__textarea--large:focus + .gc-input__label--inline,
     .gc-form .gc-input input.gc-select__input:focus + .gc-input__label--inline,
     .gc-form .gc-input .gc-select__label--floated {
-      font-size: 0.875rem; }
+      font-size: 1.2rem; }
     .gc-form .gc-input:hover,
-    .gc-form .gc-input input[type="text"]:hover,
-    .gc-form .gc-input input[type="url"]:hover,
-    .gc-form .gc-input input[type="password"]:hover,
-    .gc-form .gc-input input[type="email"]:hover,
-    .gc-form .gc-input input[type="date"]:hover,
+    .gc-form .gc-input input[type='text']:hover,
+    .gc-form .gc-input input[type='url']:hover,
+    .gc-form .gc-input input[type='password']:hover,
+    .gc-form .gc-input input[type='email']:hover,
+    .gc-form .gc-input input[type='date']:hover,
     .gc-form .gc-input .gc-input__textarea--small:hover,
     .gc-form .gc-input .gc-input__textarea--medium:hover,
     .gc-form .gc-input .gc-input__textarea--large:hover,
     .gc-form .gc-input input.gc-select__input:hover {
       cursor: text;
       color: #43484c; }
-    .gc-form .gc-input input[type="range"]:hover {
+    .gc-form .gc-input input[type='range']:hover {
       cursor: pointer; }
-    .gc-form .gc-input input[type=checkbox].gc-input--invalid:after,
+    .gc-form .gc-input input[type='checkbox'].gc-input--invalid:after,
     .gc-form .gc-input input.gc-input--invalid,
     .gc-form .gc-input .gc-select__input.gc-input--invalid {
       border-color: #f59393 !important; }
@@ -155,7 +157,7 @@
       background-color: #f2f3f4; }
     .gc-form .gc-input .gc-input__error-msg {
       color: #f59393;
-      font-size: 0.75rem;
+      font-size: 1.2rem;
       text-align: right;
       margin-top: 0.25rem;
       position: absolute;
@@ -169,8 +171,8 @@
       position: absolute;
       margin-bottom: -1.5rem;
       top: -1.375rem;
-      left: 0.5rem;
-      font-size: 0.875rem;
+      left: 0;
+      font-size: 1.2rem;
       color: #7a848e; }
       .gc-form .gc-input .gc-input__label.gc-input__label--required:after, .gc-form .gc-input .gc-input__label.gc-input__label--required::after {
         content: '*';
@@ -180,33 +182,33 @@
         position: relative;
         top: 0.188rem; }
       .gc-form .gc-input .gc-input__label.gc-input__label--checkbox {
-        font-size: 0.875rem;
+        font-size: 1.4rem;
         position: relative;
         display: inline-block;
         vertical-align: middle;
-        top: auto;
+        top: -1px;
         left: 0;
         margin: 0;
-        margin-left: 0.625rem;
+        margin-left: 1rem;
         max-width: calc(100% - 4rem); }
     .gc-form .gc-input .gc-input__label--inline {
       position: absolute;
-      top: -0.125rem;
-      font-size: 1rem;
+      top: 0.3rem;
+      font-size: 1.4rem;
       transition: 0.25s ease-in-out; }
     .gc-form .gc-input input:focus + .gc-input__label--inline,
     .gc-form .gc-input .gc-select input:focus + .gc-input__label--inline {
       top: -1.375rem;
-      font-size: 0.875rem;
+      font-size: 1.4rem;
       color: #43484c; }
     .gc-form .gc-input .gc-select__label--floated {
       color: #7a848e;
-      top: -0.5rem;
-      font-size: 0.875rem; }
+      top: -1rem;
+      font-size: 1.2rem; }
     .gc-form .gc-input .gc-input__textarea--small,
     .gc-form .gc-input .gc-input__textarea--medium,
     .gc-form .gc-input .gc-input__textarea--large {
-      padding: 0.625rem 0.938rem;
+      padding: 1rem 0.938rem;
       width: 100%; }
     .gc-form .gc-input .gc-input__textarea--small {
       height: 4rem; }
@@ -215,11 +217,11 @@
     .gc-form .gc-input .gc-input__textarea--large {
       height: 20rem; }
     .gc-form .gc-input .gc-input__list {
-      border-top: solid 0.063rem #eee;
-      border-bottom: solid 0.063rem #eee;
+      border-top: solid 0.1rem #eee;
+      border-bottom: solid 0.1rem #eee;
       display: block;
-      padding: 0.625rem 0;
-      margin: 0.625rem 0; }
+      padding: 1rem 0;
+      margin: 1rem 0; }
     .gc-form .gc-input .gc-input__list__ul {
       padding: 0;
       list-style: none; }
@@ -229,8 +231,8 @@
       margin: 0.5em 0; }
     .gc-form .gc-input .gc-select {
       position: relative;
-      margin-top: -0.875rem;
-      top: -0.125rem; }
+      margin-top: -1.4rem;
+      top: -0.2rem; }
       .gc-form .gc-input .gc-select.gc-input--invalid .gc-select__label-container {
         border-color: #f59393 !important; }
       .gc-form .gc-input .gc-select input.gc-select__input {
@@ -239,16 +241,16 @@
         padding-right: 2em !important; }
       .gc-form .gc-input .gc-select .gc-select__selection-list {
         padding: 0;
-        padding: 0.625rem 2em 0.625rem 1.25rem;
+        padding: 1rem 2em 1rem 2rem;
         list-style: none;
         background-color: #7a848e;
         min-height: 1.875rem; }
         .gc-form .gc-input .gc-select .gc-select__selection-list .gc-select__selection-list__item {
           position: relative;
           display: inline-block;
-          border: 0.063rem #43484c solid;
-          border-radius: 0.125rem;
-          padding: 0.313em calc(1.25rem + 1em) 0.313em 0.625rem;
+          border: 0.1rem #43484c solid;
+          border-radius: 0.2rem;
+          padding: 0.313em calc(2rem + 1em) 0.313em 1rem;
           color: #43484c;
           margin-right: 0.6325rem;
           background-color: #7a848e;
@@ -261,14 +263,14 @@
         padding: 0.5rem 2em 0.5rem 0.938rem;
         list-style: none;
         background-color: #7a848e;
-        min-height: 1.5rem;
+        min-height: 2rem;
         position: relative; }
         .gc-form .gc-input .gc-select .gc-select__label-container .gc-select__option-count {
           display: inline-block;
           position: absolute;
-          min-width: 1.25rem;
-          border-radius: 0.125rem;
-          padding: 0.375rem 0.625rem;
+          min-width: 2rem;
+          border-radius: 0.2rem;
+          padding: 0.375rem 1rem;
           color: #ffffff;
           text-align: center;
           font-size: 1rem;
@@ -276,16 +278,16 @@
           top: 0.313em;
           background-color: #e8bddb; }
         .gc-form .gc-input .gc-select .gc-select__label-container .gc-select__label {
-          top: 1rem;
+          top: 0.8rem;
           left: 0.5rem;
-          font-size: 1rem;
+          font-size: 1.4rem;
           color: #fafafa; }
         .gc-form .gc-input .gc-select .gc-select__label-container:hover + .gc-select__label--floated {
           color: #43484c;
           cursor: pointer; }
         .gc-form .gc-input .gc-select .gc-select__label-container.gc-select--inactive {
           background-color: transparent;
-          border-bottom: 0.063rem solid #8e979f; }
+          border-bottom: 0.1rem solid #8e979f; }
           .gc-form .gc-input .gc-select .gc-select__label-container.gc-select--inactive .gc-select__label {
             color: #8e979f; }
           .gc-form .gc-input .gc-select .gc-select__label-container.gc-select--inactive .gc-select__input-icon--fill {
@@ -304,14 +306,14 @@
         width: 100%;
         max-height: 500px;
         background-color: #ffffff;
-        border: #7a848e solid 0.063rem;
+        border: #7a848e solid 0.1rem;
         box-sizing: border-box;
         margin: 0;
         padding: 0;
         list-style: none;
         padding: 0 0.938rem; }
       .gc-form .gc-input .gc-select .gc-select__searchbar {
-        margin-top: 0.625rem; }
+        margin-top: 1rem; }
         .gc-form .gc-input .gc-select .gc-select__searchbar input {
           padding: 0; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input:focus {
@@ -320,73 +322,68 @@
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: "Andale Mono", Tahoma;
-            font-size: 0.875rem;
+            font-size: 1.4rem;
             line-height: 1.5rem; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input::-moz-placeholder {
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: "Andale Mono", Tahoma;
-            font-size: 0.875rem;
+            font-size: 1.4rem;
             line-height: 1.5rem; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input:-ms-input-placeholder {
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: "Andale Mono", Tahoma;
-            font-size: 0.875rem;
+            font-size: 1.4rem;
             line-height: 1.5rem; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input:-moz-placeholder {
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: "Andale Mono", Tahoma;
-            font-size: 0.875rem;
+            font-size: 1.4rem;
             line-height: 1.5rem; }
           .gc-form .gc-input .gc-select .gc-select__searchbar input::placeholder {
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: "Andale Mono", Tahoma;
-            font-size: 0.875rem;
+            font-size: 1.4rem;
             line-height: 1.5rem; }
       .gc-form .gc-input .gc-select .gc-select__drop-down__option {
-        padding: 0.625rem 0;
-        border-bottom: 0.063rem solid #8e979f; }
+        padding: 1rem 0;
+        border-bottom: 0.1rem solid #8e979f; }
         .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active {
           position: relative;
-          margin-top: 0.625rem;
+          margin-top: 1rem;
           background-color: transparent;
-          border: 0.063rem solid #43484c;
-          padding: 0.625rem 0.938rem;
+          border: 0.1rem solid #43484c;
+          padding: 1rem 0.938rem;
           color: #43484c; }
           .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active .gc-select__option--active__cross {
             position: absolute;
             width: 1rem;
             height: 1rem;
-            right: 0.625rem;
-            top: 0.625rem; }
+            right: 1rem;
+            top: 1rem; }
             .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active .gc-select__option--active__cross:hover {
               cursor: pointer; }
             .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active .gc-select__option--active__cross:before, .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active .gc-select__option--active__cross::before {
-              content: "";
+              content: '';
               display: block;
               background-color: #43484c;
-              width: 1.25rem;
-              height: 0.063rem;
+              width: 2rem;
+              height: 0.1rem;
               position: relative;
               top: calc(50%);
               right: 0;
               transform: rotateZ(45deg); }
             .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active .gc-select__option--active__cross:after, .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active .gc-select__option--active__cross::after {
-              content: "";
+              content: '';
               display: block;
               background-color: #43484c;
-              width: 1.25rem;
-              height: 0.063rem;
+              width: 2rem;
+              height: 0.1rem;
               position: relative;
-              top: calc(50% - 0.063rem);
+              top: calc(50% - 0.1rem);
               right: 0;
               transform: rotateZ(-45deg); }
           .gc-form .gc-input .gc-select .gc-select__drop-down__option.gc-select__drop-down__option--active:hover {
@@ -410,21 +407,64 @@
       .gc-form .gc-input .gc-select .gc-select__input-icon {
         content: '';
         display: block;
-        height: 0.75rem;
-        width: 0.75rem;
+        height: 1.2rem;
+        width: 1.2rem;
         position: absolute;
         top: 0.5rem;
         right: 0;
         z-index: -1; }
         .gc-form .gc-input .gc-select .gc-select__input-icon.gc-multi-select__icon {
           z-index: 20;
-          top: 0.75rem;
+          top: 0.5rem;
           right: 0.938rem;
-          height: 1.25rem;
-          width: 1.25rem; }
+          height: 2rem;
+          width: 2rem; }
           .gc-form .gc-input .gc-select .gc-select__input-icon.gc-multi-select__icon:hover {
             cursor: pointer; }
       .gc-form .gc-input .gc-select .gc-select__input-icon--fill {
         fill: #7a848e; }
       .gc-form .gc-input .gc-select .gc-multi-select__icon .gc-select__input-icon--fill {
         fill: #ffffff; }
+  .gc-form .gctooltip {
+    position: absolute;
+    top: 7px;
+    right: 0;
+    z-index: 600000;
+    width: 100%; }
+    @media screen and (min-width: 600px) {
+      .gc-form .gctooltip {
+        max-width: 340px; } }
+    .gc-form .gctooltip .gctooltip__icon {
+      float: right; }
+      .gc-form .gctooltip .gctooltip__icon:hover, .gc-form .gctooltip .gctooltip__icon.gctooltip__icon--active {
+        cursor: pointer; }
+        .gc-form .gctooltip .gctooltip__icon:hover path, .gc-form .gctooltip .gctooltip__icon.gctooltip__icon--active path {
+          fill: #e8bddb !important; }
+    .gc-form .gctooltip .gctooltip__message-container {
+      position: absolute;
+      background: white;
+      padding: 10px 15px;
+      border-radius: 0.25em;
+      bottom: 180%;
+      right: 0; }
+      @media screen and (min-width: 600px) {
+        .gc-form .gctooltip .gctooltip__message-container {
+          right: -7px; } }
+      .gc-form .gctooltip .gctooltip__message-container::after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: -10px;
+        right: 5px;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 20px solid white;
+        transform: rotateZ(-25deg); }
+        @media screen and (min-width: 600px) {
+          .gc-form .gctooltip .gctooltip__message-container::after {
+            right: 12px; } }
+      .gc-form .gctooltip .gctooltip__message-container .gctooltip__message {
+        color: #ffffff;
+        margin-bottom: 0; }

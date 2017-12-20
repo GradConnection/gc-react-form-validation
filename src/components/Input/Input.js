@@ -7,6 +7,7 @@ import GCCheckbox from './GCCheckbox';
 import GCSelect from './GCSelect';
 import GCMultiSelect from './GCMultiSelect';
 import GCInputLabel from './GCInputLabel';
+import GCTooltip from './GCTooltip';
 
 import ReactHtmlParser from 'react-html-parser';
 
@@ -15,12 +16,15 @@ class Input extends Component {
     super(props, context);
     this.state = {
       validationMessage: null,
-      touchedByParent: props.touchedByParent,
+      touchedByParent: props.touchedByParent
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.touchedByParent && this.props.touchedByParent !== nextProps.touchedByParent) {
+    if (
+      nextProps.touchedByParent &&
+      this.props.touchedByParent !== nextProps.touchedByParent
+    ) {
       this.setState({ touchedByParent: true }, () => {
         this.validateInput();
       });
@@ -28,24 +32,33 @@ class Input extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return (nextProps.value !== this.props.value)
-    || nextProps.touchedByParent !== this.props.touchedByParent
-    || nextProps.isVisible != this.props.isVisible
-    || nextState.validationMessage !== this.state.validationMessage
-    || nextProps.options !== this.props.options;
+    return (
+      nextProps.value !== this.props.value ||
+      nextProps.touchedByParent !== this.props.touchedByParent ||
+      nextProps.isVisible != this.props.isVisible ||
+      nextState.validationMessage !== this.state.validationMessage ||
+      nextProps.options !== this.props.options
+    );
   }
 
   componentDidUpdate() {
-    if (!this.props.touchedByParent && this.props.type === 'checkbox'
-    || !this.props.touchedByParent && this.props.type === 'radio') {
+    if (
+      (!this.props.touchedByParent && this.props.type === 'checkbox') ||
+      (!this.props.touchedByParent && this.props.type === 'radio')
+    ) {
       this.validateInput();
     }
   }
 
   validateEmail(value) {
-    const pattern = this.handleRegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    const pattern = this.handleRegExp(
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
     const valid = pattern.test(value);
-    return this.handleErrorMessage(valid, 'The email address you have entered is not valid');
+    return this.handleErrorMessage(
+      valid,
+      'The email address you have entered is not valid'
+    );
   }
 
   validateName(value) {
@@ -60,7 +73,10 @@ class Input extends Component {
       }
       return this.handleErrorMessage(valid);
     } else {
-      return this.handleErrorMessage(valid, `May not contain more than ${maxL} characters`);
+      return this.handleErrorMessage(
+        valid,
+        `May not contain more than ${maxL} characters`
+      );
     }
   }
 
@@ -73,13 +89,16 @@ class Input extends Component {
       valid = pattern.test(value);
       return this.handleErrorMessage(valid);
     } else {
-      return this.handleErrorMessage(valid, `May not contain more than ${maxL} characters`);
+      return this.handleErrorMessage(
+        valid,
+        `May not contain more than ${maxL} characters`
+      );
     }
   }
 
   validateUrl(value) {
     let usableUrl = '';
-    if ((/^(https:\/\/|http:\/\/)/).test(value)) {
+    if (/^(https:\/\/|http:\/\/)/.test(value)) {
       usableUrl = value;
     } else {
       usableUrl = `https:// ${value}`;
@@ -94,9 +113,15 @@ class Input extends Component {
     const maxL = this.props.maxLength;
     let valid;
     if (minL && value.length < minL) {
-      return this.handleErrorMessage(valid, `May not contain less than ${minL} characters`);
+      return this.handleErrorMessage(
+        valid,
+        `May not contain less than ${minL} characters`
+      );
     } else if (maxL && value.length > maxL) {
-      return this.handleErrorMessage(valid, `May not contain more than ${maxL} characters`);
+      return this.handleErrorMessage(
+        valid,
+        `May not contain more than ${maxL} characters`
+      );
     } else {
       valid = pattern.test(value);
       return this.handleErrorMessage(valid);
@@ -104,10 +129,17 @@ class Input extends Component {
   }
 
   validatePassword(value) {
-    const min = this.props.minLength && this.props.minLength !== 0 ? this.props.minLength : 8;
+    const min =
+      this.props.minLength && this.props.minLength !== 0
+        ? this.props.minLength
+        : 8;
     const pattern = this.handleRegExp('');
-    if(value.length < min ) {
-      return this.handleErrorMessage(false, `Password needs to have more than ${min} characters`, true);
+    if (value.length < min) {
+      return this.handleErrorMessage(
+        false,
+        `Password needs to have more than ${min} characters`,
+        true
+      );
     } else if (!pattern.test(value)) {
       return this.handleErrorMessage(false);
     }
@@ -117,16 +149,25 @@ class Input extends Component {
     const selectedDate = new Date(value);
     let min, max;
 
-    if(this.props.maxDate !== null && this.props.minDate !== null) {
+    if (this.props.maxDate !== null && this.props.minDate !== null) {
       max = new Date(this.props.maxDate);
       min = new Date(this.props.minDate);
-      return this.handleErrorMessage(min <= selectedDate && max >= selectedDate, `Please select a date between ${min.toDateString()} and ${max.toDateString()}`);
-    } else if(this.props.minDate !== null) {
+      return this.handleErrorMessage(
+        min <= selectedDate && max >= selectedDate,
+        `Please select a date between ${min.toDateString()} and ${max.toDateString()}`
+      );
+    } else if (this.props.minDate !== null) {
       min = new Date(this.props.minDate);
-      return this.handleErrorMessage(min <= selectedDate, `Please select a date after ${min.toDateString()}`);
+      return this.handleErrorMessage(
+        min <= selectedDate,
+        `Please select a date after ${min.toDateString()}`
+      );
     } else if (this.props.maxDate !== null) {
       max = new Date(this.props.maxDate);
-      return this.handleErrorMessage(max >= selectedDate, `Please select a date before ${max.toDateString()}`);
+      return this.handleErrorMessage(
+        max >= selectedDate,
+        `Please select a date before ${max.toDateString()}`
+      );
     }
   }
 
@@ -135,7 +176,10 @@ class Input extends Component {
     const max = this.props.max;
     let res = '';
     if (min && min > value) {
-      res = this.handleErrorMessage(false, `Number must be higher than ${min}.`);
+      res = this.handleErrorMessage(
+        false,
+        `Number must be higher than ${min}.`
+      );
     } else if (max && max < value) {
       res = this.handleErrorMessage(false, `Number must be lower than ${max}`);
     }
@@ -158,7 +202,13 @@ class Input extends Component {
   }
 
   isEmpty(v) {
-    return (v === null || v === undefined) || (typeof v === 'string' && v !== '') || (typeof v === 'object' && v.length > 0) || (typeof v === 'boolean' && v && this.props.required);
+    return (
+      v === null ||
+      v === undefined ||
+      (typeof v === 'string' && v !== '') ||
+      (typeof v === 'object' && v.length > 0) ||
+      (typeof v === 'boolean' && v && this.props.required)
+    );
   }
 
   validateInput() {
@@ -212,7 +262,9 @@ class Input extends Component {
 
   handleErrorMessage(v, msg = 'Invalid Input', ignoreCustom = false) {
     if (!v) {
-      return this.props.customErrorMessage && !ignoreCustom ? this.props.customErrorMessage : msg;
+      return this.props.customErrorMessage && !ignoreCustom
+        ? this.props.customErrorMessage
+        : msg;
     }
     return null;
   }
@@ -220,9 +272,11 @@ class Input extends Component {
   handleRegExp(regX) {
     if (this.props.customRegex) {
       let cleanPattern = this.props.customRegex;
-      if(typeof this.props.customRegex === 'string'
-      && this.props.customRegex.match(/^\//)
-      && this.props.customRegex.match(/\/$/)) {
+      if (
+        typeof this.props.customRegex === 'string' &&
+        this.props.customRegex.match(/^\//) &&
+        this.props.customRegex.match(/\/$/)
+      ) {
         cleanPattern = this.props.customRegex.slice(1, -1);
       }
       return new RegExp(cleanPattern);
@@ -237,23 +291,29 @@ class Input extends Component {
   }
 
   render() {
-    const errorMsgClass = this.props.type === 'checkbox' ? 'gc-input__error-msg--checkbox' : '';
+    const errorMsgClass =
+      this.props.type === 'checkbox' ? 'gc-input__error-msg--checkbox' : '';
     if (this.props.isVisible) {
       return (
         <div className={`gc-input ${this.props.extendedClassNames}`}>
-
           <GCInputLabel
             title={this.props.title}
             value={this.props.value}
             name={this.props.name}
             type={this.props.type}
-            required={this.props.required}>
+            required={this.props.required}
+          >
             <GCInputRenderer
               validateInput={() => this.validateInput()}
               handleChange={v => this.handleChange(v)}
               validationMessage={this.state.validationMessage}
-              {...this.props}/>
+              {...this.props}
+            />
           </GCInputLabel>
+
+          {/*
+            <GCTooltip content={this.props.tooltip} />
+          */}
 
           {this.state.validationMessage && (
             <p className={`gc-input__error-msg ${errorMsgClass}`}>
@@ -263,7 +323,7 @@ class Input extends Component {
         </div>
       );
     } else {
-      return (<span>&nbsp;</span>);
+      return <span>&nbsp;</span>;
     }
   }
 }
@@ -273,12 +333,12 @@ Input.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
-    PropTypes.array,
+    PropTypes.array
   ]),
   defaultValue: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
-    PropTypes.array,
+    PropTypes.array
   ]),
   stateName: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -292,10 +352,7 @@ Input.propTypes = {
   max: PropTypes.number,
   min: PropTypes.number,
   onChange: PropTypes.func.isRequired,
-  customRegex: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.string,
-  ]),
+  customRegex: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   customErrorMessage: PropTypes.string,
   touchedByParent: PropTypes.bool,
   sendResultsToForm: PropTypes.func,
@@ -308,6 +365,7 @@ Input.propTypes = {
   isVisible: PropTypes.bool,
   multi: PropTypes.bool,
   search: PropTypes.bool,
+  tooltip: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
 };
 
 Input.defaultProps = {
@@ -336,6 +394,7 @@ Input.defaultProps = {
   isVisible: true,
   multi: false,
   search: false,
+  tooltip: null
 };
 
 export default Input;

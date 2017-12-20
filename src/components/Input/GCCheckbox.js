@@ -5,7 +5,7 @@ import uniqueId from 'lodash/uniqueId';
 
 class GCCheckbox extends Component {
   matchValues(arr, value) {
-    if(this.props.options.length === 0){
+    if (this.props.options.length === 0) {
       return this.props.value;
     }
     return arr.includes(value);
@@ -34,7 +34,10 @@ class GCCheckbox extends Component {
       this.props.onChange(!props.value);
     } else {
       const selectedValue = value;
-      const prevValue = typeof props.value === 'string' ? this.convertToArray(props.value) : props.value.map(i => i);
+      const prevValue =
+        typeof props.value === 'string'
+          ? this.convertToArray(props.value)
+          : props.value.map(i => i);
       let newArray = prevValue;
 
       if (prevValue.includes(selectedValue)) {
@@ -50,25 +53,29 @@ class GCCheckbox extends Component {
     const props = this.props;
     // TODO: Add disabledClass
     return props.options.map((opt, i) => {
-      const activeClass = this.matchValues(props.value, opt.value) ? 'gc-form__checkbox--checked' : '';
+      const activeClass = this.matchValues(props.value, opt.value)
+        ? 'gc-form__checkbox--checked'
+        : '';
       return (
         <div
           className="gc-form__checkbox"
-          onClick={(e, v) => this.handleChange(e, opt.value)}>
-            <input
+          onClick={(e, v) => this.handleChange(e, opt.value)}
+        >
+          <input
             className={activeClass}
-              type="checkbox"
-              value={opt.value}
-              key={uniqueId()}
-              name={props.name}
-              title={props.title}
-              onChange={(e, v) => this.handleChange(e, opt.value)}
-              checked={this.matchValues(props.value, opt.value)}
-              disabled={this.props.disabled}
+            type="checkbox"
+            value={opt.value}
+            key={uniqueId()}
+            name={props.name}
+            title={props.title}
+            onChange={(e, v) => this.handleChange(e, opt.value)}
+            checked={this.matchValues(props.value, opt.value)}
+            disabled={this.props.disabled}
           />
           <label
             className={`gc-input__label gc-input__label--checkbox`}
-            htmlFor={props.name}>
+            htmlFor={props.name}
+          >
             {opt.label}
           </label>
         </div>
@@ -79,7 +86,7 @@ class GCCheckbox extends Component {
   render() {
     const props = this.props;
     const disabledClass = props.disabled ? 'gc-input--disabled' : '';
-    if(props.options.length >= 1) {
+    if (props.options.length >= 1) {
       return (
         <div className={`${disabledClass} ${props.extendedClass}`}>
           {this.renderCheckboxOpts()}
@@ -90,16 +97,21 @@ class GCCheckbox extends Component {
       return (
         <div
           className="gc-form__checkbox"
-          onClick={(e, v) => this.handleChange(e, !props.value)}>
+          onClick={(e, v) => this.handleChange(e, !props.value)}
+        >
           <input
-            className={`${activeClass} ${disabledClass} ${props.extendedClass} ${this.props.invalidClass}`}
+            className={`${activeClass} ${disabledClass} ${
+              props.extendedClass
+            } ${this.props.invalidClass}`}
             type="checkbox"
+            key={uniqueId()}
             name={props.name}
             title={props.title}
             checked={props.value}
             disabled={this.props.disabled}
           />
-        </div>);
+        </div>
+      );
     }
   }
 }
@@ -109,7 +121,7 @@ GCCheckbox.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
-    PropTypes.array,
+    PropTypes.array
   ]),
   stateName: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
@@ -120,7 +132,7 @@ GCCheckbox.propTypes = {
   sendResultsToForm: PropTypes.func,
   options: PropTypes.array,
   title: PropTypes.string,
-  multiple: PropTypes.bool,
+  multiple: PropTypes.bool
 };
 
 GCCheckbox.defaultProps = {
@@ -134,7 +146,7 @@ GCCheckbox.defaultProps = {
   sendResultsToForm: null,
   options: [],
   title: null,
-  multiple: false,
+  multiple: false
 };
 
 export default GCCheckbox;

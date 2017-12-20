@@ -8,8 +8,6 @@ $gc-form-red: #b80c0c !default;
 $gc-form-light-red: #f59393 !default;
 $gc-form-input-bg: #ffffff !default;
 
-$gc-form-font: 'Andale Mono', Tahoma !default;
-
 @mixin gc-form--bg {
   background-color: $gc-form-primary-colour;
 }
@@ -22,28 +20,28 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
   color: $gc-form-primary-colour;
 }
 
+// base 16px html | font-size 62.5%
+
 .gc-form {
- width: 100%;
- text-align: left;
- font-family: $gc-form-font;
- padding-top: 1px;
+  width: 100%;
+  text-align: left;
+  padding-top: 1px;
 
   .gc-form__description {
     color: $gc-form-grey;
-    font-size: 0.875rem;
+    font-size: 1.4rem;
   }
 
   .gc-form__label {
-    margin-bottom: -1rem;
+    margin-bottom: -1.6rem;
   }
 
   .gc-form__error-message {
-    padding: 0.625rem 1.25rem;
-    margin-bottom: 2.125rem;
-    border-radius: 0.125rem;
+    padding: 1rem 2rem;
+    margin-bottom: 3.4rem;
+    border-radius: 0.2rem;
     background-color: $gc-form-light-red;
     color: $gc-form-input-bg;
-    font-family: $gc-form-font;
 
     &.ul {
       padding-left: 3rem;
@@ -51,8 +49,8 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
 
     p,
     li {
-      font-size: 0.875rem;
-      margin: 0.625rem 0;
+      font-size: 1.4rem;
+      margin: 1rem 0;
     }
   }
 
@@ -60,43 +58,44 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
     background-color: rgba(245, 147, 147, 0.3);
     color: $gc-form-red;
     border-radius: 0;
-    font-size: 0.75rem;
-    font-family: $gc-form-font;
+    font-size: 1.2rem;
   }
 
   // INPUT STYLING
 
   .gc-input {
-    margin-top: 1.25rem;
-    margin-bottom: 3.125rem;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
     display: block;
     width: 100%;
     position: relative;
     box-sizing: border-box;
-    font-size: 1rem;
+    font-size: 1.4rem;
 
     input {
       border: none;
       border-radius: 0;
-      border-bottom: solid 0.063rem $gc-form-grey;
-      font-size: 1rem;
+      border-bottom: solid 0.1rem $gc-form-grey;
+      font-size: 1.4rem;
       width: 100%;
       height: auto;
-      min-height: 1.563rem;
+      min-height: 2.5rem;
       z-index: 100;
       background-color: transparent;
     }
 
-    input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    input:-webkit-autofill,
+    textarea:-webkit-autofill,
+    select:-webkit-autofill {
       background-color: transparent !important;
       color: inherit;
     }
 
-    input[type="text"],
-    input[type="url"],
-    input[type="password"],
-    input[type="date"],
-    input[type="email"],
+    input[type='text'],
+    input[type='url'],
+    input[type='password'],
+    input[type='date'],
+    input[type='email'],
     .gc-input__textarea--small,
     .gc-input__textarea--medium,
     .gc-input__textarea--large {
@@ -105,37 +104,39 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
       position: relative;
       box-sizing: border-box;
       background-color: transparent;
-      font-size: 1rem;
+      font-size: 1.4rem;
       color: $gc-form-med-grey;
     }
 
-    input[type="text"],
-    input[type="url"],
-    input[type="password"],
-    input[type="email"],
-    input[type="date"] {
+    input[type='text'],
+    input[type='url'],
+    input[type='password'],
+    input[type='email'],
+    input[type='date'] {
       padding: 0;
       padding-bottom: 0.25rem;
       padding-left: 0.5rem;
     }
 
-    input[type="radio"],
-    input[type="checkbox"] {
+    input[type='radio'],
+    input[type='checkbox'] {
       display: inline-block;
-      width: 1rem;
-      height: 1rem;
-      margin-right: 0.625rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      margin-right: 1rem;
       position: relative;
     }
 
     .gc-form__checkbox {
       display: inline;
-      margin-right: 1.2rem;
+      margin-right: 2rem;
     }
 
-    input[type="checkbox"] {
-      width: 0.5rem;
-      height: 0.5rem;
+    input[type='checkbox'] {
+      width: 1.2rem;
+      height: 1.2rem;
+      margin-top: 0;
+      margin-bottom: 0;
       vertical-align: middle;
       z-index: 2;
 
@@ -150,15 +151,15 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
       }
     }
 
-    input[type="checkbox"]:after,
-    input[type="checkbox"]::after {
+    input[type='checkbox']:after,
+    input[type='checkbox']::after {
       content: '';
       display: block;
       position: relative;
       left: 0;
       top: 0;
-      height: 1.2rem;
-      width: 1.2rem;
+      height: 2rem;
+      width: 2rem;
       border: solid 1px $gc-form-grey;
       border-radius: 2px;
       background-color: $gc-form-input-bg;
@@ -171,50 +172,51 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
     }
 
     &:focus,
-    input[type="text"]:focus,
-    input[type="email"]:focus,
-    input[type="url"]:focus,
-    input[type="date"]:focus,
-    input[type="password"]:focus,
+    input[type='text']:focus,
+    input[type='email']:focus,
+    input[type='url']:focus,
+    input[type='date']:focus,
+    input[type='password']:focus,
     .gc-input__textarea--small:focus,
     .gc-input__textarea--medium:focus,
     .gc-input__textarea--large:focus,
-    input.gc-select__input:focus  {
+    input.gc-select__input:focus {
       outline: none;
       @include gc-form--border;
     }
 
     &:focus,
-    input[type="text"]:focus + .gc-input__label--inline,
-    input[type="url"]:focus + .gc-input__label--inline,
-    input[type="password"]:focus + .gc-input__label--inline,
+    input[type='text']:focus + .gc-input__label--inline,
+    input[type='url']:focus + .gc-input__label--inline,
+    input[type='email']:focus + .gc-input__label--inline,
+    input[type='password']:focus + .gc-input__label--inline,
     .gc-input__textarea--small:focus + .gc-input__label--inline,
     .gc-input__textarea--medium:focus + .gc-input__label--inline,
     .gc-input__textarea--large:focus + .gc-input__label--inline,
     input.gc-select__input:focus + .gc-input__label--inline,
     .gc-select__label--floated {
-      font-size: 0.875rem;
+      font-size: 1.2rem;
     }
 
     &:hover,
-    input[type="text"]:hover,
-    input[type="url"]:hover,
-    input[type="password"]:hover,
-    input[type="email"]:hover,
-    input[type="date"]:hover,
+    input[type='text']:hover,
+    input[type='url']:hover,
+    input[type='password']:hover,
+    input[type='email']:hover,
+    input[type='date']:hover,
     .gc-input__textarea--small:hover,
     .gc-input__textarea--medium:hover,
     .gc-input__textarea--large:hover,
-    input.gc-select__input:hover  {
+    input.gc-select__input:hover {
       cursor: text;
       color: $gc-form-dark-grey;
     }
 
-    input[type="range"]:hover {
+    input[type='range']:hover {
       cursor: pointer;
     }
 
-    input[type=checkbox].gc-input--invalid:after,
+    input[type='checkbox'].gc-input--invalid:after,
     input.gc-input--invalid,
     .gc-select__input.gc-input--invalid {
       border-color: $gc-form-light-red !important;
@@ -227,7 +229,7 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
 
     .gc-input__error-msg {
       color: $gc-form-light-red;
-      font-size: 0.75rem;
+      font-size: 1.2rem;
       text-align: right;
       margin-top: 0.25rem;
       position: absolute;
@@ -246,8 +248,8 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
       position: absolute;
       margin-bottom: -1.5rem;
       top: -1.375rem;
-      left: 0.5rem;
-      font-size: 0.875rem;
+      left: 0;
+      font-size: 1.2rem;
       color: $gc-form-grey;
 
       &.gc-input__label--required:after,
@@ -261,43 +263,43 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
       }
 
       &.gc-input__label--checkbox {
-        font-size: 0.875rem;
+        font-size: 1.4rem;
         position: relative;
         display: inline-block;
         vertical-align: middle;
-        top: auto;
+        top: -1px;
         left: 0;
         margin: 0;
-        margin-left: 0.625rem;
+        margin-left: 1rem;
         max-width: calc(100% - 4rem);
       }
     }
 
     .gc-input__label--inline {
       position: absolute;
-      top: -0.125rem;
-      font-size: 1rem;
+      top: 0.3rem;
+      font-size: 1.4rem;
       transition: 0.25s ease-in-out;
     }
 
     input:focus + .gc-input__label--inline,
     .gc-select input:focus + .gc-input__label--inline {
       top: -1.375rem;
-      font-size: 0.875rem;
+      font-size: 1.4rem;
       color: $gc-form-dark-grey;
     }
 
     .gc-select__label--floated {
       color: $gc-form-grey;
-      top: -0.5rem;
-      font-size: 0.875rem;
+      top: -1rem;
+      font-size: 1.2rem;
     }
 
     // TEXT AREA STYLING
     .gc-input__textarea--small,
     .gc-input__textarea--medium,
     .gc-input__textarea--large {
-      padding: 0.625rem 0.938rem;
+      padding: 1rem 0.938rem;
       width: 100%;
     }
 
@@ -315,11 +317,11 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
 
     // NESTED FORM LIST STYLING
     .gc-input__list {
-      border-top: solid 0.063rem #eee;
-      border-bottom: solid 0.063rem #eee;
+      border-top: solid 0.1rem #eee;
+      border-bottom: solid 0.1rem #eee;
       display: block;
-      padding: 0.625rem 0;
-      margin: 0.625rem 0;
+      padding: 1rem 0;
+      margin: 1rem 0;
     }
 
     .gc-input__list__ul {
@@ -338,8 +340,8 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
     //Select
     .gc-select {
       position: relative;
-      margin-top: -0.875rem;
-      top: -0.125rem;
+      margin-top: - 1.4rem;
+      top: -0.2rem;
 
       &.gc-input--invalid .gc-select__label-container {
         border-color: $gc-form-light-red !important;
@@ -353,7 +355,7 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
 
       .gc-select__selection-list {
         padding: 0;
-        padding: 0.625rem 2em 0.625rem 1.25rem;
+        padding: 1rem 2em 1rem 2rem;
         list-style: none;
         background-color: $gc-form-grey;
         min-height: 1.875rem;
@@ -361,9 +363,9 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
         .gc-select__selection-list__item {
           position: relative;
           display: inline-block;
-          border: 0.063rem $gc-form-dark-grey solid;
-          border-radius: 0.125rem;
-          padding: 0.313em calc(1.25rem + 1em) 0.313em 0.625rem;
+          border: 0.1rem $gc-form-dark-grey solid;
+          border-radius: 0.2rem;
+          padding: 0.313em calc(2rem + 1em) 0.313em 1rem;
           color: $gc-form-dark-grey;
           margin-right: 0.6325rem;
           background-color: $gc-form-grey;
@@ -381,15 +383,15 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
         padding: 0.5rem 2em 0.5rem 0.938rem;
         list-style: none;
         background-color: $gc-form-grey;
-        min-height: 1.5rem;
+        min-height: 2rem;
         position: relative;
 
         .gc-select__option-count {
           display: inline-block;
           position: absolute;
-          min-width: 1.25rem;
-          border-radius: 0.125rem;
-          padding: 0.375rem 0.625rem;
+          min-width: 2rem;
+          border-radius: 0.2rem;
+          padding: 0.375rem 1rem;
           color: $gc-form-input-bg;
           text-align: center;
           font-size: 1rem;
@@ -400,20 +402,20 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
         }
 
         .gc-select__label {
-          top: 1rem;
+          top: 0.8rem;
           left: 0.5rem;
-          font-size: 1rem;
+          font-size: 1.4rem;
           color: #fafafa;
         }
 
         &:hover + .gc-select__label--floated {
-          color:$gc-form-dark-grey;
+          color: $gc-form-dark-grey;
           cursor: pointer;
         }
 
         &.gc-select--inactive {
           background-color: transparent;
-          border-bottom: 0.063rem solid $gc-form-med-grey;
+          border-bottom: 0.1rem solid $gc-form-med-grey;
 
           .gc-select__label {
             color: $gc-form-med-grey;
@@ -445,7 +447,7 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
         width: 100%;
         max-height: 500px;
         background-color: $gc-form-input-bg;
-        border: $gc-form-grey solid 0.063rem;
+        border: $gc-form-grey solid 0.1rem;
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -454,19 +456,19 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
       }
 
       .gc-select__searchbar {
-        margin-top: 0.625rem;
+        margin-top: 1rem;
         input {
           padding: 0;
           &:focus {
             outline: none;
           }
 
-          &::-webkit-input-placeholder  {
+          &::-webkit-input-placeholder {
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: $gc-form-font;
-            font-size: 0.875rem;
+
+            font-size: 1.4rem;
             line-height: 1.5rem;
           }
 
@@ -474,8 +476,8 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: $gc-form-font;
-            font-size: 0.875rem;
+
+            font-size: 1.4rem;
             line-height: 1.5rem;
           }
 
@@ -483,8 +485,8 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: $gc-form-font;
-            font-size: 0.875rem;
+
+            font-size: 1.4rem;
             line-height: 1.5rem;
           }
 
@@ -492,8 +494,8 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family: $gc-form-font;
-            font-size: 0.875rem;
+
+            font-size: 1.4rem;
             line-height: 1.5rem;
           }
 
@@ -501,31 +503,31 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
             color: #ddd;
             font-weight: 100;
             font-style: italic;
-            font-family:$gc-form-font;
-            font-size: 0.875rem;
+
+            font-size: 1.4rem;
             line-height: 1.5rem;
           }
         }
       }
 
       .gc-select__drop-down__option {
-        padding: 0.625rem 0;
-        border-bottom: 0.063rem solid $gc-form-med-grey;
+        padding: 1rem 0;
+        border-bottom: 0.1rem solid $gc-form-med-grey;
 
         &.gc-select__drop-down__option--active {
           position: relative;
-          margin-top: 0.625rem;
+          margin-top: 1rem;
           background-color: transparent;
-          border: 0.063rem solid $gc-form-dark-grey;
-          padding: 0.625rem 0.938rem;
+          border: 0.1rem solid $gc-form-dark-grey;
+          padding: 1rem 0.938rem;
           color: $gc-form-dark-grey;
 
           .gc-select__option--active__cross {
             position: absolute;
             width: 1rem;
             height: 1rem;
-            right: 0.625rem;
-            top: 0.625rem;
+            right: 1rem;
+            top: 1rem;
 
             &:hover {
               cursor: pointer;
@@ -533,11 +535,11 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
 
             &:before,
             &::before {
-              content: "";
+              content: '';
               display: block;
               background-color: $gc-form-dark-grey;
-              width: 1.25rem;
-              height: 0.063rem;
+              width: 2rem;
+              height: 0.1rem;
               position: relative;
               top: calc(50%);
               right: 0;
@@ -546,13 +548,13 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
 
             &:after,
             &::after {
-              content: "";
+              content: '';
               display: block;
               background-color: $gc-form-dark-grey;
-              width: 1.25rem;
-              height: 0.063rem;
+              width: 2rem;
+              height: 0.1rem;
               position: relative;
-              top: calc(50% - 0.063rem);
+              top: calc(50% - 0.1rem);
               right: 0;
               transform: rotateZ(-45deg);
             }
@@ -593,8 +595,8 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
       .gc-select__input-icon {
         content: '';
         display: block;
-        height: 0.75rem;
-        width: 0.75rem;
+        height: 1.2rem;
+        width: 1.2rem;
         position: absolute;
         top: 0.5rem;
         right: 0;
@@ -602,10 +604,10 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
 
         &.gc-multi-select__icon {
           z-index: 20;
-          top: 0.75rem;
+          top: 0.5rem;
           right: 0.938rem;
-          height: 1.25rem;
-          width: 1.25rem;
+          height: 2rem;
+          width: 2rem;
           &:hover {
             cursor: pointer;
           }
@@ -621,8 +623,66 @@ $gc-form-font: 'Andale Mono', Tahoma !default;
           fill: $gc-form-input-bg;
         }
       }
+    }
+  }
 
+  .gctooltip {
+    position: absolute;
+    top: 7px;
+    right: 0;
+    z-index: 600000;
+    width: 100%;
 
+    @media screen and (min-width: 600px) {
+      max-width: 340px;
+    }
+
+    .gctooltip__icon {
+      float: right;
+      &:hover,
+      &.gctooltip__icon--active {
+        cursor: pointer;
+
+        path {
+          fill: $gc-form-primary-colour !important;
+        }
+      }
+    }
+
+    .gctooltip__message-container {
+      position: absolute;
+      background: lighten($gc-form-primary-colour, 25%);
+      padding: 10px 15px;
+      border-radius: 0.25em;
+      bottom: 180%;
+      right: 0;
+
+      @media screen and (min-width: 600px) {
+        right: -7px;
+      }
+
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: -10px;
+        right: 5px;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 20px solid lighten($gc-form-primary-colour, 25%);
+        transform: rotateZ(-25deg);
+
+        @media screen and (min-width: 600px) {
+          right: 12px;
+        }
+      }
+
+      .gctooltip__message {
+        color: #ffffff;
+        margin-bottom: 0;
+      }
     }
   }
 }
