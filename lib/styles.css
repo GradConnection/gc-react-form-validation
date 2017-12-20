@@ -25,8 +25,8 @@
     border-radius: 0;
     font-size: 1.2rem; }
   .gc-form .gc-input {
-    margin-top: 2rem;
-    margin-bottom: 5rem;
+    margin-bottom: 2.4rem;
+    margin-top: 5rem;
     display: block;
     width: 100%;
     position: relative;
@@ -68,7 +68,7 @@
     .gc-form .gc-input input[type='email'],
     .gc-form .gc-input input[type='date'] {
       padding: 0;
-      padding-bottom: 0.25rem;
+      padding-bottom: 1rem;
       padding-left: 0.5rem; }
     .gc-form .gc-input input[type='radio'],
     .gc-form .gc-input input[type='checkbox'] {
@@ -133,7 +133,7 @@
     .gc-form .gc-input .gc-input__textarea--large:focus + .gc-input__label--inline,
     .gc-form .gc-input input.gc-select__input:focus + .gc-input__label--inline,
     .gc-form .gc-input .gc-select__label--floated {
-      font-size: 1.2rem; }
+      font-size: 1.4rem; }
     .gc-form .gc-input:hover,
     .gc-form .gc-input input[type='text']:hover,
     .gc-form .gc-input input[type='url']:hover,
@@ -159,21 +159,20 @@
       color: #f59393;
       font-size: 1.2rem;
       text-align: right;
-      margin-top: 0.25rem;
+      margin-top: 1rem;
       position: absolute;
       right: 0; }
       .gc-form .gc-input .gc-input__error-msg.gc-input__error-msg--checkbox {
         text-align: left;
-        left: 5.5rem;
-        right: auto;
-        margin-top: 0; }
+        left: 0rem;
+        right: auto; }
     .gc-form .gc-input .gc-input__label {
+      color: #7a848e;
       position: absolute;
       margin-bottom: -1.5rem;
-      top: -1.375rem;
+      top: -3.5rem;
       left: 0;
-      font-size: 1.2rem;
-      color: #7a848e; }
+      font-size: 1.4rem; }
       .gc-form .gc-input .gc-input__label.gc-input__label--required:after, .gc-form .gc-input .gc-input__label.gc-input__label--required::after {
         content: '*';
         color: #b80c0c;
@@ -195,12 +194,12 @@
         left: 0; }
     .gc-form .gc-input .gc-input__label--inline {
       position: absolute;
-      top: 0.3rem;
-      font-size: 1.4rem;
+      top: 0;
+      font-size: 1.5rem;
       transition: 0.25s ease-in-out; }
     .gc-form .gc-input input:focus + .gc-input__label--inline,
     .gc-form .gc-input .gc-select input:focus + .gc-input__label--inline {
-      top: -1.375rem;
+      top: -3.5rem;
       font-size: 1.4rem;
       color: #43484c; }
     .gc-form .gc-input .gc-select__label--floated {

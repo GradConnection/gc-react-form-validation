@@ -64,8 +64,8 @@ $gc-form-input-bg: #ffffff !default;
   // INPUT STYLING
 
   .gc-input {
-    margin-top: 2rem;
-    margin-bottom: 5rem;
+    margin-bottom: 2.4rem;
+    margin-top: 5rem;
     display: block;
     width: 100%;
     position: relative;
@@ -114,7 +114,7 @@ $gc-form-input-bg: #ffffff !default;
     input[type='email'],
     input[type='date'] {
       padding: 0;
-      padding-bottom: 0.25rem;
+      padding-bottom: 1rem;
       padding-left: 0.5rem;
     }
 
@@ -195,7 +195,7 @@ $gc-form-input-bg: #ffffff !default;
     .gc-input__textarea--large:focus + .gc-input__label--inline,
     input.gc-select__input:focus + .gc-input__label--inline,
     .gc-select__label--floated {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
     }
 
     &:hover,
@@ -231,26 +231,25 @@ $gc-form-input-bg: #ffffff !default;
       color: $gc-form-light-red;
       font-size: 1.2rem;
       text-align: right;
-      margin-top: 0.25rem;
+      margin-top: 1rem;
       position: absolute;
       right: 0;
 
       &.gc-input__error-msg--checkbox {
         text-align: left;
-        left: 5.5rem;
+        left: 0rem;
         right: auto;
-        margin-top: 0;
       }
     }
 
     // LABEL
     .gc-input__label {
+      color: $gc-form-grey;
       position: absolute;
       margin-bottom: -1.5rem;
-      top: -1.375rem;
+      top: -3.5rem;
       left: 0;
-      font-size: 1.2rem;
-      color: $gc-form-grey;
+      font-size: 1.4rem;
 
       &.gc-input__label--required:after,
       &.gc-input__label--required::after {
@@ -281,14 +280,14 @@ $gc-form-input-bg: #ffffff !default;
 
     .gc-input__label--inline {
       position: absolute;
-      top: 0.3rem;
-      font-size: 1.4rem;
+      top: 0;
+      font-size: 1.5rem;
       transition: 0.25s ease-in-out;
     }
 
     input:focus + .gc-input__label--inline,
     .gc-select input:focus + .gc-input__label--inline {
-      top: -1.375rem;
+      top: -3.5rem;
       font-size: 1.4rem;
       color: $gc-form-dark-grey;
     }
