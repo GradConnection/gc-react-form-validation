@@ -16,7 +16,7 @@ class Form extends Component {
     super(props, context);
     this.state = {
       formSubmitted: false,
-      errorMessage: '',
+      errorMessage: ''
     };
   }
 
@@ -27,33 +27,32 @@ class Form extends Component {
   }
 
   getFields() {
-    return mapValues(this.props.data, d =>
-      (<Input
+    return mapValues(this.props.data, d => (
+      <Input
         {...d}
         onChange={this.props.handleInputChange}
         touchedByParent={this.state.formSubmitted}
         sendResultsToForm={r => this.validateForm(r)}
-      />));
+      />
+    ));
   }
 
   getErrorMessages() {
-    if(!isEmpty(this.state.errorMessage)) {
+    if (!isEmpty(this.state.errorMessage)) {
       return (
         <div className="gc-form__error-message">
           <p>{ReactHtmlParser(this.state.errorMessage)}</p>
         </div>
-      )
-    } else if (!isEmpty(this.props.submissionErrorMessages) && this.state.displayErrorMessage) {
-
+      );
+    } else if (
+      !isEmpty(this.props.submissionErrorMessages) &&
+      this.state.displayErrorMessage
+    ) {
       if (isArray(this.props.submissionErrorMessages)) {
-        const errorList = this.props.submissionErrorMessages.map( err => {
-          return <li key={uniqueId()}>{ReactHtmlParser(err)}</li>
+        const errorList = this.props.submissionErrorMessages.map(err => {
+          return <li key={uniqueId()}>{ReactHtmlParser(err)}</li>;
         });
-        return (
-          <ul className="gc-form__error-message">
-          {errorList}
-          </ul>
-        );
+        return <ul className="gc-form__error-message">{errorList}</ul>;
       }
     }
   }
@@ -71,11 +70,12 @@ class Form extends Component {
       if (GCFormCounter === dataKeys.length) {
         this.props.onSubmit();
         this.setState({
-          errorMessage: "",
+          errorMessage: ''
         });
       } else {
         this.setState({
-          errorMessage: "Please make sure that you have filled in the fields correctly",
+          errorMessage:
+            'Please make sure that you have filled in the fields correctly'
         });
       }
       GCFormCounter = 0;
@@ -91,7 +91,9 @@ class Form extends Component {
   render() {
     return (
       <form
-        ref={form => { this.gcForm = form; }}
+        ref={form => {
+          this.gcForm = form;
+        }}
         className={`gc-form ${this.props.extendedClassNames}`}
         onSubmit={e => this.submitForm(e)}
       >
@@ -107,11 +109,14 @@ Form.propTypes = {
   children: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  submissionErrorMessages: PropTypes.array,
+  submissionErrorMessages: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.string
+  ])
 };
 
 Form.defaultProps = {
-  submissionErrorMessages: [],
-}
+  submissionErrorMessages: []
+};
 
 export default Form;

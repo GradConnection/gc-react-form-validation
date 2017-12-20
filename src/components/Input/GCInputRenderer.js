@@ -6,10 +6,23 @@ import GCSelect from './GCSelect';
 import GCMultiSelect from './GCMultiSelect';
 import GCInputLabel from './GCInputLabel';
 
-export default function GCInputRenderer({validationMessage, validateInput, handleChange}, ...props) {
+export default function GCInputRenderer(
+  { validationMessage, validateInput, handleChange },
+  ...props
+) {
   const hat = arguments[0];
-  const { name, disabled, type, value, min, max, title, multi, size} = arguments[0];
-  const determineType = (type) => {
+  const {
+    name,
+    disabled,
+    type,
+    value,
+    min,
+    max,
+    title,
+    multi,
+    size
+  } = arguments[0];
+  const determineType = type => {
     let inputType;
     switch (type) {
       case 'name':
@@ -51,14 +64,15 @@ export default function GCInputRenderer({validationMessage, validateInput, handl
         break;
     }
     return inputType;
-  }
+  };
 
-    const invalidClass = validationMessage ? 'gc-input--invalid' : '';
-    const disabledClass = disabled ? 'gc-input--disabled' : '';
+  const invalidClass = validationMessage ? 'gc-input--invalid' : '';
+  const disabledClass = disabled ? 'gc-input--disabled' : '';
 
-    if (type === 'textarea') {
-      const textareaClass = `gc-input__textarea--${size}`;
-      return (<textarea
+  if (type === 'textarea') {
+    const textareaClass = `gc-input__textarea--${size}`;
+    return (
+      <textarea
         className={`${invalidClass} ${disabledClass} ${textareaClass}`}
         disabled={disabled}
         name={name}
@@ -68,29 +82,39 @@ export default function GCInputRenderer({validationMessage, validateInput, handl
         min={min}
         max={max}
         title={title}
-      />);
-    } else if (type === 'radio') {
-      return (<GCRadio {...arguments[0]} onChange={v => handleChange(v)} />);
-    } else if (type === 'checkbox') {
-      return (<GCCheckbox {...arguments[0]} invalidClass={`${invalidClass}`} onChange={v => handleChange(v)} />);
-    } else if (type === 'select' && multi) {
-      return (
-        <GCMultiSelect
-          {...arguments[0]}
-          onChange={v => handleChange(v)}
-          validateInput={() => validateInput()}
-          dynamicClasses={`${invalidClass} ${disabledClass}`}
-        />);
-    } else if (type === 'select' && !multi) {
-      return (
-        <GCSelect
-          {...arguments[0]}
-          onChange={v => handleChange(v)}
-          validateInput={() => validateInput()}
-          dynamicClasses={`${invalidClass} ${disabledClass}`}
-        />);
-    } else if (type === 'number') {
-      return (<input
+      />
+    );
+  } else if (type === 'radio') {
+    return <GCRadio {...arguments[0]} onChange={v => handleChange(v)} />;
+  } else if (type === 'checkbox') {
+    return (
+      <GCCheckbox
+        {...arguments[0]}
+        invalidClass={`${invalidClass}`}
+        onChange={v => handleChange(v)}
+      />
+    );
+  } else if (type === 'select' && multi) {
+    return (
+      <GCMultiSelect
+        {...arguments[0]}
+        onChange={v => handleChange(v)}
+        validateInput={() => validateInput()}
+        dynamicClasses={`${invalidClass} ${disabledClass}`}
+      />
+    );
+  } else if (type === 'select' && !multi) {
+    return (
+      <GCSelect
+        {...arguments[0]}
+        onChange={v => handleChange(v)}
+        validateInput={() => validateInput()}
+        dynamicClasses={`${invalidClass} ${disabledClass}`}
+      />
+    );
+  } else if (type === 'number') {
+    return (
+      <input
         className={`${invalidClass} ${disabledClass}`}
         disabled={disabled}
         name={name}
@@ -101,23 +125,24 @@ export default function GCInputRenderer({validationMessage, validateInput, handl
         max={max}
         title={title}
         defaultValue={value}
-      />);
-    } else {
-      return (
-        <input
-          className={`${invalidClass} ${disabledClass}`}
-          disabled={disabled}
-          name={name}
-          type={determineType(type)}
-          value={value}
-          onBlur={() => validateInput()}
-          onInput={e => handleChange(e.target.value)}
-          onChange={e => handleChange(e.target.value)}
-          maxLength={max}
-          min={min}
-          max={max}
-          title={title}
-        />);
-    }
-
+      />
+    );
+  } else {
+    return (
+      <input
+        className={`${invalidClass} ${disabledClass}`}
+        disabled={disabled}
+        name={name}
+        type={determineType(type)}
+        value={value}
+        onBlur={() => validateInput()}
+        onInput={e => handleChange(e.target.value)}
+        onChange={e => handleChange(e.target.value)}
+        maxLength={max}
+        min={min}
+        max={max}
+        title={title}
+      />
+    );
+  }
 }

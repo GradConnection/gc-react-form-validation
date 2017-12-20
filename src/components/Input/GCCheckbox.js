@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import uniqueId from 'lodash/uniqueId';
 
+import GCInputLabel from './GCInputLabel';
+
 class GCCheckbox extends Component {
   matchValues(arr, value) {
     if (this.props.options.length === 0) {
@@ -71,9 +73,10 @@ class GCCheckbox extends Component {
             onChange={(e, v) => this.handleChange(e, opt.value)}
             checked={this.matchValues(props.value, opt.value)}
             disabled={this.props.disabled}
+            readOnly
           />
           <label
-            className={`gc-input__label gc-input__label--checkbox`}
+            className={`gc-input__label gc-input__label--checkbox gc-input__label--checkbox-group`}
             htmlFor={props.name}
           >
             {opt.label}
@@ -109,6 +112,7 @@ class GCCheckbox extends Component {
             title={props.title}
             checked={props.value}
             disabled={this.props.disabled}
+            readOnly
           />
         </div>
       );

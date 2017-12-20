@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import GCInputRenderer from './GCInputRenderer';
-import GCRadio from './GCRadio';
-import GCCheckbox from './GCCheckbox';
-import GCSelect from './GCSelect';
-import GCMultiSelect from './GCMultiSelect';
 import GCInputLabel from './GCInputLabel';
 import GCTooltip from './GCTooltip';
 
@@ -310,7 +306,6 @@ class Input extends Component {
               {...this.props}
             />
           </GCInputLabel>
-
           {/*
             <GCTooltip content={this.props.tooltip} />
           */}

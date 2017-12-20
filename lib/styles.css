@@ -164,7 +164,7 @@
       right: 0; }
       .gc-form .gc-input .gc-input__error-msg.gc-input__error-msg--checkbox {
         text-align: left;
-        left: 2.5rem;
+        left: 5.5rem;
         right: auto;
         margin-top: 0; }
     .gc-form .gc-input .gc-input__label {
@@ -187,10 +187,12 @@
         display: inline-block;
         vertical-align: middle;
         top: -1px;
-        left: 0;
+        left: -2rem;
         margin: 0;
         margin-left: 1rem;
         max-width: calc(100% - 4rem); }
+      .gc-form .gc-input .gc-input__label.gc-input__label--checkbox-group {
+        left: 0; }
     .gc-form .gc-input .gc-input__label--inline {
       position: absolute;
       top: 0.3rem;

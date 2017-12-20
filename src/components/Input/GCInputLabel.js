@@ -3,19 +3,27 @@ import isEmpty from 'lodash/isEmpty';
 
 import ReactHtmlParser from 'react-html-parser';
 
-export default function GCInputLabel({title, required, name, value, type, exception, children}) {
+export default function GCInputLabel({
+  title,
+  required,
+  name,
+  value,
+  type,
+  exception,
+  children
+}) {
   const inlineClass = isEmpty(value) ? 'gc-input__label--inline' : '';
   const requiredClass = required ? 'gc-input__label--required' : '';
   const selectClass = exception === 'select' ? 'gc-select__label' : '';
-  const floatingLabel = type !== 'radio'
-    && type !== 'date'
-    && type !== 'range'
-    && type !== 'select'
-    && type !== 'textarea'
-    && type !== 'checkbox';
-  const staticLabel = type === 'date'
-    || type === 'range'
-    || type === 'textarea';
+  const floatingLabel =
+    type !== 'radio' &&
+    type !== 'date' &&
+    type !== 'range' &&
+    type !== 'select' &&
+    type !== 'textarea' &&
+    type !== 'checkbox';
+  const staticLabel =
+    type === 'date' || type === 'range' || type === 'textarea';
 
   if (!isEmpty(title) && type !== 'select') {
     if (staticLabel) {
@@ -23,30 +31,35 @@ export default function GCInputLabel({title, required, name, value, type, except
         <div>
           <label
             className={`gc-input__label ${requiredClass} ${selectClass}`}
-            htmlFor={name}>
+            htmlFor={name}
+          >
             {ReactHtmlParser(title)}
           </label>
           {children}
         </div>
       );
     } else if (floatingLabel) {
-      return(
+      return (
         <div>
           {children}
           <label
             className={`gc-input__label ${inlineClass} ${requiredClass}`}
-            htmlFor={name}>
+            htmlFor={name}
+          >
             {ReactHtmlParser(title)}
           </label>
         </div>
       );
     } else if (type === 'checkbox') {
-      return(
+      return (
         <div>
           {children}
           <label
-            className={`gc-input__label gc-input__label--checkbox ${requiredClass} ${selectClass}`}
-            htmlFor={name}>
+            className={`gc-input__label gc-input__label--checkbox ${
+              requiredClass
+            } ${selectClass}`}
+            htmlFor={name}
+          >
             {ReactHtmlParser(title)}
           </label>
         </div>
@@ -54,4 +67,4 @@ export default function GCInputLabel({title, required, name, value, type, except
     }
   }
   return children;
-};
+}
