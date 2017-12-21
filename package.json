@@ -1,14 +1,16 @@
 {
   "name": "gc-react-form-validation",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "",
   "main": "lib/index.js",
   "author": "chrisnyman",
   "license": "ISC",
   "scripts": {
     "clean": "rm -rf build",
-    "build:scripts": "cd ./src && NODE_ENV=production babel -d ../lib ./**/*.js",
-    "build:styles": "cp ./postcss.config.js ./src/styles.scss lib/ && NODE_ENV=production node-sass < src/styles.scss > ./lib/styles.css",
+    "build:scripts":
+      "cd ./src && NODE_ENV=production babel -d ../lib ./**/*.js",
+    "build:styles":
+      "cp ./postcss.config.js ./src/styles.scss lib/ && NODE_ENV=production node-sass < src/styles.scss > ./lib/styles.css",
     "build": "npm run clean && npm run build:scripts && npm run build:styles"
   },
   "dependencies": {
