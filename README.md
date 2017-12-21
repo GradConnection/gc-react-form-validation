@@ -1,12 +1,16 @@
 # GC React form-validation
 
 This library has two components
+
 1. Input
 2. Form
 
-Input can be used separately from the Form component, while the Form component makes use of the Input component.
+Input can be used separately from the Form component, while the Form component
+makes use of the Input component.
 
-Form checks to see whether all the Inputs have been passed validation and submits the form accordingly. At the moment custom inputs are not supported, as form data needs to be in the object to be validated.
+Form checks to see whether all the Inputs have been passed validation and
+submits the form accordingly. At the moment custom inputs are not supported, as
+form data needs to be in the object to be validated.
 
 Input
 
@@ -20,9 +24,13 @@ npm install gc-react-form-validation
 
 ### Styles
 
-gc-react-form-validation exposes the stylesheets as both the original scss form (`lib/styles.scss`) and the processed css form (`lib/styles.css`). Import either in whichever way makes sense for your own project (e.g. via a webpack loader, or via a scss entry point).
+gc-react-form-validation exposes the stylesheets as both the original scss form
+(`lib/styles.scss`) and the processed css form (`lib/styles.css`). Import either
+in whichever way makes sense for your own project (e.g. via a webpack loader, or
+via a scss entry point).
 
 Below are variables available to override colour pallette:
+
 ```scss
 $gc-form-primary-colour: #e8bddb;
 $gc-form-light-grey: #f2f3f4;
@@ -34,6 +42,7 @@ $gc-form-light-red: #f59393;
 ```
 
 To change the font edit this variable:
+
 ```scss
 $gc-form-font: 'Andale Mono', Tahoma !default;
 ```
@@ -153,6 +162,7 @@ render() {
     <div>
       <Form
         data={formFields}
+        formRef={form => this.formElement = form}
         extendedClassNames="custom-classes"
         submissionErrorMessages={this.state.serverErrors} // For displaying errors after submission
         onSubmit={() => this.formSubmitted()}
@@ -173,13 +183,11 @@ render() {
     </div>
   );
 }
-
 ```
 
 If you want to use the Input component separately
 
 ```js
-
 import { Input } from 'gc-react-form-validation';
 
 ...
@@ -196,21 +204,23 @@ import { Input } from 'gc-react-form-validation';
 ```
 
 ### Props
+
 Some more props you can use.
 
-| Property | Definition                             | Required | Options   |
-|----------|:---------------------------------------|:---------|:----------|
-| type     | Determines the type of validation and type of input to render | Required | text, email, password, date, range, name, textarea, select |
-| stateName | Accepts state variables to change the input | Required | |
-| onChange | Pass function to control value. | Required | |
-| extendedClassNames | CSS class for adding custom styling. | Not required | |
-| value |  Accepts values for input | Not required | |
-| disabled | When disabled is `false` the input field is disabled | Not required |  true, false|
-| name | Requirement for input element | Not required for component render |  |
-| placeholder | Placeholder text | Not required | |
-| maxLength | Maximum character length | Not required | |
-| minLength | Minimum character length | Not required | |
-| maxDate   | Latest date, accepts date object | Not required  | |
-| minDate   | Earliest date, accepts date object | Not required | |
-| max       | Highest accepted number | Not required | |
-| min       | Lowest accepted number | Not required |  |
+| Property           | Definition                                                    | Required                          | Options                                                    |
+| ------------------ | :------------------------------------------------------------ | :-------------------------------- | :--------------------------------------------------------- |
+| type               | Determines the type of validation and type of input to render | Required                          | text, email, password, date, range, name, textarea, select |
+| stateName          | Accepts state variables to change the input                   | Required                          |                                                            |
+| onChange           | Pass function to control value.                               | Required                          |                                                            |
+| extendedClassNames | CSS class for adding custom styling.                          | Not required                      |                                                            |
+| value              | Accepts values for input                                      | Not required                      |                                                            |
+| disabled           | When disabled is `false` the input field is disabled          | Not required                      | true, false                                                |
+| name               | Requirement for input element                                 | Not required for component render |                                                            |
+| placeholder        | Placeholder text                                              | Not required                      |                                                            |
+| maxLength          | Maximum character length                                      | Not required                      |                                                            |
+| minLength          | Minimum character length                                      | Not required                      |                                                            |
+| maxDate            | Latest date, accepts date object                              | Not required                      |                                                            |
+| minDate            | Earliest date, accepts date object                            | Not required                      |                                                            |
+| max                | Highest accepted number                                       | Not required                      |                                                            |
+| min                | Lowest accepted number                                        | Not required                      |                                                            |
+| autocomplete       | Information for browser autocomplete                          | Not required                      |                                                            |
