@@ -93,9 +93,7 @@ class Form extends Component {
   render() {
     return (
       <form
-        ref={form => {
-          this.gcForm = form;
-        }}
+        ref={this.props.formRef}
         className={`gc-form ${this.props.extendedClassNames}`}
         onSubmit={e => this.submitForm(e)}
       >
@@ -108,6 +106,7 @@ class Form extends Component {
 
 Form.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
+  formRef: PropTypes.func,
   children: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,

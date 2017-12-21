@@ -20,7 +20,8 @@ export default function GCInputRenderer(
     max,
     title,
     multi,
-    size
+    size,
+    autocomplete
   } = arguments[0];
   const determineType = type => {
     let inputType;
@@ -82,6 +83,7 @@ export default function GCInputRenderer(
         min={min}
         max={max}
         title={title}
+        autoComplete={autocomplete}
       />
     );
   } else if (type === 'radio') {
@@ -125,6 +127,7 @@ export default function GCInputRenderer(
         max={max}
         title={title}
         defaultValue={value}
+        autoComplete={autocomplete}
       />
     );
   } else {
@@ -142,6 +145,7 @@ export default function GCInputRenderer(
         min={min}
         max={max}
         title={title}
+        autoComplete={autocomplete}
       />
     );
   }

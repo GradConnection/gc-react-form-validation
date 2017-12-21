@@ -360,7 +360,8 @@ Input.propTypes = {
   isVisible: PropTypes.bool,
   multi: PropTypes.bool,
   search: PropTypes.bool,
-  tooltip: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+  tooltip: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  autocomplete: PropTypes.string
 };
 
 Input.defaultProps = {
@@ -389,7 +390,8 @@ Input.defaultProps = {
   isVisible: true,
   multi: false,
   search: false,
-  tooltip: null
+  tooltip: null,
+  autocomplete: ''
 };
 
 export default Input;
