@@ -72,6 +72,10 @@ $gc-form-input-bg: #ffffff !default;
     box-sizing: border-box;
     font-size: 1.4rem;
 
+    &.gc-input--checkbox {
+      margin-top: 1rem;
+    }
+
     input {
       border: none;
       border-radius: 0;

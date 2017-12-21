@@ -32,6 +32,8 @@
     position: relative;
     box-sizing: border-box;
     font-size: 1.4rem; }
+    .gc-form .gc-input.gc-input--checkbox {
+      margin-top: 1rem; }
     .gc-form .gc-input input {
       border: none;
       border-radius: 0;

@@ -291,7 +291,11 @@ class Input extends Component {
       this.props.type === 'checkbox' ? 'gc-input__error-msg--checkbox' : '';
     if (this.props.isVisible) {
       return (
-        <div className={`gc-input ${this.props.extendedClassNames}`}>
+        <div
+          className={`gc-input gc-input--${this.props.type} ${
+            this.props.extendedClassNames
+          }`}
+        >
           <GCInputLabel
             title={this.props.title}
             value={this.props.value}
