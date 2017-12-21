@@ -397,7 +397,7 @@
       .gc-form .gc-input .gc-select .gc-select__drop-down__option--no-results {
         font-style: italic;
         color: #aaa;
-        font-size: 0.9rem; }
+        font-size: 1.2rem; }
       .gc-form .gc-input .gc-select .gc-select__drop-down__option--disabled {
         color: #aaa;
         pointer-events: none; }

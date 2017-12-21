@@ -70,7 +70,9 @@ class Form extends Component {
       if (GCFormCounter === dataKeys.length) {
         this.props.onSubmit();
         this.setState({
-          errorMessage: ''
+          errorMessage: isEmpty(this.props.submissionErrorMessages)
+            ? ''
+            : this.props.submissionErrorMessages
         });
       } else {
         this.setState({
