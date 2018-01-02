@@ -60,6 +60,9 @@ export default function GCInputRenderer(
       case 'select':
         inputType = 'select';
         break;
+      case 'custom':
+        inputType = 'hidden';
+        break;
       default:
         inputType = 'text';
         break;

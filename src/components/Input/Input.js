@@ -221,6 +221,7 @@ class Input extends Component {
         case 'name':
           error = this.validateName(props.value);
           break;
+        case 'custom':
         case 'text':
           error = this.validateText(props.value);
           break;
