@@ -23,7 +23,7 @@ class Input extends Component {
               value={opt.value}
               name={props.name}
               title={props.title}
-              checked={props.value === opt.value}
+              defaultChecked={props.value === opt.value}
             />
             <span className="gc-radio__btn-visible" />
           </span>

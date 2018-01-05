@@ -75,6 +75,7 @@ $gc-form-input-bg: #ffffff !default;
 
   &.gc-input--checkbox {
     margin-top: 1rem;
+    min-height: 1.5rem;
   }
 
   &.gc-input--custom {
@@ -134,6 +135,7 @@ $gc-form-input-bg: #ffffff !default;
     height: 1.5rem;
     margin-right: 1rem;
     position: relative;
+    min-height: 1.5rem;
   }
 
   .gc-form__checkbox {
@@ -152,8 +154,8 @@ $gc-form-input-bg: #ffffff !default;
       content: '\2714';
       display: block;
       position: absolute;
-      left: 4px;
-      top: 1px;
+      left: 2px;
+      height: 1rem;
       z-index: 10;
     }
   }
@@ -165,10 +167,11 @@ $gc-form-input-bg: #ffffff !default;
     position: relative;
     left: 0;
     top: 0;
-    height: 2rem;
-    width: 2rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    box-sizing: border-box;
     border: solid 1px $gc-form-grey;
-    border-radius: 2px;
+    border-radius: 1px;
     background-color: $gc-form-input-bg;
     z-index: 5;
 
@@ -273,8 +276,8 @@ $gc-form-input-bg: #ffffff !default;
       position: relative;
       display: inline-block;
       vertical-align: middle;
-      top: -1px;
-      left: -2rem;
+      top: 1px;
+      left: -1rem;
       margin: 0;
       margin-left: 1rem;
       max-width: calc(100% - 5.2rem);
