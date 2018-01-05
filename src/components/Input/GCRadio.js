@@ -1,39 +1,49 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { uniqueId } from 'lodash';
 
 class Input extends Component {
   renderRadioOpts() {
     const props = this.props;
-    return props.options.map((opt) => {
-      const d = new Date();
-      const uid = d.getTime() * 2;
+    return props.options.map(opt => {
       return (
-        <div>
-          <input
-            type="radio"
-            value={opt.value}
-            key={uid}
-            name={props.name}
-            title={props.title}
-            checked={props.value === opt.value}
-            onChange={e => this.handleChange(e)}
-          />
-          {opt.label}
-        </div>
+        <label
+          key={uniqueId()}
+          className="gc-radio__option"
+          htmlFor={props.name}
+        >
+          <span
+            className="gc-radio__btn"
+            role="radio"
+            onClick={e => this.handleChange(e, opt.value)}
+          >
+            <input
+              className="gc-radio__btn-hidden"
+              type="radio"
+              value={opt.value}
+              name={props.name}
+              title={props.title}
+              checked={props.value === opt.value}
+            />
+            <span className="gc-radio__btn-visible" />
+          </span>
+
+          <span className="gc-input__label gc-radio__label">{opt.label}</span>
+        </label>
       );
     });
   }
 
-  handleChange(e) {
-    if(e.target.value === this.props.value && !this.props.required) {
-      this.props.onChange("");
+  handleChange(e, value) {
+    e.preventDefault();
+    if (e.target.value === this.props.value && !this.props.required) {
+      this.props.onChange('');
     } else {
-      this.props.onChange(e.target.value);
+      this.props.onChange(value);
     }
   }
 
   render() {
-    // const invalidClass = this.state.validationMessage ? 'gc-input--invalid' : '';
     const disabledClass = this.props.disabled ? 'gc-input--disabled' : '';
     return (
       <div className={`${disabledClass} ${this.props.extendedClass}`}>
@@ -45,10 +55,7 @@ class Input extends Component {
 
 Input.propTypes = {
   extendedClass: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-  ]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   stateName: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   name: PropTypes.string,
@@ -57,7 +64,7 @@ Input.propTypes = {
   touchedByParent: PropTypes.bool,
   sendResultsToForm: PropTypes.func,
   options: PropTypes.array,
-  title: PropTypes.string,
+  title: PropTypes.string
 };
 
 Input.defaultProps = {
@@ -70,7 +77,7 @@ Input.defaultProps = {
   touchedByParent: false,
   sendResultsToForm: null,
   options: [],
-  title: null,
+  title: null
 };
 
 export default Input;
