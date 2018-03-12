@@ -282,7 +282,7 @@ class Input extends Component {
   }
 
   handleChange(v) {
-    if (!this.props.disabled) {
+    if (!this.props.disabled || !this.props.loading) {
       this.props.onChange(v, this.props.stateName);
     }
   }
@@ -303,11 +303,14 @@ class Input extends Component {
             name={this.props.name}
             type={this.props.type}
             required={this.props.required}
+            disabled={this.props.loading || this.props.disabled}
           >
             <GCInputRenderer
               validateInput={() => this.validateInput()}
               handleChange={v => this.handleChange(v)}
               validationMessage={this.state.validationMessage}
+              disabled={this.props.loading || this.props.disabled}
+              autocomplete={this.props.type}
               {...this.props}
             />
           </GCInputLabel>
@@ -366,7 +369,8 @@ Input.propTypes = {
   multi: PropTypes.bool,
   search: PropTypes.bool,
   tooltip: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  autocomplete: PropTypes.string
+  autocomplete: PropTypes.string,
+  loading: PropTypes.bool
 };
 
 Input.defaultProps = {
@@ -396,7 +400,8 @@ Input.defaultProps = {
   multi: false,
   search: false,
   tooltip: null,
-  autocomplete: ''
+  autocomplete: '',
+  loading: false
 };
 
 export default Input;

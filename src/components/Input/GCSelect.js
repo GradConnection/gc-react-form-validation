@@ -19,6 +19,15 @@ class GCSelect extends Component {
       index: -1,
       selection: this.getValue(props.options, this.props.value) || ''
     };
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('click', this.handleClose);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.handleClose);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -39,6 +48,25 @@ class GCSelect extends Component {
       nextProps.dynamicClasses !== this.props.dynamicClasses ||
       nextState.index !== this.state.index
     );
+  }
+
+  handleClose(e) {
+    e.preventDefault();
+    if (!this.props.accordian) {
+      if (this.state.isActive && !this[this.props.name].contains(e.target)) {
+        this.setState({
+          isActive: false,
+          searchActive: false,
+          searchTxt: ''
+        });
+      }
+    } else if (
+      this[this.props.name].classList.contains('gc-select--open') &&
+      !this[this.props.name].contains(e.target)
+    ) {
+      this[this.props.name].classList.remove('gc-select--open');
+      this[this.props.name].classList.add('gc-select--close');
+    }
   }
 
   getOpts(options) {
@@ -122,27 +150,55 @@ class GCSelect extends Component {
 
   handleChange(v, disabled = false) {
     if (!disabled) {
-      this.props.onChange(v);
-      this.setState(
-        {
-          isActive: false,
-          index: -1
-        },
-        () => this.props.validateInput()
-      );
+      if (this.props.accordian) {
+        this[this.props.name].classList.remove('gc-select--open');
+        this[this.props.name].classList.add('gc-select--close');
+        this.props.onChange(v);
+        setTimeout(() => {
+          this.props.validateInput();
+        }, 50);
+      } else {
+        this.props.onChange(v);
+        this.setState(
+          {
+            isActive: false,
+            index: -1
+          },
+          () => this.props.validateInput()
+        );
+      }
     }
   }
 
-  dropDownList(shouldOpen, e) {
+  dropDownList(shouldOpen, e, must = false) {
     e.preventDefault();
-    if (!shouldOpen) {
-      setTimeout(
-        () =>
-          this.setState({ isActive: false }, () => this.props.validateInput()),
-        50
-      );
+    if (this.props.accordian) {
+      if (
+        (shouldOpen && must) ||
+        (this[this.props.name].classList.contains('gc-select--close') && !must)
+      ) {
+        this[this.props.name].classList.add('gc-select--open');
+        this[this.props.name].classList.remove('gc-select--close');
+      } else if (
+        (!shouldOpen && must) ||
+        (this[this.props.name].classList.contains('gc-select--open') && !must)
+      ) {
+        this[this.props.name].classList.remove('gc-select--open');
+        this[this.props.name].classList.add('gc-select--close');
+        this.props.validateInput();
+      }
     } else {
-      this.setState({ isActive: true });
+      if (!shouldOpen) {
+        setTimeout(
+          () =>
+            this.setState({ isActive: false }, () =>
+              this.props.validateInput()
+            ),
+          50
+        );
+      } else {
+        this.setState({ isActive: true });
+      }
     }
   }
 
@@ -204,10 +260,16 @@ class GCSelect extends Component {
     const activeClass = this.state.isActive ? '' : 'gc-select--inactive';
     const floatLabel = !this.state.isActive && !isEmpty(this.props.value);
     const requiredLabelClass = !floatLabel ? requiredClass : '';
+
     return (
       <div
-        className={`gc-select ${this.props.dynamicClasses}`}
-        onBlur={() => this.dropDownList(false)}
+        className={`gc-select ${this.props.dynamicClasses} ${
+          this.props.accordian ? 'gc-select--accordian gc-select--close' : ''
+        }`}
+        ref={select => {
+          this[this.props.name] = select;
+        }}
+        key={`gc-selectList${this.props.name}`}
       >
         <div
           className={`gc-select__label-container ${activeClass}`}
@@ -225,13 +287,13 @@ class GCSelect extends Component {
           {this.state.isActive ? (
             <GCInputSVG
               type="chevronUp"
-              onMouseDown={() => this.dropDownList(false)}
+              onMouseDown={e => this.dropDownList(false, e, true)}
               className="gc-select__input-icon gc-multi-select__icon"
             />
           ) : (
             <GCInputSVG
               type="chevronDown"
-              onMouseDown={() => this.dropDownList(true)}
+              onMouseDown={e => this.dropDownList(true, e, true)}
               className="gc-select__input-icon gc-multi-select__icon"
             />
           )}
@@ -246,6 +308,27 @@ class GCSelect extends Component {
           >
             {this.props.title}
           </label>
+        )}
+
+        {this.props.accordian && (
+          <ul className="gc-select__drop-down">
+            {this.props.search && (
+              <li className="gc-select__searchbar">
+                <input
+                  name={`searchTxt${this.props.name}`}
+                  title={`Search ${this.props.name}`}
+                  autoFocus={true}
+                  placeholder="Start typing to search"
+                  value={this.state.searchTxt}
+                  onKeyDown={e => this.handleEnter(e)}
+                  onKeyUp={e => this.handleKeyPress(e)}
+                  onChange={e => this.handleSearch(e)}
+                />
+              </li>
+            )}
+            {!isEmpty(this.props.value) && this.renderActiveItem()}
+            {this.renderOptions(this.props.options)}
+          </ul>
         )}
 
         {this.state.isActive && (

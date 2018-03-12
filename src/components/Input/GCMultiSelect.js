@@ -5,6 +5,7 @@ import uniqueId from 'lodash/uniqueId';
 import isArray from 'lodash/isArray';
 import filter from 'lodash/filter';
 import without from 'lodash/without';
+import get from 'lodash/get';
 
 import GCInputLabel from './GCInputLabel';
 import GCInputSVG from './GCInputSVG';
@@ -20,6 +21,16 @@ class GCMultiSelect extends Component {
       keyCode: '',
       selection: this.getValue(props.options, this.props.value) || ''
     };
+
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('click', this.handleClose);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.handleClose);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,6 +54,17 @@ class GCMultiSelect extends Component {
       nextProps.dynamicClasses !== this.props.dynamicClasses ||
       nextState.index !== this.state.index
     );
+  }
+
+  handleClose(e) {
+    e.preventDefault();
+    if (this.state.isActive && !this.multiSelect.contains(e.target)) {
+      this.setState({
+        isActive: false,
+        searchActive: false,
+        searchTxt: ''
+      });
+    }
   }
 
   getOpts(options) {
@@ -263,6 +285,10 @@ class GCMultiSelect extends Component {
     }
   }
 
+  removeAll() {
+    this.handleChange([]);
+  }
+
   deleteFromArray(value) {
     const newValueArray = without(this.props.value, value);
     this.handleChange(newValueArray);
@@ -274,7 +300,12 @@ class GCMultiSelect extends Component {
       : '';
     const activeClass = this.state.isActive ? '' : 'gc-select--inactive';
     return (
-      <div className={`gc-select ${this.props.dynamicClasses}`}>
+      <div
+        className={`gc-select ${this.props.dynamicClasses}`}
+        ref={select => {
+          this.multiSelect = select;
+        }}
+      >
         <div
           className={`gc-select__label-container ${activeClass}`}
           onMouseDown={() => this.dropDownList(!this.state.isActive)}
@@ -288,7 +319,13 @@ class GCMultiSelect extends Component {
 
           {this.props.value.length > 0 && (
             <div className="gc-select__option-count">
-              {this.props.value.length}
+              <span className="gc-select__option-count--text">
+                {this.props.value.length}
+              </span>
+              <div
+                className="gc-select__cross"
+                onMouseDown={() => this.removeAll()}
+              />
             </div>
           )}
 
@@ -308,7 +345,11 @@ class GCMultiSelect extends Component {
         </div>
 
         {this.state.isActive && (
-          <ul className="gc-select__drop-down">
+          <ul
+            className={`gc-select__drop-down ${
+              this.props.accordian ? 'gc-select--accordian' : ''
+            }`}
+          >
             {this.props.search && (
               <li className="gc-select__searchbar">
                 <input

@@ -1,11 +1,39 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { uniqueId } from 'lodash';
+import { uniqueId, get } from 'lodash';
 
 class Input extends Component {
   renderRadioOpts() {
     const props = this.props;
-    return props.options.map(opt => {
+    if (get(this.props, 'options').length > 0) {
+      return props.options.map(opt => {
+        return (
+          <label
+            key={uniqueId()}
+            className="gc-radio__option"
+            htmlFor={props.name}
+          >
+            <span
+              className="gc-radio__btn"
+              role="radio"
+              onClick={e => this.handleChange(e, opt.value)}
+            >
+              <input
+                className="gc-radio__btn-hidden"
+                type="radio"
+                value={opt.value}
+                name={props.name}
+                title={props.title}
+                defaultChecked={props.value === opt.value}
+              />
+              <span className="gc-radio__btn-visible" />
+            </span>
+
+            <span className="gc-input__label gc-radio__label">{opt.label}</span>
+          </label>
+        );
+      });
+    } else {
       return (
         <label
           key={uniqueId()}
@@ -15,23 +43,23 @@ class Input extends Component {
           <span
             className="gc-radio__btn"
             role="radio"
-            onClick={e => this.handleChange(e, opt.value)}
+            onClick={e => this.handleChange(e, !props.value)}
           >
             <input
               className="gc-radio__btn-hidden"
               type="radio"
-              value={opt.value}
+              value={props.value}
               name={props.name}
               title={props.title}
-              defaultChecked={props.value === opt.value}
+              defaultChecked={props.value}
             />
             <span className="gc-radio__btn-visible" />
           </span>
 
-          <span className="gc-input__label gc-radio__label">{opt.label}</span>
+          <span className="gc-input__label gc-radio__label">{props.title}</span>
         </label>
       );
-    });
+    }
   }
 
   handleChange(e, value) {

@@ -72,7 +72,6 @@ export default function GCInputRenderer(
 
   const invalidClass = validationMessage ? 'gc-input--invalid' : '';
   const disabledClass = disabled ? 'gc-input--disabled' : '';
-
   if (type === 'textarea') {
     const textareaClass = `gc-input__textarea--${size}`;
     return (
