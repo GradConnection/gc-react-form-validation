@@ -12,7 +12,8 @@ class Input extends Component {
     super(props, context);
     this.state = {
       validationMessage: null,
-      touchedByParent: props.touchedByParent
+      touchedByParent: props.touchedByParent,
+      activeInput: false
     };
   }
 
@@ -182,6 +183,13 @@ class Input extends Component {
     return res;
   }
 
+  validateSelect(value, open) {
+    if (this.props.multi) {
+      return this.validateCheckbox(value);
+    }
+    return null;
+  }
+
   validateCheckbox(value) {
     let res = null;
 
@@ -207,7 +215,7 @@ class Input extends Component {
     );
   }
 
-  validateInput() {
+  validateInput(open) {
     const props = this.props;
     let error = null;
     if (this.isEmpty(props.value) && props.isVisible) {
@@ -239,6 +247,8 @@ class Input extends Component {
         case 'url':
           error = this.validateUrl(props.value);
           break;
+        case 'select':
+          error = this.validateSelect(props.value, open);
         case 'range':
         default:
           error = null;
@@ -253,7 +263,8 @@ class Input extends Component {
     }
     this.setState({
       validationMessage: error,
-      touchedByParent: false
+      touchedByParent: false,
+      activeInput: open
     });
   }
 
@@ -306,11 +317,12 @@ class Input extends Component {
             disabled={this.props.loading || this.props.disabled}
           >
             <GCInputRenderer
-              validateInput={() => this.validateInput()}
+              validateInput={open => this.validateInput(open)}
               handleChange={v => this.handleChange(v)}
               validationMessage={this.state.validationMessage}
               disabled={this.props.loading || this.props.disabled}
               autocomplete={this.props.type}
+              activeInput={this.state.activeInput}
               {...this.props}
             />
           </GCInputLabel>

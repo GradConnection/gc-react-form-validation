@@ -207,20 +207,22 @@ import { Input } from 'gc-react-form-validation';
 
 Some more props you can use.
 
-| Property           | Definition                                                    | Required                          | Options                                                    |
-| ------------------ | :------------------------------------------------------------ | :-------------------------------- | :--------------------------------------------------------- |
-| type               | Determines the type of validation and type of input to render | Required                          | text, email, password, date, range, name, textarea, select |
-| stateName          | Accepts state variables to change the input                   | Required                          |                                                            |
-| onChange           | Pass function to control value.                               | Required                          |                                                            |
-| extendedClassNames | CSS class for adding custom styling.                          | Not required                      |                                                            |
-| value              | Accepts values for input                                      | Not required                      |                                                            |
-| disabled           | When disabled is `false` the input field is disabled          | Not required                      | true, false                                                |
-| name               | Requirement for input element                                 | Not required for component render |                                                            |
-| placeholder        | Placeholder text                                              | Not required                      |                                                            |
-| maxLength          | Maximum character length                                      | Not required                      |                                                            |
-| minLength          | Minimum character length                                      | Not required                      |                                                            |
-| maxDate            | Latest date, accepts date object                              | Not required                      |                                                            |
-| minDate            | Earliest date, accepts date object                            | Not required                      |                                                            |
-| max                | Highest accepted number                                       | Not required                      |                                                            |
-| min                | Lowest accepted number                                        | Not required                      |                                                            |
-| autocomplete       | Information for browser autocomplete                          | Not required                      |                                                            |
+| Property           | Definition                                                             | Required                          | Options                                                    |
+| ------------------ | :--------------------------------------------------------------------- | :-------------------------------- | :--------------------------------------------------------- |
+| type               | Determines the type of validation and type of input to render          | Required                          | text, email, password, date, range, name, textarea, select |
+| stateName          | Accepts state variables to change the input                            | Required                          |                                                            |
+| onChange           | Pass function to control value.                                        | Required                          |                                                            |
+| extendedClassNames | CSS class for adding custom styling.                                   | Not required                      |                                                            |
+| value              | Accepts values for input                                               | Not required                      |                                                            |
+| disabled           | When disabled is `false` the input field is disabled                   | Not required                      | true, false                                                |
+| name               | Requirement for input element                                          | Not required for component render |                                                            |
+| placeholder        | Placeholder text                                                       | Not required                      |                                                            |
+| maxLength          | Maximum character length                                               | Not required                      |                                                            |
+| minLength          | Minimum character length                                               | Not required                      |                                                            |
+| maxDate            | Latest date, accepts date object                                       | Not required                      |                                                            |
+| minDate            | Earliest date, accepts date object                                     | Not required                      |                                                            |
+| max                | Highest accepted number                                                | Not required                      |                                                            |
+| min                | Lowest accepted number                                                 | Not required                      |                                                            |
+| autocomplete       | Information for browser autocomplete                                   | Not required                      |                                                            |
+| accordian          | Activates a little animation for opening and closing select drop-downs | Not required                      |                                                            |
+| multi              | When used with 'select' type allows for a multiple select list         | Not required                      |                                                            |

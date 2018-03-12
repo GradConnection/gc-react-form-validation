@@ -58,12 +58,40 @@ class GCMultiSelect extends Component {
 
   handleClose(e) {
     e.preventDefault();
-    if (this.state.isActive && !this.multiSelect.contains(e.target)) {
-      this.setState({
-        isActive: false,
-        searchActive: false,
-        searchTxt: ''
-      });
+    if (!this.props.accordian) {
+      if (this.state.isActive && !this[this.props.name].contains(e.target)) {
+        this.setState({
+          isActive: false,
+          searchActive: false,
+          searchTxt: ''
+        });
+      }
+    } else if (
+      this[this.props.name].classList.contains('gc-select--open') &&
+      !this[this.props.name].contains(e.target)
+    ) {
+      this[this.props.name].classList.remove('gc-select--open');
+      this[this.props.name].classList.add('gc-select--close');
+      setTimeout(() => {
+        this.setState({
+          searchActive: false,
+          searchTxt: '',
+          isActive: false
+        });
+      }, 500);
+    }
+  }
+
+  handleChange(v, disabled = false) {
+    if (!disabled) {
+      this.props.onChange(v);
+      this.setState(
+        {
+          isActive: false,
+          index: -1
+        },
+        () => this.props.validateInput(true)
+      );
     }
   }
 
@@ -209,36 +237,48 @@ class GCMultiSelect extends Component {
     return objArray;
   }
 
-  handleChange(v, disabled = false) {
-    if (!disabled) {
-      this.props.onChange(v);
-      this.setState(
-        {
-          index: -1,
-          searchTxt: ''
-        },
-        () => this.props.validateInput()
-      );
-    }
-  }
+  dropDownList(shouldOpen, e, must = false) {
+    e.preventDefault();
+    if (this.props.accordian) {
+      if (
+        (shouldOpen && must) ||
+        (this[this.props.name].classList.contains('gc-select--close') && !must)
+      ) {
+        this[this.props.name].classList.add('gc-select--open');
+        this[this.props.name].classList.remove('gc-select--close');
+      } else if (
+        (!shouldOpen && must) ||
+        (this[this.props.name].classList.contains('gc-select--open') && !must)
+      ) {
+        this[this.props.name].classList.remove('gc-select--open');
+        this[this.props.name].classList.add('gc-select--close');
+        setTimeout(() => {
+          this.setState({
+            searchActive: false,
+            searchTxt: ''
+          });
+        }, 500);
 
-  dropDownList(shouldOpen) {
-    if (!shouldOpen) {
-      setTimeout(
-        () =>
-          this.setState(
-            {
-              isActive: false,
-              searchTxt: '',
-              searchActive: false,
-              index: -1
-            },
-            () => this.props.validateInput()
-          ),
-        50
-      );
+        this.props.validateInput(true);
+      }
     } else {
-      this.setState({ isActive: true });
+      if (!shouldOpen) {
+        setTimeout(
+          () =>
+            this.setState(
+              {
+                isActive: false,
+                searchTxt: '',
+                searchActive: false,
+                index: -1
+              },
+              () => this.props.validateInput(true)
+            ),
+          50
+        );
+      } else {
+        this.setState({ isActive: true });
+      }
     }
   }
 
@@ -299,16 +339,24 @@ class GCMultiSelect extends Component {
       ? 'gc-input__label--required'
       : '';
     const activeClass = this.state.isActive ? '' : 'gc-select--inactive';
+    let accordianClass = '';
+    if (this.props.accordian) {
+      accordianClass = this.props.activeInput
+        ? 'gc-select--accordian gc-select--open'
+        : 'gc-select--accordian gc-select--close';
+    }
+
     return (
       <div
-        className={`gc-select ${this.props.dynamicClasses}`}
+        className={`gc-select ${this.props.dynamicClasses} ${accordianClass}`}
         ref={select => {
-          this.multiSelect = select;
+          this[this.props.name] = select;
         }}
+        key={`gc-selectList${this.props.name}`}
       >
         <div
           className={`gc-select__label-container ${activeClass}`}
-          onMouseDown={() => this.dropDownList(!this.state.isActive)}
+          onMouseDown={e => this.dropDownList(!this.state.isActive, e)}
         >
           <label
             className={`gc-input__label gc-select__label ${requiredClass}`}
@@ -332,19 +380,19 @@ class GCMultiSelect extends Component {
           {this.state.isActive ? (
             <GCInputSVG
               type="chevronUp"
-              onMouseDown={() => this.dropDownList(false)}
+              onMouseDown={e => this.dropDownList(false, e, true)}
               className="gc-select__input-icon gc-multi-select__icon"
             />
           ) : (
             <GCInputSVG
               type="chevronDown"
-              onMouseDown={() => this.dropDownList(true)}
+              onMouseDown={e => this.dropDownList(true, e, true)}
               className="gc-select__input-icon gc-multi-select__icon"
             />
           )}
         </div>
 
-        {this.state.isActive && (
+        {this.props.accordian && (
           <ul
             className={`gc-select__drop-down ${
               this.props.accordian ? 'gc-select--accordian' : ''
@@ -368,6 +416,32 @@ class GCMultiSelect extends Component {
             {this.renderOtherItems(this.props.options)}
           </ul>
         )}
+
+        {this.state.isActive &&
+          !this.props.accordian && (
+            <ul
+              className={`gc-select__drop-down ${
+                this.props.accordian ? 'gc-select--accordian' : ''
+              }`}
+            >
+              {this.props.search && (
+                <li className="gc-select__searchbar">
+                  <input
+                    name={`searchTxt${this.props.name}`}
+                    title={`Search ${this.props.name}`}
+                    autoFocus={true}
+                    placeholder="Start typing to search"
+                    value={this.state.searchTxt}
+                    onKeyDown={e => this.handleEnter(e)}
+                    onKeyUp={e => this.handleKeyPress(e)}
+                    onChange={e => this.handleSearch(e)}
+                  />
+                </li>
+              )}
+              {this.renderActiveItems(this.props.options)}
+              {this.renderOtherItems(this.props.options)}
+            </ul>
+          )}
       </div>
     );
   }
@@ -384,14 +458,16 @@ GCMultiSelect.propTypes = {
   validateInput: PropTypes.func.isRequired,
   required: PropTypes.bool.isRequired,
   multi: PropTypes.bool,
-  search: PropTypes.bool
+  search: PropTypes.bool,
+  accordian: PropTypes.bool
 };
 
 GCMultiSelect.defaultProps = {
   placeholder: '',
   title: '',
   multi: false,
-  search: false
+  search: false,
+  accordian: false
 };
 
 export default GCMultiSelect;

@@ -56,8 +56,7 @@ class GCSelect extends Component {
       if (this.state.isActive && !this[this.props.name].contains(e.target)) {
         this.setState({
           isActive: false,
-          searchActive: false,
-          searchTxt: ''
+          searchActive: false
         });
       }
     } else if (
@@ -191,8 +190,14 @@ class GCSelect extends Component {
       if (!shouldOpen) {
         setTimeout(
           () =>
-            this.setState({ isActive: false }, () =>
-              this.props.validateInput()
+            this.setState(
+              {
+                isActive: false,
+                searchTxt: '',
+                searchActive: false,
+                index: -1
+              },
+              () => this.props.validateInput()
             ),
           50
         );

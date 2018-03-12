@@ -7,7 +7,7 @@ import GCMultiSelect from './GCMultiSelect';
 import GCInputLabel from './GCInputLabel';
 
 export default function GCInputRenderer(
-  { validationMessage, validateInput, handleChange },
+  { validationMessage, validateInput, handleChange, activeInput },
   ...props
 ) {
   const hat = arguments[0];
@@ -103,7 +103,8 @@ export default function GCInputRenderer(
       <GCMultiSelect
         {...arguments[0]}
         onChange={v => handleChange(v)}
-        validateInput={() => validateInput()}
+        validateInput={open => validateInput(open)}
+        activeInput={activeInput}
         dynamicClasses={`${invalidClass} ${disabledClass}`}
       />
     );
