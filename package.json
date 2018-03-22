@@ -4,6 +4,14 @@
   "description": "",
   "main": "lib/index.js",
   "author": "chrisnyman",
+  "homepage": "https://github.com/GradConnection/gc-react-form-validation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GradConnection/gc-react-form-validation"
+  },
+  "bugs": {
+    "url": "https://github.com/GradConnection/gc-react-form-validation/issues"
+  },
   "license": "ISC",
   "scripts": {
     "clean": "rm -rf build",
