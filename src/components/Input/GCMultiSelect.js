@@ -392,56 +392,62 @@ class GCMultiSelect extends Component {
           )}
         </div>
 
-        {this.props.accordian && (
-          <ul
-            className={`gc-select__drop-down ${
-              this.props.accordian ? 'gc-select--accordian' : ''
-            }`}
-          >
-            {this.props.search && (
-              <li className="gc-select__searchbar">
-                <input
-                  name={`searchTxt${this.props.name}`}
-                  title={`Search ${this.props.name}`}
-                  autoFocus={true}
-                  placeholder="Start typing to search"
-                  value={this.state.searchTxt}
-                  onKeyDown={e => this.handleEnter(e)}
-                  onKeyUp={e => this.handleKeyPress(e)}
-                  onChange={e => this.handleSearch(e)}
-                />
-              </li>
+        {this.props.loading ? (
+          this.props.spinner
+        ) : (
+          <Fragment>
+            {this.props.accordian && (
+              <ul
+                className={`gc-select__drop-down ${
+                  this.props.accordian ? 'gc-select--accordian' : ''
+                }`}
+              >
+                {this.props.search && (
+                  <li className="gc-select__searchbar">
+                    <input
+                      name={`searchTxt${this.props.name}`}
+                      title={`Search ${this.props.name}`}
+                      autoFocus={true}
+                      placeholder="Start typing to search"
+                      value={this.state.searchTxt}
+                      onKeyDown={e => this.handleEnter(e)}
+                      onKeyUp={e => this.handleKeyPress(e)}
+                      onChange={e => this.handleSearch(e)}
+                    />
+                  </li>
+                )}
+                {this.renderActiveItems(this.props.options)}
+                {this.renderOtherItems(this.props.options)}
+              </ul>
             )}
-            {this.renderActiveItems(this.props.options)}
-            {this.renderOtherItems(this.props.options)}
-          </ul>
-        )}
 
-        {this.state.isActive &&
-          !this.props.accordian && (
-            <ul
-              className={`gc-select__drop-down ${
-                this.props.accordian ? 'gc-select--accordian' : ''
-              }`}
-            >
-              {this.props.search && (
-                <li className="gc-select__searchbar">
-                  <input
-                    name={`searchTxt${this.props.name}`}
-                    title={`Search ${this.props.name}`}
-                    autoFocus={true}
-                    placeholder="Start typing to search"
-                    value={this.state.searchTxt}
-                    onKeyDown={e => this.handleEnter(e)}
-                    onKeyUp={e => this.handleKeyPress(e)}
-                    onChange={e => this.handleSearch(e)}
-                  />
-                </li>
+            {this.state.isActive &&
+              !this.props.accordian && (
+                <ul
+                  className={`gc-select__drop-down ${
+                    this.props.accordian ? 'gc-select--accordian' : ''
+                  }`}
+                >
+                  {this.props.search && (
+                    <li className="gc-select__searchbar">
+                      <input
+                        name={`searchTxt${this.props.name}`}
+                        title={`Search ${this.props.name}`}
+                        autoFocus={true}
+                        placeholder="Start typing to search"
+                        value={this.state.searchTxt}
+                        onKeyDown={e => this.handleEnter(e)}
+                        onKeyUp={e => this.handleKeyPress(e)}
+                        onChange={e => this.handleSearch(e)}
+                      />
+                    </li>
+                  )}
+                  {this.renderActiveItems(this.props.options)}
+                  {this.renderOtherItems(this.props.options)}
+                </ul>
               )}
-              {this.renderActiveItems(this.props.options)}
-              {this.renderOtherItems(this.props.options)}
-            </ul>
-          )}
+          </Fragment>
+        )}
       </div>
     );
   }
@@ -459,7 +465,9 @@ GCMultiSelect.propTypes = {
   required: PropTypes.bool.isRequired,
   multi: PropTypes.bool,
   search: PropTypes.bool,
-  accordian: PropTypes.bool
+  accordian: PropTypes.bool,
+  loading: PropTypes.bool,
+  spinner: PropTypes.node
 };
 
 GCMultiSelect.defaultProps = {
@@ -467,7 +475,9 @@ GCMultiSelect.defaultProps = {
   title: '',
   multi: false,
   search: false,
-  accordian: false
+  accordian: false,
+  loading: false,
+  spinner: <div>Loading options...</div>
 };
 
 export default GCMultiSelect;

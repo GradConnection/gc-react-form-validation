@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import uniqueId from 'lodash/uniqueId';
@@ -288,7 +288,6 @@ class GCSelect extends Component {
               ? this.getValue(this.props.options, this.props.value)
               : this.props.title}
           </label>
-
           {this.state.isActive ? (
             <GCInputSVG
               type="chevronUp"
@@ -315,46 +314,52 @@ class GCSelect extends Component {
           </label>
         )}
 
-        {this.props.accordian && (
-          <ul className="gc-select__drop-down">
-            {this.props.search && (
-              <li className="gc-select__searchbar">
-                <input
-                  name={`searchTxt${this.props.name}`}
-                  title={`Search ${this.props.name}`}
-                  autoFocus={true}
-                  placeholder="Start typing to search"
-                  value={this.state.searchTxt}
-                  onKeyDown={e => this.handleEnter(e)}
-                  onKeyUp={e => this.handleKeyPress(e)}
-                  onChange={e => this.handleSearch(e)}
-                />
-              </li>
+        {this.props.loading ? (
+          this.props.spinner
+        ) : (
+          <Fragment>
+            {this.props.accordian && (
+              <ul className="gc-select__drop-down">
+                {this.props.search && (
+                  <li className="gc-select__searchbar">
+                    <input
+                      name={`searchTxt${this.props.name}`}
+                      title={`Search ${this.props.name}`}
+                      autoFocus={true}
+                      placeholder="Start typing to search"
+                      value={this.state.searchTxt}
+                      onKeyDown={e => this.handleEnter(e)}
+                      onKeyUp={e => this.handleKeyPress(e)}
+                      onChange={e => this.handleSearch(e)}
+                    />
+                  </li>
+                )}
+                {!isEmpty(this.props.value) && this.renderActiveItem()}
+                {this.renderOptions(this.props.options)}
+              </ul>
             )}
-            {!isEmpty(this.props.value) && this.renderActiveItem()}
-            {this.renderOptions(this.props.options)}
-          </ul>
-        )}
 
-        {this.state.isActive && (
-          <ul className="gc-select__drop-down">
-            {this.props.search && (
-              <li className="gc-select__searchbar">
-                <input
-                  name={`searchTxt${this.props.name}`}
-                  title={`Search ${this.props.name}`}
-                  autoFocus={true}
-                  placeholder="Start typing to search"
-                  value={this.state.searchTxt}
-                  onKeyDown={e => this.handleEnter(e)}
-                  onKeyUp={e => this.handleKeyPress(e)}
-                  onChange={e => this.handleSearch(e)}
-                />
-              </li>
+            {this.state.isActive && (
+              <ul className="gc-select__drop-down">
+                {this.props.search && (
+                  <li className="gc-select__searchbar">
+                    <input
+                      name={`searchTxt${this.props.name}`}
+                      title={`Search ${this.props.name}`}
+                      autoFocus={true}
+                      placeholder="Start typing to search"
+                      value={this.state.searchTxt}
+                      onKeyDown={e => this.handleEnter(e)}
+                      onKeyUp={e => this.handleKeyPress(e)}
+                      onChange={e => this.handleSearch(e)}
+                    />
+                  </li>
+                )}
+                {!isEmpty(this.props.value) && this.renderActiveItem()}
+                {this.renderOptions(this.props.options)}
+              </ul>
             )}
-            {!isEmpty(this.props.value) && this.renderActiveItem()}
-            {this.renderOptions(this.props.options)}
-          </ul>
+          </Fragment>
         )}
       </div>
     );
@@ -370,12 +375,16 @@ GCSelect.propTypes = {
   dynamicClasses: PropTypes.string.isRequired,
   title: PropTypes.string,
   validateInput: PropTypes.func.isRequired,
-  required: PropTypes.bool.isRequired
+  required: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
+  spinner: PropTypes.node
 };
 
 GCSelect.defaultProps = {
   placeholder: '',
-  title: ''
+  title: '',
+  loading: false,
+  spinner: <div>Loading options...</div>
 };
 
 export default GCSelect;
