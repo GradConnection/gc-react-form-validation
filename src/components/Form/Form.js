@@ -94,6 +94,7 @@ class Form extends Component {
     return (
       <form
         ref={this.props.formRef}
+        id={this.props.formId}
         className={`gc-form ${this.props.extendedClassNames}`}
         onSubmit={e => this.submitForm(e)}
       >
