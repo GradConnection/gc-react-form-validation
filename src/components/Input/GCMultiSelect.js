@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import uniqueId from 'lodash/uniqueId';
@@ -377,24 +377,28 @@ class GCMultiSelect extends Component {
             </div>
           )}
 
-          {this.state.isActive ? (
-            <GCInputSVG
-              type="chevronUp"
-              onMouseDown={e => this.dropDownList(false, e, true)}
-              className="gc-select__input-icon gc-multi-select__icon"
-            />
+          {this.props.loading ? (
+            this.props.spinner
           ) : (
-            <GCInputSVG
-              type="chevronDown"
-              onMouseDown={e => this.dropDownList(true, e, true)}
-              className="gc-select__input-icon gc-multi-select__icon"
-            />
+            <Fragment>
+              {this.state.isActive ? (
+                <GCInputSVG
+                  type="chevronUp"
+                  onMouseDown={e => this.dropDownList(false, e, true)}
+                  className="gc-select__input-icon gc-multi-select__icon"
+                />
+              ) : (
+                <GCInputSVG
+                  type="chevronDown"
+                  onMouseDown={e => this.dropDownList(true, e, true)}
+                  className="gc-select__input-icon gc-multi-select__icon"
+                />
+              )}
+            </Fragment>
           )}
         </div>
 
-        {this.props.loading ? (
-          this.props.spinner
-        ) : (
+        {!this.props.loading && (
           <Fragment>
             {this.props.accordian && (
               <ul
@@ -477,7 +481,7 @@ GCMultiSelect.defaultProps = {
   search: false,
   accordian: false,
   loading: false,
-  spinner: <div>Loading options...</div>
+  spinner: <div className="gc-form__spinner" />
 };
 
 export default GCMultiSelect;

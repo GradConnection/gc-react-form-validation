@@ -36,6 +36,28 @@ $gc-form-input-bg: #ffffff !default;
     margin-bottom: -1.6rem;
   }
 
+  @keyframes spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .gc-form__spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border-top: 2px solid $gc-form-primary-colour;
+    border-right: 2px solid transparent;
+    animation: spinner 0.6s linear infinite;
+  }
+
   .gc-form__error-message {
     padding: 1rem 2rem;
     margin-bottom: 3.4rem;
@@ -724,6 +746,7 @@ $gc-form-input-bg: #ffffff !default;
     }
 
     // ICON
+    .gc-form__spinner,
     .gc-select__input-icon {
       content: '';
       display: block;
@@ -744,6 +767,11 @@ $gc-form-input-bg: #ffffff !default;
           cursor: pointer;
         }
       }
+    }
+
+    .gc-form__spinner {
+      right: 1.7rem;
+      top: 0.8rem;
     }
 
     .gc-select__input-icon--fill {

@@ -7,6 +7,24 @@
     font-size: 1.4rem; }
   .gc-form .gc-form__label {
     margin-bottom: -1.6rem; }
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg); } }
+  .gc-form .gc-form__spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border-top: 2px solid #e8bddb;
+    border-right: 2px solid transparent;
+    animation: spinner 0.6s linear infinite; }
   .gc-form .gc-form__error-message {
     padding: 1rem 2rem;
     margin-bottom: 3.4rem;
@@ -489,6 +507,7 @@
     .gc-input .gc-select .gc-select__drop-down__option--disabled {
       color: #aaa;
       pointer-events: none; }
+    .gc-input .gc-select .gc-form__spinner,
     .gc-input .gc-select .gc-select__input-icon {
       content: '';
       display: block;
@@ -498,14 +517,19 @@
       top: 0.5rem;
       right: 0;
       z-index: -1; }
+      .gc-input .gc-select .gc-form__spinner.gc-multi-select__icon,
       .gc-input .gc-select .gc-select__input-icon.gc-multi-select__icon {
         z-index: 20;
         top: 1rem;
         right: 1.5rem;
         height: 1.5rem;
         width: 1.5rem; }
+        .gc-input .gc-select .gc-form__spinner.gc-multi-select__icon:hover,
         .gc-input .gc-select .gc-select__input-icon.gc-multi-select__icon:hover {
           cursor: pointer; }
+    .gc-input .gc-select .gc-form__spinner {
+      right: 1.7rem;
+      top: 0.8rem; }
     .gc-input .gc-select .gc-select__input-icon--fill {
       fill: #7a848e; }
 

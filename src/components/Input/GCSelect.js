@@ -288,18 +288,25 @@ class GCSelect extends Component {
               ? this.getValue(this.props.options, this.props.value)
               : this.props.title}
           </label>
-          {this.state.isActive ? (
-            <GCInputSVG
-              type="chevronUp"
-              onMouseDown={e => this.dropDownList(false, e, true)}
-              className="gc-select__input-icon gc-multi-select__icon"
-            />
+
+          {this.props.loading ? (
+            this.props.spinner
           ) : (
-            <GCInputSVG
-              type="chevronDown"
-              onMouseDown={e => this.dropDownList(true, e, true)}
-              className="gc-select__input-icon gc-multi-select__icon"
-            />
+            <Fragment>
+              {this.state.isActive ? (
+                <GCInputSVG
+                  type="chevronUp"
+                  onMouseDown={e => this.dropDownList(false, e, true)}
+                  className="gc-select__input-icon gc-multi-select__icon"
+                />
+              ) : (
+                <GCInputSVG
+                  type="chevronDown"
+                  onMouseDown={e => this.dropDownList(true, e, true)}
+                  className="gc-select__input-icon gc-multi-select__icon"
+                />
+              )}
+            </Fragment>
           )}
         </div>
 
@@ -314,9 +321,7 @@ class GCSelect extends Component {
           </label>
         )}
 
-        {this.props.loading ? (
-          this.props.spinner
-        ) : (
+        {!this.props.loading && (
           <Fragment>
             {this.props.accordian && (
               <ul className="gc-select__drop-down">
@@ -384,7 +389,7 @@ GCSelect.defaultProps = {
   placeholder: '',
   title: '',
   loading: false,
-  spinner: <div>Loading options...</div>
+  spinner: <div className="gc-form__spinner" />
 };
 
 export default GCSelect;
