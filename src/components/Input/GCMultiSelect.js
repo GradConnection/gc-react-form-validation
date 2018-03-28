@@ -57,7 +57,6 @@ class GCMultiSelect extends Component {
   }
 
   handleClose(e) {
-    e.preventDefault();
     if (!this.props.accordian) {
       if (this.state.isActive && !this[this.props.name].contains(e.target)) {
         this.setState({
