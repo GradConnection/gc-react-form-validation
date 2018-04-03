@@ -1,7 +1,8 @@
 .gc-form {
   width: 100%;
   text-align: left;
-  padding-top: 1px; }
+  padding-top: 1px;
+  position: relative; }
   .gc-form .gc-form__description {
     color: #7a848e;
     font-size: 1.4rem; }
@@ -179,17 +180,6 @@
   .gc-input .gc-input--disabled {
     border-color: #8e979f;
     background-color: #f2f3f4; }
-  .gc-input .gc-input__error-msg {
-    color: #f59393;
-    font-size: 1.2rem;
-    text-align: right;
-    margin-top: 1rem;
-    position: absolute;
-    right: 0; }
-    .gc-input .gc-input__error-msg.gc-input__error-msg--checkbox {
-      text-align: left;
-      left: 0rem;
-      right: auto; }
   .gc-input .gc-input__label {
     color: #7a848e;
     position: absolute;
@@ -576,3 +566,15 @@
     .gctooltip .gctooltip__message-container .gctooltip__message {
       color: #ffffff;
       margin-bottom: 0; }
+
+.gc-input__error-msg {
+  color: #f59393;
+  font-size: 1.2rem;
+  text-align: right;
+  margin-top: 1rem;
+  position: absolute;
+  right: 0; }
+  .gc-input__error-msg.gc-input__error-msg--checkbox {
+    text-align: left;
+    left: 0rem;
+    right: auto; }

@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import isArray from 'lodash/isArray';
 import mapValues from 'lodash/mapValues';
 import uniqueId from 'lodash/uniqueId';
+import has from 'lodash/has';
 
 import ReactHtmlParser from 'react-html-parser';
 
@@ -16,7 +17,8 @@ class Form extends Component {
     super(props, context);
     this.state = {
       formSubmitted: false,
-      errorMessage: ''
+      errorMessage: '',
+      errorObj: {}
     };
   }
 
@@ -24,12 +26,30 @@ class Form extends Component {
     if (prevState.formSubmitted) {
       this.setState({ formSubmitted: false });
     }
+
+    if (!prevState.formSubmitted && this.state.formSubmitted) {
+      if (this.state.errorObj.length > 0) {
+        this.props.onSubmit(this.state.errorObj);
+        this.setState({
+          errorMessage: isEmpty(this.props.submissionErrorMessages)
+            ? ''
+            : this.props.submissionErrorMessages
+        });
+      } else {
+        this.setState({
+          errorObj: {},
+          errorMessage:
+            'Please make sure that you have filled in the fields correctly'
+        });
+      }
+    }
   }
 
   getFields() {
     return mapValues(this.props.data, d => (
       <Input
         {...d}
+        autoComplete={d.autoComplete || d.type}
         onChange={this.props.handleInputChange}
         touchedByParent={this.state.formSubmitted}
         sendResultsToForm={r => this.validateForm(r)}
@@ -64,29 +84,16 @@ class Form extends Component {
       formSubmitted: true,
       displayErrorMessage: true
     });
-
-    setTimeout(() => {
-      const dataKeys = Object.keys(this.props.data);
-      if (GCFormCounter === dataKeys.length) {
-        this.props.onSubmit();
-        this.setState({
-          errorMessage: isEmpty(this.props.submissionErrorMessages)
-            ? ''
-            : this.props.submissionErrorMessages
-        });
-      } else {
-        this.setState({
-          errorMessage:
-            'Please make sure that you have filled in the fields correctly'
-        });
-      }
-      GCFormCounter = 0;
-    }, 300);
   }
 
-  validateForm(results) {
-    if (results) {
-      GCFormCounter++;
+  validateForm(results, name) {
+    const newError = this.state.errorObj;
+    if (results && has(newError, name)) {
+      newError[name] = results;
+      this.setState({ errorObj: newError });
+    } else if (!results && has(newError, name)) {
+      delete newError[name];
+      this.setState({ errorObj: newError });
     }
   }
 
@@ -98,6 +105,7 @@ class Form extends Component {
         className={`gc-form ${this.props.extendedClassNames}`}
         onSubmit={e => this.submitForm(e)}
       >
+        {this.props.description !== '' && <p>{this.props.description}</p>}
         {this.getErrorMessages()}
         {this.props.children({ fields: this.getFields() })}
       </form>
@@ -111,6 +119,7 @@ Form.propTypes = {
   children: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  description: PropTypes.string,
   submissionErrorMessages: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.string
@@ -118,6 +127,7 @@ Form.propTypes = {
 };
 
 Form.defaultProps = {
+  description: '',
   submissionErrorMessages: []
 };
 

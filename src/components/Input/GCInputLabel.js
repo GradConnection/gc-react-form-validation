@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import isEmpty from 'lodash/isEmpty';
 
 import ReactHtmlParser from 'react-html-parser';
@@ -9,6 +9,7 @@ export default function GCInputLabel({
   name,
   value,
   type,
+  hidden,
   exception,
   children
 }) {
@@ -24,11 +25,10 @@ export default function GCInputLabel({
     type !== 'checkbox';
   const staticLabel =
     type === 'date' || type === 'range' || type === 'textarea';
-
-  if (!isEmpty(title) && type !== 'select') {
+  if (!isEmpty(title) && type !== 'select' && !hidden) {
     if (staticLabel) {
       return (
-        <div>
+        <Fragment>
           <label
             className={`gc-input__label ${requiredClass} ${selectClass}`}
             htmlFor={name}
@@ -36,11 +36,11 @@ export default function GCInputLabel({
             {ReactHtmlParser(title)}
           </label>
           {children}
-        </div>
+        </Fragment>
       );
     } else if (floatingLabel) {
       return (
-        <div>
+        <Fragment>
           {children}
           <label
             className={`gc-input__label ${inlineClass} ${requiredClass}`}
@@ -48,12 +48,11 @@ export default function GCInputLabel({
           >
             {ReactHtmlParser(title)}
           </label>
-        </div>
+        </Fragment>
       );
     } else if (type === 'checkbox') {
       return (
-        <div>
-          {children}
+        <Fragment>
           <label
             className={`gc-input__label gc-input__label--checkbox ${
               requiredClass
@@ -62,9 +61,12 @@ export default function GCInputLabel({
           >
             {ReactHtmlParser(title)}
           </label>
-        </div>
+          {children}
+        </Fragment>
       );
     }
+  } else if (hidden) {
+    return null;
   }
   return children;
 }

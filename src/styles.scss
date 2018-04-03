@@ -26,6 +26,7 @@ $gc-form-input-bg: #ffffff !default;
   width: 100%;
   text-align: left;
   padding-top: 1px;
+  position: relative;
 
   .gc-form__description {
     color: $gc-form-grey;
@@ -259,21 +260,6 @@ $gc-form-input-bg: #ffffff !default;
     background-color: $gc-form-light-grey;
   }
 
-  .gc-input__error-msg {
-    color: $gc-form-light-red;
-    font-size: 1.2rem;
-    text-align: right;
-    margin-top: 1rem;
-    position: absolute;
-    right: 0;
-
-    &.gc-input__error-msg--checkbox {
-      text-align: left;
-      left: 0rem;
-      right: auto;
-    }
-  }
-
   // LABEL
   .gc-input__label {
     color: $gc-form-grey;
@@ -431,6 +417,34 @@ $gc-form-input-bg: #ffffff !default;
       vertical-align: middle;
     }
   }
+
+  // .gc-input.gc-input--range input[type='range'] {
+  //   -webkit-appearance: none; /* Override default CSS styles */
+  //   appearance: none;
+  //   width: 100%; /* Full-width */
+  //   height: 25px; /* Specified height */
+  //   background: $gc-form-med-grey; /* Grey background */
+  //   outline: none; /* Remove outline */
+  //   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  //   -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
+  //   transition: opacity 0.2s;
+  // }
+  //
+  // .gc-input.gc-input--range input[type='range']:-webkit-slider-thumb {
+  //   -webkit-appearance: none; /* Override default look */
+  //   appearance: none;
+  //   width: 25px; /* Set a specific slider handle width */
+  //   height: 25px; /* Slider handle height */
+  //   background: $gc-form-primary-colour; /* Green background */
+  //   cursor: pointer; /* Cursor on hover */
+  // }
+  //
+  // .gc-input.gc-input--range input[type='range']:-moz-range-thumb {
+  //   width: 25px; /* Set a specific slider handle width */
+  //   height: 25px; /* Slider handle height */
+  //   background: #4caf50; /* Green background */
+  //   cursor: pointer; /* Cursor on hover */
+  // }
 
   // select
   .gc-select {
@@ -837,5 +851,20 @@ $gc-form-input-bg: #ffffff !default;
       color: #ffffff;
       margin-bottom: 0;
     }
+  }
+}
+
+.gc-input__error-msg {
+  color: $gc-form-light-red;
+  font-size: 1.2rem;
+  text-align: right;
+  margin-top: 1rem;
+  position: absolute;
+  right: 0;
+
+  &.gc-input__error-msg--checkbox {
+    text-align: left;
+    left: 0rem;
+    right: auto;
   }
 }

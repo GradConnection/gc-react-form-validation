@@ -21,6 +21,7 @@ export default function GCInputRenderer(
     title,
     multi,
     size,
+    hidden,
     autocomplete
   } = arguments[0];
   const determineType = type => {
@@ -60,6 +61,7 @@ export default function GCInputRenderer(
       case 'select':
         inputType = 'select';
         break;
+      case 'hidden':
       case 'custom':
         inputType = 'hidden';
         break;
@@ -72,84 +74,88 @@ export default function GCInputRenderer(
 
   const invalidClass = validationMessage ? 'gc-input--invalid' : '';
   const disabledClass = disabled ? 'gc-input--disabled' : '';
-  if (type === 'textarea') {
-    const textareaClass = `gc-input__textarea--${size}`;
-    return (
-      <textarea
-        className={`${invalidClass} ${disabledClass} ${textareaClass}`}
-        disabled={disabled}
-        name={name}
-        defaultValue={value}
-        onBlur={() => validateInput()}
-        onChange={e => handleChange(e.target.value)}
-        min={min}
-        max={max}
-        title={title}
-        autoComplete={autocomplete}
-      />
-    );
-  } else if (type === 'radio') {
-    return <GCRadio {...arguments[0]} onChange={v => handleChange(v)} />;
-  } else if (type === 'checkbox') {
-    return (
-      <GCCheckbox
-        {...arguments[0]}
-        invalidClass={`${invalidClass}`}
-        onChange={v => handleChange(v)}
-      />
-    );
-  } else if (type === 'select' && multi) {
-    return (
-      <GCMultiSelect
-        {...arguments[0]}
-        onChange={v => handleChange(v)}
-        validateInput={open => validateInput(open)}
-        activeInput={activeInput}
-        dynamicClasses={`${invalidClass} ${disabledClass}`}
-      />
-    );
-  } else if (type === 'select' && !multi) {
-    return (
-      <GCSelect
-        {...arguments[0]}
-        onChange={v => handleChange(v)}
-        validateInput={() => validateInput()}
-        dynamicClasses={`${invalidClass} ${disabledClass}`}
-      />
-    );
-  } else if (type === 'number') {
-    return (
-      <input
-        className={`${invalidClass} ${disabledClass}`}
-        disabled={disabled}
-        name={name}
-        type={determineType(type)}
-        onBlur={() => validateInput()}
-        onChange={e => handleChange(e.target.value)}
-        min={min}
-        max={max}
-        title={title}
-        defaultValue={value}
-        autoComplete={autocomplete}
-      />
-    );
+  if (!hidden) {
+    if (type === 'textarea') {
+      const textareaClass = `gc-input__textarea--${size}`;
+      return (
+        <textarea
+          className={`${invalidClass} ${disabledClass} ${textareaClass}`}
+          disabled={disabled}
+          name={name}
+          defaultValue={value}
+          onBlur={() => validateInput()}
+          onChange={e => handleChange(e.target.value)}
+          min={min}
+          max={max}
+          title={title}
+          autoComplete={autocomplete}
+        />
+      );
+    } else if (type === 'radio') {
+      return <GCRadio {...arguments[0]} onChange={v => handleChange(v)} />;
+    } else if (type === 'checkbox') {
+      return (
+        <GCCheckbox
+          {...arguments[0]}
+          invalidClass={`${invalidClass}`}
+          onChange={v => handleChange(v)}
+        />
+      );
+    } else if (type === 'select' && multi) {
+      return (
+        <GCMultiSelect
+          {...arguments[0]}
+          onChange={v => handleChange(v)}
+          validateInput={open => validateInput(open)}
+          activeInput={activeInput}
+          dynamicClasses={`${invalidClass} ${disabledClass}`}
+        />
+      );
+    } else if (type === 'select' && !multi) {
+      return (
+        <GCSelect
+          {...arguments[0]}
+          onChange={v => handleChange(v)}
+          validateInput={() => validateInput()}
+          dynamicClasses={`${invalidClass} ${disabledClass}`}
+        />
+      );
+    } else if (type === 'number') {
+      return (
+        <input
+          className={`${invalidClass} ${disabledClass}`}
+          disabled={disabled}
+          name={name}
+          type={determineType(type)}
+          onBlur={() => validateInput()}
+          onChange={e => handleChange(e.target.value)}
+          min={min}
+          max={max}
+          title={title}
+          defaultValue={value}
+          autoComplete={autocomplete}
+        />
+      );
+    } else {
+      return (
+        <input
+          className={`${invalidClass} ${disabledClass}`}
+          disabled={disabled}
+          name={name}
+          type={determineType(type)}
+          value={value}
+          onBlur={() => validateInput()}
+          onInput={e => handleChange(e.target.value)}
+          onChange={e => handleChange(e.target.value)}
+          maxLength={max}
+          min={min}
+          max={max}
+          title={title}
+          autoComplete={autocomplete}
+        />
+      );
+    }
   } else {
-    return (
-      <input
-        className={`${invalidClass} ${disabledClass}`}
-        disabled={disabled}
-        name={name}
-        type={determineType(type)}
-        value={value}
-        onBlur={() => validateInput()}
-        onInput={e => handleChange(e.target.value)}
-        onChange={e => handleChange(e.target.value)}
-        maxLength={max}
-        min={min}
-        max={max}
-        title={title}
-        autoComplete={autocomplete}
-      />
-    );
+    return null;
   }
 }

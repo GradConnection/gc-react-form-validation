@@ -6,6 +6,7 @@ import GCInputLabel from './GCInputLabel';
 import GCTooltip from './GCTooltip';
 
 import ReactHtmlParser from 'react-html-parser';
+import has from 'lodash/has';
 
 class Input extends Component {
   constructor(props, context) {
@@ -259,7 +260,7 @@ class Input extends Component {
     }
 
     if (this.state.touchedByParent) {
-      this.props.sendResultsToForm(!error);
+      this.props.sendResultsToForm(props.name, error);
     }
     this.setState({
       validationMessage: error,
@@ -301,7 +302,7 @@ class Input extends Component {
   render() {
     const errorMsgClass =
       this.props.type === 'checkbox' ? 'gc-input__error-msg--checkbox' : '';
-    if (this.props.isVisible) {
+    if (this.props.isVisible && !this.props.hidden) {
       return (
         <div
           className={`gc-input gc-input--${this.props.type} ${
@@ -315,6 +316,7 @@ class Input extends Component {
             type={this.props.type}
             required={this.props.required}
             disabled={this.props.loading || this.props.disabled}
+            hidden={this.props.hidden}
           >
             <GCInputRenderer
               validateInput={open => this.validateInput(open)}
@@ -337,8 +339,14 @@ class Input extends Component {
           )}
         </div>
       );
+    } else if (this.state.validationMessage && this.props.hidden) {
+      return (
+        <p className={`gc-input__error-msg ${errorMsgClass}`}>
+          {ReactHtmlParser(this.state.validationMessage)}
+        </p>
+      );
     } else {
-      return <span>&nbsp;</span>;
+      return null;
     }
   }
 }
@@ -382,7 +390,8 @@ Input.propTypes = {
   search: PropTypes.bool,
   tooltip: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   autocomplete: PropTypes.string,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  hidden: PropTypes.bool
 };
 
 Input.defaultProps = {
@@ -413,7 +422,8 @@ Input.defaultProps = {
   search: false,
   tooltip: null,
   autocomplete: '',
-  loading: false
+  loading: false,
+  hidden: false
 };
 
 export default Input;
