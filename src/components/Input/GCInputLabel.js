@@ -86,6 +86,7 @@ export default function GCInputLabel({
     } else if (type === 'checkbox') {
       return (
         <Fragment>
+          {children}
           <label
             className={`gc-input__label gc-input__label--checkbox ${
               requiredClass
@@ -94,7 +95,6 @@ export default function GCInputLabel({
           >
             {ReactHtmlParser(title)}
           </label>
-          {children}
         </Fragment>
       );
     }

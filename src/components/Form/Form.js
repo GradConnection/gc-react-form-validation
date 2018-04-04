@@ -28,7 +28,7 @@ class Form extends Component {
     }
 
     if (!prevState.formSubmitted && this.state.formSubmitted) {
-      if (this.state.errorObj.length > 0) {
+      if (this.state.errorObj !== {}) {
         this.props.onSubmit(this.state.errorObj);
         this.setState({
           errorMessage: isEmpty(this.props.submissionErrorMessages)
