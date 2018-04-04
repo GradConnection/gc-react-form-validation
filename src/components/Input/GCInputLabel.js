@@ -3,6 +3,8 @@ import isEmpty from 'lodash/isEmpty';
 
 import ReactHtmlParser from 'react-html-parser';
 
+import { GCIcon } from './GCIcons';
+
 export default function GCInputLabel({
   title,
   required,
@@ -11,7 +13,10 @@ export default function GCInputLabel({
   type,
   hidden,
   exception,
-  children
+  children,
+  hasTooltip,
+  toggleTooltip,
+  toolTipActive
 }) {
   const inlineClass = isEmpty(value) ? 'gc-input__label--inline' : '';
   const requiredClass = required ? 'gc-input__label--required' : '';
@@ -35,6 +40,20 @@ export default function GCInputLabel({
           >
             {ReactHtmlParser(title)}
           </label>
+          {hasTooltip && (
+            <span
+              className="gctooltip__icon"
+              role="button"
+              onClick={() => toggleTooltip(!toolTipActive)}
+            >
+              <GCIcon
+                size="30px"
+                kind="infoIcon"
+                iconTitle="tooltip"
+                mainFill="#777"
+              />
+            </span>
+          )}
           {children}
         </Fragment>
       );
@@ -48,6 +67,20 @@ export default function GCInputLabel({
           >
             {ReactHtmlParser(title)}
           </label>
+          {hasTooltip && (
+            <span
+              className="gctooltip__icon"
+              role="button"
+              onClick={() => toggleTooltip(!toolTipActive)}
+            >
+              <GCIcon
+                size="30px"
+                kind="infoIcon"
+                iconTitle="tooltip"
+                mainFill="#777"
+              />
+            </span>
+          )}
         </Fragment>
       );
     } else if (type === 'checkbox') {

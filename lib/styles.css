@@ -525,47 +525,37 @@
 
 .gctooltip {
   position: absolute;
-  top: 7px;
-  right: 0;
+  top: 5rem;
   z-index: 600000;
-  width: 100%; }
-  @media screen and (min-width: 600px) {
-    .gctooltip {
-      max-width: 340px; } }
-  .gctooltip .gctooltip__icon {
-    float: right; }
-    .gctooltip .gctooltip__icon:hover, .gctooltip .gctooltip__icon.gctooltip__icon--active {
-      cursor: pointer; }
-      .gctooltip .gctooltip__icon:hover path, .gctooltip .gctooltip__icon.gctooltip__icon--active path {
-        fill: #e8bddb !important; }
-  .gctooltip .gctooltip__message-container {
+  width: 100%;
+  padding: 0 1rem;
+  background-color: #8e979f;
+  border-radius: 0.3rem;
+  box-sizing: border-box; }
+  .gctooltip::before {
+    content: '';
+    display: block;
     position: absolute;
-    background: white;
-    padding: 10px 15px;
-    border-radius: 0.25em;
-    bottom: 180%;
-    right: 0; }
-    @media screen and (min-width: 600px) {
-      .gctooltip .gctooltip__message-container {
-        right: -7px; } }
-    .gctooltip .gctooltip__message-container::after {
-      content: '';
-      display: block;
-      position: absolute;
-      bottom: -10px;
-      right: 5px;
-      width: 0;
-      height: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-top: 20px solid white;
-      transform: rotateZ(-25deg); }
-      @media screen and (min-width: 600px) {
-        .gctooltip .gctooltip__message-container::after {
-          right: 12px; } }
-    .gctooltip .gctooltip__message-container .gctooltip__message {
-      color: #ffffff;
-      margin-bottom: 0; }
+    top: -2rem;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 2rem solid transparent;
+    border-right: 2rem solid transparent;
+    border-bottom: 2rem solid #8e979f; }
+  .gctooltip .gctooltip__message {
+    color: #ffffff;
+    text-align: center; }
+
+.gctooltip__icon {
+  float: right;
+  position: relative;
+  top: -25px;
+  z-index: 3000; }
+  .gctooltip__icon:hover, .gctooltip__icon.gctooltip__icon--active {
+    cursor: pointer; }
+    .gctooltip__icon:hover path, .gctooltip__icon.gctooltip__icon--active path {
+      fill: #e8bddb !important; }
 
 .gc-input__error-msg {
   color: #f59393;

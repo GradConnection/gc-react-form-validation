@@ -14,7 +14,8 @@ class Input extends Component {
     this.state = {
       validationMessage: null,
       touchedByParent: props.touchedByParent,
-      activeInput: false
+      activeInput: false,
+      tooltip: false
     };
   }
 
@@ -35,7 +36,8 @@ class Input extends Component {
       nextProps.touchedByParent !== this.props.touchedByParent ||
       nextProps.isVisible != this.props.isVisible ||
       nextState.validationMessage !== this.state.validationMessage ||
-      nextProps.options !== this.props.options
+      nextProps.options !== this.props.options ||
+      this.state.tooltip !== nextState.tooltip
     );
   }
 
@@ -299,6 +301,10 @@ class Input extends Component {
     }
   }
 
+  toggleTooltip(active) {
+    this.setState({ tooltip: active });
+  }
+
   render() {
     const errorMsgClass =
       this.props.type === 'checkbox' ? 'gc-input__error-msg--checkbox' : '';
@@ -317,6 +323,9 @@ class Input extends Component {
             required={this.props.required}
             disabled={this.props.loading || this.props.disabled}
             hidden={this.props.hidden}
+            toggleTooltip={active => this.toggleTooltip(active)}
+            hasTooltip={this.props.tooltip !== ''}
+            toolTipActive={this.state.tooltip}
           >
             <GCInputRenderer
               validateInput={open => this.validateInput(open)}
@@ -328,9 +337,15 @@ class Input extends Component {
               {...this.props}
             />
           </GCInputLabel>
-          {/*
-            <GCTooltip content={this.props.tooltip} />
-          */}
+
+          {this.state.tooltip && (
+            <GCTooltip
+              content={this.props.tooltip}
+              name={this.props.name}
+              active={this.state.tooltip}
+              toggleTooltip={active => this.toggleTooltip(active)}
+            />
+          )}
 
           {this.state.validationMessage && (
             <p className={`gc-input__error-msg ${errorMsgClass}`}>
@@ -391,7 +406,8 @@ Input.propTypes = {
   tooltip: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   autocomplete: PropTypes.string,
   loading: PropTypes.bool,
-  hidden: PropTypes.bool
+  hidden: PropTypes.bool,
+  tooltip: PropTypes.string
 };
 
 Input.defaultProps = {
@@ -423,7 +439,8 @@ Input.defaultProps = {
   tooltip: null,
   autocomplete: '',
   loading: false,
-  hidden: false
+  hidden: false,
+  tooltip: ''
 };
 
 export default Input;

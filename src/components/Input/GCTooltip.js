@@ -1,15 +1,10 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { GCIcon } from './GCIcons';
 
 export default class GCTooltip extends Component {
   constructor(props, context) {
     super(props, context);
-
-    this.state = {
-      isActive: false
-    };
 
     this.removeMessage = this.removeMessage.bind(this);
   }
@@ -22,37 +17,28 @@ export default class GCTooltip extends Component {
     window.addEventListener('click', this.removeMessage);
   }
 
+  toggleMessage() {
+    this.props.toggleTooltip(!this.props.active);
+  }
+
+  removeMessage(e) {
+    // console.log(e);
+    // if (this.props.active && !this[this.props.name].contains(e.target)) {
+    //   this.props.toggleTooltip(false);
+    // }
+  }
+
   render() {
-    var iconClasses = this.state.isActive && 'gctooltip__icon--active';
-
     return (
-      <div className="gctooltip">
-        <span onClick={e => this.toggleMessage(e)}>
-          <GCIcon
-            extendedClass={`gctooltip__icon ${iconClasses}`}
-            kind="infoIcon"
-            size="14px"
-            mainFill="#cdcdcd"
-            iconTitle="Information Icon"
-          />
-        </span>
-
-        {this.state.isActive && (
-          <div className="gctooltip__message-container">
-            <p className="gctooltip__message">{this.props.content}</p>
-          </div>
-        )}
+      <div
+        className="gctooltip"
+        onClick={e => this.toggleMessage(e)}
+        ref={tooltip => {
+          this[this.props.name] = tooltip;
+        }}
+      >
+        <p className="gctooltip__message">{this.props.content}</p>
       </div>
     );
-  }
-
-  toggleMessage(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    this.setState({ isActive: !this.state.isActive });
-  }
-
-  removeMessage() {
-    this.setState({ isActive: false });
   }
 }

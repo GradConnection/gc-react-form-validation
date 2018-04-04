@@ -95,7 +95,8 @@ export class GCIcon extends React.Component {
             height={height || size}
             width={width || size}
             viewBox="0 0 100 100"
-            ariaLabelledby={iconTitle}
+            aria-labelledby={iconTitle}
+            className={this.props.extendedClassName}
           >
             <title id={iconTitle}>{iconTitle}</title>
 

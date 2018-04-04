@@ -796,60 +796,45 @@ $gc-form-input-bg: #ffffff !default;
 
 .gctooltip {
   position: absolute;
-  top: 7px;
-  right: 0;
+  top: 5rem;
   z-index: 600000;
   width: 100%;
+  padding: 0 1rem;
+  background-color: $gc-form-med-grey;
+  border-radius: 0.3rem;
+  box-sizing: border-box;
 
-  @media screen and (min-width: 600px) {
-    max-width: 340px;
-  }
-
-  .gctooltip__icon {
-    float: right;
-    &:hover,
-    &.gctooltip__icon--active {
-      cursor: pointer;
-
-      path {
-        fill: $gc-form-primary-colour !important;
-      }
-    }
-  }
-
-  .gctooltip__message-container {
+  &::before {
+    content: '';
+    display: block;
     position: absolute;
-    background: lighten($gc-form-primary-colour, 25%);
-    padding: 10px 15px;
-    border-radius: 0.25em;
-    bottom: 180%;
-    right: 0;
+    top: -2rem;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 2rem solid transparent;
+    border-right: 2rem solid transparent;
+    border-bottom: 2rem solid $gc-form-med-grey;
+  }
 
-    @media screen and (min-width: 600px) {
-      right: -7px;
-    }
+  .gctooltip__message {
+    color: #ffffff;
+    text-align: center;
+  }
+}
 
-    &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      bottom: -10px;
-      right: 5px;
-      width: 0;
-      height: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-top: 20px solid lighten($gc-form-primary-colour, 25%);
-      transform: rotateZ(-25deg);
+.gctooltip__icon {
+  float: right;
+  position: relative;
+  top: -25px;
+  z-index: 3000;
 
-      @media screen and (min-width: 600px) {
-        right: 12px;
-      }
-    }
+  &:hover,
+  &.gctooltip__icon--active {
+    cursor: pointer;
 
-    .gctooltip__message {
-      color: #ffffff;
-      margin-bottom: 0;
+    path {
+      fill: $gc-form-primary-colour !important;
     }
   }
 }
