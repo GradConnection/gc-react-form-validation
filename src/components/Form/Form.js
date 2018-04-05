@@ -11,14 +11,14 @@ import ReactHtmlParser from 'react-html-parser';
 import Input from '../Input/Input';
 
 let GCFormCounter = 0;
+let GCFormErrorObjcen = {};
 
 class Form extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       formSubmitted: false,
-      errorMessage: '',
-      errorObj: {}
+      errorMessage: ''
     };
   }
 
@@ -28,20 +28,32 @@ class Form extends Component {
     }
 
     if (!prevState.formSubmitted && this.state.formSubmitted) {
-      if (this.state.errorObj !== {}) {
-        this.props.onSubmit(this.state.errorObj);
-        this.setState({
-          errorMessage: isEmpty(this.props.submissionErrorMessages)
-            ? ''
-            : this.props.submissionErrorMessages
-        });
-      } else {
-        this.setState({
-          errorObj: {},
-          errorMessage:
-            'Please make sure that you have filled in the fields correctly'
-        });
-      }
+      setTimeout(() => {
+        if (
+          Object.keys(GCFormErrorObjcen).length === 0 &&
+          GCFormCounter === Object.keys(this.props.data).length
+        ) {
+          GCFormErrorObjcen = {};
+          this.setState(
+            {
+              errorMessage: ''
+            },
+            () => this.props.onSubmit(GCFormErrorObjcen)
+          );
+        } else {
+          this.setState({
+            errorMessage:
+              'Please make sure that you have filled in the fields correctly'
+          });
+        }
+        GCFormCounter = 0;
+      }, 700);
+    }
+
+    if (
+      prevProps.submissionErrorMessages !== this.props.submissionErrorMessages
+    ) {
+      this.setState({ errorMessage: this.props.submissionErrorMessages });
     }
   }
 
@@ -52,7 +64,7 @@ class Form extends Component {
         autoComplete={d.autoComplete || d.type}
         onChange={this.props.handleInputChange}
         touchedByParent={this.state.formSubmitted}
-        sendResultsToForm={r => this.validateForm(r)}
+        sendResultsToForm={(n, r) => this.validateForm(n, r)}
       />
     ));
   }
@@ -86,14 +98,12 @@ class Form extends Component {
     });
   }
 
-  validateForm(results, name) {
-    const newError = this.state.errorObj;
-    if (results && has(newError, name)) {
-      newError[name] = results;
-      this.setState({ errorObj: newError });
-    } else if (!results && has(newError, name)) {
-      delete newError[name];
-      this.setState({ errorObj: newError });
+  validateForm(name, results) {
+    GCFormCounter = GCFormCounter + 1;
+    if (!!results) {
+      GCFormErrorObjcen[name] = results;
+    } else if (!results && has(GCFormErrorObjcen, name)) {
+      delete GCFormErrorObjcen[name];
     }
   }
 
@@ -128,7 +138,7 @@ Form.propTypes = {
 
 Form.defaultProps = {
   description: '',
-  submissionErrorMessages: []
+  submissionErrorMessages: ''
 };
 
 export default Form;
