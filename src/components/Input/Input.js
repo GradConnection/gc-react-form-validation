@@ -5,7 +5,7 @@ import GCInputRenderer from './GCInputRenderer';
 import GCInputLabel from './GCInputLabel';
 import GCTooltip from './GCTooltip';
 
-import validateInput from '../validateInput';
+import validateInput from './validateInput';
 
 import ReactHtmlParser from 'react-html-parser';
 import has from 'lodash/has';
@@ -27,6 +27,7 @@ class Input extends Component {
       this.props.touchedByParent !== nextProps.touchedByParent
     ) {
       this.setState({ touchedByParent: true }, () => {
+        console.log('touched');
         this.validateInput();
       });
     }
@@ -43,21 +44,24 @@ class Input extends Component {
     );
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     if (
       (!this.props.touchedByParent && this.props.type === 'checkbox') ||
-      (!this.props.touchedByParent && this.props.type === 'radio')
+      (!this.props.touchedByParent && this.props.type === 'radio') ||
+      (prevProps.value !== this.props.value && this.props.hidden) ||
+      (prevProps.value !== this.props.value && this.props.type === 'custom') ||
+      (prevProps.value !== this.props.value && this.props.type === 'hidden')
     ) {
       this.validateInput();
     }
   }
 
   validateInput(open) {
-    const validationState = validateInput({
-      ...this.props,
-      open: open,
-      touchedByParent: this.state.touchedByParent
-    });
+    const validationObj = Object.assign(
+      { open: open, touchedByParent: this.state.touchedByParent },
+      this.props
+    );
+    const validationState = validateInput(validationObj);
     this.setState(validationState);
   }
 
@@ -72,9 +76,10 @@ class Input extends Component {
   }
 
   render() {
+    console.log('Input rendered: ', this.props.name);
     const errorMsgClass =
       this.props.type === 'checkbox' ? 'gc-input__error-msg--checkbox' : '';
-    if (this.props.isVisible && !this.props.hidden) {
+    if (this.props.isVisible) {
       return (
         <div
           className={`gc-input gc-input--${this.props.type} ${

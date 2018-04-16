@@ -1,23 +1,33 @@
 import React from 'react';
 
-const validationInput = ({
+const validateInput = ({
   open,
   type,
   name,
   value,
-  isVisible,
-  required,
+  isVisible = true,
+  required = false,
   touchedByParent = false,
-  from,
-  to,
-  customRegex,
-  customErrorMessage,
-  max,
-  min,
-  multi,
-  options,
-  sendResultsToForm
+  from = null,
+  to = null,
+  customRegex = null,
+  customErrorMessage = null,
+  max = null,
+  min = null,
+  multi = null,
+  options = [],
+  sendResultsToForm = null
 }) => {
+  const isEmpty = v => {
+    return (
+      v === null ||
+      v === undefined ||
+      (typeof v === 'string' && v !== '') ||
+      (typeof v === 'object' && v.length > 0) ||
+      (typeof v === 'boolean' && v && required)
+    );
+  };
+
   let error = null;
   if (isEmpty(value) && isVisible) {
     switch (type) {
@@ -222,16 +232,6 @@ const validationInput = ({
     return res;
   };
 
-  const isEmpty = v => {
-    return (
-      v === null ||
-      v === undefined ||
-      (typeof v === 'string' && v !== '') ||
-      (typeof v === 'object' && v.length > 0) ||
-      (typeof v === 'boolean' && v && required)
-    );
-  };
-
   const handleErrorMessage = (
     v,
     msg = 'Invalid Input',
@@ -258,3 +258,5 @@ const validationInput = ({
     return new RegExp(regX);
   };
 };
+
+export default validateInput;

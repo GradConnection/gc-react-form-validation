@@ -29,6 +29,8 @@ class Form extends Component {
 
     if (!prevState.formSubmitted && this.state.formSubmitted) {
       setTimeout(() => {
+        console.log('OBJECT: ', GCFormErrorObjcen);
+        console.log('COUNTER: ', GCFormCounter);
         if (
           Object.keys(GCFormErrorObjcen).length === 0 &&
           GCFormCounter === Object.keys(this.props.data).length
@@ -58,15 +60,17 @@ class Form extends Component {
   }
 
   getFields() {
-    return mapValues(this.props.data, d => (
-      <Input
-        {...d}
-        autoComplete={d.autoComplete || d.type}
-        onChange={this.props.handleInputChange}
-        touchedByParent={this.state.formSubmitted}
-        sendResultsToForm={(n, r) => this.validateForm(n, r)}
-      />
-    ));
+    return mapValues(this.props.data, d => {
+      return (
+        <Input
+          {...d}
+          autoComplete={d.autoComplete || d.type}
+          onChange={this.props.handleInputChange}
+          touchedByParent={this.state.formSubmitted}
+          sendResultsToForm={(n, r) => this.validateForm(n, r)}
+        />
+      );
+    });
   }
 
   getErrorMessages() {
@@ -105,6 +109,8 @@ class Form extends Component {
     } else if (!results && has(GCFormErrorObjcen, name)) {
       delete GCFormErrorObjcen[name];
     }
+    console.log('results: ', results);
+    console.log('name: ', name);
   }
 
   render() {
