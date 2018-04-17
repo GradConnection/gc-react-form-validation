@@ -2,8 +2,8 @@
 
 This library has two components
 
-1. Input
-2. Form
+1.  Input
+2.  Form
 
 Input can be used separately from the Form component, while the Form component
 makes use of the Input component.
@@ -203,6 +203,29 @@ import { Input } from 'gc-react-form-validation';
 />
 ```
 
+### Using Custom UI
+
+To add custom UI to Form, put the custom component inside the template with a reference to the field below it. The reference represents where the error validation message would appear.
+
+Template
+
+```js
+...
+
+{({ fields }) => (
+  <div>
+    <CustomDatePicker/>
+    {fields.customDatePicker}
+    {fields.email}
+    <button>Submit Form</button>
+  </div>
+)}
+
+...
+```
+
+In the field object add the prop `customUI: true` to prevent the library UI from rendering
+
 ### Props
 
 Some more props you can use.
@@ -211,12 +234,12 @@ Some more props you can use.
 | ------------------ | :--------------------------------------------------------------------- | :-------------------------------- | :--------------------------------------------------------- |
 | type               | Determines the type of validation and type of input to render          | Required                          | text, email, password, date, range, name, textarea, select |
 | stateName          | Accepts state variables to change the input                            | Required                          |                                                            |
+| customUI           | Accepts boolean value                                                  | Not required                      |                                                            |
 | onChange           | Pass function to control value.                                        | Required                          |                                                            |
 | extendedClassNames | CSS class for adding custom styling.                                   | Not required                      |                                                            |
 | value              | Accepts values for input                                               | Not required                      |                                                            |
 | disabled           | When disabled is `false` the input field is disabled                   | Not required                      | true, false                                                |
-| name               | Requirement for input element                                          | Not required for component render |                                                            |
-| placeholder        | Placeholder text                                                       | Not required                      |                                                            |
+| name               | Requirement for input element                                          | Not required for component render |                                                            |  |
 | maxLength          | Maximum character length                                               | Not required                      |                                                            |
 | minLength          | Minimum character length                                               | Not required                      |                                                            |
 | maxDate            | Latest date, accepts date object                                       | Not required                      |                                                            |
