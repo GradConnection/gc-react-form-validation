@@ -60,7 +60,10 @@ class Form extends Component {
   }
 
   getFields() {
-    return mapValues(this.props.data, d => {
+    // looks at template to display input
+    // TODO: Add hidden input for custom stuff
+    const renderTemplate = mapValues(this.props.data, d => {
+      console.log('GetFields: ', d);
       return (
         <Input
           {...d}
@@ -71,6 +74,9 @@ class Form extends Component {
         />
       );
     });
+
+    const hiddenInput = {};
+    return renderTemplate;
   }
 
   getErrorMessages() {

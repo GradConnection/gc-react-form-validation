@@ -27,7 +27,6 @@ class Input extends Component {
       this.props.touchedByParent !== nextProps.touchedByParent
     ) {
       this.setState({ touchedByParent: true }, () => {
-        console.log('touched');
         this.validateInput();
       });
     }
@@ -76,7 +75,6 @@ class Input extends Component {
   }
 
   render() {
-    console.log('Input rendered: ', this.props.name);
     const errorMsgClass =
       this.props.type === 'checkbox' ? 'gc-input__error-msg--checkbox' : '';
     if (this.props.isVisible) {

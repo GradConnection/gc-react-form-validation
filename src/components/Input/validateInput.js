@@ -28,57 +28,6 @@ const validateInput = ({
     );
   };
 
-  let error = null;
-  if (isEmpty(value) && isVisible) {
-    switch (type) {
-      case 'email':
-        error = validateEmail();
-        break;
-      case 'password':
-        error = validatePassword();
-        break;
-      case 'name':
-        error = validateName();
-        break;
-      case 'custom':
-      case 'text':
-        error = validateText();
-        break;
-      case 'date':
-        error = validateDate();
-        break;
-      case 'number':
-        error = validateNumber();
-        break;
-      case 'textarea':
-        error = validateTextarea();
-      case 'checkbox':
-        error = validateCheckbox();
-        break;
-      case 'url':
-        error = validateUrl();
-        break;
-      case 'select':
-        error = validateSelect();
-      case 'range':
-      default:
-        error = null;
-        break;
-    }
-  } else if (required && isVisible) {
-    error = 'This field is required';
-  }
-
-  if (touchedByParent) {
-    sendResultsToForm(name, error);
-  }
-
-  return {
-    validationMessage: error,
-    touchedByParent: false,
-    activeInput: open
-  };
-
   const validateEmail = () => {
     const pattern = handleRegExp(
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -110,7 +59,7 @@ const validateInput = ({
   };
 
   const validateText = () => {
-    const pattern = this.handleRegExp('');
+    const pattern = handleRegExp('');
     const maxL = max;
     let valid;
 
@@ -200,10 +149,7 @@ const validateInput = ({
   const validateNumber = () => {
     let res = '';
     if (min && min > value) {
-      res = this.handleErrorMessage(
-        false,
-        `Number must be higher than ${min}.`
-      );
+      res = handleErrorMessage(false, `Number must be higher than ${min}.`);
     } else if (max && max < value) {
       res = handleErrorMessage(false, `Number must be lower than ${max}`);
     }
@@ -256,6 +202,57 @@ const validateInput = ({
       return new RegExp(cleanPattern);
     }
     return new RegExp(regX);
+  };
+
+  let error = null;
+  if (isEmpty(value) && isVisible) {
+    switch (type) {
+      case 'email':
+        error = validateEmail();
+        break;
+      case 'password':
+        error = validatePassword();
+        break;
+      case 'name':
+        error = validateName();
+        break;
+      case 'custom':
+      case 'text':
+        error = validateText();
+        break;
+      case 'date':
+        error = validateDate();
+        break;
+      case 'number':
+        error = validateNumber();
+        break;
+      case 'textarea':
+        error = validateTextarea();
+      case 'checkbox':
+        error = validateCheckbox();
+        break;
+      case 'url':
+        error = validateUrl();
+        break;
+      case 'select':
+        error = validateSelect();
+      case 'range':
+      default:
+        error = null;
+        break;
+    }
+  } else if (required && isVisible) {
+    error = 'This field is required';
+  }
+
+  if (touchedByParent) {
+    sendResultsToForm(name, error);
+  }
+
+  return {
+    validationMessage: error,
+    touchedByParent: false,
+    activeInput: open
   };
 };
 
