@@ -11,7 +11,6 @@ export default function GCInputLabel({
   name,
   value,
   type,
-  hidden,
   exception,
   children,
   hasTooltip,
@@ -30,7 +29,7 @@ export default function GCInputLabel({
     type !== 'checkbox';
   const staticLabel =
     type === 'date' || type === 'range' || type === 'textarea';
-  if (!isEmpty(title) && type !== 'select' && !hidden) {
+  if (!isEmpty(title) && type !== 'select') {
     if (staticLabel) {
       return (
         <Fragment>
@@ -88,9 +87,7 @@ export default function GCInputLabel({
         <Fragment>
           {children}
           <label
-            className={`gc-input__label gc-input__label--checkbox ${
-              requiredClass
-            } ${selectClass}`}
+            className={`gc-input__label gc-input__label--checkbox ${requiredClass} ${selectClass}`}
             htmlFor={name}
           >
             {ReactHtmlParser(title)}
@@ -98,8 +95,6 @@ export default function GCInputLabel({
         </Fragment>
       );
     }
-  } else if (hidden) {
-    return null;
+    return children;
   }
-  return children;
 }

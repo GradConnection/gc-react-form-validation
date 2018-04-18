@@ -207,6 +207,10 @@ import { Input } from 'gc-react-form-validation';
 
 To add custom UI to Form, put the custom component inside the template with a reference to the field below it. The reference represents where the error validation message would appear.
 
+In the field object add the prop `customUI: true` to prevent the library UI from rendering.
+
+The input would be validated everytime the input value changes.
+
 Template
 
 ```js
@@ -223,8 +227,6 @@ Template
 
 ...
 ```
-
-In the field object add the prop `customUI: true` to prevent the library UI from rendering
 
 ### Props
 

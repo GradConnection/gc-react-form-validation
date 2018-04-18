@@ -7,7 +7,6 @@ const validateInput = ({
   value,
   isVisible = true,
   required = false,
-  touchedByParent = false,
   from = null,
   to = null,
   customRegex = null,
@@ -16,6 +15,7 @@ const validateInput = ({
   min = null,
   multi = null,
   options = [],
+  inForm = false,
   sendResultsToForm = null
 }) => {
   const isEmpty = v => {
@@ -245,13 +245,12 @@ const validateInput = ({
     error = 'This field is required';
   }
 
-  if (touchedByParent) {
+  if (inForm) {
     sendResultsToForm(name, error);
   }
 
   return {
     validationMessage: error,
-    touchedByParent: false,
     activeInput: open
   };
 };

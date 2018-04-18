@@ -1,57 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
 import isArray from 'lodash/isArray';
 import mapValues from 'lodash/mapValues';
 import uniqueId from 'lodash/uniqueId';
 import has from 'lodash/has';
+import get from 'lodash/get';
 
 import ReactHtmlParser from 'react-html-parser';
 
 import Input from '../Input/Input';
-
-let GCFormCounter = 0;
-let GCFormErrorObjcen = {};
 
 class Form extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       formSubmitted: false,
-      errorMessage: ''
+      errorMessage: '',
+      errorObj: {}
     };
   }
 
+  componentDidMount() {
+    this.props.disableSubmitButton(this.hasRequiredFields(this.props.data));
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.formSubmitted) {
-      this.setState({ formSubmitted: false });
-    }
-
-    if (!prevState.formSubmitted && this.state.formSubmitted) {
-      setTimeout(() => {
-        console.log('OBJECT: ', GCFormErrorObjcen);
-        console.log('COUNTER: ', GCFormCounter);
-        if (
-          Object.keys(GCFormErrorObjcen).length === 0 &&
-          GCFormCounter === Object.keys(this.props.data).length
-        ) {
-          GCFormErrorObjcen = {};
-          this.setState(
-            {
-              errorMessage: ''
-            },
-            () => this.props.onSubmit(GCFormErrorObjcen)
-          );
-        } else {
-          this.setState({
-            errorMessage:
-              'Please make sure that you have filled in the fields correctly'
-          });
-        }
-        GCFormCounter = 0;
-      }, 700);
-    }
-
     if (
       prevProps.submissionErrorMessages !== this.props.submissionErrorMessages
     ) {
@@ -59,18 +32,45 @@ class Form extends Component {
     }
   }
 
+  hasRequiredFields(
+    data,
+    condition = () => {
+      return true;
+    }
+  ) {
+    const requiredFields = Object.keys(data).filter(d => {
+      return (
+        has(data[d], 'required') && get(data[d], 'required') && condition(d)
+      );
+    });
+    return requiredFields.length > 0;
+  }
+
+  validateRequiredFields(data) {
+    return !this.hasRequiredFields(data, d => {
+      return this.isEmpty(data[d].value);
+    });
+  }
+
+  allowSubmission(errorObj, data) {
+    return (
+      Object.keys(errorObj).length === 0 && this.validateRequiredFields(data)
+    );
+  }
+
+  isEmpty(v) {
+    return v === '' || v === [] || v === {} || v === undefined || v === null;
+  }
+
   getFields() {
-    // looks at template to display input
-    // TODO: Add hidden input for custom stuff
     const renderTemplate = mapValues(this.props.data, d => {
-      console.log('GetFields: ', d);
       return (
         <Input
           {...d}
           autoComplete={d.autoComplete || d.type}
           onChange={this.props.handleInputChange}
-          touchedByParent={this.state.formSubmitted}
           sendResultsToForm={(n, r) => this.validateForm(n, r)}
+          inForm={true}
         />
       );
     });
@@ -80,14 +80,14 @@ class Form extends Component {
   }
 
   getErrorMessages() {
-    if (!isEmpty(this.state.errorMessage)) {
+    if (!this.isEmpty(this.state.errorMessage)) {
       return (
         <div className="gc-form__error-message">
           <p>{ReactHtmlParser(this.state.errorMessage)}</p>
         </div>
       );
     } else if (
-      !isEmpty(this.props.submissionErrorMessages) &&
+      !this.isEmpty(this.props.submissionErrorMessages) &&
       this.state.displayErrorMessage
     ) {
       if (isArray(this.props.submissionErrorMessages)) {
@@ -102,21 +102,40 @@ class Form extends Component {
   submitForm(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.setState({
-      formSubmitted: true,
-      displayErrorMessage: true
-    });
+
+    if (this.allowSubmission(this.state.errorObj, this.props.data)) {
+      this.setState(
+        {
+          formSubmitted: true,
+          displayErrorMessage: true,
+          errorMessage: '',
+          errorObj: {}
+        },
+        () => this.props.onSubmit(this.state.errorObj)
+      );
+    } else {
+      this.setState({
+        formSubmitted: true,
+        displayErrorMessage: true,
+        errorMessage:
+          'Please make sure that you have filled in the fields correctly'
+      });
+    }
   }
 
   validateForm(name, results) {
-    GCFormCounter = GCFormCounter + 1;
+    const copiedObj = this.state.errorObj;
     if (!!results) {
-      GCFormErrorObjcen[name] = results;
-    } else if (!results && has(GCFormErrorObjcen, name)) {
-      delete GCFormErrorObjcen[name];
+      copiedObj[name] = results;
+    } else if (!results && has(copiedObj, name)) {
+      delete copiedObj[name];
     }
-    console.log('results: ', results);
-    console.log('name: ', name);
+
+    this.setState({ errorObj: copiedObj }, () => {
+      this.props.disableSubmitButton(
+        this.allowSubmission(copiedObj, this.props.data)
+      );
+    });
   }
 
   render() {
@@ -145,12 +164,16 @@ Form.propTypes = {
   submissionErrorMessages: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.string
-  ])
+  ]),
+  disableSubmitButton: PropTypes.func
 };
 
 Form.defaultProps = {
   description: '',
-  submissionErrorMessages: ''
+  submissionErrorMessages: '',
+  disableSubmitButton: isDisabled => {
+    return isDisabled;
+  }
 };
 
 export default Form;

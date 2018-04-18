@@ -15,27 +15,14 @@ class Input extends Component {
     super(props, context);
     this.state = {
       validationMessage: null,
-      touchedByParent: props.touchedByParent,
       activeInput: false,
       tooltip: false
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.touchedByParent &&
-      this.props.touchedByParent !== nextProps.touchedByParent
-    ) {
-      this.setState({ touchedByParent: true }, () => {
-        this.validateInput();
-      });
-    }
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     return (
       nextProps.value !== this.props.value ||
-      nextProps.touchedByParent !== this.props.touchedByParent ||
       nextProps.isVisible != this.props.isVisible ||
       nextState.validationMessage !== this.state.validationMessage ||
       nextProps.options !== this.props.options ||
@@ -45,21 +32,15 @@ class Input extends Component {
 
   componentDidUpdate(prevProps) {
     if (
-      (!this.props.touchedByParent && this.props.type === 'checkbox') ||
-      (!this.props.touchedByParent && this.props.type === 'radio') ||
       (prevProps.value !== this.props.value && this.props.hidden) ||
-      (prevProps.value !== this.props.value && this.props.type === 'custom') ||
-      (prevProps.value !== this.props.value && this.props.type === 'hidden')
+      (prevProps.value !== this.props.value && this.props.customUI)
     ) {
       this.validateInput();
     }
   }
 
   validateInput(open) {
-    const validationObj = Object.assign(
-      { open: open, touchedByParent: this.state.touchedByParent },
-      this.props
-    );
+    const validationObj = Object.assign({ open: open }, this.props);
     const validationState = validateInput(validationObj);
     this.setState(validationState);
   }
@@ -78,24 +59,44 @@ class Input extends Component {
     const errorMsgClass =
       this.props.type === 'checkbox' ? 'gc-input__error-msg--checkbox' : '';
     if (this.props.isVisible) {
-      return (
-        <div
-          className={`gc-input gc-input--${this.props.type} ${
-            this.props.extendedClassNames
-          }`}
-        >
-          <GCInputLabel
-            title={this.props.title}
-            value={this.props.value}
-            name={this.props.name}
-            type={this.props.type}
-            required={this.props.required}
-            disabled={this.props.loading || this.props.disabled}
-            hidden={this.props.hidden}
-            toggleTooltip={active => this.toggleTooltip(active)}
-            hasTooltip={this.props.tooltip !== ''}
-            toolTipActive={this.state.tooltip}
+      if (this.props.customUI) {
+        return (
+          <div
+            className={`gc-input gc-input--custom ${
+              this.props.extendedClassNames
+            }`}
           >
+            <input
+              type="hidden"
+              value={this.props.value}
+              name={this.props.name}
+            />
+            {this.state.validationMessage && (
+              <p className={`gc-input__error-msg ${errorMsgClass}`}>
+                {ReactHtmlParser(this.state.validationMessage)}
+              </p>
+            )}
+          </div>
+        );
+      } else {
+        return (
+          <div
+            className={`gc-input gc-input--${this.props.type} ${
+              this.props.extendedClassNames
+            }`}
+          >
+            <GCInputLabel
+              title={this.props.title}
+              value={this.props.value}
+              name={this.props.name}
+              type={this.props.type}
+              required={this.props.required}
+              disabled={this.props.loading || this.props.disabled}
+              hidden={this.props.hidden}
+              toggleTooltip={active => this.toggleTooltip(active)}
+              hasTooltip={this.props.tooltip !== ''}
+              toolTipActive={this.state.tooltip}
+            />
             <GCInputRenderer
               validateInput={open => this.validateInput(open)}
               handleChange={v => this.handleChange(v)}
@@ -105,24 +106,24 @@ class Input extends Component {
               activeInput={this.state.activeInput}
               {...this.props}
             />
-          </GCInputLabel>
 
-          {this.state.tooltip && (
-            <GCTooltip
-              content={this.props.tooltip}
-              name={this.props.name}
-              active={this.state.tooltip}
-              toggleTooltip={active => this.toggleTooltip(active)}
-            />
-          )}
+            {this.state.tooltip && (
+              <GCTooltip
+                content={this.props.tooltip}
+                name={this.props.name}
+                active={this.state.tooltip}
+                toggleTooltip={active => this.toggleTooltip(active)}
+              />
+            )}
 
-          {this.state.validationMessage && (
-            <p className={`gc-input__error-msg ${errorMsgClass}`}>
-              {ReactHtmlParser(this.state.validationMessage)}
-            </p>
-          )}
-        </div>
-      );
+            {this.state.validationMessage && (
+              <p className={`gc-input__error-msg ${errorMsgClass}`}>
+                {ReactHtmlParser(this.state.validationMessage)}
+              </p>
+            )}
+          </div>
+        );
+      }
     } else if (this.state.validationMessage && this.props.hidden) {
       return (
         <p className={`gc-input__error-msg ${errorMsgClass}`}>
@@ -159,10 +160,10 @@ Input.propTypes = {
   onChange: PropTypes.func.isRequired,
   customRegex: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   customErrorMessage: PropTypes.string,
-  touchedByParent: PropTypes.bool,
   sendResultsToForm: PropTypes.func,
   options: PropTypes.array,
   required: PropTypes.bool,
+  inForm: PropTypes.bool,
   size: PropTypes.string,
   title: PropTypes.string,
   data: PropTypes.object,
@@ -174,7 +175,8 @@ Input.propTypes = {
   autocomplete: PropTypes.string,
   loading: PropTypes.bool,
   hidden: PropTypes.bool,
-  tooltip: PropTypes.string
+  tooltip: PropTypes.string,
+  customUI: PropTypes.bool
 };
 
 Input.defaultProps = {
@@ -189,8 +191,8 @@ Input.defaultProps = {
   max: null,
   min: null,
   customRegex: null,
+  inForm: false,
   customErrorMessage: null,
-  touchedByParent: false,
   sendResultsToForm: null,
   options: [],
   required: false,
@@ -205,7 +207,8 @@ Input.defaultProps = {
   autocomplete: '',
   loading: false,
   hidden: false,
-  tooltip: ''
+  tooltip: '',
+  customUI: false
 };
 
 export default Input;
