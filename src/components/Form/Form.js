@@ -130,10 +130,9 @@ class Form extends Component {
     } else if (!results && has(copiedObj, name)) {
       delete copiedObj[name];
     }
-
     this.setState({ errorObj: copiedObj }, () => {
       this.props.disableSubmitButton(
-        this.allowSubmission(copiedObj, this.props.data)
+        !this.allowSubmission(this.state.errorObj, this.props.data)
       );
     });
   }

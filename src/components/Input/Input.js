@@ -96,16 +96,17 @@ class Input extends Component {
               toggleTooltip={active => this.toggleTooltip(active)}
               hasTooltip={this.props.tooltip !== ''}
               toolTipActive={this.state.tooltip}
-            />
-            <GCInputRenderer
-              validateInput={open => this.validateInput(open)}
-              handleChange={v => this.handleChange(v)}
-              validationMessage={this.state.validationMessage}
-              disabled={this.props.loading || this.props.disabled}
-              autocomplete={this.props.type}
-              activeInput={this.state.activeInput}
-              {...this.props}
-            />
+            >
+              <GCInputRenderer
+                validateInput={open => this.validateInput(open)}
+                handleChange={v => this.handleChange(v)}
+                validationMessage={this.state.validationMessage}
+                disabled={this.props.loading || this.props.disabled}
+                autocomplete={this.props.type}
+                activeInput={this.state.activeInput}
+                {...this.props}
+              />
+            </GCInputLabel>
 
             {this.state.tooltip && (
               <GCTooltip
