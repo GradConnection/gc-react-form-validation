@@ -228,7 +228,45 @@ Template
 ...
 ```
 
-### Props
+### Disabling submission button
+
+To control the disabling the submit button you need to pass a function that changes the state of the parent component and use it to control the button's appearance
+
+```js
+...
+
+changeBtnState(newState) {
+  this.setState({
+    isDisabled: newState
+  });
+}
+
+...
+
+<Form
+  data={formFields}
+  onSubmit={() => this.formSubmitted()}
+  handleInputChange={(v, t) => this.handleChange(v, t)}
+  submissionErrorMessages={this.state.error}
+  disableSubmitButton={btnState => this.changeBtnState(btnState)}
+>
+  {({ fields }) => (
+    <Fragment>
+      <input
+        type="text"
+        onChange={e => this.handleChange(e.target.value, 'name')}
+      />
+      {fields.name}
+      {fields.email}
+      <button disabled={this.state.isDisabled} type="submit">
+        Submit Form
+      </button>
+    </Fragment>
+  )}
+</Form>
+```
+
+### Input Props
 
 Some more props you can use.
 
