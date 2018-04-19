@@ -97,5 +97,5 @@ export default function GCInputLabel({
     }
     return children;
   }
-  return null;
+  return children;
 }
