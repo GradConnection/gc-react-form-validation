@@ -64,10 +64,11 @@ class Input extends Component {
       if (this.props.customUI) {
         return (
           <div
-            className={`gc-input gc-input--custom ${
-              this.props.extendedClassNames
-            }`}
+            className={`gc-input--custom ${
+              this.state.validationMessage ? 'gc-input--custom--disabled' : null
+            } ${this.props.extendedClassNames}`}
           >
+            {this.props.customComponent()}
             <input
               type="hidden"
               value={this.props.value}
@@ -180,7 +181,8 @@ Input.propTypes = {
   hidden: PropTypes.bool,
   tooltip: PropTypes.string,
   customUI: PropTypes.bool,
-  formSubmitted: PropTypes.bool
+  formSubmitted: PropTypes.bool,
+  customComponent: PropTypes.func
 };
 
 Input.defaultProps = {
@@ -213,7 +215,8 @@ Input.defaultProps = {
   hidden: false,
   tooltip: '',
   customUI: false,
-  formSubmitted: false
+  formSubmitted: false,
+  customComponent: null
 };
 
 export default Input;
