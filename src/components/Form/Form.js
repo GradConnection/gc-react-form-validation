@@ -143,6 +143,7 @@ class Form extends Component {
       this.props.disableSubmitButton(
         !this.allowSubmission(this.state.errorObj, this.props.data)
       );
+      this.props.handleFormErrors(this.state.errorObj);
     });
   }
 
@@ -173,7 +174,8 @@ Form.propTypes = {
     PropTypes.array,
     PropTypes.string
   ]),
-  disableSubmitButton: PropTypes.func
+  disableSubmitButton: PropTypes.func,
+  handleFormErrors: PropTypes.func
 };
 
 Form.defaultProps = {
@@ -181,6 +183,9 @@ Form.defaultProps = {
   submissionErrorMessages: '',
   disableSubmitButton: isDisabled => {
     return isDisabled;
+  },
+  handleFormErrors: () => {
+    return {};
   }
 };
 
