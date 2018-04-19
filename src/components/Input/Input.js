@@ -26,14 +26,16 @@ class Input extends Component {
       nextProps.isVisible != this.props.isVisible ||
       nextState.validationMessage !== this.state.validationMessage ||
       nextProps.options !== this.props.options ||
-      this.state.tooltip !== nextState.tooltip
+      this.state.tooltip !== nextState.tooltip ||
+      this.props.formSubmitted !== nextProps.formSubmitted
     );
   }
 
   componentDidUpdate(prevProps) {
     if (
       (prevProps.value !== this.props.value && this.props.hidden) ||
-      (prevProps.value !== this.props.value && this.props.customUI)
+      (prevProps.value !== this.props.value && this.props.customUI) ||
+      (!prevProps.formSubmitted && this.props.formSubmitted)
     ) {
       this.validateInput();
     }
@@ -177,7 +179,8 @@ Input.propTypes = {
   loading: PropTypes.bool,
   hidden: PropTypes.bool,
   tooltip: PropTypes.string,
-  customUI: PropTypes.bool
+  customUI: PropTypes.bool,
+  formSubmitted: PropTypes.bool
 };
 
 Input.defaultProps = {
@@ -209,7 +212,8 @@ Input.defaultProps = {
   loading: false,
   hidden: false,
   tooltip: '',
-  customUI: false
+  customUI: false,
+  formSubmitted: false
 };
 
 export default Input;

@@ -40,7 +40,15 @@ class Form extends Component {
   ) {
     const requiredFields = Object.keys(data).filter(d => {
       return (
-        has(data[d], 'required') && get(data[d], 'required') && condition(d)
+        (has(data[d], 'required') &&
+          get(data[d], 'required') &&
+          has(data[d], 'isVisible') &&
+          get(data[d], 'isVisible') &&
+          condition(d)) ||
+        (has(data[d], 'required') &&
+          get(data[d], 'required') &&
+          !has(data[d], 'isVisible') &&
+          condition(d))
       );
     });
     return requiredFields.length > 0;
@@ -71,6 +79,7 @@ class Form extends Component {
           onChange={this.props.handleInputChange}
           sendResultsToForm={(n, r) => this.validateForm(n, r)}
           inForm={true}
+          formSubmitted={this.state.formSubmitted}
         />
       );
     });
