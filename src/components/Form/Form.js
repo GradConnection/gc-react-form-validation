@@ -89,7 +89,7 @@ class Form extends Component {
   }
 
   getErrorMessages() {
-    if (!this.isEmpty(this.state.errorMessage)) {
+    if (!this.state.errorMessage === '') {
       return (
         <div className="gc-form__error-message">
           <p>{ReactHtmlParser(this.state.errorMessage)}</p>
@@ -104,8 +104,16 @@ class Form extends Component {
           return <li key={uniqueId()}>{ReactHtmlParser(err)}</li>;
         });
         return <ul className="gc-form__error-message">{errorList}</ul>;
+      } else {
+        return (
+          <div className="gc-form__error-message">
+            <p>{ReactHtmlParser(this.props.submissionErrorMessages)}</p>
+          </div>
+        );
       }
     }
+
+    return null;
   }
 
   submitForm(e) {
