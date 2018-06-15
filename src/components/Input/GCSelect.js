@@ -17,6 +17,7 @@ class GCSelect extends Component {
       isActive: false,
       searchActive: false,
       index: -1,
+      searchTxt: '',
       selection: this.getValue(props.options, this.props.value) || ''
     };
     this.handleClose = this.handleClose.bind(this);
@@ -24,10 +25,12 @@ class GCSelect extends Component {
 
   componentDidMount() {
     window.addEventListener('click', this.handleClose);
+    window.addEventListener('keypress', this.handleKeyPress);
   }
 
   componentWillUnmount() {
     window.removeEventListener('click', this.handleClose);
+    window.removeEventListener('onKeyDown', this.handleKeyPress);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -98,9 +101,7 @@ class GCSelect extends Component {
         : '';
       return (
         <li
-          className={`gc-select__drop-down__option ${disabledClass} ${
-            hoveredClass
-          }`}
+          className={`gc-select__drop-down__option ${disabledClass} ${hoveredClass}`}
           key={uniqueId()}
           onMouseDown={() => this.handleChange(opt.value, opt.disabled)}
         >
@@ -153,7 +154,7 @@ class GCSelect extends Component {
         this[this.props.name].classList.add('gc-select--close');
         this.props.onChange(v);
         setTimeout(() => {
-          this.props.validateInput();
+          this.props.handleValidation();
         }, 50);
       } else {
         this.props.onChange(v);
@@ -162,7 +163,7 @@ class GCSelect extends Component {
             isActive: false,
             index: -1
           },
-          () => this.props.validateInput()
+          () => this.props.handleValidation()
         );
       }
     }
@@ -183,7 +184,7 @@ class GCSelect extends Component {
       ) {
         this[this.props.name].classList.remove('gc-select--open');
         this[this.props.name].classList.add('gc-select--close');
-        this.props.validateInput();
+        this.props.handleValidation();
       }
     } else {
       if (!shouldOpen) {
@@ -196,7 +197,7 @@ class GCSelect extends Component {
                 searchActive: false,
                 index: -1
               },
-              () => this.props.validateInput()
+              () => this.props.handleValidation()
             ),
           50
         );
@@ -311,9 +312,7 @@ class GCSelect extends Component {
 
         {floatLabel && (
           <label
-            className={`gc-input__label gc-select__label--floated ${
-              requiredClass
-            } gc-input__label--inline`}
+            className={`gc-input__label gc-select__label--floated ${requiredClass} gc-input__label--inline`}
             htmlFor={this.props.name}
           >
             {this.props.title}
@@ -378,7 +377,7 @@ GCSelect.propTypes = {
   options: PropTypes.array.isRequired,
   dynamicClasses: PropTypes.string.isRequired,
   title: PropTypes.string,
-  validateInput: PropTypes.func.isRequired,
+  handleValidation: PropTypes.func.isRequired,
   required: PropTypes.bool.isRequired,
   loading: PropTypes.bool,
   spinner: PropTypes.node

@@ -89,7 +89,7 @@ class GCMultiSelect extends Component {
           isActive: false,
           index: -1
         },
-        () => this.props.validateInput(true)
+        () => this.props.handleValidation(true)
       );
     }
   }
@@ -118,9 +118,7 @@ class GCMultiSelect extends Component {
         : '';
       return (
         <li
-          className={`gc-select__drop-down__option ${disabledClass} ${
-            hoveredClass
-          }`}
+          className={`gc-select__drop-down__option ${disabledClass} ${hoveredClass}`}
           key={uniqueId()}
           onMouseDown={() => this.addToArray(opt.value, opt.disabled)}
         >
@@ -150,9 +148,7 @@ class GCMultiSelect extends Component {
         : '';
       return (
         <li
-          className={`gc-select__drop-down__option gc-select__drop-down__option--active ${
-            hoveredClass
-          }`}
+          className={`gc-select__drop-down__option gc-select__drop-down__option--active ${hoveredClass}`}
           key={uniqueId()}
           onMouseDown={() => this.deleteFromArray(opt.value)}
         >
@@ -258,7 +254,7 @@ class GCMultiSelect extends Component {
           });
         }, 500);
 
-        this.props.validateInput(true);
+        this.props.handleValidation(true);
       }
     } else {
       if (!shouldOpen) {
@@ -271,7 +267,7 @@ class GCMultiSelect extends Component {
                 searchActive: false,
                 index: -1
               },
-              () => this.props.validateInput(true)
+              () => this.props.handleValidation(true)
             ),
           50
         );
@@ -464,7 +460,7 @@ GCMultiSelect.propTypes = {
   options: PropTypes.array.isRequired,
   dynamicClasses: PropTypes.string.isRequired,
   title: PropTypes.string,
-  validateInput: PropTypes.func.isRequired,
+  handleValidation: PropTypes.func.isRequired,
   required: PropTypes.bool.isRequired,
   multi: PropTypes.bool,
   search: PropTypes.bool,

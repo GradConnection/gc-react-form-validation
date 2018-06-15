@@ -228,7 +228,8 @@ const validateInput = async ({
           break;
         case 'textarea':
           return validateTextarea();
-
+          break;
+        case 'array':
         case 'checkbox':
           return validateCheckbox();
           break;

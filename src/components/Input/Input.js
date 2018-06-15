@@ -165,8 +165,16 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   to: PropTypes.object,
   from: PropTypes.object,
-  max: PropTypes.number,
-  min: PropTypes.number,
+  max: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+    PropTypes.string
+  ]),
+  min: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+    PropTypes.string
+  ]),
   onChange: PropTypes.func.isRequired,
   customRegex: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   customErrorMessage: PropTypes.string,
