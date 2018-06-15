@@ -7,7 +7,7 @@ import GCMultiSelect from './GCMultiSelect';
 import GCInputLabel from './GCInputLabel';
 
 export default function GCInputRenderer(
-  { validationMessage, validateInput, handleChange, activeInput },
+  { validationMessage, handleValidation, handleChange, activeInput },
   ...props
 ) {
   const hat = arguments[0];
@@ -22,6 +22,8 @@ export default function GCInputRenderer(
     multi,
     size,
     hidden,
+    cols,
+    rows,
     autocomplete
   } = arguments[0];
   const determineType = type => {
@@ -76,17 +78,18 @@ export default function GCInputRenderer(
   const disabledClass = disabled ? 'gc-input--disabled' : '';
   if (!hidden) {
     if (type === 'textarea') {
-      const textareaClass = `gc-input__textarea--${size}`;
       return (
         <textarea
-          className={`${invalidClass} ${disabledClass} ${textareaClass}`}
+          className={`gc-input__textarea gc-input__textarea--${size} ${invalidClass} ${disabledClass}`}
           disabled={disabled}
           name={name}
           defaultValue={value}
-          onBlur={() => validateInput()}
+          onBlur={() => handleValidation()}
           onChange={e => handleChange(e.target.value)}
-          min={min}
-          max={max}
+          minLength={min}
+          maxLength={max}
+          cols={cols}
+          rows={rows}
           title={title}
           autoComplete={autocomplete}
         />
@@ -106,7 +109,7 @@ export default function GCInputRenderer(
         <GCMultiSelect
           {...arguments[0]}
           onChange={v => handleChange(v)}
-          validateInput={open => validateInput(open)}
+          handleValidation={open => handleValidation(open)}
           activeInput={activeInput}
           dynamicClasses={`${invalidClass} ${disabledClass}`}
         />
@@ -116,7 +119,7 @@ export default function GCInputRenderer(
         <GCSelect
           {...arguments[0]}
           onChange={v => handleChange(v)}
-          validateInput={() => validateInput()}
+          handleValidation={() => handleValidation()}
           dynamicClasses={`${invalidClass} ${disabledClass}`}
         />
       );
@@ -127,7 +130,7 @@ export default function GCInputRenderer(
           disabled={disabled}
           name={name}
           type={determineType(type)}
-          onBlur={() => validateInput()}
+          onBlur={() => handleValidation()}
           onChange={e => handleChange(e.target.value)}
           min={min}
           max={max}
@@ -144,7 +147,7 @@ export default function GCInputRenderer(
           name={name}
           type={determineType(type)}
           value={value}
-          onBlur={() => validateInput()}
+          onBlur={() => handleValidation()}
           onInput={e => handleChange(e.target.value)}
           onChange={e => handleChange(e.target.value)}
           maxLength={max}

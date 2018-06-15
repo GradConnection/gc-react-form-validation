@@ -175,6 +175,7 @@
     cursor: pointer; }
   .gc-input input[type='checkbox'].gc-input--invalid:after,
   .gc-input input.gc-input--invalid,
+  .gc-input textarea.gc-input--invalid,
   .gc-input .gc-select__input.gc-input--invalid {
     border-color: #f59393 !important; }
   .gc-input .gc-input--disabled {
@@ -220,9 +221,7 @@
     color: #7a848e;
     top: -1rem;
     font-size: 1.2rem; }
-  .gc-input .gc-input__textarea--small,
-  .gc-input .gc-input__textarea--medium,
-  .gc-input .gc-input__textarea--large {
+  .gc-input .gc-input__textarea {
     padding: 1rem 0.938rem;
     width: 100%; }
   .gc-input .gc-input__textarea--small {

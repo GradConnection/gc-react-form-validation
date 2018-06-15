@@ -37,13 +37,13 @@ class Input extends Component {
       (prevProps.value !== this.props.value && this.props.customUI) ||
       (!prevProps.formSubmitted && this.props.formSubmitted)
     ) {
-      this.validateInput();
+      this.handleInputValidation();
     }
   }
 
-  validateInput(open) {
+  async handleInputValidation(open) {
     const validationObj = Object.assign({ open: open }, this.props);
-    const validationState = validateInput(validationObj);
+    const validationState = await validateInput(validationObj);
     this.setState(validationState);
   }
 
@@ -101,7 +101,7 @@ class Input extends Component {
               toolTipActive={this.state.tooltip}
             >
               <GCInputRenderer
-                validateInput={open => this.validateInput(open)}
+                handleValidation={open => this.handleInputValidation(open)}
                 handleChange={v => this.handleChange(v)}
                 validationMessage={this.state.validationMessage}
                 disabled={this.props.loading || this.props.disabled}

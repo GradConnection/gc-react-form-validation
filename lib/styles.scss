@@ -251,6 +251,7 @@ $gc-form-input-bg: #ffffff !default;
 
   input[type='checkbox'].gc-input--invalid:after,
   input.gc-input--invalid,
+  textarea.gc-input--invalid,
   .gc-select__input.gc-input--invalid {
     border-color: $gc-form-light-red !important;
   }
@@ -317,9 +318,7 @@ $gc-form-input-bg: #ffffff !default;
   }
 
   // TEXT AREA STYLING
-  .gc-input__textarea--small,
-  .gc-input__textarea--medium,
-  .gc-input__textarea--large {
+  .gc-input__textarea {
     padding: 1rem 0.938rem;
     width: 100%;
   }
@@ -449,7 +448,7 @@ $gc-form-input-bg: #ffffff !default;
   // select
   .gc-select {
     position: relative;
-    margin-top: - 1.4rem;
+    margin-top: -1.4rem;
     top: -0.2rem;
 
     &.gc-input--invalid .gc-select__label-container {
