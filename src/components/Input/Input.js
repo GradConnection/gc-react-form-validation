@@ -8,7 +8,6 @@ import GCTooltip from './GCTooltip';
 import validateInput from './validateInput';
 
 import ReactHtmlParser from 'react-html-parser';
-import has from 'lodash/has';
 
 class Input extends Component {
   constructor(props, context) {
@@ -58,6 +57,7 @@ class Input extends Component {
   }
 
   render() {
+    const { autocomplete } = this.props;
     const errorMsgClass =
       this.props.type === 'checkbox' ? 'gc-input__error-msg--checkbox' : '';
     if (this.props.isVisible) {
@@ -105,9 +105,13 @@ class Input extends Component {
                 handleChange={v => this.handleChange(v)}
                 validationMessage={this.state.validationMessage}
                 disabled={this.props.loading || this.props.disabled}
-                autocomplete={this.props.type}
                 activeInput={this.state.activeInput}
                 {...this.props}
+                autocomplete={
+                  autocomplete === 'off'
+                    ? `section-blue ${this.props.type}`
+                    : autocomplete
+                }
               />
             </GCInputLabel>
 
@@ -145,7 +149,9 @@ Input.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
-    PropTypes.array
+    PropTypes.array,
+    PropTypes.object,
+    PropTypes.number
   ]),
   defaultValue: PropTypes.oneOfType([
     PropTypes.string,
@@ -187,7 +193,7 @@ Input.propTypes = {
 
 Input.defaultProps = {
   extendedClassNames: '',
-  value: null,
+  value: '',
   defaultValue: null,
   disabled: false,
   name: '',
@@ -210,7 +216,7 @@ Input.defaultProps = {
   multi: false,
   search: false,
   tooltip: null,
-  autocomplete: '',
+  autocomplete: 'off',
   loading: false,
   hidden: false,
   tooltip: '',
