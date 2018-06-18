@@ -25,12 +25,10 @@ class GCSelect extends Component {
 
   componentDidMount() {
     window.addEventListener('click', this.handleClose);
-    window.addEventListener('keypress', this.handleKeyPress);
   }
 
   componentWillUnmount() {
     window.removeEventListener('click', this.handleClose);
-    window.removeEventListener('onKeyDown', this.handleKeyPress);
   }
 
   componentWillReceiveProps(nextProps) {

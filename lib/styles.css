@@ -66,7 +66,10 @@
     height: auto;
     min-height: 2.5rem;
     z-index: 100;
-    background-color: transparent; }
+    background-color: transparent;
+    resize: none; }
+  .gc-input textarea {
+    resize: vertical; }
   .gc-input input:-webkit-autofill,
   .gc-input textarea:-webkit-autofill,
   .gc-input select:-webkit-autofill {

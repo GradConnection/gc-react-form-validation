@@ -115,6 +115,11 @@ $gc-form-input-bg: #ffffff !default;
     min-height: 2.5rem;
     z-index: 100;
     background-color: transparent;
+    resize: none;
+  }
+
+  textarea {
+    resize: vertical;
   }
 
   input:-webkit-autofill,
