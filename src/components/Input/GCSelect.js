@@ -6,6 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 import filter from 'lodash/filter';
 import without from 'lodash/without';
 import find from 'lodash/find';
+import throttle from 'lodash/throttle';
 
 import GCInputLabel from './GCInputLabel';
 import GCInputSVG from './GCInputSVG';
@@ -16,19 +17,24 @@ class GCSelect extends Component {
     this.state = {
       isActive: false,
       searchActive: false,
+      displayListBottom: true,
       index: -1,
       searchTxt: '',
       selection: this.getValue(props.options, this.props.value) || ''
     };
     this.handleClose = this.handleClose.bind(this);
+    this.calcDropDownPostion = this.calcDropDownPostion.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('click', this.handleClose);
+    window.addEventListener('scroll', throttle(this.calcDropDownPostion, 1000));
+    this.calcDropDownPostion();
   }
 
   componentWillUnmount() {
     window.removeEventListener('click', this.handleClose);
+    window.removeEventListener('scroll', this.calcDropDownPostion);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,6 +55,21 @@ class GCSelect extends Component {
       nextProps.dynamicClasses !== this.props.dynamicClasses ||
       nextState.index !== this.state.index
     );
+  }
+
+  calcDropDownPostion() {
+    const { displayListBottom } = this.state;
+    this.rect = this[this.props.name].getBoundingClientRect();
+    const vh = window.innerHeight;
+    const y = this.rect.top;
+
+    if (vh - y < 500 && displayListBottom) {
+      console.log('list appear top');
+      this.setState({ displayListBottom: false });
+    } else if (vh - y > 500 && !displayListBottom) {
+      console.log('list appear bottom');
+      this.setState({ displayListBottom: true });
+    }
   }
 
   handleClose(e) {
@@ -341,7 +362,13 @@ class GCSelect extends Component {
             )}
 
             {this.state.isActive && (
-              <ul className="gc-select__drop-down">
+              <ul
+                className={
+                  this.state.displayListBottom
+                    ? `gc-select__drop-down`
+                    : `gc-select__drop-down gc-select__drop-down--top`
+                }
+              >
                 {this.props.search && (
                   <li className="gc-select__searchbar">
                     <input

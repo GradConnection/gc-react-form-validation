@@ -535,6 +535,7 @@ $gc-form-input-bg: #ffffff !default;
       // background-color: $gc-form-grey;
       min-height: 2rem;
       position: relative;
+      border-bottom: 0.1rem solid #8e979f;
 
       .gc-select__option-count {
         display: inline-block;
@@ -606,6 +607,10 @@ $gc-form-input-bg: #ffffff !default;
       padding: 0;
       list-style: none;
       padding: 0 0.938rem;
+
+      &.gc-select__drop-down--top {
+        bottom: 100%;
+      }
     }
 
     // Accordian animations

@@ -349,7 +349,8 @@
       padding: 0.5rem 2em 0.5rem 0.938rem;
       list-style: none;
       min-height: 2rem;
-      position: relative; }
+      position: relative;
+      border-bottom: 0.1rem solid #8e979f; }
       .gc-input .gc-select .gc-select__label-container .gc-select__option-count {
         display: inline-block;
         position: absolute;
@@ -398,6 +399,8 @@
       padding: 0;
       list-style: none;
       padding: 0 0.938rem; }
+      .gc-input .gc-select .gc-select__drop-down.gc-select__drop-down--top {
+        bottom: 100%; }
     .gc-input .gc-select.gc-select--accordian .gc-select__drop-down {
       position: relative;
       overflow: hidden;
