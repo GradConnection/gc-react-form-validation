@@ -53,7 +53,8 @@ class GCSelect extends Component {
       nextState.searchActive ||
       this.state.isActive !== nextState.isActive ||
       nextProps.dynamicClasses !== this.props.dynamicClasses ||
-      nextState.index !== this.state.index
+      nextState.index !== this.state.index ||
+      nextState.displayListBottom !== this.state.displayListBottom
     );
   }
 
@@ -63,11 +64,9 @@ class GCSelect extends Component {
     const vh = window.innerHeight;
     const y = this.rect.top;
 
-    if (vh - y < 500 && displayListBottom) {
-      console.log('list appear top');
+    if (vh - y < 300 && displayListBottom) {
       this.setState({ displayListBottom: false });
-    } else if (vh - y > 500 && !displayListBottom) {
-      console.log('list appear bottom');
+    } else if (vh - y > 300 && !displayListBottom) {
       this.setState({ displayListBottom: true });
     }
   }

@@ -6,6 +6,7 @@ import isArray from 'lodash/isArray';
 import filter from 'lodash/filter';
 import without from 'lodash/without';
 import get from 'lodash/get';
+import throttle from 'lodash/throttle';
 
 import GCInputLabel from './GCInputLabel';
 import GCInputSVG from './GCInputSVG';
@@ -19,18 +20,23 @@ class GCMultiSelect extends Component {
       searchTxt: '',
       index: -1,
       keyCode: '',
+      displayListBottom: true,
       selection: this.getValue(props.options, this.props.value) || ''
     };
 
+    this.calcDropDownPostion = this.calcDropDownPostion.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('click', this.handleClose);
+    window.addEventListener('scroll', throttle(this.calcDropDownPostion, 1000));
+    this.calcDropDownPostion();
   }
 
   componentWillUnmount() {
     window.removeEventListener('click', this.handleClose);
+    window.addEventListener('scroll', this.calcDropDownPostion);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -52,8 +58,22 @@ class GCMultiSelect extends Component {
       nextState.searchTxt !== this.state.searchTxt ||
       this.state.isActive !== nextState.isActive ||
       nextProps.dynamicClasses !== this.props.dynamicClasses ||
-      nextState.index !== this.state.index
+      nextState.index !== this.state.index ||
+      nextState.displayListBottom !== this.state.displayListBottom
     );
+  }
+
+  calcDropDownPostion() {
+    const { displayListBottom } = this.state;
+    this.rect = this[this.props.name].getBoundingClientRect();
+    const vh = window.innerHeight;
+    const y = this.rect.top;
+
+    if (vh - y < 300 && displayListBottom) {
+      this.setState({ displayListBottom: false });
+    } else if (vh - y > 300 && !displayListBottom) {
+      this.setState({ displayListBottom: true });
+    }
   }
 
   handleClose(e) {
@@ -397,9 +417,12 @@ class GCMultiSelect extends Component {
           <Fragment>
             {this.props.accordian && (
               <ul
-                className={`gc-select__drop-down ${
-                  this.props.accordian ? 'gc-select--accordian' : ''
-                }`}
+                className={`gc-select__drop-down
+                      ${
+                        this.state.displayListBottom
+                          ? ''
+                          : 'gc-select__drop-down--top'
+                      } ${this.props.accordian ? 'gc-select--accordian' : ''}`}
               >
                 {this.props.search && (
                   <li className="gc-select__searchbar">
@@ -424,8 +447,10 @@ class GCMultiSelect extends Component {
               !this.props.accordian && (
                 <ul
                   className={`gc-select__drop-down ${
-                    this.props.accordian ? 'gc-select--accordian' : ''
-                  }`}
+                    this.state.displayListBottom
+                      ? ''
+                      : 'gc-select__drop-down--top'
+                  } ${this.props.accordian ? 'gc-select--accordian' : ''}`}
                 >
                   {this.props.search && (
                     <li className="gc-select__searchbar">
