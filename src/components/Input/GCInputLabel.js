@@ -15,7 +15,8 @@ export default function GCInputLabel({
   children,
   hasTooltip,
   toggleTooltip,
-  toolTipActive
+  toolTipActive,
+  options
 }) {
   const inlineClass = isEmpty(value) ? 'gc-input__label--inline' : '';
   const requiredClass = required ? 'gc-input__label--required' : '';
@@ -83,17 +84,31 @@ export default function GCInputLabel({
         </Fragment>
       );
     } else if (type === 'checkbox') {
-      return (
-        <Fragment>
-          {children}
-          <label
-            className={`gc-input__label gc-input__label--checkbox ${requiredClass} ${selectClass}`}
-            htmlFor={name}
-          >
-            {ReactHtmlParser(title)}
-          </label>
-        </Fragment>
-      );
+      if (!options) {
+        return (
+          <Fragment>
+            {children}
+            <label
+              className={`gc-input__label gc-input__label--checkbox ${requiredClass} ${selectClass}`}
+              htmlFor={name}
+            >
+              {ReactHtmlParser(title)}
+            </label>
+          </Fragment>
+        );
+      } else {
+        return (
+          <Fragment>
+            <label
+              className={`gc-input__label ${requiredClass} ${selectClass}`}
+              htmlFor={name}
+            >
+              {ReactHtmlParser(title)}
+            </label>
+            {children}
+          </Fragment>
+        );
+      }
     }
     return children;
   }

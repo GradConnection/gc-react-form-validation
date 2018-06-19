@@ -82,11 +82,13 @@ class Input extends Component {
           </div>
         );
       } else {
+        const checkboxSingle =
+          this.props.type === 'checkbox' && this.props.options.length === 0;
         return (
           <div
             className={`gc-input gc-input--${this.props.type} ${
               this.props.extendedClassNames
-            }`}
+            } ${checkboxSingle ? 'gc-input--checkbox-single' : ''}`}
           >
             <GCInputLabel
               title={this.props.title}
@@ -99,6 +101,7 @@ class Input extends Component {
               toggleTooltip={active => this.toggleTooltip(active)}
               hasTooltip={this.props.tooltip !== ''}
               toolTipActive={this.state.tooltip}
+              options={this.props.options.length > 0}
             >
               <GCInputRenderer
                 handleValidation={open => this.handleInputValidation(open)}

@@ -97,8 +97,11 @@ $gc-form-input-bg: #ffffff !default;
   font-size: 1.4rem;
 
   &.gc-input--checkbox {
-    margin-top: 1rem;
     min-height: 1.5rem;
+
+    &.gc-input--checkbox-single {
+      margin-top: 1rem;
+    }
   }
 
   &.gc-input--custom {
