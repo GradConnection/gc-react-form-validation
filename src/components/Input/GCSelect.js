@@ -60,14 +60,16 @@ class GCSelect extends Component {
 
   calcDropDownPostion() {
     const { displayListBottom } = this.state;
-    this.rect = this[this.props.name].getBoundingClientRect();
-    const vh = window.innerHeight;
-    const y = this.rect.top;
+    if (this[this.props.name]) {
+      this.rect = this[this.props.name].getBoundingClientRect();
+      const vh = window.innerHeight;
+      const y = this.rect.top;
 
-    if (vh - y < 300 && displayListBottom) {
-      this.setState({ displayListBottom: false });
-    } else if (vh - y > 300 && !displayListBottom) {
-      this.setState({ displayListBottom: true });
+      if (vh - y < 300 && displayListBottom) {
+        this.setState({ displayListBottom: false });
+      } else if (vh - y > 300 && !displayListBottom) {
+        this.setState({ displayListBottom: true });
+      }
     }
   }
 
