@@ -23,7 +23,7 @@ const validateInput = async ({
       v === null ||
       v === undefined ||
       (typeof v === 'string' && v !== '') ||
-      (typeof v === 'object' && v.length > 0) ||
+      (typeof v === 'object' && v !== {}) ||
       (typeof v === 'boolean' && v && required)
     );
   };
