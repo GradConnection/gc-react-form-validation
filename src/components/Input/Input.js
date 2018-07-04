@@ -26,7 +26,8 @@ class Input extends Component {
       nextState.validationMessage !== this.state.validationMessage ||
       nextProps.options !== this.props.options ||
       this.state.tooltip !== nextState.tooltip ||
-      this.props.formSubmitted !== nextProps.formSubmitted
+      this.props.formSubmitted !== nextProps.formSubmitted ||
+      this.props.disabled !== nextProps.disabled
     );
   }
 
