@@ -500,7 +500,7 @@ GCMultiSelect.defaultProps = {
   placeholder: '',
   title: '',
   multi: false,
-  search: false,
+  search: true,
   accordian: false,
   loading: false,
   spinner: <div className="gc-form__spinner" />

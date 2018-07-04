@@ -225,7 +225,7 @@ Input.defaultProps = {
   formTemplate: null,
   isVisible: true,
   multi: false,
-  search: false,
+  search: true,
   tooltip: null,
   autocomplete: 'off',
   loading: false,

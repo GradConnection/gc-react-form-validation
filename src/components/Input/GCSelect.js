@@ -406,13 +406,15 @@ GCSelect.propTypes = {
   handleValidation: PropTypes.func.isRequired,
   required: PropTypes.bool.isRequired,
   loading: PropTypes.bool,
-  spinner: PropTypes.node
+  spinner: PropTypes.node,
+  search: PropTypes.bool
 };
 
 GCSelect.defaultProps = {
   placeholder: '',
   title: '',
   loading: false,
+  search: true,
   spinner: <div className="gc-form__spinner" />
 };
 
