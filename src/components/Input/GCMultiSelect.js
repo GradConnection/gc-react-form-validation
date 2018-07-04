@@ -256,6 +256,7 @@ class GCMultiSelect extends Component {
 
   dropDownList(shouldOpen, e, must = false) {
     e.preventDefault();
+    if (this.props.disabled && shouldOpen) return;
     if (this.props.accordian) {
       if (
         (shouldOpen && must) ||
@@ -493,6 +494,7 @@ GCMultiSelect.propTypes = {
   search: PropTypes.bool,
   accordian: PropTypes.bool,
   loading: PropTypes.bool,
+  disabled: PropTypes.bool,
   spinner: PropTypes.node
 };
 

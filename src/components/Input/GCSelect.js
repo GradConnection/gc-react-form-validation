@@ -191,6 +191,7 @@ class GCSelect extends Component {
 
   dropDownList(shouldOpen, e, must = false) {
     e.preventDefault();
+    if (this.props.disabled && shouldOpen) return;
     if (this.props.accordian) {
       if (
         (shouldOpen && must) ||
@@ -406,8 +407,9 @@ GCSelect.propTypes = {
   handleValidation: PropTypes.func.isRequired,
   required: PropTypes.bool.isRequired,
   loading: PropTypes.bool,
-  spinner: PropTypes.node,
   search: PropTypes.bool
+  disabled: PropTypes.bool,
+  spinner: PropTypes.node
 };
 
 GCSelect.defaultProps = {
