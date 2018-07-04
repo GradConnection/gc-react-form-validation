@@ -407,7 +407,7 @@ GCSelect.propTypes = {
   handleValidation: PropTypes.func.isRequired,
   required: PropTypes.bool.isRequired,
   loading: PropTypes.bool,
-  search: PropTypes.bool
+  search: PropTypes.bool,
   disabled: PropTypes.bool,
   spinner: PropTypes.node
 };
