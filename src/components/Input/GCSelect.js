@@ -231,10 +231,15 @@ class GCSelect extends Component {
   handleSearch(e) {
     const v = e.target.value;
     let state = this.state;
+    console.log('searching: ', v);
     if (this.state.searchActive) {
-      state = { selection: v };
+      state = {
+        searchTxt: v,
+        selection: v
+      };
     } else {
       state = {
+        searchTxt: v,
         selection: v,
         searchActive: true,
         isActive: true
