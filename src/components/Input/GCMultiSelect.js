@@ -109,7 +109,8 @@ class GCMultiSelect extends Component {
       this.setState(
         {
           isActive: false,
-          index: -1
+          index: -1,
+          searchTxt: ''
         },
         () => this.props.handleValidation(true)
       );
