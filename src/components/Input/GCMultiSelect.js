@@ -53,6 +53,7 @@ class GCMultiSelect extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return (
+      nextProps.options !== this.props.options ||
       nextProps.value !== this.props.value ||
       nextState.searchActive !== this.state.searchActive ||
       nextState.searchTxt !== this.state.searchTxt ||
