@@ -561,8 +561,12 @@ $gc-form-input-bg: #ffffff !default;
 
       .gc-select__label {
         top: 0.8rem;
+        right: 35px;
         left: 0.5rem;
         font-size: 1.4rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       &:hover + .gc-select__label--floated {

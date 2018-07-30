@@ -368,8 +368,12 @@
           vertical-align: text-top; }
       .gc-input .gc-select .gc-select__label-container .gc-select__label {
         top: 0.8rem;
+        right: 35px;
         left: 0.5rem;
-        font-size: 1.4rem; }
+        font-size: 1.4rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; }
       .gc-input .gc-select .gc-select__label-container:hover + .gc-select__label--floated {
         color: #43484c;
         cursor: pointer; }
