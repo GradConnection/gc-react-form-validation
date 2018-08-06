@@ -18,6 +18,8 @@ const validateInput = async ({
   inForm = false,
   sendResultsToForm = null
 }) => {
+  // console.log(`%c Validating ${name}`, 'background: orange');
+
   const isEmpty = v => {
     return (
       v === null ||
@@ -165,7 +167,6 @@ const validateInput = async ({
 
   const validateCheckbox = () => {
     let res = null;
-
     if (options.length > 0) {
       const minL = min;
       const maxL = max;

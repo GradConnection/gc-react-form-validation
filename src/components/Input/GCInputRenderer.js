@@ -102,6 +102,7 @@ export default function GCInputRenderer(
           {...arguments[0]}
           invalidClass={`${invalidClass}`}
           onChange={v => handleChange(v)}
+          validate={() => handleValidation()}
         />
       );
     } else if (type === 'select' && multi) {

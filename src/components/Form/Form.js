@@ -56,7 +56,11 @@ class Form extends Component {
 
   validateRequiredFields(data) {
     return !this.hasRequiredFields(data, d => {
-      return this.isEmpty(data[d].value);
+      if (data[d].type === 'checkbox' && data[d].options === undefined) {
+        return !data[d].value;
+      } else {
+        return this.isEmpty(data[d].value);
+      }
     });
   }
 

@@ -29,11 +29,12 @@ class GCCheckbox extends Component {
     }
   }
 
-  handleChange(e, value) {
+  async handleChange(e, value) {
     e.preventDefault();
     const props = this.props;
     if (props.options.length === 0) {
-      this.props.onChange(!props.value);
+      await this.props.onChange(!props.value);
+      this.props.validate();
     } else {
       const selectedValue = value;
       const prevValue =
@@ -111,6 +112,7 @@ class GCCheckbox extends Component {
             name={props.name}
             title={props.title}
             checked={props.value}
+            onClick={(e, v) => this.handleChange(e, !props.value)}
             disabled={this.props.disabled}
             readOnly
           />
