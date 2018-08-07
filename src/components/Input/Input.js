@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import GCInputRenderer from './GCInputRenderer';
 import GCInputLabel from './GCInputLabel';
 import GCTooltip from './GCTooltip';
+import GCErrorMessage from './GCErrorMessage';
 
 import validateInput from './validateInput';
 
@@ -35,6 +36,7 @@ class Input extends Component {
     if (
       (prevProps.value !== this.props.value && this.props.hidden) ||
       (prevProps.value !== this.props.value && this.props.customUI) ||
+      (prevProps.value !== this.props.value && this.props.type === 'radio') ||
       (!prevProps.formSubmitted && this.props.formSubmitted)
     ) {
       this.handleInputValidation();
@@ -75,11 +77,11 @@ class Input extends Component {
               value={this.props.value}
               name={this.props.name}
             />
-            {this.state.validationMessage && (
-              <p className={`gc-input__error-msg ${errorMsgClass}`}>
-                {ReactHtmlParser(this.state.validationMessage)}
-              </p>
-            )}
+
+            <GCErrorMessage
+              msg={this.state.validationMessage}
+              extendedClassNames={errorMsgClass}
+            />
           </div>
         );
       } else {
@@ -128,20 +130,12 @@ class Input extends Component {
               />
             )}
 
-            {this.state.validationMessage && (
-              <p className={`gc-input__error-msg ${errorMsgClass}`}>
-                {ReactHtmlParser(this.state.validationMessage)}
-              </p>
-            )}
+            <GCErrorMessage msg={this.state.validationMessage} />
           </div>
         );
       }
-    } else if (this.state.validationMessage && this.props.hidden) {
-      return (
-        <p className={`gc-input__error-msg ${errorMsgClass}`}>
-          {ReactHtmlParser(this.state.validationMessage)}
-        </p>
-      );
+    } else if (this.props.hidden) {
+      return <GCErrorMessage msg={this.state.validationMessage} />;
     } else {
       return null;
     }

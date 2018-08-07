@@ -125,6 +125,7 @@ class Form extends Component {
     e.stopPropagation();
 
     if (this.allowSubmission(this.state.errorObj, this.props.data)) {
+      // console.log('%c Form may be submitted', 'background: green');
       this.setState(
         {
           formSubmitted: true,

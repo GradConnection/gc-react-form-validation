@@ -62,9 +62,10 @@ class Input extends Component {
     }
   }
 
-  handleChange(e, value) {
+  async handleChange(e, value) {
     e.preventDefault();
-    if (e.target.value === this.props.value && !this.props.required) {
+
+    if (value === this.props.value && !this.props.required) {
       this.props.onChange('');
     } else {
       this.props.onChange(value);
