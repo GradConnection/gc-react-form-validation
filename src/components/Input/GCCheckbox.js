@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import uniqueId from 'lodash/uniqueId';
+import ReactHtmlParser from 'react-html-parser';
 
 import GCInputLabel from './GCInputLabel';
 
@@ -80,7 +81,7 @@ class GCCheckbox extends Component {
             className={`gc-input__label gc-input__label--checkbox gc-input__label--checkbox-group`}
             htmlFor={props.name}
           >
-            {opt.label}
+            {ReactHtmlParser(opt.label)}
           </label>
         </div>
       );
