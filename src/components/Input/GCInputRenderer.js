@@ -83,7 +83,7 @@ export default function GCInputRenderer(
           className={`gc-input__textarea gc-input__textarea--${size} ${invalidClass} ${disabledClass}`}
           disabled={disabled}
           name={name}
-          defaultValue={value}
+          value={value}
           onBlur={() => handleValidation()}
           onChange={e => handleChange(e.target.value)}
           minLength={min}
@@ -136,7 +136,7 @@ export default function GCInputRenderer(
           min={min}
           max={max}
           title={title}
-          defaultValue={value}
+          value={value}
           autoComplete={autocomplete}
         />
       );
