@@ -413,7 +413,7 @@ class GCMultiSelect extends Component {
         ? 'gc-select--accordian gc-select--open'
         : 'gc-select--accordian gc-select--close';
     }
-    console.log(this.props.value)
+  
     return (
       <div
         className={`gc-select ${this.props.dynamicClasses} ${accordianClass}`}
