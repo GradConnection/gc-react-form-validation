@@ -18,6 +18,7 @@ const validateInput = async ({
   inForm = false,
   sendResultsToForm = null,
   defaultAll = false,
+  allowAll = false
 }) => {
   // console.log(`%c Validating ${name}`, 'background: orange');
 
@@ -160,9 +161,9 @@ const validateInput = async ({
   };
 
   const validateSelect = () => {
-    if (multi && !defaultAll) {
+    if (multi && !defaultAll && !allowAll) {
       return validateCheckbox(value);
-    } else if (multi && defaultAll){
+    } else if (multi && defaultAll || multi && allowAll){
       if(value.length === options.length) {
         return null
       } else {

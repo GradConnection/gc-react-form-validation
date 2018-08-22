@@ -59,6 +59,16 @@ class Input extends Component {
     this.setState({ tooltip: active });
   }
 
+  getValue() {
+    if(this.props.defaultAll && this.props.multi && this.props.type === 'select'){
+      if(Array.isArray(this.props.value) && this.props.value.length === 0 || this.props.value === '' ) {
+        return this.props.options.map(o => o.value)
+      }
+    }
+
+    return this.props.value
+  }
+
   render() {
     const { autocomplete } = this.props;
     const errorMsgClass =
@@ -113,6 +123,8 @@ class Input extends Component {
                 disabled={this.props.loading || this.props.disabled}
                 activeInput={this.state.activeInput}
                 {...this.props}
+                value={this.getValue()}
+                allowAll={this.props.allowAll || this.props.defaultAll}
                 autocomplete={
                   autocomplete === 'off'
                     ? `section-blue ${this.props.type}`
@@ -161,8 +173,16 @@ Input.propTypes = {
   disabled: PropTypes.bool,
   name: PropTypes.string,
   placeholder: PropTypes.string,
-  to: PropTypes.object,
-  from: PropTypes.object,
+  to: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+    PropTypes.string
+  ]),
+  from: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+    PropTypes.string
+  ]),
   max: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.number,
@@ -232,7 +252,8 @@ Input.defaultProps = {
   formSubmitted: false,
   customComponent: null,
   defaultText: 'All Options',
-  defaultAll: false
+  defaultAll: false,
+  allowAll: false
 };
 
 export default Input;

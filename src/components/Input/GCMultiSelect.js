@@ -120,7 +120,7 @@ class GCMultiSelect extends Component {
   }
 
   generateOptions(options) {
-    if(this.props.defaultAll) {
+    if(this.props.allowAll) {
       return [{
         value: 'gcAll',
         label: this.props.defaultText
@@ -166,7 +166,7 @@ class GCMultiSelect extends Component {
 
   renderOtherItems(options) {
     let sortedArray = this.sortOptionsArray(options);
-    if(this.props.defaultAll) {
+    if(this.props.allowAll) {
       sortedArray = [{
         value: 'gcAll',
         label: this.props.defaultText
@@ -183,7 +183,7 @@ class GCMultiSelect extends Component {
   }
 
   handleAllChange(add, value, disabled) {
-    if(this.props.defaultAll) {
+    if(this.props.allowAll) {
       if(add && value === 'gcAll') {
         this.handleChange(this.getAllValues())
       } else if(!add && value === 'gcAll'){
@@ -225,7 +225,7 @@ class GCMultiSelect extends Component {
   }
 
   getInactiveItems(options) {
-    if(this.props.defaultAll && this.props.value.length === this.props.options.length) {
+    if(this.props.allowAll && this.props.value.length === this.props.options.length) {
       return this.props.options;
     } else {
       const optionsDup = options.slice();
@@ -237,7 +237,7 @@ class GCMultiSelect extends Component {
   }
 
   getActiveItems(options) {
-    if(this.props.defaultAll && this.props.value.length === this.props.options.length) {
+    if(this.props.allowAll && this.props.value.length === this.props.options.length) {
       return [{
         value: 'gcAll',
         label: this.props.defaultText
@@ -413,7 +413,6 @@ class GCMultiSelect extends Component {
         ? 'gc-select--accordian gc-select--open'
         : 'gc-select--accordian gc-select--close';
     }
-  
     return (
       <div
         className={`gc-select ${this.props.dynamicClasses} ${accordianClass}`}
