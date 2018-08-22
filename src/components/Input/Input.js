@@ -194,7 +194,9 @@ Input.propTypes = {
   tooltip: PropTypes.string,
   customUI: PropTypes.bool,
   formSubmitted: PropTypes.bool,
-  customComponent: PropTypes.func
+  customComponent: PropTypes.func,
+  defaultAll: PropTypes.bool,
+  defaultText: PropTypes.string
 };
 
 Input.defaultProps = {
@@ -228,7 +230,9 @@ Input.defaultProps = {
   tooltip: '',
   customUI: false,
   formSubmitted: false,
-  customComponent: null
+  customComponent: null,
+  defaultText: 'All Options',
+  defaultAll: false
 };
 
 export default Input;

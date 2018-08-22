@@ -608,7 +608,6 @@ $gc-form-input-bg: #ffffff !default;
       width: 100%;
       max-height: 500px;
       background-color: $gc-form-light-grey;
-      border: $gc-form-grey solid 0.1rem;
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -648,7 +647,7 @@ $gc-form-input-bg: #ffffff !default;
         }
 
         &::-webkit-input-placeholder {
-          color: #ddd;
+          color: #9c9c9c;
           font-weight: 100;
           font-style: italic;
 
@@ -657,7 +656,7 @@ $gc-form-input-bg: #ffffff !default;
         }
 
         &::-moz-placeholder {
-          color: #ddd;
+          color: #9c9c9c;
           font-weight: 100;
           font-style: italic;
 
@@ -666,7 +665,7 @@ $gc-form-input-bg: #ffffff !default;
         }
 
         &:-ms-input-placeholder {
-          color: #ddd;
+          color: #9c9c9c;
           font-weight: 100;
           font-style: italic;
 
@@ -675,7 +674,7 @@ $gc-form-input-bg: #ffffff !default;
         }
 
         &:-moz-placeholder {
-          color: #ddd;
+          color: #9c9c9c;
           font-weight: 100;
           font-style: italic;
 
@@ -684,7 +683,7 @@ $gc-form-input-bg: #ffffff !default;
         }
 
         &::placeholder {
-          color: #ddd;
+          color: #9c9c9c;
           font-weight: 100;
           font-style: italic;
 

@@ -398,7 +398,6 @@
       width: 100%;
       max-height: 500px;
       background-color: #f2f3f4;
-      border: #7a848e solid 0.1rem;
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -422,31 +421,31 @@
         .gc-input .gc-select .gc-select__searchbar input:focus {
           outline: none; }
         .gc-input .gc-select .gc-select__searchbar input::-webkit-input-placeholder {
-          color: #ddd;
+          color: #9c9c9c;
           font-weight: 100;
           font-style: italic;
           font-size: 1.4rem;
           line-height: 1.5rem; }
         .gc-input .gc-select .gc-select__searchbar input::-moz-placeholder {
-          color: #ddd;
+          color: #9c9c9c;
           font-weight: 100;
           font-style: italic;
           font-size: 1.4rem;
           line-height: 1.5rem; }
         .gc-input .gc-select .gc-select__searchbar input:-ms-input-placeholder {
-          color: #ddd;
+          color: #9c9c9c;
           font-weight: 100;
           font-style: italic;
           font-size: 1.4rem;
           line-height: 1.5rem; }
         .gc-input .gc-select .gc-select__searchbar input:-moz-placeholder {
-          color: #ddd;
+          color: #9c9c9c;
           font-weight: 100;
           font-style: italic;
           font-size: 1.4rem;
           line-height: 1.5rem; }
         .gc-input .gc-select .gc-select__searchbar input::placeholder {
-          color: #ddd;
+          color: #9c9c9c;
           font-weight: 100;
           font-style: italic;
           font-size: 1.4rem;

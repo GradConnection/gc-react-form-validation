@@ -24,6 +24,7 @@ class GCMultiSelect extends Component {
       selection: this.getValue(props.options, this.props.value) || ''
     };
 
+    this.reworkedOptions = this.generateOptions(this.props.options);
     this.calcDropDownPostion = this.calcDropDownPostion.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
@@ -118,6 +119,17 @@ class GCMultiSelect extends Component {
     }
   }
 
+  generateOptions(options) {
+    if(this.props.defaultAll) {
+      return [{
+        value: 'gcAll',
+        label: this.props.defaultText
+      }].concat(options);
+    }
+
+    return options;
+  }
+
   getOpts(options) {
     if (options.length === 0) {
       return (
@@ -144,7 +156,7 @@ class GCMultiSelect extends Component {
         <li
           className={`gc-select__drop-down__option ${disabledClass} ${hoveredClass}`}
           key={uniqueId()}
-          onMouseDown={() => this.addToArray(opt.value, opt.disabled)}
+          onMouseDown={() => this.handleAllChange(true, opt.value, opt.disabled)}
         >
           <label htmlFor={this.props.name}>{opt.label}</label>
         </li>
@@ -158,6 +170,26 @@ class GCMultiSelect extends Component {
       return this.getOpts(this.getSearchResults());
     }
     return this.getOpts(this.getInactiveItems(sortedArray));
+  }
+
+  getAllValues() {
+    return this.props.options.map( o => o.value );
+  }
+
+  handleAllChange(add, value, disabled) {
+    if(this.props.defaultAll) {
+      if(add && value === 'gcAll') {
+        this.handleChange(this.getAllValues())
+      } else if(!add && value === 'gcAll'){
+        this.removeAll();
+      } else if(value !== 'gcAll' && this.props.value.length === this.props.options.length) {
+        this.handleChange([value]);
+      } else {
+        add ? this.addToArray(value, disabled) : this.deleteFromArray(value);
+      }
+    } else {
+      add ? this.addToArray(value, disabled) : this.deleteFromArray(value);
+    }
   }
 
   renderActiveItems(options) {
@@ -174,12 +206,12 @@ class GCMultiSelect extends Component {
         <li
           className={`gc-select__drop-down__option gc-select__drop-down__option--active ${hoveredClass}`}
           key={uniqueId()}
-          onMouseDown={() => this.deleteFromArray(opt.value)}
+          onMouseDown={() => this.handleAllChange(false, opt.value)}
         >
           <label htmlFor={this.props.name}>{opt.label}</label>
           <div
             className="gc-select__option--active__cross"
-            onMouseDown={() => this.deleteFromArray(opt.value)}
+            onMouseDown={() => this.handleAllChange(false,opt.value)}
           />
         </li>
       );
@@ -187,19 +219,30 @@ class GCMultiSelect extends Component {
   }
 
   getInactiveItems(options) {
-    const optionsDup = options.slice();
-    const inactiveOptions = optionsDup.filter(o => {
-      return !this.matchToValue(this.props.value, o.value);
-    });
-    return inactiveOptions;
+    if(this.props.defaultAll && this.props.value.length === this.props.options.length) {
+      return this.props.options;
+    } else {
+      const optionsDup = options.slice();
+      const inactiveOptions = optionsDup.filter(o => {
+        return !this.matchToValue(this.props.value, o.value);
+      });
+      return inactiveOptions;
+    }
   }
 
   getActiveItems(options) {
-    const optionsDup = options.slice();
-    const activeOptions = optionsDup.filter(o => {
-      return this.matchToValue(this.props.value, o.value);
-    });
-    return activeOptions;
+    if(this.props.defaultAll && this.props.value.length === this.props.options.length) {
+      return [{
+        value: 'gcAll',
+        label: this.props.defaultText
+      }];
+    } else {
+      const optionsDup = options.slice();
+      const activeOptions = optionsDup.filter(o => {
+        return this.matchToValue(this.props.value, o.value);
+      });
+      return activeOptions;
+    }
   }
 
   sortOptionsArray(options) {
@@ -234,7 +277,7 @@ class GCMultiSelect extends Component {
   }
 
   getSearchResults(searchTxt = this.state.searchTxt) {
-    const options = this.getInactiveItems(this.props.options);
+    const options = this.getInactiveItems(this.reworkedOptions);
     if (searchTxt === '') {
       return options;
     }
@@ -327,14 +370,13 @@ class GCMultiSelect extends Component {
 
   handleKeyPress(e) {
     const { searchTxt, selection, index, searchActive } = this.state;
-    const { options } = this.props;
     const queryArray = this.getSearchResults(e.target.value);
     e.preventDefault();
     if (e.keyCode === 13) {
       if (index > -1) {
-        this.addToArray(queryArray[index].value);
+        this.handleAllChange(true, queryArray[index].value);
       } else if (selection === '') {
-        this.addToArray(selection);
+        this.handleAllChange(true, selection);
       }
     } else if (e.keyCode === 38 && index > -1) {
       // Press Up arrow key
@@ -443,8 +485,8 @@ class GCMultiSelect extends Component {
                     />
                   </li>
                 )}
-                {this.renderActiveItems(this.props.options)}
-                {this.renderOtherItems(this.props.options)}
+                {this.renderActiveItems(this.reworkedOptions)}
+                {this.renderOtherItems(this.reworkedOptions)}
               </ul>
             )}
 
@@ -471,8 +513,8 @@ class GCMultiSelect extends Component {
                       />
                     </li>
                   )}
-                  {this.renderActiveItems(this.props.options)}
-                  {this.renderOtherItems(this.props.options)}
+                  {this.renderActiveItems(this.reworkedOptions)}
+                  {this.renderOtherItems(this.reworkedOptions)}
                 </ul>
               )}
           </Fragment>
