@@ -166,6 +166,12 @@ class GCMultiSelect extends Component {
 
   renderOtherItems(options) {
     let sortedArray = this.sortOptionsArray(options);
+    if(this.props.defaultAll) {
+      sortedArray = [{
+        value: 'gcAll',
+        label: this.props.defaultText
+      }].concat(sortedArray);
+    }
     if (this.state.searchActive) {
       return this.getOpts(this.getSearchResults());
     }
@@ -407,7 +413,7 @@ class GCMultiSelect extends Component {
         ? 'gc-select--accordian gc-select--open'
         : 'gc-select--accordian gc-select--close';
     }
-
+    console.log(this.props.value)
     return (
       <div
         className={`gc-select ${this.props.dynamicClasses} ${accordianClass}`}
@@ -486,7 +492,7 @@ class GCMultiSelect extends Component {
                   </li>
                 )}
                 {this.renderActiveItems(this.reworkedOptions)}
-                {this.renderOtherItems(this.reworkedOptions)}
+                {this.renderOtherItems(this.props.options)}
               </ul>
             )}
 
@@ -514,7 +520,7 @@ class GCMultiSelect extends Component {
                     </li>
                   )}
                   {this.renderActiveItems(this.reworkedOptions)}
-                  {this.renderOtherItems(this.reworkedOptions)}
+                  {this.renderOtherItems(this.props.options)}
                 </ul>
               )}
           </Fragment>
