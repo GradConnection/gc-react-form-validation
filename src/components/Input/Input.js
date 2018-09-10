@@ -101,8 +101,11 @@ class Input extends Component {
           <div
             className={`gc-input gc-input--${this.props.type} ${
               this.props.extendedClassNames
-            } ${checkboxSingle ? 'gc-input--checkbox-single' : ''}`}
+            } ${checkboxSingle ? 'gc-input--checkbox-single' : ''} ${this.props.description !== '' ? 'gc-input--has-description' : ''}`}
           >
+            {this.props.description !== '' && (
+              <p className="gc-input__description">{ReactHtmlParser(this.props.description)}</p>
+            )}
             <GCInputLabel
               title={this.props.title}
               value={this.props.value}
@@ -155,6 +158,7 @@ class Input extends Component {
 }
 
 Input.propTypes = {
+  description: PropTypes.string,
   extendedClassNames: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.string,
@@ -220,6 +224,7 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
+  description: '',
   extendedClassNames: '',
   value: '',
   defaultValue: null,

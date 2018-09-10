@@ -96,6 +96,10 @@ $gc-form-input-bg: #ffffff !default;
   box-sizing: border-box;
   font-size: 1.4rem;
 
+  &.gc-input--has-description {
+    margin-top: 2.785em;
+  }
+
   &.gc-input--checkbox {
     min-height: 1.5rem;
 
@@ -106,6 +110,11 @@ $gc-form-input-bg: #ffffff !default;
 
   &.gc-input--custom {
     margin: 0;
+  }
+
+  p.gc-input__description {
+    position: absolute;
+    top: -3em;
   }
 
   input {
