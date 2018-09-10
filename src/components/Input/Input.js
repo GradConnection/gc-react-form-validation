@@ -97,6 +97,7 @@ class Input extends Component {
       } else {
         const checkboxSingle =
           this.props.type === 'checkbox' && this.props.options.length === 0;
+          console.log(this.props.description)
         return (
           <div
             className={`gc-input gc-input--${this.props.type} ${
@@ -104,7 +105,7 @@ class Input extends Component {
             } ${checkboxSingle ? 'gc-input--checkbox-single' : ''} ${this.props.description !== '' ? 'gc-input--has-description' : ''}`}
           >
             {this.props.description !== '' && (
-              <p className="gc-input__description">{ReactHtmlParser(this.props.description)}</p>
+              <p className="gc-input__description">{this.props.description}</p>
             )}
             <GCInputLabel
               title={this.props.title}
@@ -158,7 +159,7 @@ class Input extends Component {
 }
 
 Input.propTypes = {
-  description: PropTypes.string,
+  description: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   extendedClassNames: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.string,
