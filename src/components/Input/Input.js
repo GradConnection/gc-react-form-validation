@@ -97,7 +97,6 @@ class Input extends Component {
       } else {
         const checkboxSingle =
           this.props.type === 'checkbox' && this.props.options.length === 0;
-          console.log(this.props.description)
         return (
           <div
             className={`gc-input gc-input--${this.props.type} ${
