@@ -537,29 +537,36 @@
     .gc-input .gc-select .gc-select__input-icon--fill {
       fill: #7a848e; }
 
+.gctooltip::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -1.9rem;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-left: 2rem solid transparent;
+  border-right: 0rem solid transparent;
+  border-bottom: 2rem solid #43484c; }
+
+.gctooltip .gctooltip__message {
+  color: #F3F3F3;
+  text-align: center; }
+
+.gctooltip .gctooltip__message {
+  color: #fefefe;
+  text-align: left;
+  font-size: 1.3rem; }
+
 .gctooltip {
   position: absolute;
   top: 5rem;
   z-index: 600000;
-  width: 100%;
-  padding: 0 1rem;
-  background-color: #8e979f;
+  width: calc(100% - 32px);
+  padding: 1rem;
+  background-color: #43484c;
   border-radius: 0.3rem;
   box-sizing: border-box; }
-  .gctooltip::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: -2rem;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-left: 2rem solid transparent;
-    border-right: 2rem solid transparent;
-    border-bottom: 2rem solid #8e979f; }
-  .gctooltip .gctooltip__message {
-    color: #ffffff;
-    text-align: center; }
 
 .gctooltip__icon {
   float: right;

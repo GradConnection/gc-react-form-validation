@@ -818,33 +818,39 @@ $gc-form-input-bg: #ffffff !default;
   }
 }
 
-.gctooltip {
-  position: absolute;
-  top: 5rem;
-  z-index: 600000;
-  width: 100%;
-  padding: 0 1rem;
-  background-color: $gc-form-med-grey;
-  border-radius: 0.3rem;
-  box-sizing: border-box;
-
-  &::before {
+.gctooltip::before {
     content: '';
     display: block;
     position: absolute;
-    top: -2rem;
-    left: 50%;
+    top: -1.9rem;
+    right: 0;
     width: 0;
     height: 0;
     border-left: 2rem solid transparent;
-    border-right: 2rem solid transparent;
-    border-bottom: 2rem solid $gc-form-med-grey;
-  }
+    border-right: 0rem solid transparent;
+    border-bottom: 2rem solid $gc-form-dark-grey;
+}
 
-  .gctooltip__message {
-    color: #ffffff;
+.gctooltip .gctooltip__message {
+    color: #F3F3F3;
     text-align: center;
-  }
+}
+
+.gctooltip .gctooltip__message {
+    color: #fefefe;
+    text-align: left;
+    font-size: 1.3rem;
+}
+
+.gctooltip {
+    position: absolute;
+    top: 5rem;
+    z-index: 600000;
+    width: calc(100% - 32px);
+    padding: 1rem;
+    background-color: $gc-form-dark-grey;
+    border-radius: 0.3rem;
+    box-sizing: border-box;
 }
 
 .gctooltip__icon {
