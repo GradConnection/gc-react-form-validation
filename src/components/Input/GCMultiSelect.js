@@ -127,6 +127,13 @@ class GCMultiSelect extends Component {
       }].concat(options);
     }
 
+    if(this.props.defaultNone) {
+      return [{
+        value: 'gcNone',
+        label: this.props.defaultNoneLabel
+      }].concat(options);
+    }
+
     return options;
   }
 
@@ -172,6 +179,14 @@ class GCMultiSelect extends Component {
         label: this.props.defaultText
       }].concat(sortedArray);
     }
+
+    if(this.props.defaultNone) {
+      sortedArray = [{
+        value: 'gcNone',
+        label: this.props.defaultNoneLabel
+      }].concat(sortedArray);
+    }
+
     if (this.state.searchActive) {
       return this.getOpts(this.getSearchResults());
     }
@@ -193,6 +208,17 @@ class GCMultiSelect extends Component {
       } else {
         add ? this.addToArray(value, disabled) : this.deleteFromArray(value);
       }
+    }
+      else if(this.props.defaultNone) {
+        if(add && value === 'gcNone') {
+          this.handleChange(['gcNone'])
+        } else if(!add && value === 'gcNone'){
+          this.removeAll();
+        } else if(value !== 'gcNone' && this.props.value[0] === 'gcNone') {
+          this.handleChange([value]);
+        } else {
+          add ? this.addToArray(value, disabled) : this.deleteFromArray(value);
+        }
     } else {
       add ? this.addToArray(value, disabled) : this.deleteFromArray(value);
     }
@@ -225,7 +251,7 @@ class GCMultiSelect extends Component {
   }
 
   getInactiveItems(options) {
-    if(this.props.allowAll && this.props.value.length === this.props.options.length) {
+    if(this.props.allowAll && this.props.value.length === this.props.options.length || this.props.defaultNone && this.props.value.length === this.props.options.length) {
       return this.props.options;
     } else {
       const optionsDup = options.slice();
@@ -242,6 +268,12 @@ class GCMultiSelect extends Component {
         value: 'gcAll',
         label: this.props.defaultText
       }];
+    }
+      else if(this.props.defaultNone && this.props.value.length === this.props.options.length) {
+        return [{
+          value: 'gcNone',
+          label: this.props.defaultNoneLabel
+        }];
     } else {
       const optionsDup = options.slice();
       const activeOptions = optionsDup.filter(o => {
@@ -544,7 +576,9 @@ GCMultiSelect.propTypes = {
   accordian: PropTypes.bool,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
-  spinner: PropTypes.node
+  spinner: PropTypes.node,
+  defaultNone: PropTypes.bool,
+  defaultNoneLabel: PropTypes.string
 };
 
 GCMultiSelect.defaultProps = {
@@ -554,6 +588,8 @@ GCMultiSelect.defaultProps = {
   search: true,
   accordian: false,
   loading: false,
+  defaultNone: false,
+  defaultNoneLabel: 'None',
   spinner: <div className="gc-form__spinner" />
 };
 
