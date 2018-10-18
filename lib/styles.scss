@@ -834,13 +834,13 @@ $gc-form-input-bg: #ffffff !default;
 .gctooltip .gctooltip__message {
     color: #F3F3F3;
     text-align: center;
-    margin-bottom: 0;
 }
 
 .gctooltip .gctooltip__message {
     color: #fefefe;
     text-align: left;
     font-size: 1.3rem;
+    margin-bottom: 0;
 }
 
 .gctooltip {
@@ -855,11 +855,11 @@ $gc-form-input-bg: #ffffff !default;
 }
 
 .gctooltip__icon {
-  float: right;
-  position: relative;
-  top: -25px;
+  position: absolute;
+  top: 30%;
+  right: 0;
   z-index: 3000;
-
+  
   &:hover,
   &.gctooltip__icon--active {
     cursor: pointer;
