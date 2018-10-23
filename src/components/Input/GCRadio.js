@@ -12,11 +12,12 @@ class Input extends Component {
             key={uniqueId()}
             className="gc-radio__option"
             htmlFor={props.name}
+            onClick={e => this.handleChange(e, opt.value)}
           >
             <span
               className="gc-radio__btn"
               role="radio"
-              onClick={e => this.handleChange(e, opt.value)}
+
             >
               <input
                 className="gc-radio__btn-hidden"
@@ -39,11 +40,12 @@ class Input extends Component {
           key={uniqueId()}
           className="gc-radio__option"
           htmlFor={props.name}
+          onClick={e => this.handleChange(e, !props.value)}
         >
           <span
             className="gc-radio__btn"
             role="radio"
-            onClick={e => this.handleChange(e, !props.value)}
+
           >
             <input
               className="gc-radio__btn-hidden"
