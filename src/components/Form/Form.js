@@ -125,7 +125,6 @@ class Form extends Component {
     e.stopPropagation();
 
     if (this.allowSubmission(this.state.errorObj, this.props.data)) {
-      // console.log('%c Form may be submitted', 'background: green');
       this.setState(
         {
           formSubmitted: true,
@@ -141,6 +140,10 @@ class Form extends Component {
         displayErrorMessage: true,
         errorMessage:
           'Please make sure that you have filled in the fields correctly'
+      }, () => {
+        if(this.props.sendSubmissionValidationErrors) {
+          this.props.onSubmit(this.state.errorObj)
+        }
       });
     }
   }
@@ -188,7 +191,8 @@ Form.propTypes = {
     PropTypes.string
   ]),
   disableSubmitButton: PropTypes.func,
-  handleFormErrors: PropTypes.func
+  handleFormErrors: PropTypes.func,
+  sendSubmissionValidationErrors: PropTypes.bool // For troubleshooting
 };
 
 Form.defaultProps = {
@@ -199,7 +203,8 @@ Form.defaultProps = {
   },
   handleFormErrors: () => {
     return {};
-  }
+  },
+  sendSubmissionValidationErrors: false
 };
 
 export default Form;

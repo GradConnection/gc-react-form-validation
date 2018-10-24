@@ -37,7 +37,8 @@ class Input extends Component {
       (prevProps.value !== this.props.value && this.props.hidden) ||
       (prevProps.value !== this.props.value && this.props.customUI) ||
       (prevProps.value !== this.props.value && this.props.type === 'radio') ||
-      (!prevProps.formSubmitted && this.props.formSubmitted)
+      (!prevProps.formSubmitted && this.props.formSubmitted) ||
+      (prevProps.required !== this.props.required)
     ) {
       this.handleInputValidation();
     }
