@@ -21,6 +21,7 @@
     "start": "babel src --watch --out-dir lib"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "react": "^16.0.0",

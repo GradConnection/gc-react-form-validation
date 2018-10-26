@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import ReactHtmlParser from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser'
 
-const GCErrorMessage = ({ msg, extendedClassNames = '' }) => {
-  return !!msg ? (
-    <p className={`gc-input__error-msg ${extendedClassNames}`}>
-      {ReactHtmlParser(msg)}{' '}
-    </p>
-  ) : null;
-};
+const GCErrorMessage = ({ msg }) => (
+  <p className='gc-input__error-msg'>{ReactHtmlParser(msg)} </p>
+)
 
-export default GCErrorMessage;
+export default GCErrorMessage
