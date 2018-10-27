@@ -84,6 +84,7 @@ class Form extends Component {
           sendResultsToForm={(n, r) => this.validateForm(n, r)}
           inForm={true}
           formSubmitted={this.state.formSubmitted}
+          translations={this.props.translations}
         />
       );
     });
@@ -192,7 +193,8 @@ Form.propTypes = {
   ]),
   disableSubmitButton: PropTypes.func,
   handleFormErrors: PropTypes.func,
-  sendSubmissionValidationErrors: PropTypes.bool // For troubleshooting
+  sendSubmissionValidationErrors: PropTypes.bool, // For troubleshooting
+  translations: PropTypes.object
 };
 
 Form.defaultProps = {
@@ -204,7 +206,8 @@ Form.defaultProps = {
   handleFormErrors: () => {
     return {};
   },
-  sendSubmissionValidationErrors: false
+  sendSubmissionValidationErrors: false,
+  translations: {}
 };
 
 export default Form;
