@@ -24,8 +24,6 @@ const validateInput = async (
   },
   userTranslations
 ) => {
-  // console.log(`%c Validating ${name}`, 'background: orange');
-
   const isEmpty = v => {
     return (
       v === null ||

@@ -16,7 +16,7 @@ const translationDefaults = {
   defaultInvalidInput: () => 'Invalid input'
 }
 
-const getTranslation = (name, userTranslations, ...args) => {
+export const getTranslation = (name, userTranslations, ...args) => {
   if (userTranslations[name] !== undefined) {
     return userTranslations[name](...args)
   }
