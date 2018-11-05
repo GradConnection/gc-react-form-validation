@@ -297,8 +297,9 @@ To add translations to the validation messages pass a translation object to the 
 Each key/value pair corresponds to text in the library and must return a function.
 
 Here is an example of the expected translation object:
+
 ```js
-const translationExample = {
+const translationsExample = {
   invalidEmailAddress: () => 'This email address is invalid',
   maxCharLength: max => `May not contain more than ${max} characters`,
   minCharLength: min => `May not contain less than ${min} characters`,
@@ -314,4 +315,13 @@ const translationExample = {
   requiredField: () => 'This is a required field',
   defaultInvalidInput: () => 'Invalid input'
 }
+
+...
+
+<Form
+  ...
+  translations={translationsExample}
+  ...
+>
+...
 ```
