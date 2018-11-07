@@ -1,25 +1,29 @@
-export const validateInput = async ({
-  open,
-  type,
-  name,
-  value,
-  isVisible = true,
-  required = false,
-  from = null,
-  to = null,
-  customRegex = null,
-  customErrorMessage = null,
-  max = null,
-  min = null,
-  multi = null,
-  options = [],
-  inForm = false,
-  sendResultsToForm = null,
-  defaultAll = false,
-  allowAll = false
-}) => {
-  // console.log(`%c Validating ${name}`, 'background: orange');
+import React from 'react'
+import { getTranslation } from '../../translations'
 
+const validateInput = async (
+  {
+    open,
+    type,
+    name,
+    value,
+    isVisible = true,
+    required = false,
+    from = null,
+    to = null,
+    customRegex = null,
+    customErrorMessage = null,
+    max = null,
+    min = null,
+    multi = null,
+    options = [],
+    inForm = false,
+    sendResultsToForm = null,
+    defaultAll = false,
+    allowAll = false
+  },
+  userTranslations
+) => {
   const isEmpty = v => {
     return (
       v === null ||
@@ -37,7 +41,7 @@ export const validateInput = async ({
     const valid = pattern.test(value)
     return handleErrorMessage(
       valid,
-      'The email address you have entered is not valid'
+      getTranslation('invalidEmailAddress', userTranslations)
     )
   }
 
@@ -55,7 +59,7 @@ export const validateInput = async ({
     } else {
       return handleErrorMessage(
         valid,
-        `May not contain more than ${maxL} characters`
+        getTranslation('maxCharLength', userTranslations, maxL)
       )
     }
   }
@@ -71,7 +75,7 @@ export const validateInput = async ({
     } else {
       return handleErrorMessage(
         valid,
-        `May not contain more than ${maxL} characters`
+        getTranslation('maxCharLength', userTranslations, maxL)
       )
     }
   }
@@ -84,7 +88,10 @@ export const validateInput = async ({
       usableUrl = `https:// ${value}`
     }
     const valid = /[.]+/.test(usableUrl)
-    return handleErrorMessage(valid, 'Url is not valid')
+    return handleErrorMessage(
+      valid,
+      getTranslation('invalidURL', userTranslations)
+    )
   }
 
   const validateTextarea = () => {
@@ -95,12 +102,12 @@ export const validateInput = async ({
     if (minL && value.length < minL) {
       return handleErrorMessage(
         valid,
-        `May not contain less than ${minL} characters`
+        getTranslation('minCharLength', userTranslations, minL)
       )
     } else if (maxL && value.length > maxL) {
       return handleErrorMessage(
         valid,
-        `May not contain more than ${maxL} characters`
+        getTranslation('maxCharLength', userTranslations, maxL)
       )
     } else {
       valid = pattern.test(value)
@@ -109,12 +116,12 @@ export const validateInput = async ({
   }
 
   const validatePassword = () => {
-    const min = min && min !== 0 ? min : 8
+    const minL = min && min !== 0 ? min : 8
     const pattern = handleRegExp('')
     if (value.length < min) {
       return handleErrorMessage(
         false,
-        `Password needs to have more than ${min} characters`,
+        getTranslation('minPasswordCharLength', userTranslations, minL),
         true
       )
     } else if (!pattern.test(value)) {
@@ -131,19 +138,19 @@ export const validateInput = async ({
       min = new Date(from)
       return handleErrorMessage(
         min <= selectedDate && max >= selectedDate,
-        `Please select a date between ${min.toDateString()} and ${max.toDateString()}`
+        getTranslation('dateRange', userTranslations, min, max)
       )
     } else if (from !== null) {
       min = new Date(from)
       return handleErrorMessage(
         min <= selectedDate,
-        `Please select a date after ${min.toDateString()}`
+        getTranslation('minDateRange', userTranslations, min)
       )
     } else if (to !== null) {
       max = new Date(to)
       return handleErrorMessage(
         max >= selectedDate,
-        `Please select a date before ${max.toDateString()}`
+        getTranslation('maxDateRange', userTranslations, max)
       )
     }
   }
@@ -151,9 +158,15 @@ export const validateInput = async ({
   const validateNumber = () => {
     let res = ''
     if (min && min > value) {
-      res = handleErrorMessage(false, `Number must be higher than ${min}.`)
+      res = handleErrorMessage(
+        false,
+        getTranslation('minNumber', userTranslations, min)
+      )
     } else if (max && max < value) {
-      res = handleErrorMessage(false, `Number must be lower than ${max}`)
+      res = handleErrorMessage(
+        false,
+        getTranslation('maxNumber', userTranslations, max)
+      )
     }
     return res
   }
@@ -177,9 +190,9 @@ export const validateInput = async ({
       const minL = min
       const maxL = max
       if (minL && minL > value.length) {
-        res = `Please select more than ${minL} options`
+        res = getTranslation('minSelectOptions', userTranslations, minL)
       } else if (maxL && maxL < value.length) {
-        res = `Please select less than ${maxL} options`
+        res = getTranslation('maxSelectOptions', userTranslations, maxL)
       }
     }
     return res
@@ -187,7 +200,7 @@ export const validateInput = async ({
 
   const handleErrorMessage = (
     v,
-    msg = 'Invalid Input',
+    msg = getTranslation('defaultInvalidInput', userTranslations),
     ignoreCustom = false
   ) => {
     if (!v) {
@@ -216,32 +229,42 @@ export const validateInput = async ({
       switch (type) {
         case 'email':
           return validateEmail()
+          break
         case 'password':
           return validatePassword()
+          break
         case 'name':
           return validateName()
+          break
         case 'custom':
         case 'text':
           return validateText()
+          break
         case 'date':
           return validateDate()
+          break
         case 'number':
           return validateNumber()
+          break
         case 'textarea':
           return validateTextarea()
+          break
         case 'array':
         case 'checkbox':
           return validateCheckbox()
+          break
         case 'url':
           return validateUrl()
+          break
         case 'select':
           return validateSelect()
         case 'range':
         default:
           return null
+          break
       }
     } else if (required && isVisible) {
-      return 'This field is required'
+      return getTranslation('requiredField', userTranslations)
     } else {
       return null
     }
@@ -258,3 +281,5 @@ export const validateInput = async ({
     activeInput: open
   }
 }
+
+export default validateInput

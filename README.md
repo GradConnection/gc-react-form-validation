@@ -289,3 +289,39 @@ Some more props you can use.
 | autocomplete       | Information for browser autocomplete                                   | Not required                      |                                                            |
 | accordian          | Activates a little animation for opening and closing select drop-downs | Not required                      |                                                            |
 | multi              | When used with 'select' type allows for a multiple select list         | Not required                      |                                                            |
+
+### Translations
+
+To add translations to the validation messages pass a translation object to the `translations` prop of either the Form or Input component. If no translation object is found then default translations will be used.
+
+Each key/value pair corresponds to text in the library and must return a function.
+
+Here is an example of the expected translation object:
+
+```js
+const translationsExample = {
+  invalidEmailAddress: () => 'This email address is invalid',
+  maxCharLength: max => `May not contain more than ${max} characters`,
+  minCharLength: min => `May not contain less than ${min} characters`,
+  invalidURL: () => 'This URL is invalid',
+  minPasswordCharLength: min => `Password may not contain less than ${min} characters`,
+  dateRange: (fromDate, toDate) => `Choose a date between ${fromDate.toDateString()} and ${toDate.toDateString()}`,
+  maxDateRange: toDate => `Choose a date earlier than ${toDate}`,
+  minDateRange: fromDate => `Choose a date later than ${fromDate}`,
+  maxNumber: max => `Choose a number lower than ${max}`,
+  minNumber: min => `Choose a number higher than ${min}`,
+  maxSelectOptions: max => `May not select more than ${max} options`,
+  minSelectOptions: min => `May not select less than ${min} options`,
+  requiredField: () => 'This is a required field',
+  defaultInvalidInput: () => 'Invalid input'
+}
+
+...
+
+<Form
+  ...
+  translations={translationsExample}
+  ...
+>
+...
+```

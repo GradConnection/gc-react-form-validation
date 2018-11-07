@@ -28,7 +28,8 @@ class Input extends Component {
       nextProps.options !== this.props.options ||
       this.state.tooltip !== nextState.tooltip ||
       this.props.formSubmitted !== nextProps.formSubmitted ||
-      this.props.disabled !== nextProps.disabled
+      this.props.disabled !== nextProps.disabled ||
+      this.props.translations !== nextProps.translations
     );
   }
 
@@ -46,7 +47,7 @@ class Input extends Component {
 
   async handleInputValidation(open) {
     const validationObj = Object.assign({ open: open }, this.props);
-    const validationState = await validateInput(validationObj);
+    const validationState = await validateInput(validationObj, this.props.translations);
     this.setState(validationState);
   }
 
@@ -221,7 +222,8 @@ Input.propTypes = {
   formSubmitted: PropTypes.bool,
   customComponent: PropTypes.func,
   defaultAll: PropTypes.bool,
-  defaultText: PropTypes.string
+  defaultText: PropTypes.string,
+  translations: PropTypes.object
 };
 
 Input.defaultProps = {
@@ -259,7 +261,8 @@ Input.defaultProps = {
   customComponent: null,
   defaultText: 'All Options',
   defaultAll: false,
-  allowAll: false
+  allowAll: false,
+  translations: {}
 };
 
 export default Input;

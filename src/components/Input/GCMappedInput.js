@@ -1,12 +1,8 @@
 import React from 'react'
 
-const GCMappedInput = ({ type, ...restProps }) => {
-  console.log('MappedInput')
-  return (
+const GCMappedInput = ({ type }) => (
     <div>
       <h1>{type}</h1>
-    </div>
-  )
-}
+    </div>)
 
 export default GCMappedInput

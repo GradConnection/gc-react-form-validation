@@ -20,6 +20,14 @@ $gc-form-input-bg: #ffffff !default;
   color: $gc-form-primary-colour;
 }
 
+@mixin gc-input-error-text {
+  color: mix($white, $gc-form-red, 40%);
+}
+
+@mixin gc-input-error-border {
+  border-color: $gc-form-red;
+}
+
 // base 16px html | font-size 62.5%
 
 .gc-form {
@@ -859,7 +867,7 @@ $gc-form-input-bg: #ffffff !default;
   top: 30%;
   right: 0;
   z-index: 3000;
-  
+
   &:hover,
   &.gctooltip__icon--active {
     cursor: pointer;
