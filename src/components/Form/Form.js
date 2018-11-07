@@ -1,41 +1,41 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import isArray from 'lodash/isArray';
-import mapValues from 'lodash/mapValues';
-import uniqueId from 'lodash/uniqueId';
-import has from 'lodash/has';
-import get from 'lodash/get';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import isArray from 'lodash/isArray'
+import mapValues from 'lodash/mapValues'
+import uniqueId from 'lodash/uniqueId'
+import has from 'lodash/has'
+import get from 'lodash/get'
 
-import ReactHtmlParser from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser'
 
-import Input from '../Input/Input';
+import Input from '../Input/Input'
 
 class Form extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor (props, context) {
+    super(props, context)
     this.state = {
       formSubmitted: false,
       errorMessage: '',
       errorObj: {}
-    };
-  }
-
-  componentDidMount() {
-    this.props.disableSubmitButton(this.hasRequiredFields(this.props.data));
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      prevProps.submissionErrorMessages !== this.props.submissionErrorMessages
-    ) {
-      this.setState({ errorMessage: this.props.submissionErrorMessages });
     }
   }
 
-  hasRequiredFields(
+  componentDidMount () {
+    this.props.disableSubmitButton(this.hasRequiredFields(this.props.data))
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (
+      prevProps.submissionErrorMessages !== this.props.submissionErrorMessages
+    ) {
+      this.setState({ errorMessage: this.props.submissionErrorMessages })
+    }
+  }
+
+  hasRequiredFields (
     data,
     condition = () => {
-      return true;
+      return true
     }
   ) {
     const requiredFields = Object.keys(data).filter(d => {
@@ -49,32 +49,32 @@ class Form extends Component {
           get(data[d], 'required') &&
           !has(data[d], 'isVisible') &&
           condition(d))
-      );
-    });
-    return requiredFields.length > 0;
+      )
+    })
+    return requiredFields.length > 0
   }
 
-  validateRequiredFields(data) {
+  validateRequiredFields (data) {
     return !this.hasRequiredFields(data, d => {
       if (data[d].type === 'checkbox' && data[d].options === undefined) {
-        return !data[d].value;
+        return !data[d].value
       } else {
-        return this.isEmpty(data[d].value);
+        return this.isEmpty(data[d].value)
       }
-    });
+    })
   }
 
-  allowSubmission(errorObj, data) {
+  allowSubmission (errorObj, data) {
     return (
       Object.keys(errorObj).length === 0 && this.validateRequiredFields(data)
-    );
+    )
   }
 
-  isEmpty(v) {
-    return v === '' || v === [] || v === {} || v === undefined || v === null;
+  isEmpty (v) {
+    return v === '' || v === [] || v === {} || v === undefined || v === null
   }
 
-  getFields() {
+  getFields () {
     const renderTemplate = mapValues(this.props.data, d => {
       return (
         <Input
@@ -82,48 +82,48 @@ class Form extends Component {
           autoComplete={d.autoComplete || d.type}
           onChange={this.props.handleInputChange}
           sendResultsToForm={(n, r) => this.validateForm(n, r)}
-          inForm={true}
+          inForm
           formSubmitted={this.state.formSubmitted}
           translations={this.props.translations}
         />
-      );
-    });
+      )
+    })
 
-    const hiddenInput = {};
-    return renderTemplate;
+    const hiddenInput = {}
+    return renderTemplate
   }
 
-  getErrorMessages() {
+  getErrorMessages () {
     if (!this.state.errorMessage === '') {
       return (
-        <div className="gc-form__error-message">
+        <div className='gc-form__error-message'>
           <p>{ReactHtmlParser(this.state.errorMessage)}</p>
         </div>
-      );
+      )
     } else if (
       !this.isEmpty(this.props.submissionErrorMessages) &&
       this.state.displayErrorMessage
     ) {
       if (isArray(this.props.submissionErrorMessages)) {
         const errorList = this.props.submissionErrorMessages.map(err => {
-          return <li key={uniqueId()}>{ReactHtmlParser(err)}</li>;
-        });
-        return <ul className="gc-form__error-message">{errorList}</ul>;
+          return <li key={uniqueId()}>{ReactHtmlParser(err)}</li>
+        })
+        return <ul className='gc-form__error-message'>{errorList}</ul>
       } else {
         return (
-          <div className="gc-form__error-message">
+          <div className='gc-form__error-message'>
             <p>{ReactHtmlParser(this.props.submissionErrorMessages)}</p>
           </div>
-        );
+        )
       }
     }
 
-    return null;
+    return null
   }
 
-  submitForm(e) {
-    e.preventDefault();
-    e.stopPropagation();
+  submitForm (e) {
+    e.preventDefault()
+    e.stopPropagation()
 
     if (this.allowSubmission(this.state.errorObj, this.props.data)) {
       this.setState(
@@ -134,7 +134,7 @@ class Form extends Component {
           errorObj: {}
         },
         () => this.props.onSubmit(this.state.errorObj)
-      );
+      )
     } else {
       this.setState({
         formSubmitted: true,
@@ -142,29 +142,29 @@ class Form extends Component {
         errorMessage:
           'Please make sure that you have filled in the fields correctly'
       }, () => {
-        if(this.props.onFormValidationFailure) {
+        if (this.props.onFormValidationFailure) {
           this.props.onSubmit(this.state.errorObj)
         }
-      });
+      })
     }
   }
 
-  validateForm(name, results) {
-    const copiedObj = this.state.errorObj;
-    if (!!results) {
-      copiedObj[name] = results;
+  validateForm (name, results) {
+    const copiedObj = this.state.errorObj
+    if (results) {
+      copiedObj[name] = results
     } else if (!results && has(copiedObj, name)) {
-      delete copiedObj[name];
+      delete copiedObj[name]
     }
     this.setState({ errorObj: copiedObj }, () => {
       this.props.disableSubmitButton(
         !this.allowSubmission(this.state.errorObj, this.props.data)
-      );
-      this.props.handleFormErrors(this.state.errorObj);
-    });
+      )
+      this.props.handleFormErrors(this.state.errorObj)
+    })
   }
 
-  render() {
+  render () {
     return (
       <form
         ref={this.props.formRef}
@@ -176,7 +176,7 @@ class Form extends Component {
         {this.getErrorMessages()}
         {this.props.children({ fields: this.getFields() })}
       </form>
-    );
+    )
   }
 }
 
@@ -195,19 +195,19 @@ Form.propTypes = {
   handleFormErrors: PropTypes.func,
   onFormValidationFailure: PropTypes.bool, // For troubleshooting
   translations: PropTypes.object
-};
+}
 
 Form.defaultProps = {
   description: '',
   submissionErrorMessages: '',
   disableSubmitButton: isDisabled => {
-    return isDisabled;
+    return isDisabled
   },
   handleFormErrors: () => {
-    return {};
+    return {}
   },
   onFormValidationFailure: false,
   translations: {}
-};
+}
 
-export default Form;
+export default Form

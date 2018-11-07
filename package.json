@@ -18,7 +18,8 @@
     "build:scripts": "cd ./src && NODE_ENV=production babel -d ../lib './**/*.js'",
     "build:styles": "cp ./postcss.config.js ./src/styles.scss lib/ && NODE_ENV=production node-sass < src/styles.scss > ./lib/styles.css",
     "build": "npm run clean && npm run build:scripts && npm run build:styles",
-    "start": "babel src --watch --out-dir lib"
+    "start": "babel src --watch --out-dir lib",
+    "test": "standard && node my-tests.js"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -35,6 +36,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "node-sass": "^4.5.3"
+    "node-sass": "^4.5.3",
+    "standard": "^12.0.1"
   }
 }

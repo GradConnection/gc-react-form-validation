@@ -1,19 +1,19 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 
-import uniqueId from 'lodash/uniqueId';
-import isArray from 'lodash/isArray';
-import filter from 'lodash/filter';
-import without from 'lodash/without';
-import get from 'lodash/get';
-import throttle from 'lodash/throttle';
+import uniqueId from 'lodash/uniqueId'
+import isArray from 'lodash/isArray'
+import filter from 'lodash/filter'
+import without from 'lodash/without'
+import get from 'lodash/get'
+import throttle from 'lodash/throttle'
 
-import GCInputLabel from './GCInputLabel';
-import GCInputSVG from './GCInputSVG';
+import GCInputLabel from './GCInputLabel'
+import GCInputSVG from './GCInputSVG'
 
 class GCMultiSelect extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       isActive: false,
       searchActive: false,
@@ -22,37 +22,37 @@ class GCMultiSelect extends Component {
       keyCode: '',
       displayListBottom: true,
       selection: this.getValue(props.options, this.props.value) || ''
-    };
+    }
 
-    this.reworkedOptions = this.generateOptions(this.props.options);
-    this.calcDropDownPostion = this.calcDropDownPostion.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.reworkedOptions = this.generateOptions(this.props.options)
+    this.calcDropDownPostion = this.calcDropDownPostion.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
 
-  componentDidMount() {
-    window.addEventListener('click', this.handleClose);
-    window.addEventListener('scroll', throttle(this.calcDropDownPostion, 1000));
-    this.calcDropDownPostion();
+  componentDidMount () {
+    window.addEventListener('click', this.handleClose)
+    window.addEventListener('scroll', throttle(this.calcDropDownPostion, 1000))
+    this.calcDropDownPostion()
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('click', this.handleClose);
-    window.addEventListener('scroll', this.calcDropDownPostion);
+  componentWillUnmount () {
+    window.removeEventListener('click', this.handleClose)
+    window.addEventListener('scroll', this.calcDropDownPostion)
   }
 
-  componentWillReceiveProps(nextProps) {
-    const props = this.props;
+  componentWillReceiveProps (nextProps) {
+    const props = this.props
     if (
       nextProps.value.length !== props.value.length ||
       this.state.searchActive
     ) {
       this.setState({
         selection: this.getValue(props.options, nextProps.value)
-      });
+      })
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate (nextProps, nextState) {
     return (
       nextProps.options !== this.props.options ||
       nextProps.value !== this.props.value ||
@@ -62,52 +62,52 @@ class GCMultiSelect extends Component {
       nextProps.dynamicClasses !== this.props.dynamicClasses ||
       nextState.index !== this.state.index ||
       nextState.displayListBottom !== this.state.displayListBottom
-    );
+    )
   }
 
-  calcDropDownPostion() {
-    const { displayListBottom } = this.state;
+  calcDropDownPostion () {
+    const { displayListBottom } = this.state
     if (this[this.props.name]) {
-      this.rect = this[this.props.name].getBoundingClientRect();
-      const vh = window.innerHeight;
-      const y = this.rect.top;
+      this.rect = this[this.props.name].getBoundingClientRect()
+      const vh = window.innerHeight
+      const y = this.rect.top
 
       if (vh - y < 300 && displayListBottom) {
-        this.setState({ displayListBottom: false });
+        this.setState({ displayListBottom: false })
       } else if (vh - y > 300 && !displayListBottom) {
-        this.setState({ displayListBottom: true });
+        this.setState({ displayListBottom: true })
       }
     }
   }
 
-  handleClose(e) {
+  handleClose (e) {
     if (!this.props.accordian) {
       if (this.state.isActive && !this[this.props.name].contains(e.target)) {
         this.setState({
           isActive: false,
           searchActive: false,
           searchTxt: ''
-        });
+        })
       }
     } else if (
       this[this.props.name].classList.contains('gc-select--open') &&
       !this[this.props.name].contains(e.target)
     ) {
-      this[this.props.name].classList.remove('gc-select--open');
-      this[this.props.name].classList.add('gc-select--close');
+      this[this.props.name].classList.remove('gc-select--open')
+      this[this.props.name].classList.add('gc-select--close')
       setTimeout(() => {
         this.setState({
           searchActive: false,
           searchTxt: '',
           isActive: false
-        });
-      }, 500);
+        })
+      }, 500)
     }
   }
 
-  handleChange(v, disabled = false) {
+  handleChange (v, disabled = false) {
     if (!disabled) {
-      this.props.onChange(v);
+      this.props.onChange(v)
       this.setState(
         {
           isActive: false,
@@ -115,33 +115,33 @@ class GCMultiSelect extends Component {
           searchTxt: ''
         },
         () => this.props.handleValidation(true)
-      );
+      )
     }
   }
 
-  generateOptions(options) {
-    if(this.props.allowAll) {
+  generateOptions (options) {
+    if (this.props.allowAll) {
       return [{
         value: 'gcAll',
         label: this.props.defaultText
-      }].concat(options);
+      }].concat(options)
     }
 
-    if(this.props.defaultNone) {
+    if (this.props.defaultNone) {
       return [{
         value: 'gcNone',
         label: this.props.defaultNoneLabel
-      }].concat(options);
+      }].concat(options)
     }
 
-    return options;
+    return options
   }
 
-  getOpts(options) {
+  getOpts (options) {
     if (options.length === 0) {
       return (
         <li
-          className="gc-select__drop-down__option gc-select__drop-down__option--no-results"
+          className='gc-select__drop-down__option gc-select__drop-down__option--no-results'
           key={uniqueId()}
         >
           <label htmlFor={this.props.name}>
@@ -150,15 +150,15 @@ class GCMultiSelect extends Component {
               : 'No available options'}
           </label>
         </li>
-      );
+      )
     }
 
     return options.map((opt, index) => {
       const hoveredClass =
-        this.state.index === index ? 'gc-select__drop-down__option--hover' : '';
+        this.state.index === index ? 'gc-select__drop-down__option--hover' : ''
       const disabledClass = opt.disabled
         ? 'gc-select__drop-down__option--disabled'
-        : '';
+        : ''
       return (
         <li
           className={`gc-select__drop-down__option ${disabledClass} ${hoveredClass}`}
@@ -167,73 +167,72 @@ class GCMultiSelect extends Component {
         >
           <label htmlFor={this.props.name}>{opt.label}</label>
         </li>
-      );
-    });
+      )
+    })
   }
 
-  renderOtherItems(options) {
-    let sortedArray = this.sortOptionsArray(options);
-    if(this.props.allowAll) {
+  renderOtherItems (options) {
+    let sortedArray = this.sortOptionsArray(options)
+    if (this.props.allowAll) {
       sortedArray = [{
         value: 'gcAll',
         label: this.props.defaultText
-      }].concat(sortedArray);
+      }].concat(sortedArray)
     }
 
-    if(this.props.defaultNone) {
+    if (this.props.defaultNone) {
       sortedArray = [{
         value: 'gcNone',
         label: this.props.defaultNoneLabel
-      }].concat(sortedArray);
+      }].concat(sortedArray)
     }
 
     if (this.state.searchActive) {
-      return this.getOpts(this.getSearchResults());
+      return this.getOpts(this.getSearchResults())
     }
-    return this.getOpts(this.getInactiveItems(sortedArray));
+    return this.getOpts(this.getInactiveItems(sortedArray))
   }
 
-  getAllValues() {
-    return this.props.options.map( o => o.value );
+  getAllValues () {
+    return this.props.options.map(o => o.value)
   }
 
-  handleAllChange(add, value, disabled) {
-    if(this.props.allowAll) {
-      if(add && value === 'gcAll') {
+  handleAllChange (add, value, disabled) {
+    if (this.props.allowAll) {
+      if (add && value === 'gcAll') {
         this.handleChange(this.getAllValues())
-      } else if(!add && value === 'gcAll'){
-        this.removeAll();
-      } else if(value !== 'gcAll' && this.props.value.length === this.props.options.length) {
-        this.handleChange([value]);
+      } else if (!add && value === 'gcAll') {
+        this.removeAll()
+      } else if (value !== 'gcAll' && this.props.value.length === this.props.options.length) {
+        this.handleChange([value])
       } else {
-        add ? this.addToArray(value, disabled) : this.deleteFromArray(value);
+        add ? this.addToArray(value, disabled) : this.deleteFromArray(value)
       }
-    }
-      else if(this.props.defaultNone) {
-        if(add && value === 'gcNone') {
-          this.handleChange(['gcNone'])
-        } else if(!add && value === 'gcNone'){
-          this.removeAll();
-        } else if(value !== 'gcNone' && this.props.value[0] === 'gcNone') {
-          this.handleChange([value]);
-        } else {
-          add ? this.addToArray(value, disabled) : this.deleteFromArray(value);
-        }
+    } else if (this.props.defaultNone) {
+      if (add && value === 'gcNone') {
+        this.handleChange(['gcNone'])
+      } else if (!add && value === 'gcNone') {
+        this.removeAll()
+      } else if (value !== 'gcNone' && this.props.value[0] === 'gcNone') {
+        this.handleChange([value])
+      } else {
+        add ? this.addToArray(value, disabled) : this.deleteFromArray(value)
+      }
     } else {
-      add ? this.addToArray(value, disabled) : this.deleteFromArray(value);
+      add ? this.addToArray(value, disabled) : this.deleteFromArray(value)
     }
   }
 
-  renderActiveItems(options) {
-    const activeItems = this.getActiveItems(options);
-    const sortedArray = this.sortOptionsArray(activeItems);
+  renderActiveItems (options) {
+    const activeItems = this.getActiveItems(options)
+    const sortedArray = this.sortOptionsArray(activeItems)
 
     return sortedArray.map((opt, index) => {
       const hoveredClass =
-        this.state.index === index ? 'gc-select__drop-down__option--hover' : '';
+        this.state.index === index ? 'gc-select__drop-down__option--hover' : ''
       const disabledClass = opt.disabled
         ? 'gc-select__drop-down__option--disabled'
-        : '';
+        : ''
       return (
         <li
           className={`gc-select__drop-down__option gc-select__drop-down__option--active ${hoveredClass}`}
@@ -242,125 +241,124 @@ class GCMultiSelect extends Component {
         >
           <label htmlFor={this.props.name}>{opt.label}</label>
           <div
-            className="gc-select__option--active__cross"
-            onMouseDown={() => this.handleAllChange(false,opt.value)}
+            className='gc-select__option--active__cross'
+            onMouseDown={() => this.handleAllChange(false, opt.value)}
           />
         </li>
-      );
-    });
+      )
+    })
   }
 
-  getInactiveItems(options) {
-    if(this.props.allowAll && this.props.value.length === this.props.options.length || this.props.defaultNone && this.props.value.length === this.props.options.length) {
-      return this.props.options;
+  getInactiveItems (options) {
+    if (this.props.allowAll && this.props.value.length === this.props.options.length || this.props.defaultNone && this.props.value.length === this.props.options.length) {
+      return this.props.options
     } else {
-      const optionsDup = options.slice();
+      const optionsDup = options.slice()
       const inactiveOptions = optionsDup.filter(o => {
-        return !this.matchToValue(this.props.value, o.value);
-      });
-      return inactiveOptions;
+        return !this.matchToValue(this.props.value, o.value)
+      })
+      return inactiveOptions
     }
   }
 
-  getActiveItems(options) {
-    if(this.props.allowAll && this.props.value.length === this.props.options.length) {
+  getActiveItems (options) {
+    if (this.props.allowAll && this.props.value.length === this.props.options.length) {
       return [{
         value: 'gcAll',
         label: this.props.defaultText
-      }];
-    }
-      else if(this.props.defaultNone && this.props.value.length === this.props.options.length) {
-        return [{
-          value: 'gcNone',
-          label: this.props.defaultNoneLabel
-        }];
+      }]
+    } else if (this.props.defaultNone && this.props.value.length === this.props.options.length) {
+      return [{
+        value: 'gcNone',
+        label: this.props.defaultNoneLabel
+      }]
     } else {
-      const optionsDup = options.slice();
+      const optionsDup = options.slice()
       const activeOptions = optionsDup.filter(o => {
-        return this.matchToValue(this.props.value, o.value);
-      });
-      return activeOptions;
+        return this.matchToValue(this.props.value, o.value)
+      })
+      return activeOptions
     }
   }
 
-  sortOptionsArray(options) {
-    const optionsDup = options.slice();
+  sortOptionsArray (options) {
+    const optionsDup = options.slice()
     optionsDup.sort((a, b) => {
       if (a.label < b.label) {
-        return -1;
+        return -1
       }
       if (a.label > b.label) {
-        return 1;
+        return 1
       }
-      return 0;
-    });
-    return optionsDup;
+      return 0
+    })
+    return optionsDup
   }
 
-  matchToValue(arr, value) {
-    return arr.includes(value);
+  matchToValue (arr, value) {
+    return arr.includes(value)
   }
 
-  addToArray(v, disabled) {
+  addToArray (v, disabled) {
     if (!this.matchToValue(this.props.value, v)) {
-      let newValueArray = [];
+      let newValueArray = []
       if (this.props.value.length > 0) {
-        newValueArray = this.props.value.slice();
+        newValueArray = this.props.value.slice()
       }
-      newValueArray.push(v);
-      this.handleChange(newValueArray, disabled);
+      newValueArray.push(v)
+      this.handleChange(newValueArray, disabled)
     } else {
-      this.deleteFromArray(v);
+      this.deleteFromArray(v)
     }
   }
 
-  getSearchResults(searchTxt = this.state.searchTxt) {
-    const options = this.getInactiveItems(this.reworkedOptions);
+  getSearchResults (searchTxt = this.state.searchTxt) {
+    const options = this.getInactiveItems(this.reworkedOptions)
     if (searchTxt === '') {
-      return options;
+      return options
     }
-    const pattern = new RegExp(searchTxt, 'i');
-    const foo = filter(options, o => pattern.test(o.label));
-    return foo;
+    const pattern = new RegExp(searchTxt, 'i')
+    const foo = filter(options, o => pattern.test(o.label))
+    return foo
   }
 
-  getValue(arr, value) {
-    const valueArray = isArray(value) ? value : value.split(', ');
-    let objArray = [];
+  getValue (arr, value) {
+    const valueArray = isArray(value) ? value : value.split(', ')
+    let objArray = []
     valueArray.forEach(i => {
       arr.forEach(o => {
         if (i === o.value) {
-          objArray.push(o);
+          objArray.push(o)
         }
-      });
-    });
-    return objArray;
+      })
+    })
+    return objArray
   }
 
-  dropDownList(shouldOpen, e, must = false) {
-    e.preventDefault();
-    if (this.props.disabled && shouldOpen) return;
+  dropDownList (shouldOpen, e, must = false) {
+    e.preventDefault()
+    if (this.props.disabled && shouldOpen) return
     if (this.props.accordian) {
       if (
         (shouldOpen && must) ||
         (this[this.props.name].classList.contains('gc-select--close') && !must)
       ) {
-        this[this.props.name].classList.add('gc-select--open');
-        this[this.props.name].classList.remove('gc-select--close');
+        this[this.props.name].classList.add('gc-select--open')
+        this[this.props.name].classList.remove('gc-select--close')
       } else if (
         (!shouldOpen && must) ||
         (this[this.props.name].classList.contains('gc-select--open') && !must)
       ) {
-        this[this.props.name].classList.remove('gc-select--open');
-        this[this.props.name].classList.add('gc-select--close');
+        this[this.props.name].classList.remove('gc-select--open')
+        this[this.props.name].classList.add('gc-select--close')
         setTimeout(() => {
           this.setState({
             searchActive: false,
             searchTxt: ''
-          });
-        }, 500);
+          })
+        }, 500)
 
-        this.props.handleValidation(true);
+        this.props.handleValidation(true)
       }
     } else {
       if (!shouldOpen) {
@@ -376,80 +374,80 @@ class GCMultiSelect extends Component {
               () => this.props.handleValidation(true)
             ),
           50
-        );
+        )
       } else {
-        this.setState({ isActive: true });
+        this.setState({ isActive: true })
       }
     }
   }
 
-  handleSearch(e) {
+  handleSearch (e) {
     if (e.keyCode !== 13 && e.keyCode !== 38 && e.keyCode !== 40) {
-      const v = e.target.value;
-      let state = this.state;
+      const v = e.target.value
+      let state = this.state
       if (this.state.searchActive) {
-        state = { searchTxt: v };
+        state = { searchTxt: v }
       } else {
         state = {
           searchTxt: v,
           searchActive: true,
           isActive: true
-        };
+        }
       }
-      this.setState(state);
+      this.setState(state)
     }
   }
 
-  handleEnter(e) {
+  handleEnter (e) {
     if (e.keyCode === 13) {
-      e.preventDefault();
+      e.preventDefault()
     }
   }
 
-  handleKeyPress(e) {
-    const { searchTxt, selection, index, searchActive } = this.state;
-    const queryArray = this.getSearchResults(e.target.value);
-    e.preventDefault();
+  handleKeyPress (e) {
+    const { searchTxt, selection, index, searchActive } = this.state
+    const queryArray = this.getSearchResults(e.target.value)
+    e.preventDefault()
     if (e.keyCode === 13) {
       if (index > -1) {
-        this.handleAllChange(true, queryArray[index].value);
+        this.handleAllChange(true, queryArray[index].value)
       } else if (selection === '') {
-        this.handleAllChange(true, selection);
+        this.handleAllChange(true, selection)
       }
     } else if (e.keyCode === 38 && index > -1) {
       // Press Up arrow key
-      this.setState({ index: index - 1 });
+      this.setState({ index: index - 1 })
     } else if (e.keyCode === 40 && queryArray.length - 1 > index) {
       // Press Down arrow key
-      this.setState({ index: index + 1 });
+      this.setState({ index: index + 1 })
     }
   }
 
-  removeAll() {
-    this.handleChange([]);
+  removeAll () {
+    this.handleChange([])
   }
 
-  deleteFromArray(value) {
-    const newValueArray = without(this.props.value, value);
-    this.handleChange(newValueArray);
+  deleteFromArray (value) {
+    const newValueArray = without(this.props.value, value)
+    this.handleChange(newValueArray)
   }
 
-  render() {
+  render () {
     const requiredClass = this.props.required
       ? 'gc-input__label--required'
-      : '';
-    const activeClass = this.state.isActive ? '' : 'gc-select--inactive';
-    let accordianClass = '';
+      : ''
+    const activeClass = this.state.isActive ? '' : 'gc-select--inactive'
+    let accordianClass = ''
     if (this.props.accordian) {
       accordianClass = this.props.activeInput
         ? 'gc-select--accordian gc-select--open'
-        : 'gc-select--accordian gc-select--close';
+        : 'gc-select--accordian gc-select--close'
     }
     return (
       <div
         className={`gc-select ${this.props.dynamicClasses} ${accordianClass}`}
         ref={select => {
-          this[this.props.name] = select;
+          this[this.props.name] = select
         }}
         key={`gc-selectList${this.props.name}`}
       >
@@ -465,12 +463,12 @@ class GCMultiSelect extends Component {
           </label>
 
           {this.props.value.length > 0 && (
-            <div className="gc-select__option-count">
-              <span className="gc-select__option-count--text">
+            <div className='gc-select__option-count'>
+              <span className='gc-select__option-count--text'>
                 {this.props.value.length}
               </span>
               <div
-                className="gc-select__cross"
+                className='gc-select__cross'
                 onMouseDown={() => this.removeAll()}
               />
             </div>
@@ -482,15 +480,15 @@ class GCMultiSelect extends Component {
             <Fragment>
               {this.state.isActive ? (
                 <GCInputSVG
-                  type="chevronUp"
+                  type='chevronUp'
                   onMouseDown={e => this.dropDownList(false, e, true)}
-                  className="gc-select__input-icon gc-multi-select__icon"
+                  className='gc-select__input-icon gc-multi-select__icon'
                 />
               ) : (
                 <GCInputSVG
-                  type="chevronDown"
+                  type='chevronDown'
                   onMouseDown={e => this.dropDownList(true, e, true)}
-                  className="gc-select__input-icon gc-multi-select__icon"
+                  className='gc-select__input-icon gc-multi-select__icon'
                 />
               )}
             </Fragment>
@@ -503,18 +501,18 @@ class GCMultiSelect extends Component {
               <ul
                 className={`gc-select__drop-down
                       ${
-                        this.state.displayListBottom
-                          ? ''
-                          : 'gc-select__drop-down--top'
-                      } ${this.props.accordian ? 'gc-select--accordian' : ''}`}
+              this.state.displayListBottom
+                ? ''
+                : 'gc-select__drop-down--top'
+              } ${this.props.accordian ? 'gc-select--accordian' : ''}`}
               >
                 {this.props.search && (
-                  <li className="gc-select__searchbar">
+                  <li className='gc-select__searchbar'>
                     <input
                       name={`searchTxt${this.props.name}`}
                       title={`Search ${this.props.name}`}
-                      autoFocus={true}
-                      placeholder="Start typing to search"
+                      autoFocus
+                      placeholder='Start typing to search'
                       value={this.state.searchTxt}
                       onKeyDown={e => this.handleEnter(e)}
                       onKeyUp={e => this.handleKeyPress(e)}
@@ -529,35 +527,35 @@ class GCMultiSelect extends Component {
 
             {this.state.isActive &&
               !this.props.accordian && (
-                <ul
-                  className={`gc-select__drop-down ${
-                    this.state.displayListBottom
-                      ? ''
-                      : 'gc-select__drop-down--top'
-                  } ${this.props.accordian ? 'gc-select--accordian' : ''}`}
-                >
-                  {this.props.search && (
-                    <li className="gc-select__searchbar">
-                      <input
-                        name={`searchTxt${this.props.name}`}
-                        title={`Search ${this.props.name}`}
-                        autoFocus={true}
-                        placeholder="Start typing to search"
-                        value={this.state.searchTxt}
-                        onKeyDown={e => this.handleEnter(e)}
-                        onKeyUp={e => this.handleKeyPress(e)}
-                        onChange={e => this.handleSearch(e)}
-                      />
-                    </li>
-                  )}
-                  {this.renderActiveItems(this.reworkedOptions)}
-                  {this.renderOtherItems(this.props.options)}
-                </ul>
-              )}
+              <ul
+                className={`gc-select__drop-down ${
+                  this.state.displayListBottom
+                    ? ''
+                    : 'gc-select__drop-down--top'
+                } ${this.props.accordian ? 'gc-select--accordian' : ''}`}
+              >
+                {this.props.search && (
+                  <li className='gc-select__searchbar'>
+                    <input
+                      name={`searchTxt${this.props.name}`}
+                      title={`Search ${this.props.name}`}
+                      autoFocus
+                      placeholder='Start typing to search'
+                      value={this.state.searchTxt}
+                      onKeyDown={e => this.handleEnter(e)}
+                      onKeyUp={e => this.handleKeyPress(e)}
+                      onChange={e => this.handleSearch(e)}
+                    />
+                  </li>
+                )}
+                {this.renderActiveItems(this.reworkedOptions)}
+                {this.renderOtherItems(this.props.options)}
+              </ul>
+            )}
           </Fragment>
         )}
       </div>
-    );
+    )
   }
 }
 
@@ -579,7 +577,7 @@ GCMultiSelect.propTypes = {
   spinner: PropTypes.node,
   defaultNone: PropTypes.bool,
   defaultNoneLabel: PropTypes.string
-};
+}
 
 GCMultiSelect.defaultProps = {
   placeholder: '',
@@ -590,7 +588,7 @@ GCMultiSelect.defaultProps = {
   loading: false,
   defaultNone: false,
   defaultNoneLabel: 'None',
-  spinner: <div className="gc-form__spinner" />
-};
+  spinner: <div className='gc-form__spinner' />
+}
 
-export default GCMultiSelect;
+export default GCMultiSelect

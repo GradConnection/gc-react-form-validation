@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import GCInputRenderer from './GCInputRenderer';
-import GCInputLabel from './GCInputLabel';
-import GCTooltip from './GCTooltip';
-import GCErrorMessage from './GCErrorMessage';
+import GCInputRenderer from './GCInputRenderer'
+import GCInputLabel from './GCInputLabel'
+import GCTooltip from './GCTooltip'
+import GCErrorMessage from './GCErrorMessage'
 
-import validateInput from './validateInput';
+import validateInput from './validateInput'
 
-import ReactHtmlParser from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser'
 
 class Input extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor (props, context) {
+    super(props, context)
     this.state = {
       validationMessage: null,
       activeInput: false,
       tooltip: false
-    };
+    }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate (nextProps, nextState) {
     return (
       nextProps.value !== this.props.value ||
       nextProps.isVisible != this.props.isVisible ||
@@ -30,10 +30,10 @@ class Input extends Component {
       this.props.formSubmitted !== nextProps.formSubmitted ||
       this.props.disabled !== nextProps.disabled ||
       this.props.translations !== nextProps.translations
-    );
+    )
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate (prevProps) {
     if (
       (prevProps.value !== this.props.value && this.props.hidden) ||
       (prevProps.value !== this.props.value && this.props.customUI) ||
@@ -41,29 +41,29 @@ class Input extends Component {
       (!prevProps.formSubmitted && this.props.formSubmitted) ||
       (prevProps.required !== this.props.required)
     ) {
-      this.handleInputValidation();
+      this.handleInputValidation()
     }
   }
 
-  async handleInputValidation(open) {
-    const validationObj = Object.assign({ open: open }, this.props);
-    const validationState = await validateInput(validationObj, this.props.translations);
-    this.setState(validationState);
+  async handleInputValidation (open) {
+    const validationObj = Object.assign({ open: open }, this.props)
+    const validationState = await validateInput(validationObj, this.props.translations)
+    this.setState(validationState)
   }
 
-  handleChange(v) {
+  handleChange (v) {
     if (!this.props.disabled || !this.props.loading) {
-      this.props.onChange(v, this.props.stateName);
+      this.props.onChange(v, this.props.stateName)
     }
   }
 
-  toggleTooltip(active) {
-    this.setState({ tooltip: active });
+  toggleTooltip (active) {
+    this.setState({ tooltip: active })
   }
 
-  getValue() {
-    if(this.props.defaultAll && this.props.multi && this.props.type === 'select'){
-      if(Array.isArray(this.props.value) && this.props.value.length === 0 || this.props.value === '' ) {
+  getValue () {
+    if (this.props.defaultAll && this.props.multi && this.props.type === 'select') {
+      if (Array.isArray(this.props.value) && this.props.value.length === 0 || this.props.value === '') {
         return this.props.options.map(o => o.value)
       }
     }
@@ -71,10 +71,10 @@ class Input extends Component {
     return this.props.value
   }
 
-  render() {
-    const { autocomplete } = this.props;
+  render () {
+    const { autocomplete } = this.props
     const errorMsgClass =
-      this.props.type === 'checkbox' ? 'gc-input__error-msg--checkbox' : '';
+      this.props.type === 'checkbox' ? 'gc-input__error-msg--checkbox' : ''
     if (this.props.isVisible) {
       if (this.props.customUI) {
         return (
@@ -85,7 +85,7 @@ class Input extends Component {
           >
             {this.props.customComponent()}
             <input
-              type="hidden"
+              type='hidden'
               value={this.props.value}
               name={this.props.name}
             />
@@ -95,10 +95,10 @@ class Input extends Component {
               extendedClassNames={errorMsgClass}
             />
           </div>
-        );
+        )
       } else {
         const checkboxSingle =
-          this.props.type === 'checkbox' && this.props.options.length === 0;
+          this.props.type === 'checkbox' && this.props.options.length === 0
         return (
           <div
             className={`gc-input gc-input--${this.props.type} ${
@@ -106,7 +106,7 @@ class Input extends Component {
             } ${checkboxSingle ? 'gc-input--checkbox-single' : ''} ${this.props.description !== '' ? 'gc-input--has-description' : ''}`}
           >
             {this.props.description !== '' && (
-              <p className="gc-input__description">{this.props.description}</p>
+              <p className='gc-input__description'>{this.props.description}</p>
             )}
             <GCInputLabel
               title={this.props.title}
@@ -149,12 +149,12 @@ class Input extends Component {
 
             <GCErrorMessage msg={this.state.validationMessage} />
           </div>
-        );
+        )
       }
     } else if (this.props.hidden) {
-      return <GCErrorMessage msg={this.state.validationMessage} />;
+      return <GCErrorMessage msg={this.state.validationMessage} />
     } else {
-      return null;
+      return null
     }
   }
 }
@@ -224,7 +224,7 @@ Input.propTypes = {
   defaultAll: PropTypes.bool,
   defaultText: PropTypes.string,
   translations: PropTypes.object
-};
+}
 
 Input.defaultProps = {
   description: '',
@@ -263,6 +263,6 @@ Input.defaultProps = {
   defaultAll: false,
   allowAll: false,
   translations: {}
-};
+}
 
-export default Input;
+export default Input

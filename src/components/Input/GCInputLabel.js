@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
-import isEmpty from 'lodash/isEmpty';
+import React, { Component, Fragment } from 'react'
+import isEmpty from 'lodash/isEmpty'
 
-import ReactHtmlParser from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser'
 
-import { GCIcon } from './GCIcons';
+import { GCIcon } from './GCIcons'
 
-export default function GCInputLabel({
+export default function GCInputLabel ({
   title,
   required,
   name,
@@ -18,18 +18,18 @@ export default function GCInputLabel({
   toolTipActive,
   options
 }) {
-  const inlineClass = isEmpty(value) ? 'gc-input__label--inline' : '';
-  const requiredClass = required ? 'gc-input__label--required' : '';
-  const selectClass = exception === 'select' ? 'gc-select__label' : '';
+  const inlineClass = isEmpty(value) ? 'gc-input__label--inline' : ''
+  const requiredClass = required ? 'gc-input__label--required' : ''
+  const selectClass = exception === 'select' ? 'gc-select__label' : ''
   const floatingLabel =
     type !== 'radio' &&
     type !== 'date' &&
     type !== 'range' &&
     type !== 'select' &&
     type !== 'textarea' &&
-    type !== 'checkbox';
+    type !== 'checkbox'
   const staticLabel =
-    type === 'date' || type === 'range' || type === 'textarea';
+    type === 'date' || type === 'range' || type === 'textarea'
   if (!isEmpty(title) && type !== 'select') {
     if (staticLabel) {
       return (
@@ -42,21 +42,21 @@ export default function GCInputLabel({
           </label>
           {hasTooltip && (
             <span
-              className="gctooltip__icon"
-              role="button"
+              className='gctooltip__icon'
+              role='button'
               onClick={() => toggleTooltip(!toolTipActive)}
             >
               <GCIcon
-                size="30px"
-                kind="infoIcon"
-                iconTitle="tooltip"
-                mainFill="#777"
+                size='30px'
+                kind='infoIcon'
+                iconTitle='tooltip'
+                mainFill='#777'
               />
             </span>
           )}
           {children}
         </Fragment>
-      );
+      )
     } else if (floatingLabel) {
       return (
         <Fragment>
@@ -69,20 +69,20 @@ export default function GCInputLabel({
           </label>
           {hasTooltip && (
             <span
-              className="gctooltip__icon"
-              role="button"
+              className='gctooltip__icon'
+              role='button'
               onClick={() => toggleTooltip(!toolTipActive)}
             >
               <GCIcon
-                size="30px"
-                kind="infoIcon"
-                iconTitle="tooltip"
-                mainFill="#777"
+                size='30px'
+                kind='infoIcon'
+                iconTitle='tooltip'
+                mainFill='#777'
               />
             </span>
           )}
         </Fragment>
-      );
+      )
     } else if (type === 'checkbox') {
       if (!options) {
         return (
@@ -95,7 +95,7 @@ export default function GCInputLabel({
               {ReactHtmlParser(title)}
             </label>
           </Fragment>
-        );
+        )
       } else {
         return (
           <Fragment>
@@ -107,10 +107,10 @@ export default function GCInputLabel({
             </label>
             {children}
           </Fragment>
-        );
+        )
       }
     }
-    return children;
+    return children
   }
-  return children;
+  return children
 }

@@ -6,11 +6,11 @@ export const toArray = value => {
   if (typeof value !== 'array') {
     if (value === '') {
       if (value.includes(',')) {
-        return value.split();
+        return value.split()
       }
-      return [value];
+      return [value]
     }
-    return [];
+    return []
   }
-  return value;
-};
+  return value
+}

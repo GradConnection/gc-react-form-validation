@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import GCRadio from './GCRadio';
-import GCCheckbox from './GCCheckbox';
-import GCSelect from './GCSelect';
-import GCMultiSelect from './GCMultiSelect';
-import GCInputLabel from './GCInputLabel';
+import GCRadio from './GCRadio'
+import GCCheckbox from './GCCheckbox'
+import GCSelect from './GCSelect'
+import GCMultiSelect from './GCMultiSelect'
+import GCInputLabel from './GCInputLabel'
 
-export default function GCInputRenderer(
+export default function GCInputRenderer (
   { validationMessage, handleValidation, handleChange, activeInput },
   ...props
 ) {
-  const hat = arguments[0];
+  const hat = arguments[0]
   const {
     name,
     disabled,
@@ -25,57 +25,57 @@ export default function GCInputRenderer(
     cols,
     rows,
     autocomplete
-  } = arguments[0];
+  } = arguments[0]
   const determineType = type => {
-    let inputType;
+    let inputType
     switch (type) {
       case 'name':
-        inputType = 'name';
-        break;
+        inputType = 'name'
+        break
       case 'text':
       case 'url':
-        inputType = 'text';
-        break;
+        inputType = 'text'
+        break
       case 'email':
-        inputType = 'email';
-        break;
+        inputType = 'email'
+        break
       case 'checkbox':
-        inputType = 'checkbox';
-        break;
+        inputType = 'checkbox'
+        break
       case 'password':
-        inputType = 'password';
-        break;
+        inputType = 'password'
+        break
       case 'date':
-        inputType = 'date';
-        break;
+        inputType = 'date'
+        break
       case 'range':
-        inputType = 'range';
-        break;
+        inputType = 'range'
+        break
       case 'number':
-        inputType = 'number';
-        break;
+        inputType = 'number'
+        break
       case 'textarea':
-        inputType = 'textarea';
-        break;
+        inputType = 'textarea'
+        break
       case 'radio':
-        inputType = 'radio';
-        break;
+        inputType = 'radio'
+        break
       case 'select':
-        inputType = 'select';
-        break;
+        inputType = 'select'
+        break
       case 'hidden':
       case 'custom':
-        inputType = 'hidden';
-        break;
+        inputType = 'hidden'
+        break
       default:
-        inputType = 'text';
-        break;
+        inputType = 'text'
+        break
     }
-    return inputType;
-  };
+    return inputType
+  }
 
-  const invalidClass = validationMessage ? 'gc-input--invalid' : '';
-  const disabledClass = disabled ? 'gc-input--disabled' : '';
+  const invalidClass = validationMessage ? 'gc-input--invalid' : ''
+  const disabledClass = disabled ? 'gc-input--disabled' : ''
   if (!hidden) {
     if (type === 'textarea') {
       return (
@@ -93,9 +93,9 @@ export default function GCInputRenderer(
           title={title}
           autoComplete={autocomplete}
         />
-      );
+      )
     } else if (type === 'radio') {
-      return <GCRadio {...arguments[0]} onChange={v => handleChange(v)} />;
+      return <GCRadio {...arguments[0]} onChange={v => handleChange(v)} />
     } else if (type === 'checkbox') {
       return (
         <GCCheckbox
@@ -104,7 +104,7 @@ export default function GCInputRenderer(
           onChange={v => handleChange(v)}
           validate={() => handleValidation()}
         />
-      );
+      )
     } else if (type === 'select' && multi) {
       return (
         <GCMultiSelect
@@ -114,7 +114,7 @@ export default function GCInputRenderer(
           activeInput={activeInput}
           dynamicClasses={`${invalidClass} ${disabledClass}`}
         />
-      );
+      )
     } else if (type === 'select' && !multi) {
       return (
         <GCSelect
@@ -123,7 +123,7 @@ export default function GCInputRenderer(
           handleValidation={() => handleValidation()}
           dynamicClasses={`${invalidClass} ${disabledClass}`}
         />
-      );
+      )
     } else if (type === 'number') {
       return (
         <input
@@ -139,7 +139,7 @@ export default function GCInputRenderer(
           value={value}
           autoComplete={autocomplete}
         />
-      );
+      )
     } else {
       return (
         <input
@@ -157,9 +157,9 @@ export default function GCInputRenderer(
           title={title}
           autoComplete={autocomplete}
         />
-      );
+      )
     }
   } else {
-    return null;
+    return null
   }
 }

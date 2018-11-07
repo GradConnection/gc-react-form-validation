@@ -1,5 +1,7 @@
 # GC React form-validation
 
+
+
 This library has two components
 
 1.  Input
@@ -325,3 +327,5 @@ const translationsExample = {
 >
 ...
 ```
+
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)

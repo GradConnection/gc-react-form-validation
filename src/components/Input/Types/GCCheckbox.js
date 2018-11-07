@@ -1,73 +1,73 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import uniqueId from 'lodash/uniqueId';
-import ReactHtmlParser from 'react-html-parser';
+import uniqueId from 'lodash/uniqueId'
+import ReactHtmlParser from 'react-html-parser'
 
-import GCInputLabel from './GCInputLabel';
+import GCInputLabel from './GCInputLabel'
 
 class GCCheckbox extends Component {
-  matchValues(arr, value) {
+  matchValues (arr, value) {
     if (this.props.options.length === 0) {
-      return this.props.value;
+      return this.props.value
     }
-    return arr.includes(value);
+    return arr.includes(value)
   }
 
-  removeFromArray(arr, item) {
-    const index = arr.findIndex(el => item === el);
-    arr.splice(index, 1);
-    return arr;
+  removeFromArray (arr, item) {
+    const index = arr.findIndex(el => item === el)
+    arr.splice(index, 1)
+    return arr
   }
 
-  convertToArray(str) {
+  convertToArray (str) {
     if (str === '') {
-      return [];
+      return []
     } else if (str.includes(', ')) {
-      return str.split(', ');
+      return str.split(', ')
     } else {
-      return [str];
+      return [str]
     }
   }
 
-  async handleChange(e, value) {
-    e.preventDefault();
-    const props = this.props;
+  async handleChange (e, value) {
+    e.preventDefault()
+    const props = this.props
     if (props.options.length === 0) {
-      await this.props.onChange(!props.value);
-      this.props.validate();
+      await this.props.onChange(!props.value)
+      this.props.validate()
     } else {
-      const selectedValue = value;
+      const selectedValue = value
       const prevValue =
         typeof props.value === 'string'
           ? this.convertToArray(props.value)
-          : props.value.map(i => i);
-      let newArray = prevValue;
+          : props.value.map(i => i)
+      let newArray = prevValue
 
       if (prevValue.includes(selectedValue)) {
-        newArray = this.removeFromArray(prevValue, selectedValue);
+        newArray = this.removeFromArray(prevValue, selectedValue)
       } else {
-        newArray.push(selectedValue);
+        newArray.push(selectedValue)
       }
-      this.props.onChange(newArray);
+      this.props.onChange(newArray)
     }
   }
 
-  renderCheckboxOpts() {
-    const props = this.props;
+  renderCheckboxOpts () {
+    const props = this.props
     // TODO: Add disabledClass
     return props.options.map((opt, i) => {
       const activeClass = this.matchValues(props.value, opt.value)
         ? 'gc-form__checkbox--checked'
-        : '';
+        : ''
       return (
         <div
-          className="gc-form__checkbox"
+          className='gc-form__checkbox'
           onClick={(e, v) => this.handleChange(e, opt.value)}
         >
           <input
             className={activeClass}
-            type="checkbox"
+            type='checkbox'
             value={opt.value}
             key={uniqueId()}
             name={props.name}
@@ -84,31 +84,31 @@ class GCCheckbox extends Component {
             {ReactHtmlParser(opt.label)}
           </label>
         </div>
-      );
-    });
+      )
+    })
   }
 
-  render() {
-    const props = this.props;
-    const disabledClass = props.disabled ? 'gc-input--disabled' : '';
+  render () {
+    const props = this.props
+    const disabledClass = props.disabled ? 'gc-input--disabled' : ''
     if (props.options.length >= 1) {
       return (
         <div className={`${disabledClass} ${props.extendedClass}`}>
           {this.renderCheckboxOpts()}
         </div>
-      );
+      )
     } else {
-      const activeClass = props.value ? 'gc-form__checkbox--checked' : '';
+      const activeClass = props.value ? 'gc-form__checkbox--checked' : ''
       return (
         <div
-          className="gc-form__checkbox"
+          className='gc-form__checkbox'
           onClick={(e, v) => this.handleChange(e, !props.value)}
         >
           <input
             className={`${activeClass} ${disabledClass} ${
               props.extendedClass
             } ${this.props.invalidClass}`}
-            type="checkbox"
+            type='checkbox'
             key={uniqueId()}
             name={props.name}
             title={props.title}
@@ -118,7 +118,7 @@ class GCCheckbox extends Component {
             readOnly
           />
         </div>
-      );
+      )
     }
   }
 }
@@ -140,7 +140,7 @@ GCCheckbox.propTypes = {
   options: PropTypes.array,
   title: PropTypes.string,
   multiple: PropTypes.bool
-};
+}
 
 GCCheckbox.defaultProps = {
   extendedClass: '',
@@ -154,6 +154,6 @@ GCCheckbox.defaultProps = {
   options: [],
   title: null,
   multiple: false
-};
+}
 
-export default GCCheckbox;
+export default GCCheckbox

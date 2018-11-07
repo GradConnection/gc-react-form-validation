@@ -1,86 +1,86 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { uniqueId, get } from 'lodash';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { uniqueId, get } from 'lodash'
 
 class Input extends Component {
-  renderRadioOpts() {
-    const props = this.props;
+  renderRadioOpts () {
+    const props = this.props
     if (get(this.props, 'options').length > 0) {
       return props.options.map(opt => {
         return (
           <label
             key={uniqueId()}
-            className="gc-radio__option"
+            className='gc-radio__option'
             htmlFor={props.name}
             onClick={e => this.handleChange(e, opt.value)}
           >
             <span
-              className="gc-radio__btn"
-              role="radio"
+              className='gc-radio__btn'
+              role='radio'
 
             >
               <input
-                className="gc-radio__btn-hidden"
-                type="radio"
+                className='gc-radio__btn-hidden'
+                type='radio'
                 value={opt.value}
                 name={props.name}
                 title={props.title}
                 defaultChecked={props.value === opt.value}
               />
-              <span className="gc-radio__btn-visible" />
+              <span className='gc-radio__btn-visible' />
             </span>
 
-            <span className="gc-input__label gc-radio__label">{opt.label}</span>
+            <span className='gc-input__label gc-radio__label'>{opt.label}</span>
           </label>
-        );
-      });
+        )
+      })
     } else {
       return (
         <label
           key={uniqueId()}
-          className="gc-radio__option"
+          className='gc-radio__option'
           htmlFor={props.name}
           onClick={e => this.handleChange(e, !props.value)}
         >
           <span
-            className="gc-radio__btn"
-            role="radio"
+            className='gc-radio__btn'
+            role='radio'
 
           >
             <input
-              className="gc-radio__btn-hidden"
-              type="radio"
+              className='gc-radio__btn-hidden'
+              type='radio'
               value={props.value}
               name={props.name}
               title={props.title}
               defaultChecked={props.value}
             />
-            <span className="gc-radio__btn-visible" />
+            <span className='gc-radio__btn-visible' />
           </span>
 
-          <span className="gc-input__label gc-radio__label">{props.title}</span>
+          <span className='gc-input__label gc-radio__label'>{props.title}</span>
         </label>
-      );
+      )
     }
   }
 
-  async handleChange(e, value) {
-    e.preventDefault();
+  async handleChange (e, value) {
+    e.preventDefault()
 
     if (value === this.props.value && !this.props.required) {
-      this.props.onChange('');
+      this.props.onChange('')
     } else {
-      this.props.onChange(value);
+      this.props.onChange(value)
     }
   }
 
-  render() {
-    const disabledClass = this.props.disabled ? 'gc-input--disabled' : '';
+  render () {
+    const disabledClass = this.props.disabled ? 'gc-input--disabled' : ''
     return (
       <div className={`${disabledClass} ${this.props.extendedClass}`}>
         {this.renderRadioOpts()}
       </div>
-    );
+    )
   }
 }
 
@@ -96,7 +96,7 @@ Input.propTypes = {
   sendResultsToForm: PropTypes.func,
   options: PropTypes.array,
   title: PropTypes.string
-};
+}
 
 Input.defaultProps = {
   extendedClass: '',
@@ -109,6 +109,6 @@ Input.defaultProps = {
   sendResultsToForm: null,
   options: [],
   title: null
-};
+}
 
-export default Input;
+export default Input
