@@ -88,7 +88,7 @@ class Form extends Component {
       )
     })
 
-    const hiddenInput = {}
+    // const hiddenInput = {}
     return renderTemplate
   }
 
@@ -135,16 +135,19 @@ class Form extends Component {
         () => this.props.onSubmit(this.state.errorObj)
       )
     } else {
-      this.setState({
-        formSubmitted: true,
-        displayErrorMessage: true,
-        errorMessage:
-          'Please make sure that you have filled in the fields correctly'
-      }, () => {
-        if (this.props.onFormValidationFailure) {
-          this.props.onSubmit(this.state.errorObj)
+      this.setState(
+        {
+          formSubmitted: true,
+          displayErrorMessage: true,
+          errorMessage:
+            'Please make sure that you have filled in the fields correctly'
+        },
+        () => {
+          if (this.props.onFormValidationFailure) {
+            this.props.onSubmit(this.state.errorObj)
+          }
         }
-      })
+      )
     }
   }
 

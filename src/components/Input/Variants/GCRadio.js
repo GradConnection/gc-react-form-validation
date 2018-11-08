@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { uniqueId, get } from 'lodash'
 
-class Input extends Component {
+class GCRadio extends Component {
   renderRadioOpts () {
     const props = this.props
     if (get(this.props, 'options').length > 0) {
@@ -84,7 +84,7 @@ class Input extends Component {
   }
 }
 
-Input.propTypes = {
+GCRadio.propTypes = {
   extendedClass: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   stateName: PropTypes.string.isRequired,
@@ -98,7 +98,7 @@ Input.propTypes = {
   title: PropTypes.string
 }
 
-Input.defaultProps = {
+GCRadio.defaultProps = {
   extendedClass: '',
   value: null,
   disabled: false,
@@ -111,4 +111,4 @@ Input.defaultProps = {
   title: null
 }
 
-export default Input
+export { GCRadio }

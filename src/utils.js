@@ -14,3 +14,17 @@ export const toArray = value => {
   }
   return value
 }
+
+export const determineRenderType = type => {
+  switch (type) {
+    case 'hidden':
+    case 'custom':
+      return 'hidden'
+    case 'name':
+    case 'text':
+    case 'url':
+      return 'text'
+    default:
+      return type
+  }
+}

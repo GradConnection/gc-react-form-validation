@@ -156,4 +156,4 @@ GCCheckbox.defaultProps = {
   multiple: false
 }
 
-export default GCCheckbox
+export { GCCheckbox }

@@ -5,10 +5,8 @@ import uniqueId from 'lodash/uniqueId'
 import isArray from 'lodash/isArray'
 import filter from 'lodash/filter'
 import without from 'lodash/without'
-import get from 'lodash/get'
 import throttle from 'lodash/throttle'
 
-import GCInputLabel from './GCInputLabel'
 import GCInputSVG from './GCInputSVG'
 
 class GCMultiSelect extends Component {
@@ -591,4 +589,4 @@ GCMultiSelect.defaultProps = {
   spinner: <div className='gc-form__spinner' />
 }
 
-export default GCMultiSelect
+export { GCMultiSelect }

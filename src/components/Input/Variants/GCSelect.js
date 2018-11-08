@@ -426,4 +426,4 @@ GCSelect.defaultProps = {
   spinner: <div className='gc-form__spinner' />
 }
 
-export default GCSelect
+export { GCSelect }

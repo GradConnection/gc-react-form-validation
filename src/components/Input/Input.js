@@ -8,7 +8,7 @@ import GCErrorMessage from './GCErrorMessage'
 
 import validateInput from './validateInput'
 
-import ReactHtmlParser from 'react-html-parser'
+// import ReactHtmlParser from 'react-html-parser'
 
 class Input extends Component {
   constructor (props, context) {
@@ -23,7 +23,7 @@ class Input extends Component {
   shouldComponentUpdate (nextProps, nextState) {
     return (
       nextProps.value !== this.props.value ||
-      nextProps.isVisible != this.props.isVisible ||
+      nextProps.isVisible !== this.props.isVisible ||
       nextState.validationMessage !== this.state.validationMessage ||
       nextProps.options !== this.props.options ||
       this.state.tooltip !== nextState.tooltip ||
@@ -39,7 +39,7 @@ class Input extends Component {
       (prevProps.value !== this.props.value && this.props.customUI) ||
       (prevProps.value !== this.props.value && this.props.type === 'radio') ||
       (!prevProps.formSubmitted && this.props.formSubmitted) ||
-      (prevProps.required !== this.props.required)
+      prevProps.required !== this.props.required
     ) {
       this.handleInputValidation()
     }
@@ -47,7 +47,10 @@ class Input extends Component {
 
   async handleInputValidation (open) {
     const validationObj = Object.assign({ open: open }, this.props)
-    const validationState = await validateInput(validationObj, this.props.translations)
+    const validationState = await validateInput(
+      validationObj,
+      this.props.translations
+    )
     this.setState(validationState)
   }
 
@@ -62,8 +65,15 @@ class Input extends Component {
   }
 
   getValue () {
-    if (this.props.defaultAll && this.props.multi && this.props.type === 'select') {
-      if (Array.isArray(this.props.value) && this.props.value.length === 0 || this.props.value === '') {
+    if (
+      this.props.defaultAll &&
+      this.props.multi &&
+      this.props.type === 'select'
+    ) {
+      if (
+        (Array.isArray(this.props.value) && this.props.value.length === 0) ||
+        this.props.value === ''
+      ) {
         return this.props.options.map(o => o.value)
       }
     }
@@ -103,7 +113,9 @@ class Input extends Component {
           <div
             className={`gc-input gc-input--${this.props.type} ${
               this.props.extendedClassNames
-            } ${checkboxSingle ? 'gc-input--checkbox-single' : ''} ${this.props.description !== '' ? 'gc-input--has-description' : ''}`}
+            } ${checkboxSingle ? 'gc-input--checkbox-single' : ''} ${
+              this.props.description !== '' ? 'gc-input--has-description' : ''
+            }`}
           >
             {this.props.description !== '' && (
               <p className='gc-input__description'>{this.props.description}</p>
