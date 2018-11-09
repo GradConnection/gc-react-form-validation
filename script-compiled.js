@@ -37,5 +37,3 @@ return b.options.map(function(c){var d=a.matchValues(b.value,c.value)?"gc-form__
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.determineRenderType=exports.isEmpty=exports.toArray=void 0;/*
 * An attempt to get out of using lodash
 */var toArray=function(a){return"array"==typeof a?a:""===a?a.includes(",")?a.split():[a]:[]};exports.toArray=toArray;var isEmpty=function(a){return""===a||[]===a||{}===a||a===void 0||null===a};exports.isEmpty=isEmpty;var determineRenderType=function(a){return"hidden"===a||"custom"===a?"hidden":"name"===a||"text"===a||"url"===a?"text":a};exports.determineRenderType=determineRenderType;
-
-//# sourceMappingURL=index.js.map

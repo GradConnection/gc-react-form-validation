@@ -5,9 +5,9 @@ const validateInput = async (
   {
     open,
     type,
+    customValidationType,
     name,
     value,
-    isVisible = true,
     required = false,
     from = null,
     to = null,
@@ -20,7 +20,8 @@ const validateInput = async (
     inForm = false,
     sendResultsToForm = null,
     defaultAll = false,
-    allowAll = false
+    allowAll = false,
+    hidden = false
   },
   userTranslations
 ) => {
@@ -224,53 +225,44 @@ const validateInput = async (
     return new RegExp(regX)
   }
 
-  const getErrorMessage = () => {
-    if (isEmpty(value) && isVisible) {
-      switch (type) {
+  const getErrorMessage = (renderType, hidden, value) => {
+    if (isEmpty(value) && hidden) {
+      switch (renderType) {
+        case 'custom':
+          return getErrorMessage(customValidationType, hidden, value)
         case 'email':
           return validateEmail()
-          break
         case 'password':
           return validatePassword()
-          break
         case 'name':
           return validateName()
-          break
-        case 'custom':
         case 'text':
           return validateText()
-          break
         case 'date':
           return validateDate()
-          break
         case 'number':
           return validateNumber()
-          break
         case 'textarea':
           return validateTextarea()
-          break
         case 'array':
         case 'checkbox':
           return validateCheckbox()
-          break
         case 'url':
           return validateUrl()
-          break
         case 'select':
           return validateSelect()
         case 'range':
         default:
           return null
-          break
       }
-    } else if (required && isVisible) {
+    } else if (required && hidden) {
       return getTranslation('requiredField', userTranslations)
     } else {
       return null
     }
   }
 
-  const error = await getErrorMessage()
+  const error = await getErrorMessage(type, hidden, value)
 
   if (inForm) {
     sendResultsToForm(name, error)

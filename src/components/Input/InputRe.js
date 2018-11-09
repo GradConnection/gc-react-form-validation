@@ -96,9 +96,9 @@ class Input extends Component {
       type,
       extendedClassNames,
       description,
-      customUI,
       isVisible,
-      disabled
+      disabled,
+      hidden
     } = this.props
     const {
       validationMessage,
@@ -112,50 +112,28 @@ class Input extends Component {
       [extendedClassNames]: extendedClassNames
     })
 
-    const customInputClasses = classnames('gc-input', 'gc-input--custom', {
-      'gc-input--invalid': showValidationMessage,
-      'gc-input--disabled': disabled,
-      [extendedClassNames]: extendedClassNames
-    })
-
-    if (isVisible) {
-      if (!customUI) {
-        // Renders standard layout
-        return (
-          <div className={inputClasses}>
-            {description && <GCDescription text={description} />}
-            <GCMappedInput
-              handleInputValidation={open => this.handleInputValidation(open)}
-              handleInputChange={v => this.handleInputChange(v)}
-              {...this.props}
-            />
-            {showValidationMessage && (
-              <GCErrorMessage msg={validationMessage} />
-            )}
-            {showTooltip && (
-              <GCTooltip
-                content={this.props.tooltip}
-                name={this.props.name}
-                active={this.state.tooltip}
-                toggleTooltip={active => this.toggleTooltip(active)}
-              />
-            )}
-          </div>
-        )
-      } else {
-        // TODO: Simplify the custom component
-        // Renders custom component
-        return (
-          <div className={customInputClasses}>
-            {this.props.customComponent(this.props, this.state)}
-            <input
-              type='hidden'
-              value={this.props.value}
+    if (!hidden || isVisible) {
+      return (
+        <div className={inputClasses}>
+          {description && <GCDescription text={description} />}
+          <GCMappedInput
+            handleInputValidation={open => this.handleInputValidation(open)}
+            handleInputChange={v => this.handleInputChange(v)}
+            {...this.props}
+          />
+          {showValidationMessage && (
+            <GCErrorMessage msg={validationMessage} />
+          )}
+          {showTooltip && (
+            <GCTooltip
+              content={this.props.tooltip}
               name={this.props.name}
+              active={this.state.tooltip}
+              toggleTooltip={active => this.toggleTooltip(active)}
             />
-          </div>
-        )
-      }
+          )}
+        </div>
+      )
     }
     return null
   }

@@ -16,10 +16,6 @@ const GCMappedInput = props => {
   const renderType = determineRenderType(type)
   // NOTE: From here on out the Input.props.type will be used for validation only
 
-  if (props.hidden) {
-    return null
-  }
-
   switch (renderType) {
     case 'textarea':
       return <GCTextarea {...props} />

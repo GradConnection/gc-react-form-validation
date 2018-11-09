@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
+import classnames from 'classnames'
 import isArray from 'lodash/isArray'
 import mapValues from 'lodash/mapValues'
 import uniqueId from 'lodash/uniqueId'
@@ -7,6 +9,8 @@ import has from 'lodash/has'
 import get from 'lodash/get'
 
 import ReactHtmlParser from 'react-html-parser'
+
+import { isEmpty } from '../../utils'
 
 import Input from '../Input/Input'
 
@@ -42,12 +46,12 @@ class Form extends Component {
       return (
         (has(data[d], 'required') &&
           get(data[d], 'required') &&
-          has(data[d], 'isVisible') &&
-          get(data[d], 'isVisible') &&
+          has(data[d], 'hidden') &&
+          get(data[d], 'hidden') &&
           condition(d)) ||
         (has(data[d], 'required') &&
           get(data[d], 'required') &&
-          !has(data[d], 'isVisible') &&
+          !has(data[d], 'hidden') &&
           condition(d))
       )
     })
@@ -59,19 +63,15 @@ class Form extends Component {
       if (data[d].type === 'checkbox' && data[d].options === undefined) {
         return !data[d].value
       } else {
-        return this.isEmpty(data[d].value)
+        return isEmpty(data[d].value)
       }
     })
   }
 
-  allowSubmission (errorObj, data) {
+  validateForm (errorObj, data) {
     return (
       Object.keys(errorObj).length === 0 && this.validateRequiredFields(data)
     )
-  }
-
-  isEmpty (v) {
-    return v === '' || v === [] || v === {} || v === undefined || v === null
   }
 
   getFields () {
@@ -81,7 +81,7 @@ class Form extends Component {
           {...d}
           autoComplete={d.autoComplete || d.type}
           onChange={this.props.handleInputChange}
-          sendResultsToForm={(n, r) => this.validateForm(n, r)}
+          sendResultsToForm={(n, r) => this.validateFormOnInput(n, r)}
           inForm
           formSubmitted={this.state.formSubmitted}
         />
@@ -100,7 +100,7 @@ class Form extends Component {
         </div>
       )
     } else if (
-      !this.isEmpty(this.props.submissionErrorMessages) &&
+      !isEmpty(this.props.submissionErrorMessages) &&
       this.state.displayErrorMessage
     ) {
       if (isArray(this.props.submissionErrorMessages)) {
@@ -124,7 +124,7 @@ class Form extends Component {
     e.preventDefault()
     e.stopPropagation()
 
-    if (this.allowSubmission(this.state.errorObj, this.props.data)) {
+    if (this.validateForm(this.state.errorObj, this.props.data)) {
       this.setState(
         {
           formSubmitted: true,
@@ -151,7 +151,7 @@ class Form extends Component {
     }
   }
 
-  validateForm (name, results) {
+  validateFormOnInput (name, results) {
     const copiedObj = this.state.errorObj
     if (results) {
       copiedObj[name] = results
@@ -167,12 +167,15 @@ class Form extends Component {
   }
 
   render () {
+    const formClasses = classnames('gc-form', {
+      [this.props.extendedClassNames]: this.props.extendedClassNames
+    })
     return (
       <form
         ref={this.props.formRef}
         id={this.props.formId}
-        className={`gc-form ${this.props.extendedClassNames}`}
-        onSubmit={e => this.submitForm(e)}
+        className={formClasses}
+        onSubmit={e => this.handleFormSubmission(e)}
       >
         {this.props.description !== '' && <p>{this.props.description}</p>}
         {this.getErrorMessages()}

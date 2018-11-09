@@ -3,20 +3,20 @@ import PropTypes from 'prop-types'
 
 import GCStaticLabel from '../Labels/GCStaticLabel'
 
-const GCCustom = ({ title, name, size, min, max, handleInputValidation, handleInputChange, ...restProps }) => (
-  <Fragment>
-    <GCStaticLabel title={title} htmlFor={name} />
-    <textarea
-      name={name}
-      className={`gc-input__textarea gc-input__textarea--${size}`}
-      onBlur={() => handleInputValidation()}
-      onChange={e => handleInputChange(e.target.value)}
-      minLength={min}
-      maxLength={max}
-      {...restProps}
-    />
-  </Fragment>
-)
+const GCCustom = props => {
+  const { title, name, value, customComponent } = props
+  return (
+    <Fragment>
+      <GCStaticLabel title={title} htmlFor={name} />
+      {customComponent(props)}
+      <input
+        type='hidden'
+        value={value}
+        name={name}
+      />
+    </Fragment>
+  )
+}
 
 GCCustom.propTypes = {
   extendedClass: PropTypes.string,
