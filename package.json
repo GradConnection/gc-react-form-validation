@@ -18,8 +18,8 @@
     "build:prod": "babel src --out-file lib/index.js --source-maps && npm run build:styles",
     "build:scripts": "cd ./src && NODE_ENV=production babel -d ../lib './**/*.js'",
     "build:styles": "cp ./postcss.config.js ./src/styles.scss lib/ && NODE_ENV=production node-sass < src/styles.scss > ./lib/styles.css",
-    "build": "npm run clean && npm run build:scripts && npm run build:styles",
-    "start": "babel src --watch --out-dir lib",
+    "build": "npm run clean && npm run build:prod && npm run build:styles",
+    "start": "babel src --watch --out-file lib/index.js --source-maps",
     "test": "standard && node my-tests.js"
   },
   "dependencies": {
