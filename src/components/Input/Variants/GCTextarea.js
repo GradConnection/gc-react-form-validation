@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import GCStaticLabel from './GCStaticLabel'
+// import GCStaticLabel from './Labels/GCStaticLabel'
 
 const GCTextarea = ({ title, name, size, min, max, handleInputValidation, handleInputChange, ...restProps }) => (
   <Fragment>

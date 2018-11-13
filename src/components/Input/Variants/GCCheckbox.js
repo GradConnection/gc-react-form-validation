@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import uniqueId from 'lodash/uniqueId'
 import ReactHtmlParser from 'react-html-parser'
 
-import GCInputLabel from './GCInputLabel'
+// import GCInputLabel from './GCInputLabel'
 
 class GCCheckbox extends Component {
   matchValues (arr, value) {

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import GCStaticLabel from '../Labels/GCStaticLabel'
+import { GCStaticLabel } from '../Labels/GCStaticLabel'
 
 const GCCustom = props => {
   const { title, name, value, customComponent } = props

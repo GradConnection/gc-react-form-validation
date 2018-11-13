@@ -7,7 +7,7 @@ import filter from 'lodash/filter'
 import without from 'lodash/without'
 import throttle from 'lodash/throttle'
 
-import GCInputSVG from './GCInputSVG'
+// import GCInputSVG from './GCInputSVG'
 
 class GCMultiSelect extends Component {
   constructor (props) {

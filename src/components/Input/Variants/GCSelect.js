@@ -8,8 +8,8 @@ import without from 'lodash/without'
 import find from 'lodash/find'
 import throttle from 'lodash/throttle'
 
-import GCInputLabel from './GCInputLabel'
-import GCInputSVG from './GCInputSVG'
+// import GCInputLabel from './GCInputLabel'
+// import GCInputSVG from './GCInputSVG'
 
 class GCSelect extends Component {
   constructor (props) {
