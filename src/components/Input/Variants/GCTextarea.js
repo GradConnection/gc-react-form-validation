@@ -4,18 +4,15 @@ import PropTypes from 'prop-types'
 // import GCStaticLabel from './Labels/GCStaticLabel'
 
 const GCTextarea = ({ title, name, size, min, max, handleInputValidation, handleInputChange, ...restProps }) => (
-  <Fragment>
-    <GCStaticLabel title={title} htmlFor={name} />
-    <textarea
-      name={name}
-      className={`gc-input__textarea gc-input__textarea--${size}`}
-      onBlur={() => handleInputValidation()}
-      onChange={e => handleInputChange(e.target.value)}
-      minLength={min}
-      maxLength={max}
-      {...restProps}
+  <textarea
+    name={name}
+    className={`gc-input__textarea gc-input__textarea--${size}`}
+    onBlur={() => handleInputValidation()}
+    onChange={e => handleInputChange(e.target.value)}
+    minLength={min}
+    maxLength={max}
+    {...restProps}
     />
-  </Fragment>
 )
 
 GCTextarea.propTypes = {

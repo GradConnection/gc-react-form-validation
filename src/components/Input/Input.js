@@ -5,10 +5,11 @@ import classnames from 'classnames'
 
 import validateInput from './validateInput'
 
-import GCTooltip from './GCTooltip'
-import GCErrorMessage from './GCErrorMessage'
+import GCLabel from './GCLabel'
 import GCDescription from './GCDescription'
 import GCMappedInput from './GCMappedInput'
+import GCTooltip from './GCTooltip'
+import GCErrorMessage from './GCErrorMessage'
 
 class Input extends Component {
   constructor (props, context) {
@@ -98,7 +99,9 @@ class Input extends Component {
       description,
       isVisible,
       disabled,
-      hidden
+      hidden,
+      title,
+      name
     } = this.props
     const {
       validationMessage,
@@ -115,6 +118,7 @@ class Input extends Component {
     if (!hidden || isVisible) {
       return (
         <div className={inputClasses}>
+          {label && <GCLabel title={title} htmlFor={name} />}
           {description && <GCDescription text={description} />}
           <GCMappedInput
             handleInputValidation={open => this.handleInputValidation(open)}

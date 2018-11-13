@@ -75,18 +75,16 @@ class Form extends Component {
   }
 
   getFields () {
-    const renderTemplate = mapValues(this.props.data, d => {
-      return (
-        <Input
-          {...d}
-          autoComplete={d.autoComplete || d.type}
-          onChange={this.props.handleInputChange}
-          sendResultsToForm={(n, r) => this.validateFormOnInput(n, r)}
-          inForm
-          formSubmitted={this.state.formSubmitted}
+    const renderTemplate = mapValues(this.props.data, d =>
+      <Input
+        autoComplete={d.autoComplete || d.type}
+        onChange={this.props.handleInputChange}
+        sendResultsToForm={(n, r) => this.validateFormOnInput(n, r)}
+        inForm
+        formSubmitted={this.state.formSubmitted}
+        {...d}
         />
       )
-    })
 
     // const hiddenInput = {}
     return renderTemplate

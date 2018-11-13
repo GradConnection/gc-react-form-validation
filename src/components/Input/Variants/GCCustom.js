@@ -1,14 +1,11 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import { GCStaticLabel } from '../Labels/GCStaticLabel'
-
 const GCCustom = props => {
   const { title, name, value, customComponent } = props
   return (
     <Fragment>
-      <GCStaticLabel title={title} htmlFor={name} />
-      {customComponent(props)}
+      { customComponent(props) }
       <input
         type='hidden'
         value={value}

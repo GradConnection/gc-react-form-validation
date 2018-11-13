@@ -8,7 +8,8 @@ module.exports = {
     library: 'GCReactFormValidation',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'lib'),
-    filename: 'index.js'
+    filename: 'index.js',
+    publicPath: 'lib'
   },
   devtool: 'source-map',
   mode: 'none',
@@ -26,7 +27,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/react'],
+            presets: ['@babel/react', '@babel/preset-env'],
             plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-optional-chaining']
           }
         }
@@ -54,8 +55,7 @@ module.exports = {
       { from: 'src/styles.scss', to: './' }
     ]),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css'
+      filename: '[name].css'
     })
   ]
 
