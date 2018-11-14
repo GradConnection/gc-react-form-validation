@@ -24,9 +24,9 @@ class Form extends Component {
     }
   }
 
-  componentDidMount () {
-    this.props.disableSubmitButton(this.hasRequiredFields(this.props.data))
-  }
+  // componentDidMount () {
+  //   this.props.disableSubmitButton(this.hasRequiredFields(this.props.data))
+  // }
 
   componentDidUpdate (prevProps, prevState) {
     if (
@@ -74,20 +74,52 @@ class Form extends Component {
     )
   }
 
-  getFields () {
-    const renderTemplate = mapValues(this.props.data, d =>
+  getFields (data) {
+    const { onInputChange } = this.props
+    const { formSubmitted } = this.state
+
+    const renderTemplate = mapValues(data, d =>
       <Input
         autoComplete={d.autoComplete || d.type}
-        onChange={this.props.handleInputChange}
+        onChange={onInputChange}
         sendResultsToForm={(n, r) => this.validateFormOnInput(n, r)}
         inForm
-        formSubmitted={this.state.formSubmitted}
+        formSubmitted={formSubmitted}
         {...d}
         />
       )
 
-    // const hiddenInput = {}
-    return renderTemplate
+    const hiddenInput = {}
+    // return renderTemplate
+    // we want an object of components
+    const stuff = Object.entries(data)
+    .reduce((a, [name, d]) => {
+      return Object.assign(a, {[name]: (
+        <Input
+          autoComplete={d.autoComplete || d.type}
+          onChange={onInputChange}
+          sendResultsToForm={(n, r) => this.validateFormOnInput(n, r)}
+          inForm
+          formSubmitted={formSubmitted}
+          {...d}
+          />
+      )}, {})
+    })
+
+    console.log('Replacement method', stuff)
+
+    const bleh = Object.keys(data).map(d => (
+      <Input
+        autoComplete={data[d].autoComplete || data[d].type}
+        onChange={onInputChange}
+        sendResultsToForm={(n, r) => this.validateFormOnInput(n, r)}
+        inForm
+        formSubmitted={formSubmitted}
+        name={d}
+        {...data[d]}
+        />
+    ))
+    return bleh
   }
 
   getErrorMessages () {
@@ -118,7 +150,7 @@ class Form extends Component {
     return null
   }
 
-  submitForm (e) {
+  handleFormSubmission (e) {
     e.preventDefault()
     e.stopPropagation()
 
@@ -156,59 +188,59 @@ class Form extends Component {
     } else if (!results && has(copiedObj, name)) {
       delete copiedObj[name]
     }
+
     this.setState({ errorObj: copiedObj }, () => {
-      this.props.disableSubmitButton(
-        !this.allowSubmission(this.state.errorObj, this.props.data)
-      )
-      this.props.handleFormErrors(this.state.errorObj)
+      this.validateForm(this.state.errorObj, this.props.data) ?
+        this.props.onFormValidationSuccess() :
+        this.props.onFormValidationFailure(this.state.errorObj)
     })
   }
 
   render () {
+    const { extendedClassNames, ref, id, description, children, data } = this.props
     const formClasses = classnames('gc-form', {
-      [this.props.extendedClassNames]: this.props.extendedClassNames
+      [extendedClassNames]: extendedClassNames
     })
+
+    console.log('getFields', this.getFields(data))
+
     return (
       <form
-        ref={this.props.formRef}
-        id={this.props.formId}
+        ref={ref}
+        id={id}
         className={formClasses}
         onSubmit={e => this.handleFormSubmission(e)}
       >
-        {this.props.description !== '' && <p>{this.props.description}</p>}
+        {description !== '' && <p>{description}</p>}
         {this.getErrorMessages()}
-        {this.props.children({ fields: this.getFields() })}
+        {children({ fields: this.getFields(data) })}
       </form>
     )
   }
 }
 
 Form.propTypes = {
-  handleInputChange: PropTypes.func.isRequired,
-  formRef: PropTypes.func,
-  children: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+  children: PropTypes.func.isRequired,
+
+  ref: PropTypes.func,
   description: PropTypes.string,
   submissionErrorMessages: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.string
   ]),
-  disableSubmitButton: PropTypes.func,
-  handleFormErrors: PropTypes.func,
-  onFormValidationFailure: PropTypes.bool // For troubleshooting
+  onFormValidationSuccess: PropTypes.func,
+  onFormValidationFailure: PropTypes.func
 }
 
 Form.defaultProps = {
   description: '',
   submissionErrorMessages: '',
-  disableSubmitButton: isDisabled => {
-    return isDisabled
-  },
-  handleFormErrors: () => {
-    return {}
-  },
-  onFormValidationFailure: false
+  handleFormErrors: () => ({}),
+  onFormValidationSuccess: () => ({}),
+  onFormValidationFailure: () => ({})
 }
 
 export default Form

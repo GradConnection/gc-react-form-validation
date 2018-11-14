@@ -67,7 +67,7 @@ class Input extends Component {
 
   handleInputChange (v) {
     if (!this.props.disabled || !this.props.loading) {
-      this.props.onChange(v, this.props.stateName)
+      this.props.onChange(v, this.props.name)
     }
   }
 
@@ -100,7 +100,7 @@ class Input extends Component {
       isVisible,
       disabled,
       hidden,
-      title,
+      label = title,
       name
     } = this.props
     const {
@@ -118,7 +118,7 @@ class Input extends Component {
     if (!hidden || isVisible) {
       return (
         <div className={inputClasses}>
-          {label && <GCLabel title={title} htmlFor={name} />}
+          {label && <GCLabel label={label} htmlFor={name} />}
           {description && <GCDescription text={description} />}
           <GCMappedInput
             handleInputValidation={open => this.handleInputValidation(open)}
@@ -158,7 +158,6 @@ Input.propTypes = {
     PropTypes.bool,
     PropTypes.array
   ]),
-  stateName: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   name: PropTypes.string,
@@ -194,7 +193,6 @@ Input.propTypes = {
   title: PropTypes.string,
   data: PropTypes.object,
   formTemplate: PropTypes.func,
-  isVisible: PropTypes.bool,
   multi: PropTypes.bool,
   search: PropTypes.bool,
   tooltip: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
@@ -202,11 +200,12 @@ Input.propTypes = {
   loading: PropTypes.bool,
   hidden: PropTypes.bool,
   tooltip: PropTypes.string,
-  customUI: PropTypes.bool,
   formSubmitted: PropTypes.bool,
   customComponent: PropTypes.func,
   defaultAll: PropTypes.bool,
-  defaultText: PropTypes.string
+  defaultText: PropTypes.string,
+  onInputValidationSuccess: PropTypes.func,
+  onInputValidationFailure: PropTypes.func
 }
 
 Input.defaultProps = {
@@ -230,21 +229,20 @@ Input.defaultProps = {
   size: 'medium',
   title: null,
   data: null,
-  formTemplate: null,
-  isVisible: true,
   multi: false,
   search: true,
   tooltip: null,
-  autocomplete: 'off',
+  autoComplete: 'off',
   loading: false,
   hidden: false,
   tooltip: '',
-  customUI: false,
   formSubmitted: false,
   customComponent: null,
   defaultText: 'All Options',
   defaultAll: false,
-  allowAll: false
+  allowAll: false,
+  onInputValidationSuccess: () => ({}),
+  onInputValidationFailure: () => ({})
 }
 
 export default Input

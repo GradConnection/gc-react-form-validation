@@ -12,7 +12,7 @@ import {
 } from './Variants'
 
 const GCMappedInput = props => {
-  const { type, handleInputChange, handleInputValidation } = props
+  const { type, handleInputChange, handleInputValidation, inForm, sendResultsToForm, extendedClassNames, allowAll, defaultAll, formSubmitted, customRegex, customErrorMessage, formTemplate, isVisible, multi, search, autoComplete, defaultText, customComponent, customUI, loading, defaultValue, autocomplete, onInputValidationSuccess, onInputValidationFailure, ...xtra } = props
   const renderType = determineRenderType(type)
   // NOTE: From here on out the Input.props.type will be used for validation only
 
@@ -34,14 +34,14 @@ const GCMappedInput = props => {
     default:
       return (
         <input
-          className={`gc-input__${type}`}
+          className={`gc-input__${type} ${extendedClassNames}`}
           type={renderType}
           onBlur={() => handleInputValidation()}
           onInput={e => handleInputChange(e.target.value)}
           onChange={e => handleInputChange(e.target.value)}
           maxLength={props.max}
           minLength={props.min}
-          {...props}
+          {...xtra}
         />
       )
   }
