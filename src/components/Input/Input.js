@@ -19,6 +19,8 @@ class Input extends Component {
       showTooltip: false,
       showValidationMessage: false
     }
+
+    this.handleInputChange = this.handleInputChange.bind(this)
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -54,8 +56,8 @@ class Input extends Component {
     const isValid = !!validationMessage
     this.setState(
       {
-        validationMessage: validationMessage,
-        showValidationMessage: isValid
+        ...validationMessage,
+        showValidationMessage: !isValid
       },
       () => {
         isValid
@@ -122,7 +124,7 @@ class Input extends Component {
           {description && <GCDescription text={description} />}
           <GCMappedInput
             handleInputValidation={open => this.handleInputValidation(open)}
-            handleInputChange={v => this.handleInputChange(v)}
+            handleInputChange={this.handleInputChange}
             {...this.props}
           />
           {showValidationMessage && (
