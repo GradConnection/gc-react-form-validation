@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import classnames from 'classnames'
 import isArray from 'lodash/isArray'
-import mapValues from 'lodash/mapValues'
 import uniqueId from 'lodash/uniqueId'
 import has from 'lodash/has'
 import get from 'lodash/get'
@@ -78,48 +77,21 @@ class Form extends Component {
     const { onInputChange } = this.props
     const { formSubmitted } = this.state
 
-    const renderTemplate = mapValues(data, d =>
-      <Input
-        autoComplete={d.autoComplete || d.type}
-        onChange={onInputChange}
-        sendResultsToForm={(n, r) => this.validateFormOnInput(n, r)}
-        inForm
-        formSubmitted={formSubmitted}
-        {...d}
-        />
-      )
-
     const hiddenInput = {}
-    // return renderTemplate
-    // we want an object of components
-    const stuff = Object.entries(data)
+    return Object.entries(data)
     .reduce((a, [name, d]) => {
-      return Object.assign(a, {[name]: (
+      return Object.assign({ [name]: (
         <Input
           autoComplete={d.autoComplete || d.type}
           onChange={onInputChange}
           sendResultsToForm={(n, r) => this.validateFormOnInput(n, r)}
           inForm
+          name={name}
           formSubmitted={formSubmitted}
           {...d}
           />
-      )}, {})
-    })
-
-    console.log('Replacement method', stuff)
-
-    const bleh = Object.keys(data).map(d => (
-      <Input
-        autoComplete={data[d].autoComplete || data[d].type}
-        onChange={onInputChange}
-        sendResultsToForm={(n, r) => this.validateFormOnInput(n, r)}
-        inForm
-        formSubmitted={formSubmitted}
-        name={d}
-        {...data[d]}
-        />
-    ))
-    return bleh
+      )}, a)
+    }, {})
   }
 
   getErrorMessages () {
@@ -201,8 +173,6 @@ class Form extends Component {
     const formClasses = classnames('gc-form', {
       [extendedClassNames]: extendedClassNames
     })
-
-    console.log('getFields', this.getFields(data))
 
     return (
       <form
