@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 const GCTextarea = ({ title, name, size, min, max, handleInputValidation, handleInputChange, ...restProps }) => (
   <textarea
     name={name}
-    className={`gc-input__textarea gc-input__textarea--${size}`}
+    className={`gc-input__el gc-input__textarea--${size}`}
     onBlur={() => handleInputValidation()}
     onChange={e => handleInputChange(e.target.value)}
     minLength={min}

@@ -20,7 +20,9 @@ class GCPassword extends Component {
 
     return (
       <Fragment>
-        <input type={mode}
+        <input
+          className='gc-input__el'
+          type={mode}
           value={value}
           name={name}
           onBlur={() => handleInputValidation()}

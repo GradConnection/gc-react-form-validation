@@ -34,7 +34,7 @@ const GCMappedInput = props => {
     default:
       return (
         <input
-          className={`gc-input__${type} ${extendedClassNames}`}
+          className='gc-input__el'
           type={renderType}
           onBlur={() => handleInputValidation()}
           onChange={e => handleInputChange(e.target.value)}

@@ -77,7 +77,7 @@ class GCRadio extends Component {
   render () {
     const disabledClass = this.props.disabled ? 'gc-input--disabled' : ''
     return (
-      <div className={`${disabledClass} ${this.props.extendedClass}`}>
+      <div className='gc-input__el'>
         {this.renderRadioOpts()}
       </div>
     )

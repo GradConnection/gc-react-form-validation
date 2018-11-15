@@ -99,7 +99,6 @@ class GCCheckbox extends Component {
       const activeClass = props.value ? 'gc-form__checkbox--checked' : ''
       return (
         <div
-          className='gc-form__checkbox'
           onClick={(e, v) => this.handleChange(e, !props.value)}
         >
           <input

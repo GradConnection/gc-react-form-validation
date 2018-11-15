@@ -102,6 +102,7 @@ class Input extends Component {
       isVisible,
       disabled,
       hidden,
+      required,
       label = title,
       name
     } = this.props
@@ -120,7 +121,7 @@ class Input extends Component {
     if (!hidden || isVisible) {
       return (
         <div className={inputClasses}>
-          {label && <GCLabel label={label} htmlFor={name} />}
+          {label && <GCLabel label={label} htmlFor={name} required={required} />}
           {description && <GCDescription text={description} />}
           <GCMappedInput
             handleInputValidation={open => this.handleInputValidation(open)}

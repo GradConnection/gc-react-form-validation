@@ -1,0 +1,23 @@
+.gc-input {
+  margin-bottom: 1.5rem;
+}
+
+// What the user will interact with, usually bordered
+.gc-input__el {
+  border: solid $gc-form-light-grey 1px;
+  border-radius: 0.2rem;
+  color: $gc-form-black;
+  font-size: 1.2rem;
+  padding: 0.7rem 1rem;
+
+  &:focus,
+  &:active {
+    border-color: $gc-form-dark-grey;
+    outline: none;
+  }
+}
+
+// TEXT
+.gc-input--text .gc-input__el {
+
+}
