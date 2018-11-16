@@ -17,7 +17,7 @@ const translationDefaults = {
 }
 
 export const getTranslation = (name, userTranslations, ...args) => {
-  if (userTranslations[name] !== undefined) {
+  if (userTranslations !== undefined && userTranslations[name] !== undefined) {
     return userTranslations[name](...args)
   }
   return translationDefaults[name](...args)

@@ -1,3 +1,26 @@
+.gc-description {
+  color: #909090;
+  margin-top: 0;
+  margin-bottom: 0.5rem; }
+
+.gc-error,
+.gc-helper-text {
+  font-size: 1rem;
+  text-align: right;
+  margin: 0;
+  margin-top: 0.3rem; }
+
+.gc-error {
+  background-color: #c46e6b;
+  color: #ffffff;
+  border-radius: 0.2rem;
+  padding: 0.4rem 0.8rem;
+  right: 0;
+  position: absolute; }
+
+.gc-helper-text {
+  color: #44474b; }
+
 .gc-label {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
@@ -13,17 +36,25 @@
   color: #c46e6b; }
 
 .gc-input {
+  position: relative;
   margin-bottom: 1.5rem; }
 
 .gc-input__el {
+  display: block;
+  width: 100%;
   border: solid #e2e2e2 1px;
   border-radius: 0.2rem;
   color: #44474b;
   font-size: 1.2rem;
-  padding: 0.7rem 1rem; }
+  padding: 0.7rem 1rem;
+  box-sizing: border-box;
+  resize: none; }
   .gc-input__el:focus, .gc-input__el:active {
     border-color: #909090;
     outline: none; }
+
+.gc-input--invalid .gc-input__el {
+  border-color: #c46e6b; }
 
 
 /*# sourceMappingURL=main.css.map*/

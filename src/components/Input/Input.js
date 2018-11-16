@@ -10,6 +10,7 @@ import GCDescription from './GCDescription'
 import GCMappedInput from './GCMappedInput'
 import GCTooltip from './GCTooltip'
 import GCErrorMessage from './GCErrorMessage'
+import GCHelperText from './GCHelperText'
 
 class Input extends Component {
   constructor (props, context) {
@@ -49,20 +50,20 @@ class Input extends Component {
 
   async handleInputValidation (open) {
     const { onInputValidationFailure, onInputValidationSuccess } = this.props
-    const validationMessage = await validateInput({
+    const validationResponse = await validateInput({
       open: open,
       ...this.props
     })
-    const isValid = !!validationMessage
+    const isValid = !validationResponse.validationMessage
     this.setState(
       {
-        ...validationMessage,
+        ...validationResponse,
         showValidationMessage: !isValid
       },
       () => {
         isValid
           ? onInputValidationSuccess()
-          : onInputValidationFailure(validationMessage)
+          : onInputValidationFailure(validationResponse)
       }
     )
   }
@@ -103,6 +104,7 @@ class Input extends Component {
       disabled,
       hidden,
       required,
+      helperText,
       label = title,
       name
     } = this.props
@@ -117,7 +119,6 @@ class Input extends Component {
       'gc-input--disabled': disabled,
       [extendedClassNames]: extendedClassNames
     })
-
     if (!hidden || isVisible) {
       return (
         <div className={inputClasses}>
@@ -129,8 +130,13 @@ class Input extends Component {
             {...this.props}
           />
           {showValidationMessage && (
-            <GCErrorMessage msg={validationMessage} />
+            <GCErrorMessage text={validationMessage} />
           )}
+
+          {helperText && (
+            <GCHelperText text={helperText} />
+          )}
+
           {showTooltip && (
             <GCTooltip
               content={this.props.tooltip}
@@ -192,7 +198,6 @@ Input.propTypes = {
   options: PropTypes.array,
   required: PropTypes.bool,
   inForm: PropTypes.bool,
-  size: PropTypes.string,
   title: PropTypes.string,
   data: PropTypes.object,
   formTemplate: PropTypes.func,
@@ -229,7 +234,6 @@ Input.defaultProps = {
   sendResultsToForm: null,
   options: [],
   required: false,
-  size: 'medium',
   title: null,
   data: null,
   multi: false,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 // import GCStaticLabel from './Labels/GCStaticLabel'
 
-const GCTextarea = ({ title, name, size, min, max, handleInputValidation, handleInputChange, ...restProps }) => (
+const GCTextarea = ({ name, value, size, min, max, handleInputValidation, handleInputChange, sendResultsToForm, rows = 4, ...restProps }) => (
   <textarea
     name={name}
     className={`gc-input__el gc-input__textarea--${size}`}
@@ -11,7 +11,8 @@ const GCTextarea = ({ title, name, size, min, max, handleInputValidation, handle
     onChange={e => handleInputChange(e.target.value)}
     minLength={min}
     maxLength={max}
-    {...restProps}
+    rows={rows}
+    value={value}
     />
 )
 
@@ -22,7 +23,6 @@ GCTextarea.propTypes = {
     PropTypes.bool,
     PropTypes.array
   ]),
-  stateName: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   name: PropTypes.string,
   onChange: PropTypes.func.isRequired,

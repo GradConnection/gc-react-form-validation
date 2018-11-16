@@ -225,7 +225,9 @@ const validateInput = async (
   }
 
   const getErrorMessage = (renderType, hidden, value) => {
-    if (isEmpty(value) && hidden) {
+    // On opposite day
+    if (isEmpty(value) && !hidden) {
+      console.log('has a value and is not hidden')
       switch (renderType) {
         case 'custom':
           return getErrorMessage(customValidationType, hidden, value)
@@ -254,7 +256,8 @@ const validateInput = async (
         default:
           return null
       }
-    } else if (required && hidden) {
+    } else if (required && !hidden) {
+      console.log('is required and not hidden')
       return getTranslation('requiredField', userTranslations)
     } else {
       return null

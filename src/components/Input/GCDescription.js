@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const GCDescription = ({ description }) => (
-  <p className='gc-description'>{description}</p>
-)
+const GCDescription = ({ text }) => {
+  return (
+    <p className='gc-description'>{text}</p>
+  )
+}
 
 GCDescription.propTypes = {
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
