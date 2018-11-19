@@ -10,8 +10,6 @@
   text-align: right;
   margin: 0;
   margin-top: 0.3rem;
-  // right: 0;
-  // position: absolute;
 }
 
 .gc-error {
@@ -25,4 +23,15 @@
 
 .gc-helper-text {
   color: $gc-form-black;
+}
+
+.gc-icon {
+  display: block;
+
+  svg {
+    width: 2rem;
+  }
+  path {
+    fill: $gc-form-dark-grey;
+  }
 }

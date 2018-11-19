@@ -5,6 +5,7 @@ import { determineRenderType } from '../../utils'
 import {
   GCTextarea,
   GCRadio,
+  GCPassword,
   GCCheckbox,
   GCMultiSelect,
   GCSelect,
@@ -29,6 +30,8 @@ const GCMappedInput = props => {
       ) : (
         <GCSelect {...props} />
       )
+    case 'password':
+      return <GCPassword {...props} />
     case 'custom':
       return <GCCustom {...props} />
     default:

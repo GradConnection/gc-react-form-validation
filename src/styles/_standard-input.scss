@@ -30,3 +30,28 @@
 .gc-input--text .gc-input__el {
 
 }
+
+// PASSWORD
+.gc-input--password {
+  .gc-input__el {
+    padding-right: 4rem;
+  }
+}
+
+.gc-btn--icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: none;
+    border: none;
+    padding: 0.4rem 1rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+}
