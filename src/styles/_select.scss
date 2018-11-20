@@ -2,7 +2,22 @@
   .gc-input__el {
     .gc-select__value {
       color: $gc-form-dark-grey;
-      padding: 0.7rem 1rem;
+      padding: 0.5rem 1rem;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .gc-select__value__text {
+      line-height: 2rem;
+    }
+
+    .gc-select__caret {
+      svg {
+        margin-top: 0.2rem;
+        height: 1.5rem;
+        width: auto;
+      }
     }
 
     .gc-select__list {

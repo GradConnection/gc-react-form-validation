@@ -30,3 +30,12 @@ export const determineRenderType = type => {
       return type
   }
 }
+
+export const getLabel = (v, options) => {
+  const obj = options.find(opt => opt.value === v)
+  return obj.label
+}
+
+export const removeOption = (v, options) => {
+  return options.filter(opt => opt.value !== v)
+}

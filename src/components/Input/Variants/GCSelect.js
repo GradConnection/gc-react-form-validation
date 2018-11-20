@@ -18,6 +18,10 @@ class GCSelect extends Component {
       isActive: false
     }
 
+    this.select = React.createRef()
+
+    this.handleWindowClick = this.handleWindowClick.bind(this)
+    this.onTagCrossBtnClick = this.onTagCrossBtnClick.bind(this)
     this.onInputClick = this.onInputClick.bind(this)
   }
   // constructor (props) {
@@ -293,9 +297,25 @@ class GCSelect extends Component {
   //   return this.getOpts(options)
   // }
 
+  componentDidMount () {
+    window.addEventListener('click', this.handleWindowClick)
+    // window.addEventListener('scroll', throttle(this.calcDropDownPostion, 1000))
+    // this.calcDropDownPostion()
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('click', this.handleWindowClick)
+    // window.removeEventListener('scroll', this.calcDropDownPostion)
+  }
+
+  handleWindowClick (e) {
+    if (!this.select.current.contains(e.target)) {
+      this.setState({ isActive: false })
+    }
+  }
+
   onInputClick (e) {
     e.preventDefault()
-    console.log('de/activating')
     this.setState(state => ({ isActive: !state.isActive }))
   }
 
@@ -303,6 +323,11 @@ class GCSelect extends Component {
     e.preventDefault()
     this.props.handleInputChange(value, this.props.name)
     this.setState({ isActive: false })
+  }
+
+  onTagCrossBtnClick (e) {
+    e.preventDefault()
+    this.props.handleInputChange('', this.props.name)
   }
 
   render () {
@@ -316,10 +341,18 @@ class GCSelect extends Component {
       'gc-input__el--active': isActive
     })
     return (
-      <div className={selectClasses}>
+      <div
+        className={selectClasses}
+        ref={this.select}>
         <div role='button' className='gc-select__value' onClick={this.onInputClick}>
-          {isEmpty(value) ? placeholder : getLabel(value, options) }
+          {isEmpty(value) ? (
+            <span className='gc-select__value__text'>{placeholder}</span>
+          ) : (
+            <GCTag onCrossBtnClick={this.onTagCrossBtnClick}>{getLabel(value, options)}</GCTag>
+          )}
+          <GCIcon kind='caretIcon'extendedClassNames='gc-select__caret' />
         </div>
+
         {isActive && (
           <ul className='gc-select__list'>
             {removeOption(value, options).map(opt => (

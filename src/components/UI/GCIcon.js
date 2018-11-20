@@ -1,12 +1,45 @@
 import React from 'react'
 
-export default class GCIcon extends React.Component {
+class GCIcon extends React.Component {
   renderIcon (kind) {
     const { mainFill, width, height, size, iconTitle } = this.props
 
     switch (kind) {
       default:
         return null
+      case 'caretIcon':
+        return (
+          <svg
+            id='layer_caretIcon'
+            height={height || size}
+            width={width || size}
+            viewBox='0 0 50 50'
+            aria-labelledby={iconTitle}
+        >
+            <title id={iconTitle}>{iconTitle}</title>
+
+            <g id='caretIcon'>
+              <path
+                d='M25,7.9l8.8,8.8l3.9-3.9L25,0L12.2,12.8l3.9,3.9L25,7.9z M25,42.1l-8.8-8.8l-3.9,3.9L25,50l12.8-12.8l-3.9-3.9 L25,42.1z' />
+            </g>
+          </svg>
+        )
+      case 'closeIcon':
+        return (
+          <svg
+            id='layer_closeIcon'
+            height={height || size}
+            width={width || size}
+            viewBox='0 0 50 50'
+            aria-labelledby={iconTitle}
+      >
+            <title id={iconTitle}>{iconTitle}</title>
+
+            <g id='closeIcon'>
+              <path d='M26.1,25L49.8,1.3c0.3-0.3,0.3-0.8,0-1.1s-0.8-0.3-1.1,0L25,23.9L1.3,0.2C1-0.1,0.5-0.1,0.2,0.2s-0.3,0.8,0,1.1L23.9,25 L0.2,48.7c-0.3,0.3-0.3,0.8,0,1.1C0.4,49.9,0.6,50,0.8,50s0.4-0.1,0.5-0.2L25,26.1l23.7,23.7c0.1,0.1,0.3,0.2,0.5,0.2 s0.4-0.1,0.5-0.2c0.3-0.3,0.3-0.8,0-1.1L26.1,25z' />
+            </g>
+          </svg>
+        )
       case 'hideIcon':
         return (
           <svg
@@ -160,3 +193,5 @@ export default class GCIcon extends React.Component {
     )
   }
 }
+
+export { GCIcon }

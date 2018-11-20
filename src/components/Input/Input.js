@@ -223,7 +223,6 @@ Input.defaultProps = {
   defaultValue: null,
   disabled: false,
   name: '',
-  placeholder: '',
   to: null,
   from: null,
   max: null,

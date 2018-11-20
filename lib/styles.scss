@@ -1,6 +1,7 @@
 // FORM STYLING
 $gc-form-light-grey: #e2e2e2 !default;
 $gc-form-grey: #f3f3f3 !default;
+$gc-form-med-grey: #cfcfcf !default;
 $gc-form-dark-grey: #909090 !default;
 $gc-form-black: #44474b !default;
 
@@ -13,6 +14,8 @@ $gc-form-primary-colour: #e8bddb !default;
 // UI
 @import './label.scss';
 @import './error-message.scss';
+@import './tag.scss';
 
 // Input
 @import './standard-input.scss';
+@import './select.scss';

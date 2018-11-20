@@ -60,3 +60,25 @@
       outline: none;
     }
 }
+
+.gc-btn--icon-sml {
+  box-sizing: border-box;
+  padding: 0.2rem 0.5rem 0.5rem 0.5rem;
+
+  svg {
+    width: 0.5rem;
+
+  }
+}
+
+.gc-btn--icon,
+.gc-btn--icon-sml {
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
