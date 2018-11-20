@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
-import GCIcon from '../../UI/GCIcon'
+import { GCIcon } from 'ui'
 
 class GCPassword extends Component {
   constructor (props) {
@@ -25,7 +25,7 @@ class GCPassword extends Component {
     const { value, name, handleInputValidation, handleInputChange } = this.props
 
     return (
-      <Fragment>
+      <div>
         <input
           className='gc-input__el'
           type={mode}
@@ -42,8 +42,7 @@ class GCPassword extends Component {
             <GCIcon kind='hideIcon' />
           )}
         </button>
-
-      </Fragment>
+      </div>
     )
   }
 }
