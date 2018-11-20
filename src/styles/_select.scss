@@ -41,6 +41,7 @@
       border-bottom: solid 1px $gc-form-dark-grey;
       padding: 0.8rem 0;
 
+      &.gc-select__list-item--hovered,
       &:hover {
         color: $gc-form-primary-colour;
         cursor: pointer;
@@ -49,6 +50,10 @@
 
     .gc-select__list-item:last-of-type {
       border-bottom: none;
+    }
+
+    .gc-select__list-item--selected {
+      font-weight: bold;
     }
   }
 }

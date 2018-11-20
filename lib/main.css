@@ -151,12 +151,15 @@
   color: #44474b;
   border-bottom: solid 1px #909090;
   padding: 0.8rem 0; }
-  .gc-input--select .gc-input__el .gc-select__list-item:hover {
+  .gc-input--select .gc-input__el .gc-select__list-item.gc-select__list-item--hovered, .gc-input--select .gc-input__el .gc-select__list-item:hover {
     color: #e8bddb;
     cursor: pointer; }
 
 .gc-input--select .gc-input__el .gc-select__list-item:last-of-type {
   border-bottom: none; }
+
+.gc-input--select .gc-input__el .gc-select__list-item--selected {
+  font-weight: bold; }
 
 
 /*# sourceMappingURL=main.css.map*/

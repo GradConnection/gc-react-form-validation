@@ -5,22 +5,26 @@ import uniqueId from 'lodash/uniqueId'
 import filter from 'lodash/filter'
 import without from 'lodash/without'
 import find from 'lodash/find'
-import throttle from 'lodash/throttle'
 import classNames from 'classnames'
 
-import { isEmpty, getLabel, removeOption } from 'utils'
-import { GCIcon, GCTag } from 'ui'
+import { isEmpty, getLabel } from 'utils'
+import { GCIcon } from 'ui'
 
 class GCSelect extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isActive: false
+      isActive: false,
+      index: -1,
+      options: props.options
     }
 
+    this.hidden = React.createRef()
     this.select = React.createRef()
 
     this.handleWindowClick = this.handleWindowClick.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
+
     this.onTagCrossBtnClick = this.onTagCrossBtnClick.bind(this)
     this.onInputClick = this.onInputClick.bind(this)
   }
@@ -299,18 +303,62 @@ class GCSelect extends Component {
 
   componentDidMount () {
     window.addEventListener('click', this.handleWindowClick)
-    // window.addEventListener('scroll', throttle(this.calcDropDownPostion, 1000))
-    // this.calcDropDownPostion()
+    window.addEventListener('keydown', this.handleKeyPress)
   }
 
   componentWillUnmount () {
     window.removeEventListener('click', this.handleWindowClick)
-    // window.removeEventListener('scroll', this.calcDropDownPostion)
+    window.addEventListener('keydown', this.handleKeyPress)
   }
 
   handleWindowClick (e) {
     if (!this.select.current.contains(e.target)) {
       this.setState({ isActive: false })
+    }
+  }
+
+  onEnterKeyPress (e) {
+    e.preventDefault()
+
+    const { options, index } = this.state
+    const { value, handleInputChange } = this.props
+
+    this.setState({
+      isActive: false,
+      index: -1
+    }, () => {
+      if (index > -1 && options[index].value !== value) {
+        handleInputChange(options[index].value)
+      } else if (options[index].value === value) {
+        handleInputChange('')
+      }
+    })
+  }
+
+  onUpKeyPress (e) {
+    const { options, index } = this.state
+
+    e.preventDefault()
+    this.setState({ index: index - 1 })
+  }
+
+  onDownKeyPress (e) {
+    const { options, index } = this.state
+
+    e.preventDefault()
+    this.setState({ index: index + 1 })
+  }
+
+  handleKeyPress (e) {
+    const { options, index, isActive } = this.state
+    if (isActive) {
+      if (e.keyCode === 13) {
+        this.onEnterKeyPress(e)
+      } else if (e.keyCode === 38 && index > -1) {
+        this.onUpKeyPress(e)
+      } else if (e.keyCode === 40 && options.length - 1 > index) {
+        this.onDownKeyPress(e)
+      }
     }
   }
 
@@ -330,40 +378,50 @@ class GCSelect extends Component {
     this.props.handleInputChange('', this.props.name)
   }
 
+  computeItemClassList (selectV, itemV, index) {
+    return classNames('gc-select__list-item', {
+      'gc-select__list-item--selected': selectV === itemV,
+      'gc-select__list-item--hovered': this.state.index === index
+    })
+  }
+
   render () {
     const {
       placeholder = 'Select an option',
       value,
-      options
+      search,
+      name
     } = this.props
-    const { isActive } = this.state
+    const { isActive, options } = this.state
+
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
       'gc-input__el--active': isActive
     })
+
     return (
       <div
         className={selectClasses}
         ref={this.select}>
+        <input ref={this.hidden} type='hidden' />
+
         <div role='button' className='gc-select__value' onClick={this.onInputClick}>
-          {isEmpty(value) ? (
-            <span className='gc-select__value__text'>{placeholder}</span>
-          ) : (
-            <GCTag onCrossBtnClick={this.onTagCrossBtnClick}>{getLabel(value, options)}</GCTag>
-          )}
+          <span className='gc-select__value__text'>{isEmpty(value) ? placeholder : getLabel(value, options)}</span>
           <GCIcon kind='caretIcon'extendedClassNames='gc-select__caret' />
         </div>
 
         {isActive && (
           <ul className='gc-select__list'>
-            {removeOption(value, options).map(opt => (
+            {options.map((opt, i) => (
               <li
-                className='gc-select__list-item'
+                key={`${i}_select_${name}`}
+                className={this.computeItemClassList(value, opt.value, i)}
                 onClick={e => this.onOptionClick(e, opt.value)}>
                 {opt.label}
               </li>
             ))}
           </ul>
         )}
+
       </div>
     )
   }
