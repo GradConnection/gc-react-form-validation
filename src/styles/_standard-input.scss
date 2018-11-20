@@ -15,6 +15,11 @@
   box-sizing: border-box;
   resize: none;
 
+  &.gc-input__el--no-padding {
+    padding: 0;
+  }
+
+  &.gc-input__el--active,
   &:focus,
   &:active {
     border-color: $gc-form-dark-grey;
@@ -40,7 +45,7 @@
 
 .gc-btn--icon {
     position: absolute;
-    bottom: 0;
+    top: 2.1rem;
     right: 0;
     background: none;
     border: none;

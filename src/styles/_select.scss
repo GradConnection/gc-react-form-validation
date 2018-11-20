@@ -1,0 +1,39 @@
+.gc-input--select {
+  .gc-input__el {
+    .gc-select__value {
+      color: $gc-form-dark-grey;
+      padding: 0.7rem 1rem;
+    }
+
+    .gc-select__list {
+      background-color: $gc-form-grey;
+      list-style: none;
+      padding: 0 1rem;
+      margin: 0;
+      left: 0;
+      right: 0;
+      border: solid 1px $gc-form-dark-grey;
+      border-radius: 0 0 0.2rem 0.2rem;
+      position: absolute;
+      overflow-y: scroll;
+      max-height: 300px;
+      box-sizing: border-box;
+    }
+
+    .gc-select__list-item {
+      font-size: 1.2rem;
+      color: $gc-form-black;
+      border-bottom: solid 1px $gc-form-dark-grey;
+      padding: 0.8rem 0;
+
+      &:hover {
+        color: $gc-form-primary-colour;
+        cursor: pointer;
+      }
+    }
+
+    .gc-select__list-item:last-of-type {
+      border-bottom: none;
+    }
+  }
+}
