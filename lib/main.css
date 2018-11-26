@@ -205,7 +205,8 @@
   position: absolute;
   overflow-y: scroll;
   max-height: 300px;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  z-index: 500; }
 
 .gc-input--select .gc-input__el .gc-select__list-item {
   font-size: 1.2rem;

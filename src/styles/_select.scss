@@ -26,7 +26,7 @@
     .gc-select__value__text--search {
       border: none;
       padding: 0;
-      
+
       &:active,
       &:focus {
         outline: none;
@@ -54,6 +54,7 @@
       overflow-y: scroll;
       max-height: 300px;
       box-sizing: border-box;
+      z-index: 500;
     }
 
     .gc-select__list-item {

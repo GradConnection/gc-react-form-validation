@@ -29,7 +29,6 @@ const GCCheckbox = ({
     }
 
     onInputChange(newArray)
-    handleInputValidation(newArray)
   }
 
   const renderSingleCheckbox = () => (
