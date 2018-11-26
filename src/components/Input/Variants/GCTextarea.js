@@ -3,49 +3,45 @@ import PropTypes from 'prop-types'
 
 // import GCStaticLabel from './Labels/GCStaticLabel'
 
-const GCTextarea = ({ name, value, size, min, max, handleInputValidation, handleInputChange, sendResultsToForm, rows = 4, ...restProps }) => (
+const GCTextarea = ({
+  name,
+  value,
+  size,
+  min,
+  max,
+  handleInputValidation,
+  onInputChange,
+  rows,
+  ...restProps
+}) => (
   <textarea
     name={name}
     className={`gc-input__el gc-input__textarea--${size}`}
     onBlur={() => handleInputValidation()}
-    onChange={e => handleInputChange(e.target.value)}
+    onChange={e => onInputChange(e.target.value)}
     minLength={min}
     maxLength={max}
     rows={rows}
-    value={value}
+    {...restProps}
     />
 )
 
 GCTextarea.propTypes = {
-  extendedClass: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-    PropTypes.array
-  ]),
-  disabled: PropTypes.bool,
-  name: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  customErrorMessage: PropTypes.string,
-  touchedByParent: PropTypes.bool,
-  sendResultsToForm: PropTypes.func,
-  options: PropTypes.array,
-  title: PropTypes.string,
-  multiple: PropTypes.bool
+  name: PropTypes.string.isRequired,
+  handleInputValidation: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  rows: PropTypes.number,
+  size: PropTypes.string,
+  min: PropTypes.number,
+  max: PropTypes.number
 }
 
 GCTextarea.defaultProps = {
-  extendedClass: '',
-  value: null,
-  disabled: false,
-  name: '',
-  customRegex: null,
-  customErrorMessage: null,
-  touchedByParent: false,
-  sendResultsToForm: null,
-  options: [],
-  title: null,
-  multiple: false
+  rows: 4,
+  size: 'med',
+  min: undefined,
+  max: undefined
 }
 
 export { GCTextarea }
