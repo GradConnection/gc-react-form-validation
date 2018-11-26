@@ -312,7 +312,7 @@ class GCSelect extends Component {
 
   componentWillUnmount () {
     window.removeEventListener('click', this.handleWindowClick)
-    window.addEventListener('keydown', this.handleKeyPress)
+    window.removeEventListener('keydown', this.handleKeyPress)
   }
 
   componentDidUpdate (prevProps, prevState) {
