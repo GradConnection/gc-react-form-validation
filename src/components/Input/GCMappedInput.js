@@ -13,15 +13,23 @@ import {
 } from './Variants'
 
 const GCMappedInput = props => {
-  const { type, handleInputChange, handleInputValidation, inForm, sendResultsToForm, extendedClassNames, allowAll, defaultAll, formSubmitted, customRegex, customErrorMessage, formTemplate, isVisible, multi, search, autoComplete, defaultText, customComponent, customUI, loading, defaultValue, autocomplete, onInputValidationSuccess, onInputValidationFailure, onChange, ...xtra } = props
+  const { helperText, type, handleInputChange, handleInputValidation, inForm, sendResultsToForm, extendedClassNames, extendedClass, customRegex, customErrorMessage, touchedByParent, allowAll, defaultAll, formSubmitted, formTemplate, isVisible, multi, search, autoComplete, defaultText, customComponent, customUI, loading, defaultValue, onInputValidationSuccess, onInputValidationFailure, onChange, ...xtra } = props
   const renderType = determineRenderType(type)
   // NOTE: From here on out the Input.props.type will be used for validation only
-
   switch (renderType) {
     case 'textarea':
-      return <GCTextarea {...props} />
+      return <GCTextarea
+        handleInputValidation={handleInputValidation}
+        onInputChange={handleInputChange}
+        {...xtra} />
     case 'radio':
-      return <GCRadio {...props} />
+      return <GCRadio
+        onRadioBtnClick={handleInputChange}
+        options={xtra.options}
+        value={xtra.value}
+        name={xtra.name}
+        title={xtra.title}
+        required={xtra.required} />
     case 'checkbox':
       return <GCCheckbox {...props} />
     case 'select':
@@ -43,6 +51,7 @@ const GCMappedInput = props => {
           onChange={e => handleInputChange(e.target.value)}
           maxLength={props.max}
           minLength={props.min}
+          autoComplete={xtra.autoComplete || xtra.name}
           {...xtra}
         />
       )

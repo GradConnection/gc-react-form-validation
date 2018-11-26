@@ -117,15 +117,64 @@
 .gc-btn--icon-sml:active {
   outline: none; }
 
+.gc-input--list {
+  list-style: none;
+  padding: 0;
+  border: none; }
+
+.gc-input-list__item {
+  position: relative;
+  margin-bottom: 0.5rem; }
+  .gc-input-list__item:last-of-type {
+    margin-bottom: 0; }
+
+.gc-input__inline-label {
+  font-size: 1.2rem;
+  margin-left: 0.8rem; }
+
+.gc-input__inline-icon {
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 1px solid #909090;
+  position: absolute;
+  left: 0; }
+
+.gc-input--invalid .gc-input--list .gc-input__inline-icon {
+  border-color: #c46e6b; }
+
+.gc-input--invalid .gc-input--list .gc-input__inline-label {
+  color: #c46e6b; }
+
 .gc-input--select .gc-input__el .gc-select__value {
   color: #909090;
   padding: 0.5rem 1rem;
   position: relative;
   display: flex;
   justify-content: space-between; }
+  .gc-input--select .gc-input__el .gc-select__value:hover {
+    cursor: pointer; }
 
 .gc-input--select .gc-input__el .gc-select__value__text {
-  line-height: 2rem; }
+  line-height: 2rem;
+  width: 100%;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none; }
+
+.gc-input--select .gc-input__el .gc-select__value__text--search {
+  border: none;
+  padding: 0; }
+  .gc-input--select .gc-input__el .gc-select__value__text--search:active, .gc-input--select .gc-input__el .gc-select__value__text--search:focus {
+    outline: none; }
 
 .gc-input--select .gc-input__el .gc-select__caret svg {
   margin-top: 0.2rem;
@@ -160,6 +209,25 @@
 
 .gc-input--select .gc-input__el .gc-select__list-item--selected {
   font-weight: bold; }
+
+.gc-radio__btn-hidden {
+  visibility: hidden;
+  margin: 0; }
+
+.gc-radio__icon {
+  border-radius: 0.7rem; }
+
+.gc-radio__btn-hidden:checked + .gc-radio__icon::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 0.4rem;
+  background-color: #909090;
+  transform: translate(-50%, -50%);
+  margin-top: 50%;
+  margin-left: 50%; }
 
 
 /*# sourceMappingURL=main.css.map*/

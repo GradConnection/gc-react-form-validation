@@ -1,0 +1,21 @@
+.gc-radio__btn-hidden {
+  visibility: hidden;
+  margin: 0;
+}
+
+.gc-radio__icon {
+  border-radius: 0.7rem;
+}
+
+.gc-radio__btn-hidden:checked + .gc-radio__icon::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 0.4rem;
+  background-color: $gc-form-dark-grey;
+  transform: translate(-50%, -50%);
+  margin-top: 50%;
+  margin-left: 50%;
+}

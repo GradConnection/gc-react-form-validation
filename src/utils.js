@@ -39,3 +39,13 @@ export const getLabel = (v, options) => {
 export const removeOption = (v, options) => {
   return options.filter(opt => opt.value !== v)
 }
+
+export const debounce = (func, delay) => {
+  let inDebounce
+  return function () {
+    const context = this
+    const args = arguments
+    clearTimeout(inDebounce)
+    inDebounce = setTimeout(() => func.apply(context, args), delay)
+  }
+}

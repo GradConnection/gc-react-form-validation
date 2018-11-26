@@ -82,3 +82,42 @@
     outline: none;
   }
 }
+
+.gc-input--list {
+  list-style: none;
+  padding: 0;
+  border: none;
+}
+
+.gc-input-list__item {
+  position: relative;
+  margin-bottom: 0.5rem;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.gc-input__inline-label {
+  font-size: 1.2rem;
+  margin-left: 0.8rem;
+}
+
+.gc-input__inline-icon {
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 1px solid $gc-form-dark-grey;
+  position: absolute;
+  left: 0;
+}
+
+.gc-input--invalid .gc-input--list {
+  .gc-input__inline-icon {
+    border-color: $gc-form-red;
+  }
+
+  .gc-input__inline-label {
+    color: $gc-form-red;
+  }
+}
