@@ -1,4 +1,5 @@
 import { getTranslation } from 'translations'
+import { toArray } from 'utils'
 
 const validateInput = async (
   {
@@ -189,9 +190,10 @@ const validateInput = async (
     if (options.length > 0) {
       const minL = min
       const maxL = max
-      if (minL && minL > value.length) {
+      const valueArray = toArray(value)
+      if (minL && minL > valueArray.length) {
         res = getTranslation('minSelectOptions', userTranslations, minL)
-      } else if (maxL && maxL < value.length) {
+      } else if (maxL && maxL < valueArray.length) {
         res = getTranslation('maxSelectOptions', userTranslations, maxL)
       }
     }
@@ -227,7 +229,6 @@ const validateInput = async (
   const getErrorMessage = (renderType, hidden, value) => {
     // On opposite day
     if (isEmpty(value) && !hidden) {
-      console.log('has a value and is not hidden')
       switch (renderType) {
         case 'custom':
           return getErrorMessage(customValidationType, hidden, value)
@@ -257,7 +258,6 @@ const validateInput = async (
           return null
       }
     } else if (required && !hidden) {
-      console.log('is required and not hidden')
       return getTranslation('requiredField', userTranslations)
     } else {
       return null

@@ -20,13 +20,17 @@ const GCCheckbox = ({
 
   const onCheckboxItemClick = newValue => {
     const valueArray = toArray(value)
+    let newArray = []
+
     if (!valueArray.includes(newValue)) {
-      onInputChange([...valueArray, newValue])
+      newArray = [...valueArray, newValue]
     } else {
-      const newArray = valueArray.filter(v => v !== newValue)
-      onInputChange(newArray)
+      newArray = valueArray.filter(v => v !== newValue)
     }
-    handleInputValidation()
+
+    handleInputValidation(newArray, () => {
+      onInputChange(newArray)
+    })
   }
 
   const renderSingleCheckbox = () => (

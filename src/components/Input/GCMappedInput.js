@@ -49,7 +49,7 @@ const GCMappedInput = props => {
         <input
           className='gc-input__el'
           type={renderType}
-          onBlur={() => handleInputValidation()}
+          onBlur={e => handleInputValidation(e.target.value)}
           onChange={e => handleInputChange(e.target.value)}
           maxLength={props.max}
           minLength={props.min}

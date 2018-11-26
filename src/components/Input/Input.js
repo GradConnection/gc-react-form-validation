@@ -22,6 +22,7 @@ class Input extends Component {
     }
 
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleInputValidation = this.handleInputValidation.bind(this)
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -44,15 +45,15 @@ class Input extends Component {
       (!prevProps.formSubmitted && this.props.formSubmitted) ||
       prevProps.required !== this.props.required
     ) {
-      this.handleInputValidation()
+      this.handleInputValidation(this.props.value)
     }
   }
 
-  async handleInputValidation (open) {
+  async handleInputValidation (value, cb = () => {}) {
     const { onInputValidationFailure, onInputValidationSuccess } = this.props
     const validationResponse = await validateInput({
-      open: open,
-      ...this.props
+      ...this.props,
+      value: value
     })
     const isValid = !validationResponse.validationMessage
     this.setState(
@@ -61,9 +62,12 @@ class Input extends Component {
         showValidationMessage: !isValid
       },
       () => {
-        isValid
-          ? onInputValidationSuccess()
-          : onInputValidationFailure(validationResponse)
+        if (isValid) {
+          onInputValidationSuccess()
+          cb()
+        } else {
+          onInputValidationFailure(validationResponse)
+        }
       }
     )
   }
@@ -129,7 +133,7 @@ class Input extends Component {
           {displayLabel && <GCLabel label={label} htmlFor={name} required={required} />}
           {description && <GCDescription text={description} />}
           <GCMappedInput
-            handleInputValidation={open => this.handleInputValidation(open)}
+            handleInputValidation={this.handleInputValidation}
             handleInputChange={this.handleInputChange}
             {...this.props}
           />

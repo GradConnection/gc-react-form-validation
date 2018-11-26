@@ -17,7 +17,7 @@ const GCTextarea = ({
   <textarea
     name={name}
     className={`gc-input__el gc-input__textarea--${size}`}
-    onBlur={() => handleInputValidation()}
+    onBlur={e => handleInputValidation(e.target.value)}
     onChange={e => onInputChange(e.target.value)}
     minLength={min}
     maxLength={max}

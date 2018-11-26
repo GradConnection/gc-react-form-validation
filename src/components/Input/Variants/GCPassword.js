@@ -33,7 +33,7 @@ class GCPassword extends Component {
           value={value}
           name={name}
           autoComplete='current-password'
-          onBlur={() => handleInputValidation()}
+          onBlur={e => handleInputValidation(e.target.value)}
           onChange={e => handleInputChange(e.target.value)} />
 
         <button className='gc-btn--icon' onClick={this.onIconBtnClick}>
