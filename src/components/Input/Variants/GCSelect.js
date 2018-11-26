@@ -7,7 +7,7 @@ import without from 'lodash/without'
 import find from 'lodash/find'
 import classNames from 'classnames'
 
-import { isEmpty, getLabel } from 'utils'
+import { isEmpty, getLabel, debounce } from 'utils'
 import { GCIcon } from 'ui'
 
 class GCSelect extends Component {
@@ -16,11 +16,16 @@ class GCSelect extends Component {
     this.state = {
       isActive: false,
       index: -1,
-      options: props.options
+      options: props.options,
+      isSearchActive: false,
+      searchTerm: ''
     }
 
-    this.hidden = React.createRef()
+    this.textDisplay = React.createRef()
+    this.searchInput = React.createRef()
     this.select = React.createRef()
+
+    this.onSearchInputChange = this.onSearchInputChange.bind(this)
 
     this.handleWindowClick = this.handleWindowClick.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
@@ -248,7 +253,6 @@ class GCSelect extends Component {
   // handleSearch (e) {
   //   const v = e.target.value
   //   let state = this.state
-  //   console.log('searching: ', v)
   //   if (this.state.searchActive) {
   //     state = {
   //       searchTxt: v,
@@ -311,9 +315,22 @@ class GCSelect extends Component {
     window.addEventListener('keydown', this.handleKeyPress)
   }
 
+  componentDidUpdate (prevProps, prevState) {
+    const { isSearchActive } = this.state
+    if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
+      this.searchInput.current.focus()
+    }
+  }
+
   handleWindowClick (e) {
-    if (!this.select.current.contains(e.target)) {
-      this.setState({ isActive: false })
+    if (!this.select.current.contains(e.target) && e.target !== this.textDisplay) {
+      // console.log('select', this.select.current)
+      // console.log('target', e.target)
+      // console.log('text', this.textDisplay)
+      // console.log('search', this.searchInput)
+      this.setState({
+        isActive: false
+      })
     }
   }
 
@@ -322,7 +339,6 @@ class GCSelect extends Component {
 
     const { options, index } = this.state
     const { value, handleInputChange } = this.props
-
     this.setState({
       isActive: false,
       index: -1
@@ -362,15 +378,38 @@ class GCSelect extends Component {
     }
   }
 
+  onSearchInputChange (e) {
+    const searchTerm = e.target.value
+    const { options } = this.props
+    const filteredOptions = options.filter(opt => opt.label.includes(searchTerm))
+    this.setState({
+      searchTerm: e.target.value,
+      options: filteredOptions
+    })
+  }
+
   onInputClick (e) {
     e.preventDefault()
-    this.setState(state => ({ isActive: !state.isActive }))
+    // console.log('value clicked')
+    if (this.props.search) {
+      if (!this.state.isActive) {
+        this.setState({ isActive: true })
+      } else {
+        // console.log('search should be active')
+        this.setState({ isSearchActive: true })
+      }
+    } else {
+      this.setState(state => ({ isActive: !state.isActive }))
+    }
   }
 
   onOptionClick (e, value) {
     e.preventDefault()
     this.props.handleInputChange(value, this.props.name)
-    this.setState({ isActive: false })
+    this.setState({
+      isActive: false,
+      isSearchActive: false
+    })
   }
 
   onTagCrossBtnClick (e) {
@@ -392,7 +431,7 @@ class GCSelect extends Component {
       search,
       name
     } = this.props
-    const { isActive, options } = this.state
+    const { isActive, options, isSearchActive, searchTerm } = this.state
 
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
       'gc-input__el--active': isActive
@@ -402,11 +441,22 @@ class GCSelect extends Component {
       <div
         className={selectClasses}
         ref={this.select}>
-        <input ref={this.hidden} type='hidden' />
 
-        <div role='button' className='gc-select__value' onClick={this.onInputClick}>
-          <span className='gc-select__value__text'>{isEmpty(value) ? placeholder : getLabel(value, options)}</span>
-          <GCIcon kind='caretIcon'extendedClassNames='gc-select__caret' />
+        <div
+          role='button'
+          className='gc-select__value'
+          onClick={this.onInputClick}>
+          {isSearchActive ? (
+            <input
+              ref={this.searchInput}
+              className='gc-select__value__text gc-select__value__text--search'
+              type='text'
+              onChange={this.onSearchInputChange}
+              value={searchTerm} />
+          ) : (
+            <span ref={this.textDisplay} className='gc-select__value__text'>{isEmpty(value) ? placeholder : getLabel(value, options)}</span>
+          )}
+          <GCIcon kind='caretIcon' extendedClassNames='gc-select__caret' />
         </div>
 
         {isActive && (
