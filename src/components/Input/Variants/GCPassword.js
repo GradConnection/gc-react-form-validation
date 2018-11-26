@@ -32,6 +32,7 @@ class GCPassword extends Component {
           ref={this.input}
           value={value}
           name={name}
+          autoComplete='current-password'
           onBlur={() => handleInputValidation()}
           onChange={e => handleInputChange(e.target.value)} />
 
