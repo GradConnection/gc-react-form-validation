@@ -28,9 +28,8 @@ const GCCheckbox = ({
       newArray = valueArray.filter(v => v !== newValue)
     }
 
-    handleInputValidation(newArray, () => {
-      onInputChange(newArray)
-    })
+    onInputChange(newArray)
+    handleInputValidation(newArray)
   }
 
   const renderSingleCheckbox = () => (
@@ -64,7 +63,7 @@ const GCCheckbox = ({
             title={title}
             checked={toArray(value).includes(opt.value)}
             onChange={e => e.preventDefault()}
-              />
+            />
           <span className='gc-input__inline-icon gc-checkbox__icon' />
           <label className='gc-input__inline-label'>{opt.label}</label>
         </li>

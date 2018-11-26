@@ -128,6 +128,7 @@
 .gc-input--list {
   list-style: none;
   padding: 0;
+  margin: 0;
   border: none; }
 
 .gc-input-list__item {
@@ -148,16 +149,14 @@
   width: 1.2rem;
   height: 1.2rem;
   border: 1px solid #909090;
+  background-color: #ffffff;
   position: absolute;
   left: 0; }
   .gc-input__inline-icon:hover {
     cursor: pointer; }
 
-.gc-input--invalid .gc-input--list .gc-input__inline-icon {
-  border-color: #c46e6b; }
-
-.gc-input--invalid .gc-input--list .gc-input__inline-label {
-  color: #c46e6b; }
+.gc-input--invalid .gc-input--list {
+  background-color: #f7ebeb; }
 
 .gc-input--select .gc-input__el .gc-select__value {
   color: #909090;

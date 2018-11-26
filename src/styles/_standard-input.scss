@@ -96,6 +96,7 @@
 .gc-input--list {
   list-style: none;
   padding: 0;
+  margin: 0;
   border: none;
 }
 
@@ -123,6 +124,7 @@
   width: 1.2rem;
   height: 1.2rem;
   border: 1px solid $gc-form-dark-grey;
+  background-color: $gc-form-input-bg;
   position: absolute;
   left: 0;
 
@@ -132,11 +134,15 @@
 }
 
 .gc-input--invalid .gc-input--list {
-  .gc-input__inline-icon {
-    border-color: $gc-form-red;
-  }
-
-  .gc-input__inline-label {
-    color: $gc-form-red;
-  }
+  // .gc-input__inline-icon {
+  //   border-color: $gc-form-red;
+  // }
+  //
+  // .gc-input__inline-label {
+  //   color: $gc-form-red;
+  // }
+  // border: solid 1px $gc-form-red;
+  // border-radius: 0.2rem;
+  // padding: 0.7rem 1rem;
+  background-color: lighten($gc-form-red, 35%);
 }
