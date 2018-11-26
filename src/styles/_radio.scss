@@ -1,13 +1,8 @@
-.gc-radio__btn-hidden {
-  visibility: hidden;
-  margin: 0;
-}
-
 .gc-radio__icon {
   border-radius: 0.7rem;
 }
 
-.gc-radio__btn-hidden:checked + .gc-radio__icon::after {
+.gc-input__btn-hidden:checked + .gc-radio__icon::after {
   content: '';
   display: block;
   position: absolute;

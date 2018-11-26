@@ -1,10 +1,9 @@
 /*
 * An attempt to get out of using lodash
 */
-
 export const toArray = value => {
-  if (typeof value !== 'array') {
-    if (value === '') {
+  if (!Array.isArray(value)) {
+    if (value !== '') {
       if (value.includes(',')) {
         return value.split()
       }

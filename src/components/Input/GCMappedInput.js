@@ -31,7 +31,9 @@ const GCMappedInput = props => {
         title={xtra.title}
         required={xtra.required} />
     case 'checkbox':
-      return <GCCheckbox {...props} />
+      return <GCCheckbox
+        onInputChange={handleInputChange}
+        {...props} />
     case 'select':
       return props.multi ? (
         <GCMultiSelect {...props} />
