@@ -106,7 +106,8 @@ class Input extends Component {
       required,
       helperText,
       label = title,
-      name
+      name,
+      options
     } = this.props
     const {
       validationMessage,
@@ -119,10 +120,13 @@ class Input extends Component {
       'gc-input--disabled': disabled,
       [extendedClassNames]: extendedClassNames
     })
+
+    const displayLabel = label && type !== 'checkbox' || label && type === 'checkbox' && options.length > 0
+
     if (!hidden || isVisible) {
       return (
         <div className={inputClasses}>
-          {label && <GCLabel label={label} htmlFor={name} required={required} />}
+          {displayLabel && <GCLabel label={label} htmlFor={name} required={required} />}
           {description && <GCDescription text={description} />}
           <GCMappedInput
             handleInputValidation={open => this.handleInputValidation(open)}
