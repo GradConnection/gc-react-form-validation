@@ -9,7 +9,8 @@ import {
   GCCheckbox,
   GCMultiSelect,
   GCSelect,
-  GCCustom
+  GCCustom,
+  GCDatePicker
 } from './Variants'
 
 const GCMappedInput = props => {
@@ -33,7 +34,13 @@ const GCMappedInput = props => {
     case 'checkbox':
       return <GCCheckbox
         onInputChange={handleInputChange}
-        {...props} />
+        handleInputValidation={handleInputValidation}
+        {...xtra} />
+    case 'date':
+      return <GCDatePicker
+        onInputChange={handleInputChange}
+        handleInputValidation={handleInputValidation}
+        {...xtra} />
     case 'select':
       return props.multi ? (
         <GCMultiSelect {...props} />
