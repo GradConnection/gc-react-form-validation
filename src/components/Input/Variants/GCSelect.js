@@ -444,23 +444,23 @@ class GCSelect extends Component {
 
         <div
           role='button'
-          className='gc-select__value'
+          className='gc-drop-down__value'
           onClick={this.onInputClick}>
           {isSearchActive ? (
             <input
               ref={this.searchInput}
-              className='gc-select__value__text gc-select__value__text--search'
+              className='gc-drop-down__value__text gc-select__value__text--search'
               type='text'
               onChange={this.onSearchInputChange}
               value={searchTerm} />
           ) : (
-            <span ref={this.textDisplay} className='gc-select__value__text'>{isEmpty(value) ? placeholder : getLabel(value, options)}</span>
+            <span ref={this.textDisplay} className='gc-drop-down__value__text'>{isEmpty(value) ? placeholder : getLabel(value, options)}</span>
           )}
-          <GCIcon kind='caretIcon' extendedClassNames='gc-select__caret' />
+          <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
         </div>
 
         {isActive && (
-          <ul className='gc-select__list'>
+          <ul className='gc-drop-down__el gc-select__list'>
             {options.map((opt, i) => (
               <li
                 key={`${i}_select_${name}`}

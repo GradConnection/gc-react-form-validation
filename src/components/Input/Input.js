@@ -109,6 +109,7 @@ class Input extends Component {
       hidden,
       required,
       helperText,
+      tooltip,
       label = title,
       name,
       options
@@ -130,13 +131,24 @@ class Input extends Component {
     if (!hidden || isVisible) {
       return (
         <div className={inputClasses}>
-          {displayLabel && <GCLabel label={label} htmlFor={name} required={required} />}
-          {description && <GCDescription text={description} />}
+          {displayLabel && (
+            <GCLabel label={label} htmlFor={name} required={required} />
+          )}
+
+          {description && (
+            <GCDescription text={description} />
+          )}
+
+          {tooltip && (
+            <button className='gc-btn--icon' />
+          )}
+
           <GCMappedInput
             handleInputValidation={this.handleInputValidation}
             handleInputChange={this.handleInputChange}
             {...this.props}
           />
+
           {showValidationMessage && (
             <GCErrorMessage text={validationMessage} />
           )}

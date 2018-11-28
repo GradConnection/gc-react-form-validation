@@ -1,0 +1,56 @@
+.gc-input__el {
+  .gc-drop-down__value {
+    color: $gc-form-dark-grey;
+    padding: 0.5rem 1rem;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .gc-drop-down__value__text {
+    line-height: 2rem;
+    width: 100%;
+    -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none;
+  }
+
+  .gc-drop-down__value__text--search {
+    border: none;
+    padding: 0;
+
+    &:active,
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .gc-drop-down__caret {
+    svg {
+      margin-top: 0.2rem;
+      height: 1.5rem;
+      width: auto;
+    }
+  }
+
+  .gc-drop-down__el {
+    background-color: $gc-form-grey;
+    list-style: none;
+    padding: 0 1rem;
+    margin: 0;
+    left: 0;
+    right: 0;
+    border: solid 1px $gc-form-dark-grey;
+    border-radius: 0 0 0.2rem 0.2rem;
+    position: absolute;
+    box-sizing: border-box;
+    z-index: 500;
+  }
+}

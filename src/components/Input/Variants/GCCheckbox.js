@@ -11,6 +11,7 @@ class GCCheckbox extends Component {
     }
     this.checkbox = React.createRef()
     this.handleBlur = this.handleBlur.bind(this)
+    this.onSingleCheckboxClick = this.onSingleCheckboxClick.bind(this)
   }
 
   componentDidMount () {
