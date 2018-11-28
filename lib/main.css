@@ -206,6 +206,11 @@
   box-sizing: border-box;
   z-index: 500; }
 
+.gc-tooltip__icon {
+  top: -0.5rem; }
+  .gc-tooltip__icon svg {
+    width: 1.5rem; }
+
 .gc-input--select .gc-input__el .gc-select__list {
   overflow-y: scroll;
   max-height: 300px; }

@@ -163,7 +163,7 @@ class GCIcon extends React.Component {
             id='layer_infoIcon'
             height={height || size}
             width={width || size}
-            viewBox='0 0 100 100'
+            viewBox='0 0 50 50'
             aria-labelledby={iconTitle}
             className={this.props.extendedClassName}
           >

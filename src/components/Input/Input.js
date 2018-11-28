@@ -11,6 +11,7 @@ import GCMappedInput from './GCMappedInput'
 import GCTooltip from './GCTooltip'
 import GCErrorMessage from './GCErrorMessage'
 import GCHelperText from './GCHelperText'
+import { GCIcon } from 'ui'
 
 class Input extends Component {
   constructor (props, context) {
@@ -23,12 +24,13 @@ class Input extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleInputValidation = this.handleInputValidation.bind(this)
+    this.onTooltipIconClick = this.onTooltipIconClick.bind(this)
   }
 
   shouldComponentUpdate (nextProps, nextState) {
     return (
       nextState.validationMessage !== this.state.validationMessage ||
-      nextState.tooltip !== this.state.tooltip ||
+      nextState.showTooltip !== this.state.showTooltip ||
       nextProps.value !== this.props.value ||
       nextProps.hidden !== this.props.hidden ||
       nextProps.options !== this.props.options ||
@@ -78,8 +80,13 @@ class Input extends Component {
     }
   }
 
+  onTooltipIconClick (e) {
+    e.preventDefault()
+    this.toggleTooltip(!this.state.showTooltip)
+  }
+
   toggleTooltip (active) {
-    this.setState({ tooltip: active })
+    this.setState({ showTooltip: active })
   }
 
   getValue () {
@@ -140,7 +147,7 @@ class Input extends Component {
           )}
 
           {tooltip && (
-            <button className='gc-btn--icon' />
+            <button className='gc-btn--icon gc-tooltip__icon' onClick={this.onTooltipIconClick}><GCIcon kind='infoIcon' /></button>
           )}
 
           <GCMappedInput

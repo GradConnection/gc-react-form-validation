@@ -29,15 +29,16 @@ export default class GCTooltip extends Component {
   }
 
   render () {
+    console.log('rendering tooltip')
     return (
       <div
-        className='gctooltip'
+        className='gc-tooltip'
         onClick={e => this.toggleMessage(e)}
         ref={tooltip => {
           this[this.props.name] = tooltip
         }}
       >
-        <p className='gctooltip__message'>{this.props.content}</p>
+        <p className='gc-tooltip__message'>{this.props.content}</p>
       </div>
     )
   }
