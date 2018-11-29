@@ -1,0 +1,70 @@
+.gc-calendar {
+  display: flex;
+  justify-content: center;
+
+  .gc-calendar__main {
+    width: 220px;
+    padding-bottom: 1rem;
+  }
+
+  .gc-calendar__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+  }
+
+  .gc-calendar__header__btn {
+    background: none;
+    border: none;
+    outline: none;
+
+    svg {
+      height: 1.2rem;
+      fill: $gc-form-black;
+      stroke: $gc-form-black;
+      stroke-width: 0.5rem;
+    }
+
+    &.gc-calendar__header__btn--left svg {
+      transform: rotateZ(180deg);
+    }
+  }
+
+
+
+  .gc-calendar__header__text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: $gc-form-black;
+  }
+
+  .gc-calendar__body__cell {
+    width: calc(100% / 7);
+    display: inline-block;
+    text-align: center;
+    color: $gc-form-black;
+    border: none;
+    background-color: transparent;
+    padding: 0.4rem 0;
+
+    &.gc-calendar__body__cell--btn {
+      &:active,
+      &:focus {
+        outline: none;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .gc-calendar__body__cell--active {
+    background-color: $gc-form-med-grey;
+
+  }
+
+  .gc-calendar__body__cell--disabled {
+    color: $gc-form-med-grey
+  }
+}

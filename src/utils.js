@@ -48,3 +48,45 @@ export const debounce = (func, delay) => {
     inDebounce = setTimeout(() => func.apply(context, args), delay)
   }
 }
+
+export const dayShortNameArray = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
+export const monthNameArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+
+export const getPrevMonth = dateC => {
+  const date = new Date(dateC)
+  const newMonth = (date.getMonth() + 1) % 12 - 2
+  if (newMonth === 11) {
+    const newYear = date.getFullYear() - 1
+    const newMonthDate = new Date(date.setMonth(newMonth))
+    return new Date(newMonthDate.setYear(newYear))
+  } else {
+    return new Date(date.setMonth(newMonth))
+  }
+}
+
+export const getNextMonth = dateC => {
+  const date = new Date(dateC)
+  const newMonth = (date.getMonth() + 1) % 12
+  if (newMonth === 0) {
+    const newYear = date.getFullYear() + 1
+    const newMonthDate = new Date(date.setMonth(newMonth))
+    return new Date(newMonthDate.setYear(newYear))
+  } else {
+    return new Date(date.setMonth(newMonth))
+  }
+}
+
+export const getFirstDayOfMonth = date => new Date(date.setDate(1)).getDay()
+
+export const getFirstDayOfMonthName = date => dayShortNameArray[getFirstDayOfMonth(date)]
+
+export const getLastDayOfMonth = date => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay()
+
+export const getMonthName = date => {
+  const monthI = date.getMonth()
+  return monthNameArray[monthI]
+}
+
+export const getMonthLength = date => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+
+export const getYear = date => date.getFullYear()

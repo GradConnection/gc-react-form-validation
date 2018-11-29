@@ -5,10 +5,10 @@ class GCInputSVG extends Component {
   render () {
     const { type, className } = this.props
     switch (type) {
-      case 'chevronDown':
+      case 'chevronIcon':
         return (
           <svg
-            id='layer_chevronDown'
+            id='layer_chevronIcon'
             className={className}
             style={{ maxHeight: '50px' }}
             viewBox='0 0 50 50'

@@ -7,6 +7,24 @@ class GCIcon extends React.Component {
     switch (kind) {
       default:
         return null
+      case 'chevronIcon':
+        return (
+          <svg
+            id='layer_chevronIcon'
+            height={height || size}
+            width={width || size}
+            viewBox='0 0 50 50'
+            aria-labelledby={iconTitle}
+        >
+            <title id={iconTitle}>{iconTitle}</title>
+
+            <g id='chevronIcon'>
+              <path
+                d='M13.385 50a.729.729 0 0 1-.515-1.244l23.408-23.41L12.176 1.245a.729.729 0 1 1 1.03-1.03L37.824 24.83a.729.729 0 0 1 0 1.031L13.9 49.786a.727.727 0 0 1-.515.214z'
+            />
+            </g>
+          </svg>
+        )
       case 'caretIcon':
         return (
           <svg
