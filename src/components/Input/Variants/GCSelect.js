@@ -38,7 +38,7 @@ class GCSelect extends Component {
     this.handleOnBlurEffect = this.handleOnBlurEffect.bind(this)
     this.handleOnFocusEffect = this.handleOnFocusEffect.bind(this)
 
-    this.onInputClick = this.onInputClick.bind(this)
+    this.onInputMouseUp = this.onInputMouseUp.bind(this)
   }
 
   componentDidMount () {
@@ -131,7 +131,9 @@ class GCSelect extends Component {
     this.setState({ index: index + 1 })
   }
 
-  handleOnFocusEffect () {
+  handleOnFocusEffect (e) {
+    e.preventDefault()
+    console.log('focussing')
     if (this.props.search) {
       this.setState({
         isActive: true,
@@ -167,10 +169,11 @@ class GCSelect extends Component {
     })
   }
 
-  onInputClick (e) {
-    e.preventDefault()
+  onInputMouseUp (e) {
+    // e.preventDefault()
+    const {isActive, isFocussed} = this.state
     if (this.props.search) {
-      if (!this.state.isActive) {
+      if (!isActive) {
         this.setState({
           isActive: true,
           isFocussed: true
@@ -180,8 +183,8 @@ class GCSelect extends Component {
           isSearchActive: true,
           placeholder: 'Start typing to search' })
       }
-    } else {
-      this.setState(state => ({ isActive: !state.isActive }))
+    } else if (isFocussed && !isActive) {
+      this.setState({ isActive: true })
     }
   }
 
@@ -232,7 +235,7 @@ class GCSelect extends Component {
         <div
           role='button'
           className='gc-drop-down__value'
-          onClick={this.onInputClick}>
+          onMouseUp={this.onInputMouseUp}>
           <input
             ref={this.textInput}
             className='gc-drop-down__value__text gc-drop-down__value__text--input'
