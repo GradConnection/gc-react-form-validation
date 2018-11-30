@@ -211,7 +211,7 @@
   border-radius: 0 0 0.2rem 0.2rem;
   position: absolute;
   box-sizing: border-box;
-  z-index: 500; }
+  z-index: 5000000000000; }
 
 .gc-tooltip__icon {
   top: -0.5rem; }

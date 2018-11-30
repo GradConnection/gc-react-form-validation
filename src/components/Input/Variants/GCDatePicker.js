@@ -49,7 +49,8 @@ class GCDatePicker extends Component {
     this.props.onInputChange(newValue)
   }
 
-  onDropDownClick () {
+  onDropDownClick (e) {
+    e.preventDefault()
     this.setState(state => ({ isActive: !state.isActive }))
   }
 
@@ -71,7 +72,7 @@ class GCDatePicker extends Component {
         <div
           role='button'
           className='gc-drop-down__value'
-          onClick={this.onDropDownClick}>
+          onMouseDown={this.onDropDownClick}>
           <input
             className='gc-drop-down__value__text gc-drop-down__value__text--input'
             type='text'
