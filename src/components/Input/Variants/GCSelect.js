@@ -23,6 +23,7 @@ class GCSelect extends Component {
 
     this.state = {
       isActive: false,
+      isFocussed: false,
       index: -1,
       ...this.searchReset
     }
@@ -34,6 +35,8 @@ class GCSelect extends Component {
 
     this.handleWindowClick = this.handleWindowClick.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.handleOnBlurEffect = this.handleOnBlurEffect.bind(this)
+    this.handleOnFocusEffect = this.handleOnFocusEffect.bind(this)
 
     this.onTagCrossBtnClick = this.onTagCrossBtnClick.bind(this)
     this.onInputClick = this.onInputClick.bind(this)
@@ -63,6 +66,38 @@ class GCSelect extends Component {
         ...this.searchReset
       })
     }
+  }
+
+  handleKeyPress (e) {
+    const { options, index, isActive, isFocussed } = this.state
+    if (isActive && isFocussed) {
+      if (e.keyCode === 13) {
+        this.onEnterKeyPress(e)
+      } else if (e.keyCode === 38 && index > -1) {
+        this.onUpKeyPress(e)
+      } else if (e.keyCode === 40 && options.length - 1 > index) {
+        this.onDownKeyPress(e)
+      }
+    }
+
+    if (!isActive && isFocussed) {
+      if (e.keyCode === 40 || e.keyCode === 13) {
+        this.activateDropDown()
+      }
+    }
+  }
+
+  activateDropDown () {
+    const activeState = {
+      isActive: true
+    }
+
+    if (this.props.search) {
+      activeState.isSearchActive = true
+      activeState.placeholder = 'Start typing to search'
+    }
+
+    this.setState(activeState)
   }
 
   onEnterKeyPress (e) {
@@ -97,17 +132,28 @@ class GCSelect extends Component {
     this.setState({ index: index + 1 })
   }
 
-  handleKeyPress (e) {
-    const { options, index, isActive } = this.state
-    if (isActive) {
-      if (e.keyCode === 13) {
-        this.onEnterKeyPress(e)
-      } else if (e.keyCode === 38 && index > -1) {
-        this.onUpKeyPress(e)
-      } else if (e.keyCode === 40 && options.length - 1 > index) {
-        this.onDownKeyPress(e)
-      }
+  handleOnFocusEffect () {
+    if (this.props.search) {
+      this.setState({
+        isActive: true,
+        isFocussed: true,
+        isSearchActive: true,
+        placeholder: 'Start typing to search'
+      })
+    } else {
+      this.setState({
+        isActive: true,
+        isFocussed: true
+      })
     }
+  }
+
+  handleOnBlurEffect () {
+    this.setState({
+      isActive: false,
+      isFocussed: false,
+      ...this.resetSearch
+    })
   }
 
   onSearchInputChange (e) {
@@ -170,12 +216,11 @@ class GCSelect extends Component {
       search,
       name
     } = this.props
-    const { isActive, options, isSearchActive, searchTerm, placeholder } = this.state
+    const { isActive, isFocussed, options, isSearchActive, searchTerm, placeholder } = this.state
 
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
-      'gc-input__el--active': isActive
+      'gc-input__el--active': isActive || isFocussed
     })
-
     return (
       <div
         className={selectClasses}
@@ -191,6 +236,8 @@ class GCSelect extends Component {
             type='text'
             value={this.computeInputValue(value, options, isSearchActive, searchTerm)}
             onChange={this.onSearchInputChange}
+            onFocus={this.handleOnFocusEffect}
+            onBlur={this.handleOnBlurEffect}
             placeholder={placeholder}
             readOnly={!isSearchActive}
               />

@@ -36,7 +36,10 @@ class GCPassword extends Component {
           onBlur={e => handleInputValidation(e.target.value)}
           onChange={e => handleInputChange(e.target.value)} />
 
-        <button className='gc-btn--icon' onClick={this.onIconBtnClick}>
+        <button
+          tabIndex={-1}
+          className='gc-btn--icon'
+          onClick={this.onIconBtnClick}>
           {mode === 'password' ? (
             <GCIcon kind='showIcon' />
           ) : (
