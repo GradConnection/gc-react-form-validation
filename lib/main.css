@@ -230,6 +230,9 @@
   .gc-input--select .gc-input__el .gc-select__list-item.gc-select__list-item--hovered, .gc-input--select .gc-input__el .gc-select__list-item:hover {
     color: #e8bddb;
     cursor: pointer; }
+  .gc-input--select .gc-input__el .gc-select__list-item.gc-select__list-item--no-opt:hover {
+    color: #44474b;
+    cursor: default; }
 
 .gc-input--select .gc-input__el .gc-select__list-item:last-of-type {
   border-bottom: none; }

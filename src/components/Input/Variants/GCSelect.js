@@ -17,12 +17,13 @@ class GCSelect extends Component {
       isActive: false,
       index: -1,
       options: props.options,
+      searchTerm: '',
       isSearchActive: false,
-      searchTerm: ''
+      placeholder: props.placeholder || 'Select an option'
     }
 
-    this.textDisplay = React.createRef()
-    this.searchInput = React.createRef()
+    this.textInput = React.createRef()
+    // this.searchInput = React.createRef()
     this.select = React.createRef()
 
     this.onSearchInputChange = this.onSearchInputChange.bind(this)
@@ -318,16 +319,12 @@ class GCSelect extends Component {
   componentDidUpdate (prevProps, prevState) {
     const { isSearchActive } = this.state
     if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
-      this.searchInput.current.focus()
+      this.textInput.current.focus()
     }
   }
 
   handleWindowClick (e) {
-    if (!this.select.current.contains(e.target) && e.target !== this.textDisplay) {
-      // console.log('select', this.select.current)
-      // console.log('target', e.target)
-      // console.log('text', this.textDisplay)
-      // console.log('search', this.searchInput)
+    if (!this.select.current.contains(e.target) && e.target !== this.textInput) {
       this.setState({
         isActive: false
       })
@@ -381,7 +378,7 @@ class GCSelect extends Component {
   onSearchInputChange (e) {
     const searchTerm = e.target.value
     const { options } = this.props
-    const filteredOptions = options.filter(opt => opt.label.includes(searchTerm))
+    const filteredOptions = options.filter(opt => opt.label.toLowerCase().includes(searchTerm.toLowerCase()))
     this.setState({
       searchTerm: e.target.value,
       options: filteredOptions
@@ -390,13 +387,13 @@ class GCSelect extends Component {
 
   onInputClick (e) {
     e.preventDefault()
-    // console.log('value clicked')
     if (this.props.search) {
       if (!this.state.isActive) {
         this.setState({ isActive: true })
       } else {
-        // console.log('search should be active')
-        this.setState({ isSearchActive: true })
+        this.setState({
+          isSearchActive: true,
+          placeholder: 'Start typing to search' })
       }
     } else {
       this.setState(state => ({ isActive: !state.isActive }))
@@ -408,7 +405,8 @@ class GCSelect extends Component {
     this.props.handleInputChange(value, this.props.name)
     this.setState({
       isActive: false,
-      isSearchActive: false
+      isSearchActive: false,
+      placeholder: this.props.placeholder || 'Select an option'
     })
   }
 
@@ -424,14 +422,21 @@ class GCSelect extends Component {
     })
   }
 
+  computeInputValue (value, options, isSearchActive, searchTerm) {
+    if (isSearchActive) {
+      return searchTerm
+    } else {
+      return isEmpty(value) ? '' : getLabel(value, options)
+    }
+  }
+
   render () {
     const {
-      placeholder = 'Select an option',
       value,
       search,
       name
     } = this.props
-    const { isActive, options, isSearchActive, searchTerm } = this.state
+    const { isActive, options, isSearchActive, searchTerm, placeholder } = this.state
 
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
       'gc-input__el--active': isActive
@@ -446,29 +451,35 @@ class GCSelect extends Component {
           role='button'
           className='gc-drop-down__value'
           onClick={this.onInputClick}>
-          {isSearchActive ? (
-            <input
-              ref={this.searchInput}
-              className='gc-drop-down__value__text gc-select__value__text--search'
-              type='text'
-              onChange={this.onSearchInputChange}
-              value={searchTerm} />
-          ) : (
-            <span ref={this.textDisplay} className='gc-drop-down__value__text'>{isEmpty(value) ? placeholder : getLabel(value, options)}</span>
-          )}
+          <input
+            ref={this.textInput}
+            className='gc-drop-down__value__text gc-drop-down__value__text--input'
+            type='text'
+            value={this.computeInputValue(value, options, isSearchActive, searchTerm)}
+            onChange={this.onSearchInputChange}
+            placeholder={placeholder}
+            readOnly={!isSearchActive}
+              />
           <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
         </div>
 
         {isActive && (
           <ul className='gc-drop-down__el gc-select__list'>
-            {options.map((opt, i) => (
+            {options.length > 0 ?
+            options.map((opt, i) => (
               <li
                 key={`${i}_select_${name}`}
                 className={this.computeItemClassList(value, opt.value, i)}
                 onClick={e => this.onOptionClick(e, opt.value)}>
                 {opt.label}
               </li>
-            ))}
+            )) : (
+              <li
+                key={`$noOpt_select_${name}`}
+                className='gc-select__list-item gc-select__list-item--no-opt'>
+                <i>There are no available options</i>
+              </li>
+          )}
           </ul>
         )}
 
