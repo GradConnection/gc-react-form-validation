@@ -38,7 +38,6 @@ class GCSelect extends Component {
     this.handleOnBlurEffect = this.handleOnBlurEffect.bind(this)
     this.handleOnFocusEffect = this.handleOnFocusEffect.bind(this)
 
-    this.onTagCrossBtnClick = this.onTagCrossBtnClick.bind(this)
     this.onInputClick = this.onInputClick.bind(this)
   }
 
@@ -149,11 +148,13 @@ class GCSelect extends Component {
   }
 
   handleOnBlurEffect () {
+    const { handleInputValidation, value } = this.props
     this.setState({
       isActive: false,
       isFocussed: false,
       ...this.resetSearch
     })
+    handleInputValidation(value)
   }
 
   onSearchInputChange (e) {
@@ -170,7 +171,10 @@ class GCSelect extends Component {
     e.preventDefault()
     if (this.props.search) {
       if (!this.state.isActive) {
-        this.setState({ isActive: true })
+        this.setState({
+          isActive: true,
+          isFocussed: true
+        })
       } else {
         this.setState({
           isSearchActive: true,
@@ -181,18 +185,21 @@ class GCSelect extends Component {
     }
   }
 
-  onOptionClick (e, value) {
+  onOptionMouseDown (e, value) {
     e.preventDefault()
-    this.props.handleInputChange(value, this.props.name)
+
+    const { handleInputChange } = this.props
+
     this.setState({
       isActive: false,
       ...this.searchReset
+    }, () => {
+      if (value === this.props.value) {
+        handleInputChange('')
+      } else {
+        handleInputChange(value)
+      }
     })
-  }
-
-  onTagCrossBtnClick (e) {
-    e.preventDefault()
-    this.props.handleInputChange('', this.props.name)
   }
 
   computeItemClassList (selectV, itemV, index) {
@@ -211,11 +218,7 @@ class GCSelect extends Component {
   }
 
   render () {
-    const {
-      value,
-      search,
-      name
-    } = this.props
+    const { value, search, name } = this.props
     const { isActive, isFocussed, options, isSearchActive, searchTerm, placeholder } = this.state
 
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
@@ -251,7 +254,7 @@ class GCSelect extends Component {
               <li
                 key={`${i}_select_${name}`}
                 className={this.computeItemClassList(value, opt.value, i)}
-                onClick={e => this.onOptionClick(e, opt.value)}>
+                onMouseDown={e => this.onOptionMouseDown(e, opt.value)}>
                 {opt.label}
               </li>
             )) : (
@@ -267,6 +270,16 @@ class GCSelect extends Component {
       </div>
     )
   }
+}
+
+GCSelect.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  options: PropTypes.array,
+  search: PropTypes.bool,
+  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  handleInputChange: PropTypes.func.isRequired,
+  handleInputValidation: PropTypes.func.isRequired
 }
 
 export { GCSelect }

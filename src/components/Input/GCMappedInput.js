@@ -40,12 +40,29 @@ const GCMappedInput = props => {
       return <GCDatePicker
         onInputChange={handleInputChange}
         handleInputValidation={handleInputValidation}
-        {...xtra} />
+        name={xtra.name}
+        value={xtra.value}
+        defaultValue={xtra.defaultValue}
+        placeholder={xtra.placeholder} />
     case 'select':
       return props.multi ? (
-        <GCMultiSelect {...props} />
+        <GCMultiSelect
+          name={xtra.name}
+          value={xtra.value}
+          options={xtra.options}
+          search={search}
+          placeholder={xtra.placeholder}
+          handleInputChange={handleInputChange}
+          handleInputValidation={handleInputValidation} />
       ) : (
-        <GCSelect {...props} />
+        <GCSelect
+          name={xtra.name}
+          value={xtra.value}
+          options={xtra.options}
+          search={search}
+          placeholder={xtra.placeholder}
+          handleInputChange={handleInputChange}
+          handleInputValidation={handleInputValidation} />
       )
     case 'password':
       return <GCPassword {...props} />

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import classNames from 'classnames'
 
@@ -40,7 +41,7 @@ class GCDatePicker extends Component {
   }
 
   handleOnBlurEffect (e) {
-    this.setState({ isActive: false })
+    this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
   }
 
   onDateChange (newValue) {
@@ -92,6 +93,19 @@ class GCDatePicker extends Component {
       </div>
     )
   }
+}
+
+GCDatePicker.propTypes = {
+  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  value: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
+  defaultValue: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
+  handleInputValidation: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired
+}
+
+GCDatePicker.defaultProps = {
+  placeholder: 'Select Date',
+  defaultValue: ''
 }
 
 export {GCDatePicker}
