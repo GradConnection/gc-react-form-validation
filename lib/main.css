@@ -218,6 +218,28 @@
   .gc-tooltip__icon svg {
     width: 1.5rem; }
 
+.gc-tooltip {
+  position: absolute;
+  vertical-align: baseline;
+  max-width: 80%;
+  right: 1.75em;
+  bottom: 120%;
+  background-color: #909090; }
+  .gc-tooltip .gc-tooltip__message {
+    margin: 0.5em;
+    color: #ffffff; }
+  .gc-tooltip::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -1em;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-left: 1em solid transparent;
+    border-right: 0em solid transparent;
+    border-top: 1em solid #909090; }
+
 .gc-input--select .gc-input__el .gc-select__list {
   overflow-y: scroll;
   max-height: 300px; }
