@@ -147,7 +147,7 @@ class Input extends Component {
           )}
 
           {tooltip && (
-            <button className='gc-btn--icon gc-tooltip__icon' onClick={this.onTooltipIconClick}><GCIcon kind='infoIcon' /></button>
+            <button className='gc-btn--icon gc-tooltip__icon' onClick={this.onTooltipIconClick} tabIndex={-1}><GCIcon kind='infoIcon' /></button>
           )}
 
           <GCMappedInput

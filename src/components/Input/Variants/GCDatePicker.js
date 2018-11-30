@@ -17,6 +17,8 @@ class GCDatePicker extends Component {
     this.onDropDownClick = this.onDropDownClick.bind(this)
     this.onDateChange = this.onDateChange.bind(this)
     this.handleActivateCalendar = this.handleActivateCalendar.bind(this)
+    this.handleOnFocusEffect = this.handleOnFocusEffect.bind(this)
+    this.handleOnBlurEffect = this.handleOnBlurEffect.bind(this)
   }
 
   componentDidMount () {
@@ -31,6 +33,14 @@ class GCDatePicker extends Component {
     if (!this.datePicker.current.contains(e.target)) {
       this.setState({ isActive: false })
     }
+  }
+
+  handleOnFocusEffect (e) {
+    this.setState({ isActive: true })
+  }
+
+  handleOnBlurEffect (e) {
+    this.setState({ isActive: false })
   }
 
   onDateChange (newValue) {
@@ -61,7 +71,14 @@ class GCDatePicker extends Component {
           role='button'
           className='gc-drop-down__value'
           onClick={this.onDropDownClick}>
-          <span className='gc-drop-down__value__text'>{isEmpty(value) ? placeholder : this.formatDate(value)}</span>
+          <input
+            className='gc-drop-down__value__text gc-drop-down__value__text--input'
+            type='text'
+            defaultValue={isEmpty(value) ? '' : this.formatDate(value)}
+            placeholder={placeholder}
+            readOnly
+            onFocus={this.handleOnFocusEffect}
+            onBlur={this.handleOnBlurEffect} />
           <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
         </div>
         {isActive && (
