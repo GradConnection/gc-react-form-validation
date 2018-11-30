@@ -28,6 +28,13 @@
         color: $gc-form-primary-colour;
         cursor: pointer;
       }
+
+      &.gc-select__list-item--no-opt {
+        &:hover {
+          color: $gc-form-black;
+          cursor: default;
+        }
+      }
     }
 
     .gc-select__list-item:last-of-type {
