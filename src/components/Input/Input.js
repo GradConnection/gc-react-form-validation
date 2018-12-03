@@ -8,7 +8,7 @@ import validateInput from './validateInput'
 import GCLabel from './GCLabel'
 import GCDescription from './GCDescription'
 import GCMappedInput from './GCMappedInput'
-import GCTooltip from './GCTooltip'
+import { GCTooltip } from './GCTooltip'
 import GCErrorMessage from './GCErrorMessage'
 import GCHelperText from './GCHelperText'
 import { GCIcon } from 'ui'
@@ -147,7 +147,7 @@ class Input extends Component {
           )}
 
           {tooltip && (
-            <button className='gc-btn--icon gc-tooltip__icon' onClick={this.onTooltipIconClick} tabIndex={-1}><GCIcon kind='infoIcon' /></button>
+            <span className='gc-btn--icon gc-tooltip__icon' onClick={this.onTooltipIconClick} tabIndex={-1}><GCIcon kind='infoIcon' /></span>
           )}
 
           <GCMappedInput
@@ -168,7 +168,7 @@ class Input extends Component {
             <GCTooltip
               content={this.props.tooltip}
               name={this.props.name}
-              active={this.state.tooltip}
+              active={this.state.showTooltip}
               toggleTooltip={active => this.toggleTooltip(active)}
             />
           )}
