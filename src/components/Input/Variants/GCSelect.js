@@ -166,7 +166,7 @@ class GCSelect extends Component {
   }
 
   onInputMouseUp (e) {
-    const { isActive, isFocussed } = this.state
+    const { isActive } = this.state
     if (this.props.search) {
       if (!isActive) {
         this.setState({
@@ -178,7 +178,7 @@ class GCSelect extends Component {
           isSearchActive: true,
           placeholder: 'Start typing to search' })
       }
-    } else if (isFocussed && !isActive) {
+    } else if (!isActive) {
       this.setState({ isActive: true })
     }
   }
