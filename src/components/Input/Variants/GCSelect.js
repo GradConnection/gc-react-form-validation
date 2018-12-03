@@ -1,13 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import uniqueId from 'lodash/uniqueId'
-import filter from 'lodash/filter'
-import without from 'lodash/without'
-import find from 'lodash/find'
 import classNames from 'classnames'
 
-import { isEmpty, getLabel, debounce } from 'utils'
+import { isEmpty, getLabel } from 'utils'
 import { GCIcon } from 'ui'
 
 class GCSelect extends Component {
@@ -103,7 +99,7 @@ class GCSelect extends Component {
     e.preventDefault()
 
     const { options, index } = this.state
-    const { value, handleInputChange, placeholder } = this.props
+    const { value, handleInputChange } = this.props
     this.setState({
       isActive: false,
       index: -1,
@@ -118,14 +114,14 @@ class GCSelect extends Component {
   }
 
   onUpKeyPress (e) {
-    const { options, index } = this.state
+    const { index } = this.state
 
     e.preventDefault()
     this.setState({ index: index - 1 })
   }
 
   onDownKeyPress (e) {
-    const { options, index } = this.state
+    const { index } = this.state
 
     e.preventDefault()
     this.setState({ index: index + 1 })
@@ -133,7 +129,7 @@ class GCSelect extends Component {
 
   handleOnFocusEffect (e) {
     e.preventDefault()
-    console.log('focussing')
+
     if (this.props.search) {
       this.setState({
         isActive: true,
@@ -170,8 +166,7 @@ class GCSelect extends Component {
   }
 
   onInputMouseUp (e) {
-    // e.preventDefault()
-    const {isActive, isFocussed} = this.state
+    const { isActive, isFocussed } = this.state
     if (this.props.search) {
       if (!isActive) {
         this.setState({
@@ -221,7 +216,7 @@ class GCSelect extends Component {
   }
 
   render () {
-    const { value, search, name } = this.props
+    const { value, name } = this.props
     const { isActive, isFocussed, options, isSearchActive, searchTerm, placeholder } = this.state
 
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
@@ -246,30 +241,29 @@ class GCSelect extends Component {
             onBlur={this.handleOnBlurEffect}
             placeholder={placeholder}
             readOnly={!isSearchActive}
-              />
+          />
           <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
         </div>
 
         {isActive && (
           <ul className='gc-drop-down__el gc-select__list'>
-            {options.length > 0 ?
-            options.map((opt, i) => (
-              <li
-                key={`${i}_select_${name}`}
-                className={this.computeItemClassList(value, opt.value, i)}
-                onMouseDown={e => this.onOptionMouseDown(e, opt.value)}>
-                {opt.label}
-              </li>
-            )) : (
-              <li
-                key={`$noOpt_select_${name}`}
-                className='gc-select__list-item gc-select__list-item--no-opt'>
-                <i>There are no available options</i>
-              </li>
-          )}
+            { options.length > 0 ?
+              options.map((opt, i) => (
+                <li
+                  key={`${i}_select_${name}`}
+                  className={this.computeItemClassList(value, opt.value, i)}
+                  onMouseDown={e => this.onOptionMouseDown(e, opt.value)}>
+                  {opt.label}
+                </li>
+              )) : (
+                <li
+                  key={`$noOpt_select_${name}`}
+                  className='gc-select__list-item gc-select__list-item--no-opt'>
+                  <i>There are no available options</i>
+                </li>
+              )}
           </ul>
         )}
-
       </div>
     )
   }

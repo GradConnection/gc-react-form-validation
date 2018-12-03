@@ -117,6 +117,7 @@ class Input extends Component {
       required,
       helperText,
       tooltip,
+      title,
       label = title,
       name,
       options
@@ -133,7 +134,7 @@ class Input extends Component {
       [extendedClassNames]: extendedClassNames
     })
 
-    const displayLabel = label && type !== 'checkbox' || label && type === 'checkbox' && options.length > 0
+    const displayLabel = (label && type !== 'checkbox') || (label && type === 'checkbox' && options.length > 0)
 
     if (!hidden || isVisible) {
       return (

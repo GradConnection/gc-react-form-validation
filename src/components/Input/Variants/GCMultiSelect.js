@@ -104,7 +104,7 @@ class GCMultiSelect extends Component {
     e.preventDefault()
 
     const { options, index } = this.state
-    const { value, handleInputChange, placeholder } = this.props
+    const { value, handleInputChange } = this.props
     this.setState({
       isActive: false,
       index: -1,
@@ -119,14 +119,14 @@ class GCMultiSelect extends Component {
   }
 
   onUpKeyPress (e) {
-    const { options, index } = this.state
+    const { index } = this.state
 
     e.preventDefault()
     this.setState({ index: index - 1 })
   }
 
   onDownKeyPress (e) {
-    const { options, index } = this.state
+    const { index } = this.state
 
     e.preventDefault()
     this.setState({ index: index + 1 })
@@ -213,7 +213,6 @@ class GCMultiSelect extends Component {
   render () {
     const {
       value,
-      search,
       name
     } = this.props
     const { isActive, isFocussed, options, isSearchActive, searchTerm, placeholder } = this.state
@@ -240,27 +239,27 @@ class GCMultiSelect extends Component {
             onBlur={this.handleOnBlurEffect}
             placeholder={placeholder}
             readOnly={!isSearchActive}
-              />
+            />
           <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
         </div>
 
         {isActive && (
           <ul className='gc-drop-down__el gc-select__list'>
             {options.length > 0 ?
-            options.map((opt, i) => (
-              <li
-                key={`${i}_select_${name}`}
-                className={this.computeItemClassList(value, opt.value, i)}
-                onClick={e => this.onOptionClick(e, opt.value)}>
-                {opt.label}
-              </li>
-            )) : (
-              <li
-                key={`$noOpt_select_${name}`}
-                className='gc-select__list-item gc-select__list-item--no-opt'>
-                <i>There are no available options</i>
-              </li>
-          )}
+              options.map((opt, i) => (
+                <li
+                  key={`${i}_select_${name}`}
+                  className={this.computeItemClassList(value, opt.value, i)}
+                  onClick={e => this.onOptionClick(e, opt.value)}>
+                  {opt.label}
+                </li>
+              )) : (
+                <li
+                  key={`$noOpt_select_${name}`}
+                  className='gc-select__list-item gc-select__list-item--no-opt'>
+                  <i>There are no available options</i>
+                </li>
+              )}
           </ul>
         )}
 
