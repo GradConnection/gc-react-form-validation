@@ -49,12 +49,14 @@
   font-size: 0;
   background-color: #f3f3f3;
   box-sizing: border-box;
-  overflow: hidden; }
+  overflow: hidden;
+  margin-right: 0.5rem; }
   .gc-tag .gc-tag__label {
     display: inline-block;
     font-size: 1.2rem;
     box-sizing: border-box;
-    padding: 0.3rem 0.5rem 0.2rem 0.5rem;
+    padding: 0.2rem 0.5rem;
+    line-height: 1.5rem;
     color: #44474b; }
   .gc-tag .gc-tag__btn {
     border: none;
@@ -188,6 +190,10 @@
   font-size: 1.2rem; }
   .gc-input__el .gc-drop-down__value__text--input:focus, .gc-input__el .gc-drop-down__value__text--input:active {
     outline: none; }
+
+.gc-input__el .gc-drop-down__value__text--input-inline {
+  display: inline-block;
+  width: auto; }
 
 .gc-input__el .gc-drop-down__value__text--search {
   border: none;

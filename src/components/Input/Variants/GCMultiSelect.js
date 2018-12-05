@@ -1,14 +1,10 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import uniqueId from 'lodash/uniqueId'
-import filter from 'lodash/filter'
-import without from 'lodash/without'
-import find from 'lodash/find'
 import classNames from 'classnames'
 
-import { isEmpty, getLabel, debounce } from 'utils'
-import { GCIcon } from 'ui'
+import { isEmpty, getLabel, toArray } from 'utils'
+import { GCIcon, GCTag } from 'ui'
 
 class GCMultiSelect extends Component {
   constructor (props) {
@@ -60,7 +56,9 @@ class GCMultiSelect extends Component {
   }
 
   handleWindowClick (e) {
-    if (!this.select.current.contains(e.target) && e.target !== this.textInput) {
+    console.log('target', e.target)
+    if (!this.select.current.contains(e.target)) {
+      console.log('Apparently clicking outside the input')
       this.setState({
         isActive: false,
         ...this.searchReset
@@ -104,16 +102,13 @@ class GCMultiSelect extends Component {
     e.preventDefault()
 
     const { options, index } = this.state
-    const { value, handleInputChange } = this.props
     this.setState({
       isActive: false,
       index: -1,
       ...this.searchReset
     }, () => {
-      if (index > -1 && options[index].value !== value) {
-        handleInputChange(options[index].value)
-      } else if (options[index].value === value) {
-        handleInputChange('')
+      if (index > -1) {
+        this.handleInputChange(options[index].value)
       }
     })
   }
@@ -130,6 +125,12 @@ class GCMultiSelect extends Component {
 
     e.preventDefault()
     this.setState({ index: index + 1 })
+  }
+
+  onTagCrossBtnClick (e, value) {
+    e.preventDefault()
+    const newValueArray = this.removeItemFromValueArray(value)
+    this.props.handleInputChange(newValueArray)
   }
 
   handleOnFocusEffect () {
@@ -159,18 +160,28 @@ class GCMultiSelect extends Component {
   onSearchInputChange (e) {
     const searchTerm = e.target.value
     const { options } = this.props
+
     const filteredOptions = options.filter(opt => opt.label.toLowerCase().includes(searchTerm.toLowerCase()))
-    this.setState({
+    const newState = {
       searchTerm: e.target.value,
       options: filteredOptions
-    })
+    }
+
+    if (!this.state.isActive) {
+      newState.isActive = true
+    }
+
+    this.setState(newState)
   }
 
   onInputClick (e) {
     e.preventDefault()
     if (this.props.search) {
       if (!this.state.isActive) {
-        this.setState({ isActive: true })
+        this.setState({
+          isFocussed: true,
+          isActive: true
+        })
       } else {
         this.setState({
           isSearchActive: true,
@@ -183,21 +194,38 @@ class GCMultiSelect extends Component {
 
   onOptionClick (e, value) {
     e.preventDefault()
-    this.props.handleInputChange(value, this.props.name)
+    this.handleInputChange(value)
     this.setState({
-      isActive: false,
       ...this.searchReset
     })
   }
 
-  onTagCrossBtnClick (e) {
-    e.preventDefault()
-    this.props.handleInputChange('', this.props.name)
+  handleInputChange (newValue) {
+    const { value } = this.props
+
+    let newValueArray = []
+    if (value.includes(newValue)) {
+      newValueArray = this.removeItemFromValueArray(newValue)
+    } else {
+      newValueArray = this.addItemToValueArray(newValue)
+    }
+
+    this.props.handleInputChange(newValueArray)
+  }
+
+  removeItemFromValueArray (item) {
+    return this.props.value.filter(v => v !== item)
+  }
+
+  addItemToValueArray (item) {
+    const newValueArray = this.props.value.splice(0)
+    newValueArray.push(item)
+    return newValueArray
   }
 
   computeItemClassList (selectV, itemV, index) {
     return classNames('gc-select__list-item', {
-      'gc-select__list-item--selected': selectV === itemV,
+      'gc-select__list-item--selected': selectV.includes(itemV),
       'gc-select__list-item--hovered': this.state.index === index
     })
   }
@@ -206,8 +234,12 @@ class GCMultiSelect extends Component {
     if (isSearchActive) {
       return searchTerm
     } else {
-      return isEmpty(value) ? '' : getLabel(value, this.props.options)
+      return isEmpty(value) ? '' : value.map(v => getLabel(v, this.props.options)).join()
     }
+  }
+
+  renderTags (valueArray) {
+    return toArray(valueArray).map(value => (<GCTag onCrossBtnClick={e => this.onTagCrossBtnClick(e, value)}>{getLabel(value, this.props.options)}</GCTag>))
   }
 
   render () {
@@ -220,32 +252,38 @@ class GCMultiSelect extends Component {
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
       'gc-input__el--active': isActive || isFocussed
     })
+
     return (
       <div
         className={selectClasses}
         ref={this.select}>
-
         <div
           role='button'
           className='gc-drop-down__value'
           onClick={this.onInputClick}>
-          <input
+          <span
             ref={this.textInput}
             className='gc-drop-down__value__text gc-drop-down__value__text--input'
-            type='text'
-            value={this.computeInputValue(value, options, isSearchActive, searchTerm)}
-            onChange={this.onSearchInputChange}
-            onFocus={this.handleOnFocusEffect}
-            onBlur={this.handleOnBlurEffect}
-            placeholder={placeholder}
-            readOnly={!isSearchActive}
-            />
+          >
+            {this.renderTags(value)}
+            {this.props.search && isFocussed && (
+              <input
+                className='gc-drop-down__value__text gc-drop-down__value__text--input gc-drop-down__value__text--input-inline'
+                type='text'
+                autoFocus
+                value={this.state.searchTerm}
+                onChange={this.onSearchInputChange}
+                onBlur={this.handleOnBlurEffect}
+                placeholder='Start typing to search'
+              />
+            )}
+          </span>
           <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
         </div>
 
         {isActive && (
           <ul className='gc-drop-down__el gc-select__list'>
-            {options.length > 0 ?
+            { options.length > 0 ?
               options.map((opt, i) => (
                 <li
                   key={`${i}_select_${name}`}
@@ -262,7 +300,6 @@ class GCMultiSelect extends Component {
               )}
           </ul>
         )}
-
       </div>
     )
   }
@@ -270,12 +307,22 @@ class GCMultiSelect extends Component {
 
 GCMultiSelect.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.array.isRequired]
+  ),
   options: PropTypes.array,
   search: PropTypes.bool,
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   handleInputChange: PropTypes.func.isRequired,
-  handleInputValidation: PropTypes.func.isRequired
+  handleInputValidation: PropTypes.func.isRequired,
+  selectAll: PropTypes.bool,
+  defaultValue: PropTypes.array
+}
+
+GCMultiSelect.defaultProps = {
+  selectAll: false,
+  defaultValue: []
 }
 
 export { GCMultiSelect }

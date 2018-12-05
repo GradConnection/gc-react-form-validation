@@ -33,6 +33,11 @@
     }
   }
 
+  .gc-drop-down__value__text--input-inline {
+    display: inline-block;
+    width: auto;
+  }
+
   .gc-drop-down__value__text--search {
     border: none;
     padding: 0;
