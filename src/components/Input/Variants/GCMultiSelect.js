@@ -14,7 +14,7 @@ class GCMultiSelect extends Component {
       options: props.options,
       searchTerm: '',
       isSearchActive: false,
-      placeholder: props.placeholder || 'Select an option'
+      placeholder: props.placeholder || 'Select options'
     }
 
     this.state = {
@@ -56,7 +56,6 @@ class GCMultiSelect extends Component {
   }
 
   handleWindowClick (e) {
-    console.log('target', e.target)
     if (!this.select.current.contains(e.target)) {
       console.log('Apparently clicking outside the input')
       this.setState({
@@ -103,8 +102,6 @@ class GCMultiSelect extends Component {
 
     const { options, index } = this.state
     this.setState({
-      isActive: false,
-      index: -1,
       ...this.searchReset
     }, () => {
       if (index > -1) {
@@ -153,6 +150,7 @@ class GCMultiSelect extends Component {
     this.setState({
       isActive: false,
       isFocussed: false,
+      index: -1,
       ...this.resetSearch
     })
   }
@@ -192,7 +190,7 @@ class GCMultiSelect extends Component {
     }
   }
 
-  onOptionClick (e, value) {
+  onOptionMouseDown (e, value) {
     e.preventDefault()
     this.handleInputChange(value)
     this.setState({
@@ -252,17 +250,27 @@ class GCMultiSelect extends Component {
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
       'gc-input__el--active': isActive || isFocussed
     })
-
+    console.log('value empty', isEmpty(value))
+    console.log(isFocussed)
+    console.log(placeholder)
     return (
       <div
         className={selectClasses}
         ref={this.select}>
         <div
+          ref={this.textInput}
           role='button'
           className='gc-drop-down__value'
+          onFocus={this.handleOnFocusEffect}
           onClick={this.onInputClick}>
+          {isEmpty(value) && !isFocussed && (
+            <input
+              className='gc-drop-down__value__text gc-drop-down__value__text--input'
+              value=''
+              placeholder={placeholder}
+              readOnly
+          />)}
           <span
-            ref={this.textInput}
             className='gc-drop-down__value__text gc-drop-down__value__text--input'
           >
             {this.renderTags(value)}
@@ -273,6 +281,7 @@ class GCMultiSelect extends Component {
                 autoFocus
                 value={this.state.searchTerm}
                 onChange={this.onSearchInputChange}
+                onFocus={this.handleOnFocusEffect}
                 onBlur={this.handleOnBlurEffect}
                 placeholder='Start typing to search'
               />
@@ -288,7 +297,7 @@ class GCMultiSelect extends Component {
                 <li
                   key={`${i}_select_${name}`}
                   className={this.computeItemClassList(value, opt.value, i)}
-                  onClick={e => this.onOptionClick(e, opt.value)}>
+                  onMouseDown={e => this.onOptionMouseDown(e, opt.value)}>
                   {opt.label}
                 </li>
               )) : (
@@ -317,12 +326,11 @@ GCMultiSelect.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   handleInputValidation: PropTypes.func.isRequired,
   selectAll: PropTypes.bool,
-  defaultValue: PropTypes.array
+  selectAllValue: PropTypes.array
 }
 
 GCMultiSelect.defaultProps = {
-  selectAll: false,
-  defaultValue: []
+  selectAll: false
 }
 
 export { GCMultiSelect }
