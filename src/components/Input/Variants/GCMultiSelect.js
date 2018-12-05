@@ -17,6 +17,11 @@ class GCMultiSelect extends Component {
       placeholder: props.placeholder || 'Select options'
     }
 
+    this.searchActivate = {
+      isSearchActive: true,
+      placeholder: 'Start typing to search'
+    }
+
     this.state = {
       isActive: false,
       isFocussed: false,
@@ -60,6 +65,8 @@ class GCMultiSelect extends Component {
       console.log('Apparently clicking outside the input')
       this.setState({
         isActive: false,
+        isFocussed: false,
+        index: -1,
         ...this.searchReset
       })
     }
@@ -86,7 +93,8 @@ class GCMultiSelect extends Component {
 
   activateDropDown () {
     const activeState = {
-      isActive: true
+      isActive: true,
+      isFocussed: true
     }
 
     if (this.props.search) {
@@ -119,7 +127,6 @@ class GCMultiSelect extends Component {
 
   onDownKeyPress (e) {
     const { index } = this.state
-
     e.preventDefault()
     this.setState({ index: index + 1 })
   }
@@ -135,8 +142,7 @@ class GCMultiSelect extends Component {
       this.setState({
         isActive: true,
         isFocussed: true,
-        isSearchActive: true,
-        placeholder: 'Start typing to search'
+        ...this.searchActivate
       })
     } else {
       this.setState({
@@ -181,12 +187,14 @@ class GCMultiSelect extends Component {
           isActive: true
         })
       } else {
-        this.setState({
-          isSearchActive: true,
-          placeholder: 'Start typing to search' })
+        this.setState(this.searchActivate)
       }
     } else {
-      this.setState(state => ({ isActive: !state.isActive }))
+      if (this.state.isActive) {
+        this.setState({ isActive: false })
+      } else {
+        this.setState({ isActive: true, isFocussed: true })
+      }
     }
   }
 
@@ -228,16 +236,11 @@ class GCMultiSelect extends Component {
     })
   }
 
-  computeInputValue (value, options, isSearchActive, searchTerm) {
-    if (isSearchActive) {
-      return searchTerm
-    } else {
-      return isEmpty(value) ? '' : value.map(v => getLabel(v, this.props.options)).join()
-    }
-  }
-
   renderTags (valueArray) {
-    return toArray(valueArray).map(value => (<GCTag onCrossBtnClick={e => this.onTagCrossBtnClick(e, value)}>{getLabel(value, this.props.options)}</GCTag>))
+    return toArray(valueArray).map(value => (
+      <GCTag
+        onCrossBtnClick={e => this.onTagCrossBtnClick(e, value)}>{getLabel(value, this.props.options)}</GCTag>
+    ))
   }
 
   render () {
@@ -245,14 +248,12 @@ class GCMultiSelect extends Component {
       value,
       name
     } = this.props
-    const { isActive, isFocussed, options, isSearchActive, searchTerm, placeholder } = this.state
+    const { isActive, isFocussed, options, placeholder } = this.state
 
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
       'gc-input__el--active': isActive || isFocussed
     })
-    console.log('value empty', isEmpty(value))
-    console.log(isFocussed)
-    console.log(placeholder)
+
     return (
       <div
         className={selectClasses}
@@ -269,9 +270,11 @@ class GCMultiSelect extends Component {
               value=''
               placeholder={placeholder}
               readOnly
-          />)}
+            />
+          )}
           <span
             className='gc-drop-down__value__text gc-drop-down__value__text--input'
+            onBlur={this.handleOnBlurEffect}
           >
             {this.renderTags(value)}
             {this.props.search && isFocussed && (
