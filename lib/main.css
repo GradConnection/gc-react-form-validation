@@ -296,29 +296,43 @@
 
 .gc-calendar {
   display: flex;
-  justify-content: center; }
+  justify-content: center;
+  padding: 0 0.8rem; }
   .gc-calendar .gc-calendar__main {
-    width: 220px;
-    padding-bottom: 1rem; }
-  .gc-calendar .gc-calendar__header {
     display: flex;
-    justify-content: space-between;
     padding: 1rem 0; }
-  .gc-calendar .gc-calendar__header__btn {
+  .gc-calendar .gc-calendar__content--wrapper {
+    display: flex; }
+  .gc-calendar .gc-calendar__content {
+    min-width: 220px;
+    min-height: 180px; }
+  .gc-calendar .gc-calendar__content--right .gc-calendar__body {
+    border-left: 1px solid #cfcfcf; }
+  .gc-calendar .gc-calendar__header {
+    margin: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #44474b; }
+  .gc-calendar .gc-calendar__controls__btn {
     background: none;
     border: none;
-    outline: none; }
-    .gc-calendar .gc-calendar__header__btn svg {
+    outline: none;
+    align-self: flex-start;
+    padding-left: 0;
+    padding-right: 0; }
+    .gc-calendar .gc-calendar__controls__btn svg {
       height: 1.2rem;
       fill: #44474b;
       stroke: #44474b;
       stroke-width: 0.5rem; }
-    .gc-calendar .gc-calendar__header__btn.gc-calendar__header__btn--left svg {
+    .gc-calendar .gc-calendar__controls__btn.gc-calendar__controls__btn--left svg {
       transform: rotateZ(180deg); }
-  .gc-calendar .gc-calendar__header__text {
-    font-size: 1.2rem;
+  .gc-calendar .gc-calendar__body__row--weekdays {
     font-weight: bold;
-    color: #44474b; }
+    border-top: solid 1px #cfcfcf;
+    border-bottom: solid 1px #cfcfcf; }
   .gc-calendar .gc-calendar__body__cell {
     width: calc(100% / 7);
     display: inline-block;
@@ -331,6 +345,11 @@
       outline: none; }
     .gc-calendar .gc-calendar__body__cell.gc-calendar__body__cell--btn:hover {
       cursor: pointer; }
+  .gc-calendar .gc-calendar__main--range .gc-calendar__body__cell--active {
+    background-color: #909090;
+    color: #ffffff; }
+  .gc-calendar .gc-calendar__main--range .gc-calendar__body__cell-range {
+    background-color: #cfcfcf; }
   .gc-calendar .gc-calendar__body__cell--active {
     background-color: #cfcfcf; }
   .gc-calendar .gc-calendar__body__cell--disabled {

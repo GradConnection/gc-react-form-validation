@@ -10,7 +10,8 @@ import {
   GCMultiSelect,
   GCSelect,
   GCCustom,
-  GCDatePicker
+  GCDatePicker,
+  GCDateRangePicker
 } from './Variants'
 
 const GCMappedInput = props => {
@@ -38,6 +39,14 @@ const GCMappedInput = props => {
         {...xtra} />
     case 'date':
       return <GCDatePicker
+        onInputChange={handleInputChange}
+        handleInputValidation={handleInputValidation}
+        name={xtra.name}
+        value={xtra.value}
+        defaultValue={xtra.defaultValue}
+        placeholder={xtra.placeholder} />
+    case 'date-range':
+      return <GCDateRangePicker
         onInputChange={handleInputChange}
         handleInputValidation={handleInputValidation}
         name={xtra.name}

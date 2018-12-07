@@ -45,8 +45,15 @@ const CalendarBody = ({ displayDate, valueDate, onDateClick }) => {
       {calcRows(i)}
     </div>)
   }
+
+  const dayArray = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+  const weekDays = (<div className='gc-calendar__body__row gc-calendar__body__row--weekdays'>
+    {dayArray.map(day => (<div className='gc-calendar__body__cell' >{day}</div>))}
+  </div>)
+
   return (
     <div className='gc-calendar__body'>
+      {weekDays}
       {grid}
     </div>
   )
