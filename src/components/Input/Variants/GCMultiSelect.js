@@ -61,13 +61,14 @@ class GCMultiSelect extends Component {
   }
 
   handleWindowClick (e) {
-    if (!this.select.current.contains(e.target)) {
+    if (!this.select.current.contains(e.target) && this.state.isFocussed) {
       this.setState({
         isActive: false,
         isFocussed: false,
         index: -1,
         ...this.searchReset
       })
+      this.props.handleInputValidation(this.props.value)
     }
   }
 
@@ -158,6 +159,7 @@ class GCMultiSelect extends Component {
       index: -1,
       ...this.resetSearch
     })
+    this.props.handleInputValidation(this.props.value)
   }
 
   onSearchInputChange (e) {
