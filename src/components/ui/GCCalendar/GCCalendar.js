@@ -19,8 +19,7 @@ class GCCalendar extends Component {
     this.onDateClick = this.onDateClick.bind(this)
 
     // range
-    this.onStartDateClick = this.onStartDateClick.bind(this)
-    this.onEndDateClick = this.onEndDateClick.bind(this)
+    this.onRangeDateClick = this.onRangeDateClick.bind(this)
   }
 
   computeNewState (value, defaultValue, type) {
@@ -30,6 +29,17 @@ class GCCalendar extends Component {
       month: date.getMonth(),
       year: date.getFullYear()
     }
+  }
+
+  getDisplayValues (value, defaultValue) {
+    // if (this.props.type === 'range') {
+    //   const cleanDefaultValue = isEmpty(defaultValue) ? new Date() : new Date(defaultValue)
+    //   const cleanValue = isEmpty(value) ? cleanDefaultValue : new Date(value)
+    //   return cleanValue
+    // }
+    const cleanDefaultValue = isEmpty(defaultValue) ? new Date() : new Date(defaultValue)
+    const cleanValue = isEmpty(value) ? cleanDefaultValue : new Date(value)
+    return cleanValue
   }
 
   onLeftArrowBtnClick (e) {
@@ -58,34 +68,32 @@ class GCCalendar extends Component {
     }
   }
 
-  onStartDateClick (e, date) {
-    e.preventDefault()
-    const { year, month } = this.state
-    const newValue = new Date(year, month, date)
-    console.log('start:', date)
-    if (+this.props.value !== +newValue) {
-      this.props.onStartDateChange(newValue)
-    } else {
-      this.props.onStartDateChange('')
-    }
-  }
+  onRangeDateClick (event, day, month, year) {
+    event.preventDefault()
+    const { value } = this.props
+    const newValue = new Date(year, month, day)
+    const date = isEmpty(value) ? { start: undefined, end: undefined } : value
+    const n = +newValue
+    const s = +date.start
+    const e = +date.end
 
-  onEndDateClick (e, date) {
-    e.preventDefault()
-    const { year, month } = this.state
-    const newValue = new Date(year, month, date)
-    console.log('end:', date)
-    if (+this.props.value !== +newValue) {
-      this.props.onEndDateChange(newValue)
-    } else {
-      this.props.onEndDateChange('')
+    if (Number.isNaN(s) && Number.isNaN(e)) {
+      date.start = newValue
+      date.end = undefined
+    } else if (!Number.isNaN(s) && Number.isNaN(e) && s < n) {
+      date.end = newValue
+    } else if ((!Number.isNaN(s) && Number.isNaN(e) && n < s) || n < s) {
+      date.end = value.start
+      date.start = newValue
+    } else if (s < n) {
+      date.end = newValue
+      date.start = value.start
+    } else if (n === s) {
+      date.start = undefined
+    } else if (e === s) {
+      date.end = undefined
     }
-  }
-
-  getDisplayValues (value, defaultValue) {
-    const cleanDefaultValue = isEmpty(defaultValue) ? new Date() : new Date(defaultValue)
-    const cleanValue = isEmpty(value) ? cleanDefaultValue : new Date(value)
-    return cleanValue
+    this.props.onDateChange(date)
   }
 
   render () {
@@ -110,7 +118,7 @@ class GCCalendar extends Component {
         </div>
       )
     }
-
+    console.log('Value', value)
     const endDateView = getNextMonth(displayValue)
     return (
       <div className='gc-calendar__main gc-calendar__main--range'>
@@ -124,17 +132,17 @@ class GCCalendar extends Component {
               displayDate={displayValue}
               valueDate={value}
               type='range-left'
-              onDateClick={this.onStartDateClick} />
+              onDateClick={this.onRangeDateClick} />
           </div>
           <div className='gc-calendar__content gc-calendar__content--right'>
             <CalendarHeader
               month={monthNameArray[endDateView.getMonth()]}
               year={endDateView.getFullYear()} />
             <CalendarBody
-              displayDate={displayValue}
+              displayDate={getNextMonth(displayValue)}
               valueDate={value}
               type='range-right'
-              onDateClick={this.onEndDateClick} />
+              onDateClick={this.onRangeDateClick} />
           </div>
         </CalendarControls>
       </div>

@@ -81,7 +81,7 @@ class GCDatePicker extends Component {
             readOnly
             onFocus={this.handleOnFocusEffect}
             onBlur={this.handleOnBlurEffect} />
-          <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
+          <GCIcon kind='calendarIcon' extendedClassNames='gc-drop-down__caret' />
         </div>
         {isActive && (
           <div className='gc-calendar gc-drop-down__el'>

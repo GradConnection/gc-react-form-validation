@@ -1,8 +1,24 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-import { dayShortNameArray, getFirstDayOfMonth, getLastDayOfMonth, getMonthLength, getPrevMonth } from 'utils'
+import { dayShortNameArray, getFirstDayOfMonth, getLastDayOfMonth, getMonthLength, getPrevMonth, getNextMonth } from 'utils'
 
-const CalendarBody = ({ displayDate, valueDate, onDateClick }) => {
+const CalendarBody = ({ displayDate, valueDate, onDateClick, type = 'picker' }) => {
+  const getValueDate = (valueDate, type) => {
+    if (type.startsWith('range')) {
+      return [new Date(valueDate.start), new Date(valueDate.end)]
+    }
+    return new Date(valueDate)
+  }
+
+  const getSelectedDates = (date, type) => {
+    if (Array.isArray(date)) {
+      return date.map(d => {
+        return displayDate.getMonth() === d.getMonth() ? d.getDate() : undefined
+      })
+    }
+    return date.getDate()
+  }
+
   const firstDayI = getFirstDayOfMonth(displayDate)
   const lastDayI = getLastDayOfMonth(displayDate)
   const monthLength = getMonthLength(displayDate)
@@ -10,10 +26,18 @@ const CalendarBody = ({ displayDate, valueDate, onDateClick }) => {
   const prevMonthLength = getMonthLength(prevMonth)
   const extraDays = firstDayI + 6 - lastDayI
   const numOfWeeks = (monthLength + extraDays) / 7
-
   let counter = 1
-  const valueDateTested = new Date(valueDate)
-  const selectedDate = valueDateTested.getDate()
+  const valueDateTested = getValueDate(valueDate, type)
+  const selectedDate = getSelectedDates(valueDateTested, type)
+  console.log('SELECTED DATE: ', selectedDate)
+
+  const onActiveDateClick = (e, day) => {
+    if (type.startsWith('range')) {
+      onDateClick(e, day, displayDate.getMonth(), displayDate.getFullYear())
+    } else {
+      onDateClick(e, day)
+    }
+  }
 
   const calcRows = rowI => {
     const cells = []
@@ -27,12 +51,22 @@ const CalendarBody = ({ displayDate, valueDate, onDateClick }) => {
         } else {
           date = cellI - lastDayI
         }
-        cells.push(<div className='gc-calendar__body__cell gc-calendar__body__cell--disabled' >{date}</div>)
+        cells.push(
+          <div
+            className='gc-calendar__body__cell gc-calendar__body__cell--disabled' >{date}</div>
+        )
       } else if ((rowI === 0 && cellI >= firstDayI) || (rowI > 0 && counter <= monthLength)) {
         // Current month dates
         const num = counter
-        const activeClass = selectedDate && num === selectedDate ? 'gc-calendar__body__cell--active' : ''
-        cells.push(<button className={`gc-calendar__body__cell gc-calendar__body__cell--btn ${activeClass}`} onClick={e => onDateClick(e, num)}>{counter}</button>)
+        let activeClass = ''
+        if ((!Array.isArray(selectedDate) && selectedDate && num === selectedDate) || (Array.isArray(selectedDate) && selectedDate.includes(num))) {
+          activeClass = 'gc-calendar__body__cell--active'
+        }
+        cells.push(
+          <button
+            className={`gc-calendar__body__cell gc-calendar__body__cell--btn ${activeClass}`}
+            onClick={e => onActiveDateClick(e, num)}>{counter}</button>
+        )
         counter++
       }
     })

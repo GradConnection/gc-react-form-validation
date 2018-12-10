@@ -7,6 +7,22 @@ class GCIcon extends React.Component {
     switch (kind) {
       default:
         return null
+      case 'calendarIcon':
+        return (
+          <svg
+            id='layer_calnedarIcon'
+            height={height || size}
+            width={width || size}
+            viewBox='0 0 50 50'
+            aria-labelledby={iconTitle}
+          >
+            <title id={iconTitle}>{iconTitle}</title>
+
+            <g id='calendarIcon'>
+              <path d='M48.6,0H1.4C0.6,0,0,0.6,0,1.4v0.2v8.6v38.4C0,49.4,0.6,50,1.4,50h47.2c0.8,0,1.4-0.6,1.4-1.4V10.2V1.6V1.4 C50,0.6,49.4,0,48.6,0z M1.4,1.6h47.2v8.6H1.4V1.6z M48.6,48.6H1.4V11.6h47.2V48.6z M17.8,43.9h5.9h2.5h5.9h2.5h8.4v-8.3V33v-5.7 v-2.6v-8.3h-8.4h-2.5h-5.9h-2.5h-5.9h-2.5H6.9v8.3v2.6V33v2.6v8.3h8.4H17.8z M33.6,17.8h0.3h0.7h6.9v6.8h-6.9h-0.7h-0.3V17.8z M33.6,27.3v-0.7v-0.4h0.3h0.7h6.9v0.4v0.7V33h-6.9h-0.7h-0.3V27.3z M33.6,35.6v-0.7v-0.4h0.3h0.7h6.9v0.4v0.7v6.8h-6.9h-0.7h-0.3 V35.6z M25.2,17.8h0.3h0.7h5.9v6.8h-5.9h-0.7h-0.3C25.2,24.7,25.2,17.8,25.2,17.8z M25.2,27.3v-0.7v-0.4h0.3h0.7h5.9v0.4v0.7V33 h-5.9h-0.7h-0.3C25.2,33,25.2,27.3,25.2,27.3z M25.2,35.6v-0.7v-0.4h0.3h0.7h5.9v0.4v0.7v6.8h-5.9h-0.7h-0.3 C25.2,42.4,25.2,35.6,25.2,35.6z M16.8,17.8h0.3h0.7h5.9v6.8h-5.9h-1C16.8,24.7,16.8,17.8,16.8,17.8z M16.8,26.1h0.3h0.7h5.9v0.4 v0.7V33h-5.9h-0.7h-0.3V26.1z M16.8,35.6v-0.7v-0.4h0.3h0.7h5.9v0.4v0.7v6.8h-5.9h-0.7h-0.3V35.6z M8.4,17.8h6.9v6.8H8.4V17.8z M8.4,27.3v-0.7v-0.4h6.9V33H8.4V27.3z M8.4,35.6v-0.7v-0.4h6.9v0.4v0.7v6.8H8.4V35.6z' />
+            </g>
+          </svg>
+        )
       case 'chevronIcon':
         return (
           <svg
@@ -33,7 +49,7 @@ class GCIcon extends React.Component {
             width={width || size}
             viewBox='0 0 50 50'
             aria-labelledby={iconTitle}
-        >
+            >
             <title id={iconTitle}>{iconTitle}</title>
 
             <g id='caretIcon'>
@@ -50,7 +66,7 @@ class GCIcon extends React.Component {
             width={width || size}
             viewBox='0 0 50 50'
             aria-labelledby={iconTitle}
-      >
+          >
             <title id={iconTitle}>{iconTitle}</title>
 
             <g id='closeIcon'>

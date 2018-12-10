@@ -201,6 +201,10 @@
   .gc-input__el .gc-drop-down__value__text--search:active, .gc-input__el .gc-drop-down__value__text--search:focus {
     outline: none; }
 
+.gc-input__el .gc-drop-down__btn {
+  border: none;
+  background-color: pink; }
+
 .gc-input__el .gc-drop-down__caret svg {
   margin-top: 0.2rem;
   height: 1.5rem;

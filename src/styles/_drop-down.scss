@@ -48,6 +48,11 @@
     }
   }
 
+  .gc-drop-down__btn {
+    border: none;
+    background-color: pink;
+  }
+
   .gc-drop-down__caret {
     svg {
       margin-top: 0.2rem;

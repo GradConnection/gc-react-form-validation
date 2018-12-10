@@ -16,8 +16,7 @@ class GCDateRangePicker extends Component {
     this.datePicker = React.createRef()
 
     this.onDropDownClick = this.onDropDownClick.bind(this)
-    this.onEndDateChange = this.onEndDateChange.bind(this)
-    this.onStartDateChange = this.onStartDateChange.bind(this)
+    this.onDateChange = this.onDateChange.bind(this)
 
     this.handleActivateCalendar = this.handleActivateCalendar.bind(this)
     this.handleOnFocusEffect = this.handleOnFocusEffect.bind(this)
@@ -46,19 +45,8 @@ class GCDateRangePicker extends Component {
     this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
   }
 
-  onEndDateChange (newValue) {
-    // Must receive date obj
-    console.log('end date changed')
-    this.props.onInputChange({
-      start: newValue, end: this.props.value.end
-    })
-  }
-
-  onStartDateChange (newValue) {
-    console.log('start date changed')
-    this.props.onInputChange({
-      end: newValue, start: this.props.value.start
-    })
+  onDateChange (newValue) {
+    this.props.onInputChange(newValue)
   }
 
   onDropDownClick (e) {
@@ -76,7 +64,7 @@ class GCDateRangePicker extends Component {
   render () {
     const { placeholder = 'Select Date', value, defaultValue } = this.props
     const { isActive } = this.state
-    console.log(isEmpty(value.end))
+
     const dateClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
       'gc-input__el--active': isActive
     })
@@ -104,19 +92,20 @@ class GCDateRangePicker extends Component {
             readOnly
             onFocus={this.handleOnFocusEffect}
             onBlur={this.handleOnBlurEffect} />
-          <button onClick={this.onDropDownClick}>
-            <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
+          <button
+            className='gc-drop-down__btn'
+            onClick={this.onDropDownClick}>
+            <GCIcon kind='calendarIcon' extendedClassNames='gc-drop-down__caret' />
           </button>
 
         </div>
         {isActive && (
           <div className='gc-calendar gc-calendar--range gc-drop-down__el'>
             <GCCalendar
-              value={value.start}
+              value={value}
               defaultValue={defaultValue}
               type='range'
-              onStartDateChange={this.onStartDateChange}
-              onEndDateChange={this.onEndDateChange}
+              onDateChange={this.onDateChange}
             />
           </div>
         )}
@@ -127,7 +116,7 @@ class GCDateRangePicker extends Component {
 
 GCDateRangePicker.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  value: PropTypes.obj,
+  value: PropTypes.any,
   defaultValue: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
   handleInputValidation: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired
