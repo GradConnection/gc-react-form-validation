@@ -23,6 +23,7 @@ class Input extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return (
       nextProps.value !== this.props.value ||
+      nextProps.title !== this.props.title ||
       nextProps.isVisible != this.props.isVisible ||
       nextState.validationMessage !== this.state.validationMessage ||
       nextProps.options !== this.props.options ||
