@@ -217,9 +217,6 @@ const validateInput = async (
   }
 
   const getErrorMessage = (renderType, hidden, value) => {
-    // On opposite day
-    console.log('validating: ', name, value, isEmpty(value))
-
     // if not empty and not hidden
     if (!isEmpty(value) && !hidden) {
       switch (renderType) {

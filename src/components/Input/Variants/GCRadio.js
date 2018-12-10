@@ -10,7 +10,7 @@ const GCRadio = ({
   required
 }) => {
   const onListItemClick = newValue => {
-    if (newValue === value && required) {
+    if (newValue === value && !required) {
       onRadioBtnClick('')
     } else {
       onRadioBtnClick(newValue, name)
@@ -31,6 +31,7 @@ const GCRadio = ({
             value={opt.value}
             name={name}
             title={title}
+            required={required}
             checked={value === opt.value}
             onChange={e => e.preventDefault()}
             />
