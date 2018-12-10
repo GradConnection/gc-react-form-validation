@@ -12,11 +12,14 @@ class GCPassword extends Component {
     this.onIconBtnClick = this.onIconBtnClick.bind(this)
   }
 
-  onIconBtnClick () {
+  onIconBtnClick (e) {
+    e.preventDefault()
     const { mode } = this.state
     const newMode = mode === 'password' ? 'text' : 'password'
     this.setState({ mode: newMode }, () => {
-      this.input.current.focus()
+      if (!this.input.current.isFocussed) {
+        this.input.current.focus()
+      }
     })
   }
 

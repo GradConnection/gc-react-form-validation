@@ -21,18 +21,9 @@ class Form extends Component {
       errorMessage: '',
       errorObj: {}
     }
-  }
 
-  // componentDidMount () {
-  //   window.addEventListener('invalid', (function () {
-  //     return function (e) {
-  //       e.preventDefault()
-  //       console.log('sup')
-  //       this.handleFormSubmission(e)
-  //     // myValidation();
-  //     }
-  //   })(), true)
-  // }
+    this.updateErrorObj = this.updateErrorObj.bind(this)
+  }
 
   componentDidUpdate (prevProps, prevState) {
     if (
@@ -91,7 +82,7 @@ class Form extends Component {
           <Input
             autoComplete={d.autoComplete || d.type}
             onChange={onInputChange}
-            sendResultsToForm={(n, r) => this.validateFormOnInput(n, r)}
+            sendResultsToForm={this.updateErrorObj}
             inForm
             name={name}
             formSubmitted={formSubmitted}
@@ -132,7 +123,6 @@ class Form extends Component {
   handleFormSubmission (e) {
     e.preventDefault()
     e.stopPropagation()
-
     if (this.validateForm(this.state.errorObj, this.props.data)) {
       this.setState(
         {
@@ -141,7 +131,12 @@ class Form extends Component {
           errorMessage: '',
           errorObj: {}
         },
-        () => this.props.onSubmit(this.state.errorObj)
+        () => {
+          this.props.onSubmit()
+          if (typeof onFormValidationSuccess === 'function') {
+            this.props.onFormValidationSuccess()
+          }
+        }
       )
     } else {
       this.setState(
@@ -152,27 +147,36 @@ class Form extends Component {
             'Please make sure that you have filled in the fields correctly'
         },
         () => {
-          if (this.props.onFormValidationFailure) {
-            this.props.onSubmit(this.state.errorObj)
+          if (typeof this.props.onFormValidationFailure === 'function') {
+            this.props.onFormValidationFailure(this.state.errorObj)
           }
         }
       )
     }
   }
 
-  validateFormOnInput (name, results) {
+  updateErrorObj (name, results) {
     const copiedObj = this.state.errorObj
-    if (results) {
-      copiedObj[name] = results
-    } else if (!results && has(copiedObj, name)) {
-      delete copiedObj[name]
+    if (results !== this.state.errorObj) {
+      if (results) {
+        copiedObj[name] = results
+      } else if (!results && has(copiedObj, name)) {
+        delete copiedObj[name]
+      }
+
+      // only update if different?
+      this.setState({ errorObj: copiedObj })
     }
 
-    this.setState({ errorObj: copiedObj }, () => {
-      this.validateForm(this.state.errorObj, this.props.data) ?
-        this.props.onFormValidationSuccess() :
-        this.props.onFormValidationFailure(this.state.errorObj)
-    })
+    this.handleFormValidationCallbacks(this.validateForm(this.state.errorObj, this.props.data), copiedObj)
+  }
+
+  handleFormValidationCallbacks (isFormValid, errorObj) {
+    if (isFormValid && typeof this.props.onFormValidationSuccess === 'function') {
+      this.props.onFormValidationSuccess()
+    } else if (!isFormValid && typeof this.props.onFormValidationFailure === 'function') {
+      this.props.onFormValidationFailure(errorObj)
+    }
   }
 
   render () {
@@ -208,17 +212,13 @@ Form.propTypes = {
   submissionErrorMessages: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.string
-  ]),
-  onFormValidationSuccess: PropTypes.func,
-  onFormValidationFailure: PropTypes.func
+  ])
 }
 
 Form.defaultProps = {
   description: '',
   submissionErrorMessages: '',
-  handleFormErrors: () => ({}),
-  onFormValidationSuccess: () => ({}),
-  onFormValidationFailure: () => ({})
+  handleFormErrors: () => ({})
 }
 
 export default Form

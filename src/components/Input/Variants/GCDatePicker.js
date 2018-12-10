@@ -31,7 +31,7 @@ class GCDatePicker extends Component {
   }
 
   handleActivateCalendar (e) {
-    if (!this.datePicker.current.contains(e.target)) {
+    if (!this.datePicker.current.contains(e.target) && this.state.isActive) {
       this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
     }
   }
