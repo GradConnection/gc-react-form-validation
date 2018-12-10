@@ -24,7 +24,14 @@ class Form extends Component {
   }
 
   // componentDidMount () {
-  //   this.props.disableSubmitButton(this.hasRequiredFields(this.props.data))
+  //   window.addEventListener('invalid', (function () {
+  //     return function (e) {
+  //       e.preventDefault()
+  //       console.log('sup')
+  //       this.handleFormSubmission(e)
+  //     // myValidation();
+  //     }
+  //   })(), true)
   // }
 
   componentDidUpdate (prevProps, prevState) {
@@ -77,21 +84,21 @@ class Form extends Component {
     const { onInputChange } = this.props
     const { formSubmitted } = this.state
 
-    const hiddenInput = {}
+    // const hiddenInput = {}
     return Object.entries(data)
-    .reduce((a, [name, d]) => {
-      return Object.assign({ [name]: (
-        <Input
-          autoComplete={d.autoComplete || d.type}
-          onChange={onInputChange}
-          sendResultsToForm={(n, r) => this.validateFormOnInput(n, r)}
-          inForm
-          name={name}
-          formSubmitted={formSubmitted}
-          {...d}
+      .reduce((a, [name, d]) => {
+        return Object.assign({ [name]: (
+          <Input
+            autoComplete={d.autoComplete || d.type}
+            onChange={onInputChange}
+            sendResultsToForm={(n, r) => this.validateFormOnInput(n, r)}
+            inForm
+            name={name}
+            formSubmitted={formSubmitted}
+            {...d}
           />
-      )}, a)
-    }, {})
+        ) }, a)
+      }, {})
   }
 
   getErrorMessages () {
@@ -180,6 +187,7 @@ class Form extends Component {
         id={id}
         className={formClasses}
         onSubmit={e => this.handleFormSubmission(e)}
+        noValidate
       >
         {description !== '' && <p>{description}</p>}
         {this.getErrorMessages()}

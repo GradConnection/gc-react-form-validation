@@ -14,7 +14,9 @@ export const toArray = value => {
   return value
 }
 
-export const isEmpty = value => (value === '' || (Array.isArray(value) && value.length === 0) || JSON.stringify(value) === JSON.stringify({}) || value === undefined || value === null)
+export const isEmptyString = v => typeof v === 'string' && !v.trim()
+
+export const isEmpty = value => (isEmptyString(value) || (Array.isArray(value) && value.length === 0) || (typeof value !== 'string' && JSON.stringify(value) === JSON.stringify({})) || value === undefined || value === null)
 
 export const determineRenderType = type => {
   switch (type) {

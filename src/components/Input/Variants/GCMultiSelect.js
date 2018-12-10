@@ -62,7 +62,6 @@ class GCMultiSelect extends Component {
 
   handleWindowClick (e) {
     if (!this.select.current.contains(e.target)) {
-      console.log('Apparently clicking outside the input')
       this.setState({
         isActive: false,
         isFocussed: false,
@@ -224,7 +223,7 @@ class GCMultiSelect extends Component {
   }
 
   addItemToValueArray (item) {
-    const newValueArray = this.props.value.splice(0)
+    const newValueArray = toArray(this.props.value).splice(0)
     newValueArray.push(item)
     return newValueArray
   }

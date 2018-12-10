@@ -1,5 +1,5 @@
 import { getTranslation } from 'translations'
-import { toArray } from 'utils'
+import { toArray, isEmpty } from 'utils'
 
 const validateInput = async (
   {
@@ -25,16 +25,6 @@ const validateInput = async (
   },
   userTranslations
 ) => {
-  const isEmpty = v => {
-    return (
-      v === null ||
-      v === undefined ||
-      (typeof v === 'string' && v !== '') ||
-      (typeof v === 'object' && v !== {}) ||
-      (typeof v === 'boolean' && v && required)
-    )
-  }
-
   const validateEmail = () => {
     const pattern = handleRegExp(
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -228,7 +218,10 @@ const validateInput = async (
 
   const getErrorMessage = (renderType, hidden, value) => {
     // On opposite day
-    if (isEmpty(value) && !hidden) {
+    console.log('validating: ', name, value, isEmpty(value))
+
+    // if not empty and not hidden
+    if (!isEmpty(value) && !hidden) {
       switch (renderType) {
         case 'custom':
           return getErrorMessage(customValidationType, hidden, value)
