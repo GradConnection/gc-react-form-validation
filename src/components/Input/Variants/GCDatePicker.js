@@ -23,11 +23,11 @@ class GCDatePicker extends Component {
   }
 
   componentDidMount () {
-    window.addEventListener('click', this.handleActivateCalendar)
+    document.addEventListener('click', this.handleActivateCalendar)
   }
 
   componentWillMount () {
-    window.removeEventListener('click', this.handleActivateCalendar)
+    document.removeEventListener('click', this.handleActivateCalendar)
   }
 
   handleActivateCalendar (e) {

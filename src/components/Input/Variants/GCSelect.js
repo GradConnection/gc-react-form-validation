@@ -38,13 +38,13 @@ class GCSelect extends Component {
   }
 
   componentDidMount () {
-    window.addEventListener('click', this.handleWindowClick)
-    window.addEventListener('keydown', this.handleKeyPress)
+    document.addEventListener('click', this.handleWindowClick)
+    document.addEventListener('keydown', this.handleKeyPress)
   }
 
   componentWillUnmount () {
-    window.removeEventListener('click', this.handleWindowClick)
-    window.removeEventListener('keydown', this.handleKeyPress)
+    document.removeEventListener('click', this.handleWindowClick)
+    document.removeEventListener('keydown', this.handleKeyPress)
   }
 
   componentDidUpdate (prevProps, prevState) {

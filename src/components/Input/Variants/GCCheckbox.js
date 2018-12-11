@@ -15,11 +15,11 @@ class GCCheckbox extends Component {
   }
 
   componentDidMount () {
-    window.addEventListener('click', this.handleBlur)
+    document.addEventListener('click', this.handleBlur)
   }
 
   componentWillUnmount () {
-    window.removeEventListener('click', this.handleBlur)
+    document.removeEventListener('click', this.handleBlur)
   }
 
   handleBlur (e) {
