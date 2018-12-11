@@ -1,7 +1,5 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// const SassPlugin = require('sass-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
@@ -29,6 +27,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
+            sourceMap: true,
             presets: ['@babel/react', '@babel/preset-env'],
             plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-optional-chaining']
           }
@@ -37,8 +36,6 @@ module.exports = {
       {
         test: /\.(sc|c)ss$/,
         use: [{
-          loader: MiniCssExtractPlugin.loader
-        }, {
           loader: 'css-loader',
           options: {
             sourceMap: true
@@ -48,17 +45,14 @@ module.exports = {
           options: {
             sourceMap: true
           }
-        }]
+        }
+        ]
       }
     ]
   },
   plugins: [
     new CopyWebpackPlugin([
-      { from: 'src/styles/styles.scss', to: './' }
-    ]),
-    new MiniCssExtractPlugin({
-      filename: '[name].css'
-    })
-    // new SassPlugin('./src/styles/styles.scss')
+      { from: 'src/styles', to: './scss' }
+    ])
   ]
 }

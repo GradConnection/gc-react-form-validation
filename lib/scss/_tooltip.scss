@@ -1,0 +1,34 @@
+.gc-tooltip__icon {
+  top: -0.5rem;
+
+  svg {
+    width: 1.5rem;
+  }
+}
+
+.gc-tooltip {
+  position: absolute;
+  vertical-align: baseline;
+  max-width: 80%;
+  right: 1.75em;
+  bottom: 120%;
+  background-color: $gc-form-dark-grey;
+
+  .gc-tooltip__message {
+    margin: 0.5em;
+    color: $gc-form-input-bg;
+  }
+
+  &::after {
+    content: '';
+      display: block;
+      position: absolute;
+      bottom: -1em;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-left: 1em solid transparent;
+      border-right: 0em solid transparent;
+      border-top: 1em solid $gc-form-dark-grey;
+  }
+}

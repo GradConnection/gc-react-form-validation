@@ -1,0 +1,101 @@
+.gc-calendar {
+  display: flex;
+  justify-content: center;
+  padding: 0 0.8rem;
+
+  .gc-calendar__main {
+    display: flex;
+    padding: 1rem 0;
+  }
+
+  .gc-calendar__content--wrapper {
+    display: flex;
+  }
+
+  .gc-calendar__content {
+    min-width: 220px;
+    min-height: 180px;
+  }
+
+  .gc-calendar__content--right {
+    // margin-left: 1rem;
+    .gc-calendar__body {
+      border-left: 1px solid $gc-form-med-grey;
+    }
+  }
+
+  .gc-calendar__header {
+    margin: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    color: $gc-form-black;
+  }
+
+  .gc-calendar__controls__btn {
+    background: none;
+    border: none;
+    outline: none;
+    align-self: flex-start;
+    padding-left: 0;
+    padding-right: 0;
+
+    svg {
+      height: 1.2rem;
+      fill: $gc-form-black;
+      stroke: $gc-form-black;
+      stroke-width: 0.5rem;
+    }
+
+    &.gc-calendar__controls__btn--left svg {
+      transform: rotateZ(180deg);
+    }
+  }
+
+  .gc-calendar__body__row--weekdays {
+    font-weight: bold;
+    border-top: solid 1px $gc-form-med-grey;
+    border-bottom: solid 1px $gc-form-med-grey;
+  }
+
+  .gc-calendar__body__cell {
+    width: calc(100% / 7);
+    display: inline-block;
+    text-align: center;
+    color: $gc-form-black;
+    border: none;
+    background-color: transparent;
+    padding: 0.4rem 0;
+
+    &.gc-calendar__body__cell--btn {
+      &:active,
+      &:focus {
+        outline: none;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .gc-calendar__main--range {
+    .gc-calendar__body__cell--active {
+      background-color: $gc-form-dark-grey;
+      color: $gc-form-input-bg;
+    }
+
+    .gc-calendar__body__cell-range {
+      background-color: $gc-form-med-grey;
+    }
+  }
+
+  .gc-calendar__body__cell--active {
+    background-color: $gc-form-med-grey;
+  }
+
+  .gc-calendar__body__cell--disabled {
+    color: $gc-form-med-grey
+  }
+}

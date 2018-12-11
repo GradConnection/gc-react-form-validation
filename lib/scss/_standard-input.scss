@@ -1,0 +1,148 @@
+.gc-input {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+// What the user will interact with, usually bordered
+.gc-input__el {
+  display: block;
+  width: 100%;
+  border: solid $gc-form-light-grey 1px;
+  border-radius: 0.2rem;
+  color: $gc-form-black;
+  font-size: 1.2rem;
+  padding: 0.7rem 1rem;
+  box-sizing: border-box;
+  resize: none;
+
+  &.gc-input__el--no-padding {
+    padding: 0;
+  }
+
+  &.gc-input__el--active,
+  &:focus,
+  &:active {
+    border-color: $gc-form-dark-grey;
+    outline: none;
+  }
+
+  &.gc-input__el--no-deco {
+    padding: 0;
+    border: none;
+  }
+}
+
+.gc-input--invalid .gc-input__el {
+  border-color: $gc-form-red;
+}
+
+// TEXT
+.gc-input--text .gc-input__el {
+
+}
+
+// PASSWORD
+.gc-input--password {
+  .gc-input__el {
+    padding-right: 4rem;
+  }
+}
+
+.gc-btn--icon {
+    position: absolute;
+    top: 2.1rem;
+    right: 0;
+    background: none;
+    border: none;
+    padding: 0.4rem 1rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+}
+
+.gc-btn--icon-sml {
+  box-sizing: border-box;
+  padding: 0.2rem 0.5rem 0.5rem 0.5rem;
+
+  svg {
+    width: 0.5rem;
+
+  }
+}
+
+.gc-btn--icon,
+.gc-btn--icon-sml {
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+.gc-input__btn-hidden {
+  visibility: hidden;
+  margin: 0;
+}
+
+.gc-input--list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.gc-input-list__item {
+  position: relative;
+  margin-bottom: 0.5rem;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    color: $gc-form-black;
+    border-color: $gc-form-black;
+  }
+}
+
+.gc-input__inline-label {
+  font-size: 1.2rem;
+  margin-left: 0.8rem;
+}
+
+.gc-input__inline-icon {
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 1px solid $gc-form-dark-grey;
+  background-color: $gc-form-input-bg;
+  position: absolute;
+  left: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.gc-input--invalid .gc-input--list {
+  // .gc-input__inline-icon {
+  //   border-color: $gc-form-red;
+  // }
+  //
+  // .gc-input__inline-label {
+  //   color: $gc-form-red;
+  // }
+  // border: solid 1px $gc-form-red;
+  // border-radius: 0.2rem;
+  // padding: 0.7rem 1rem;
+  background-color: lighten($gc-form-red, 35%);
+}
