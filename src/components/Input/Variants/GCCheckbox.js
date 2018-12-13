@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ReactHtmlParser from 'react-html-parser'
 
 import { toArray } from 'utils'
 
@@ -71,7 +72,7 @@ class GCCheckbox extends Component {
           onChange={e => e.preventDefault()}
         />
         <span className='gc-input__inline-icon gc-checkbox__icon' onClick={this.onSingleCheckboxClick} />
-        <label className='gc-input__inline-label'>{label}</label>
+        <label className='gc-input__inline-label'>{ReactHtmlParser(label)}</label>
       </div>
     )
   }

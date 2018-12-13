@@ -3,6 +3,10 @@
   margin-bottom: 1.5rem;
 }
 
+input.gc-input__el,
+.gc-drop-down__value {
+  background-color: $gc-form-input-bg;
+}
 // What the user will interact with, usually bordered
 .gc-input__el {
   display: block;

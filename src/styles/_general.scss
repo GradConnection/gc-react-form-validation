@@ -8,6 +8,14 @@ $gc-form-red: #c46e6b !default;
 $gc-form-input-bg: #ffffff !default;
 $gc-form-primary-colour: #e8bddb !default;
 
+* {
+  box-sizing: content-box;
+}
+
+.gc-form {
+  width: 100%;
+}
+
 .gc-description {
   color: $gc-form-dark-grey;
   margin-top: 0;

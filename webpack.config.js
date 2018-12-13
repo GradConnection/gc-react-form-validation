@@ -8,7 +8,8 @@ module.exports = {
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'lib'),
     filename: 'index.js',
-    publicPath: 'lib'
+    publicPath: 'lib',
+    globalObject: "typeof self !== 'undefined' ? self : this"
   },
   devtool: 'source-map',
   mode: 'none',
@@ -29,7 +30,7 @@ module.exports = {
           options: {
             sourceMap: true,
             presets: ['@babel/react', '@babel/preset-env'],
-            plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-optional-chaining']
+            plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-optional-chaining', '@babel/plugin-transform-runtime']
           }
         }
       },

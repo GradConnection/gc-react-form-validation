@@ -123,6 +123,7 @@ class Form extends Component {
   handleFormSubmission (e) {
     e.preventDefault()
     e.stopPropagation()
+    console.log('%c Form has been validated and thinks its okay to submit', 'background: #bada55; color: #fff')
     if (this.validateForm(this.state.errorObj, this.props.data)) {
       this.setState(
         {
