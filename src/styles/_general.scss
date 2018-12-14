@@ -9,7 +9,7 @@ $gc-form-input-bg: #ffffff !default;
 $gc-form-primary-colour: #e8bddb !default;
 
 * {
-  box-sizing: content-box;
+  box-sizing: border-box;
 }
 
 .gc-form {
@@ -37,6 +37,7 @@ $gc-form-primary-colour: #e8bddb !default;
   padding: 0.4rem 0.8rem;
   right: 0;
   position: absolute;
+  z-index: 2;
 }
 
 .gc-helper-text {

@@ -34,6 +34,9 @@ class Input extends Component {
       nextProps.value !== this.props.value ||
       nextProps.hidden !== this.props.hidden ||
       nextProps.options !== this.props.options ||
+      nextProps.label !== this.props.label ||
+      nextProps.description !== this.props.description ||
+      nextProps.helperText !== this.props.helperText ||
       nextProps.formSubmitted !== this.props.formSubmitted ||
       nextProps.disabled !== this.props.disabled
     )

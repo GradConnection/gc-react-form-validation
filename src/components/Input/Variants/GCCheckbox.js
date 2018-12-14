@@ -40,6 +40,7 @@ class GCCheckbox extends Component {
 
   onSingleCheckboxClick () {
     this.props.onInputChange(!this.props.value)
+    this.props.handleInputValidation(!this.props.value)
   }
 
   onCheckboxItemClick (newValue) {
@@ -57,7 +58,7 @@ class GCCheckbox extends Component {
   }
 
   renderSingleCheckbox () {
-    const { name, value, label } = this.props
+    const { name, value, label, required } = this.props
 
     return (
       <div
@@ -68,11 +69,11 @@ class GCCheckbox extends Component {
           type='checkbox'
           name={name}
           title={label}
-          checked={value}
+          checked={!!value}
           onChange={e => e.preventDefault()}
         />
         <span className='gc-input__inline-icon gc-checkbox__icon' onClick={this.onSingleCheckboxClick} />
-        <label className='gc-input__inline-label'>{ReactHtmlParser(label)}</label>
+        <label className={`gc-input__inline-label ${required ? 'gc-label__text--required' : ''}`}>{ReactHtmlParser(label)}</label>
       </div>
     )
   }

@@ -52,12 +52,13 @@ class Form extends Component {
           condition(d))
       )
     })
+    console.log("required fields:", requiredFields)
     return requiredFields.length > 0
   }
 
   validateRequiredFields (data) {
     return !this.hasRequiredFields(data, d => {
-      if (data[d].type === 'checkbox' && data[d].options === undefined) {
+      if (data[d].type === 'checkbox' && data[d].options.length === 0) {
         return !data[d].value
       } else {
         return isEmpty(data[d].value)
@@ -66,6 +67,8 @@ class Form extends Component {
   }
 
   validateForm (errorObj, data) {
+    console.log('errorObj length:', Object.keys(errorObj).length === 0)
+    console.log('validatedRequired fields:', this.validateRequiredFields(data))
     return (
       Object.keys(errorObj).length === 0 && this.validateRequiredFields(data)
     )
@@ -123,7 +126,7 @@ class Form extends Component {
   handleFormSubmission (e) {
     e.preventDefault()
     e.stopPropagation()
-    console.log('%c Form has been validated and thinks its okay to submit', 'background: #bada55; color: #fff')
+
     if (this.validateForm(this.state.errorObj, this.props.data)) {
       this.setState(
         {
@@ -133,6 +136,7 @@ class Form extends Component {
           errorObj: {}
         },
         () => {
+          console.log('%c Form has been validated and thinks its okay to submit', 'background: #bada55; color: #fff')
           this.props.onSubmit()
           if (typeof onFormValidationSuccess === 'function') {
             this.props.onFormValidationSuccess()

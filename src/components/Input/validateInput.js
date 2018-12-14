@@ -186,6 +186,11 @@ const validateInput = async (
       } else if (maxL && maxL < valueArray.length) {
         res = getTranslation('maxSelectOptions', userTranslations, maxL)
       }
+    } else {
+      console.log('single checkbox')
+      if (!value && required) {
+        res = res = getTranslation('requiredField', userTranslations)
+      }
     }
     return res
   }

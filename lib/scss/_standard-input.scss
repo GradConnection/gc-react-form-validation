@@ -1,6 +1,6 @@
 .gc-input {
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 input.gc-input__el,
@@ -15,7 +15,7 @@ input.gc-input__el,
   border-radius: 0.2rem;
   color: $gc-form-black;
   font-size: 1.2rem;
-  padding: 0.7rem 1rem;
+  padding: 0.8rem 1rem 0.7rem 1rem;
   box-sizing: border-box;
   resize: none;
 
@@ -121,6 +121,7 @@ input.gc-input__el,
 .gc-input__inline-label {
   font-size: 1.2rem;
   margin-left: 0.8rem;
+  vertical-align: top;
 }
 
 .gc-input__inline-icon {
@@ -137,16 +138,7 @@ input.gc-input__el,
   }
 }
 
-.gc-input--invalid .gc-input--list {
-  // .gc-input__inline-icon {
-  //   border-color: $gc-form-red;
-  // }
-  //
-  // .gc-input__inline-label {
-  //   color: $gc-form-red;
-  // }
-  // border: solid 1px $gc-form-red;
-  // border-radius: 0.2rem;
-  // padding: 0.7rem 1rem;
-  background-color: lighten($gc-form-red, 35%);
+.gc-input--invalid .gc-input--list,
+.gc-input--invalid.gc-input--checkbox .gc-input__el {
+  background-color: lighten($gc-form-red, 40%);
 }
