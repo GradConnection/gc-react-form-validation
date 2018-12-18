@@ -9,7 +9,7 @@ import get from 'lodash/get'
 
 import ReactHtmlParser from 'react-html-parser'
 
-import { isEmpty } from '../../utils'
+import { isEmpty, isEmptyObject } from 'utils'
 
 import Input from '../Input/Input'
 
@@ -18,6 +18,7 @@ class Form extends Component {
     super(props, context)
     this.state = {
       formSubmitted: false,
+      displayErrorMessage: false,
       errorMessage: '',
       errorObj: {}
     }
@@ -31,47 +32,28 @@ class Form extends Component {
     ) {
       this.setState({ errorMessage: this.props.submissionErrorMessages })
     }
-  }
 
-  hasRequiredFields (
-    data,
-    condition = () => {
-      return true
+    if (!prevState.formSubmitted && this.state.formSubmitted) {
+      console.log('form submitted, inputs are all validating, reset')
+      // reset form submission state
+      this.resetForm()
     }
-  ) {
-    const requiredFields = Object.keys(data).filter(d => {
-      return (
-        (has(data[d], 'required') &&
-          get(data[d], 'required') &&
-          has(data[d], 'hidden') &&
-          get(data[d], 'hidden') &&
-          condition(d)) ||
-        (has(data[d], 'required') &&
-          get(data[d], 'required') &&
-          !has(data[d], 'hidden') &&
-          condition(d))
-      )
-    })
-    console.log("required fields:", requiredFields)
-    return requiredFields.length > 0
+
+    if (prevState.formSubmitted && !this.state.formSubmitted) {
+      setTimeout(() => {
+        if(Object.keys(this.state.errorObj).length === 0) {
+          this.onValidationSuccess()
+        } else {
+          this.onValidationFailure()
+        }
+      }, 500)
+    }
   }
 
-  validateRequiredFields (data) {
-    return !this.hasRequiredFields(data, d => {
-      if (data[d].type === 'checkbox' && data[d].options.length === 0) {
-        return !data[d].value
-      } else {
-        return isEmpty(data[d].value)
-      }
+  resetForm() {
+    this.setState({
+      formSubmitted: false
     })
-  }
-
-  validateForm (errorObj, data) {
-    console.log('errorObj length:', Object.keys(errorObj).length === 0)
-    console.log('validatedRequired fields:', this.validateRequiredFields(data))
-    return (
-      Object.keys(errorObj).length === 0 && this.validateRequiredFields(data)
-    )
   }
 
   getFields (data) {
@@ -95,7 +77,8 @@ class Form extends Component {
       }, {})
   }
 
-  getErrorMessages () {
+  handleErrorMessage () {
+    console.log('handling error messages')
     if (!this.state.errorMessage === '') {
       return (
         <div className='gc-form__error-message'>
@@ -123,41 +106,48 @@ class Form extends Component {
     return null
   }
 
-  handleFormSubmission (e) {
+  onFormSubmission (e) {
     e.preventDefault()
     e.stopPropagation()
 
-    if (this.validateForm(this.state.errorObj, this.props.data)) {
-      this.setState(
-        {
-          formSubmitted: true,
-          displayErrorMessage: true,
-          errorMessage: '',
-          errorObj: {}
-        },
-        () => {
-          console.log('%c Form has been validated and thinks its okay to submit', 'background: #bada55; color: #fff')
-          this.props.onSubmit()
-          if (typeof onFormValidationSuccess === 'function') {
-            this.props.onFormValidationSuccess()
+    this.setState(
+      {
+        formSubmitted: true,
+        displayErrorMessage: true,
+        errorMessage: '',
+        errorObj: {}
+      })
+  }
+
+  onValidationSuccess() {
+    this.setState(
+          {
+            displayErrorMessage: false,
+            errorObj: {}
+          },
+          () => {
+            console.log('%c Form has been validated and thinks its okay to submit', 'background: #bada55; color: #fff')
+            this.props.onSubmit()
+            if (typeof onFormValidationSuccess === 'function') {
+              this.props.onFormValidationSuccess()
+            }
           }
-        }
-      )
-    } else {
-      this.setState(
-        {
-          formSubmitted: true,
-          displayErrorMessage: true,
-          errorMessage:
-            'Please make sure that you have filled in the fields correctly'
-        },
-        () => {
-          if (typeof this.props.onFormValidationFailure === 'function') {
-            this.props.onFormValidationFailure(this.state.errorObj)
+        )
+  }
+
+  onValidationFailure() {
+    this.setState(
+          {
+            displayErrorMessage: true,
+            errorMessage:
+              'Please make sure that you have filled in the fields correctly'
+          },
+          () => {
+            if (typeof this.props.onFormValidationFailure === 'function') {
+              this.props.onFormValidationFailure(this.state.errorObj)
+            }
           }
-        }
-      )
-    }
+        )
   }
 
   updateErrorObj (name, results) {
@@ -169,12 +159,13 @@ class Form extends Component {
         delete copiedObj[name]
       }
 
-      // only update if different?
       this.setState({ errorObj: copiedObj })
     }
 
-    this.handleFormValidationCallbacks(this.validateForm(this.state.errorObj, this.props.data), copiedObj)
+    this.handleFormValidationCallbacks(isEmptyObject(copiedObj), copiedObj)
   }
+
+
 
   handleFormValidationCallbacks (isFormValid, errorObj) {
     if (isFormValid && typeof this.props.onFormValidationSuccess === 'function') {
@@ -195,11 +186,11 @@ class Form extends Component {
         ref={ref}
         id={id}
         className={formClasses}
-        onSubmit={e => this.handleFormSubmission(e)}
+        onSubmit={e => this.onFormSubmission(e)}
         noValidate
       >
         {description !== '' && <p>{description}</p>}
-        {this.getErrorMessages()}
+        {this.handleErrorMessage()}
         {children({ fields: this.getFields(data) })}
       </form>
     )
@@ -211,6 +202,7 @@ Form.propTypes = {
   onInputChange: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   children: PropTypes.func.isRequired,
+  customFormErrorMessage: PropTypes.node,
 
   ref: PropTypes.func,
   description: PropTypes.string,

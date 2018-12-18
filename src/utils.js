@@ -14,6 +14,8 @@ export const toArray = value => {
   return value
 }
 
+export const isEmptyObject = obj => Object.keys(obj).length === 0
+
 export const isEmptyString = v => typeof v === 'string' && !v.trim()
 
 export const isEmpty = value => (isEmptyString(value) || (Array.isArray(value) && value.length === 0) || (typeof value !== 'string' && JSON.stringify(value) === JSON.stringify({})) || value === undefined || value === null)
