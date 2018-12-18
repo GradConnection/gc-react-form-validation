@@ -54,7 +54,7 @@ class Form extends Component {
   }
 
   getFields (data) {
-    const { onInputChange } = this.props
+    const { onInputChange, ref } = this.props
     const { formSubmitted } = this.state
 
     // const hiddenInput = {}
@@ -66,6 +66,7 @@ class Form extends Component {
             onChange={onInputChange}
             sendResultsToForm={this.updateErrorObj}
             inForm
+            formRef={ref}
             name={name}
             formSubmitted={formSubmitted}
             {...d}
@@ -77,7 +78,6 @@ class Form extends Component {
   handleErrorMessageRender () {
     const { displayErrorMessage, errorObj } = this.state
     const { submissionErrorMessages } = this.props
-    console.log('handling error messages')
     const errorMessage = 'Please make sure that you have filled in all the fields correctly'
 
     if (!isEmpty(submissionErrorMessages) && isEmptyObject(errorObj)) {

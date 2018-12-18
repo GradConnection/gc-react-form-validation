@@ -23,6 +23,12 @@ class GCPassword extends Component {
     })
   }
 
+  handleKeyDown(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault()
+    }
+  }
+
   render () {
     const { mode } = this.state
     const { value, name, handleInputValidation, handleInputChange } = this.props
@@ -37,7 +43,8 @@ class GCPassword extends Component {
           name={name}
           autoComplete='current-password'
           onBlur={e => handleInputValidation(e.target.value)}
-          onChange={e => handleInputChange(e.target.value)} />
+          onChange={e => handleInputChange(e.target.value)}
+          onKeyDown={e => this.handleKeyDown(e)}/>
 
         <button
           tabIndex={-1}
