@@ -19,7 +19,6 @@ class Form extends Component {
     this.state = {
       formSubmitted: false,
       displayErrorMessage: false,
-      errorMessage: '',
       errorObj: {}
     }
 
@@ -34,8 +33,6 @@ class Form extends Component {
     }
 
     if (!prevState.formSubmitted && this.state.formSubmitted) {
-      console.log('form submitted, inputs are all validating, reset')
-      // reset form submission state
       this.resetForm()
     }
 
@@ -77,32 +74,41 @@ class Form extends Component {
       }, {})
   }
 
-  handleErrorMessage () {
+  handleErrorMessageRender () {
+    const { displayErrorMessage, errorObj } = this.state
+    const { submissionErrorMessages } = this.props
     console.log('handling error messages')
-    if (!this.state.errorMessage === '') {
-      return (
-        <div className='gc-form__error-message'>
-          <p>{ReactHtmlParser(this.state.errorMessage)}</p>
-        </div>
-      )
-    } else if (
-      !isEmpty(this.props.submissionErrorMessages) &&
-      this.state.displayErrorMessage
-    ) {
-      if (isArray(this.props.submissionErrorMessages)) {
-        const errorList = this.props.submissionErrorMessages.map(err => {
-          return <li key={uniqueId()}>{ReactHtmlParser(err)}</li>
-        })
-        return <ul className='gc-form__error-message'>{errorList}</ul>
+    const errorMessage = 'Please make sure that you have filled in all the fields correctly'
+
+    if (!isEmpty(submissionErrorMessages) && isEmptyObject(errorObj)) {
+      if (Array.isArray(submissionErrorMessages) && submissionErrorMessages.length > 1) {
+        return (
+          <ul className='gc-form-error'>
+           {submissionErrorMessages.map(error => <li><p>{ReactHtmlParser(error)}</p></li>)}
+          </ul>
+        )
+      } else if (Array.isArray(submissionErrorMessages) && submissionErrorMessages.length === 1) {
+        return (
+          <div className='gc-form-error'>
+            <p>{ReactHtmlParser(submissionErrorMessages[0])}</p>
+          </div>
+        )
       } else {
         return (
-          <div className='gc-form__error-message'>
-            <p>{ReactHtmlParser(this.props.submissionErrorMessages)}</p>
+          <div className='gc-form-error'>
+            <p>{ReactHtmlParser(submissionErrorMessages)}</p>
           </div>
         )
       }
     }
 
+    if( displayErrorMessage ) {
+      return (
+        <div className='gc-form-error'>
+          <p>{ReactHtmlParser(errorMessage)}</p>
+        </div>
+      )
+    }
     return null
   }
 
@@ -114,7 +120,6 @@ class Form extends Component {
       {
         formSubmitted: true,
         displayErrorMessage: true,
-        errorMessage: '',
         errorObj: {}
       })
   }
@@ -139,8 +144,6 @@ class Form extends Component {
     this.setState(
           {
             displayErrorMessage: true,
-            errorMessage:
-              'Please make sure that you have filled in the fields correctly'
           },
           () => {
             if (typeof this.props.onFormValidationFailure === 'function') {
@@ -165,8 +168,6 @@ class Form extends Component {
     this.handleFormValidationCallbacks(isEmptyObject(copiedObj), copiedObj)
   }
 
-
-
   handleFormValidationCallbacks (isFormValid, errorObj) {
     if (isFormValid && typeof this.props.onFormValidationSuccess === 'function') {
       this.props.onFormValidationSuccess()
@@ -177,6 +178,7 @@ class Form extends Component {
 
   render () {
     const { extendedClassNames, ref, id, description, children, data } = this.props
+
     const formClasses = classnames('gc-form', {
       [extendedClassNames]: extendedClassNames
     })
@@ -190,7 +192,7 @@ class Form extends Component {
         noValidate
       >
         {description !== '' && <p>{description}</p>}
-        {this.handleErrorMessage()}
+        {this.handleErrorMessageRender()}
         {children({ fields: this.getFields(data) })}
       </form>
     )
@@ -202,7 +204,6 @@ Form.propTypes = {
   onInputChange: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   children: PropTypes.func.isRequired,
-  customFormErrorMessage: PropTypes.node,
 
   ref: PropTypes.func,
   description: PropTypes.string,

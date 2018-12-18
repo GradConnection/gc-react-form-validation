@@ -9,7 +9,6 @@ import {
   GCCheckbox,
   GCMultiSelect,
   GCSelect,
-  GCCustom,
   GCDatePicker,
   GCDateRangePicker
 } from './Variants'
@@ -76,8 +75,6 @@ const GCMappedInput = props => {
       )
     case 'password':
       return <GCPassword {...props} />
-    case 'custom':
-      return <GCCustom {...props} />
     default:
       return (
         <input

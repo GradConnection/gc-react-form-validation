@@ -113,6 +113,7 @@ class Input extends Component {
     const {
       type,
       extendedClassNames,
+      customComponent,
       description,
       isVisible,
       disabled,
@@ -138,46 +139,79 @@ class Input extends Component {
     })
 
     const displayLabel = (label && type !== 'checkbox') || (label && type === 'checkbox' && options.length > 0)
+    if (!hidden) {
+      if(!customComponent()) {
+        return (
+          <div className={inputClasses}>
+            {displayLabel && (
+              <GCLabel label={label} htmlFor={name} required={required} />
+            )}
 
-    if (!hidden || isVisible) {
-      return (
-        <div className={inputClasses}>
-          {displayLabel && (
-            <GCLabel label={label} htmlFor={name} required={required} />
-          )}
+            {description && (
+              <GCDescription text={description} />
+            )}
 
-          {description && (
-            <GCDescription text={description} />
-          )}
+            {tooltip && (
+              <span className='gc-btn--icon gc-tooltip__icon' onClick={this.onTooltipIconClick} tabIndex={-1}><GCIcon kind='infoIcon' /></span>
+            )}
 
-          {tooltip && (
-            <span className='gc-btn--icon gc-tooltip__icon' onClick={this.onTooltipIconClick} tabIndex={-1}><GCIcon kind='infoIcon' /></span>
-          )}
-
-          <GCMappedInput
-            handleInputValidation={this.handleInputValidation}
-            handleInputChange={this.handleInputChange}
-            {...this.props}
-          />
-
-          {showValidationMessage && (
-            <GCErrorMessage text={validationMessage} />
-          )}
-
-          {helperText && (
-            <GCHelperText text={helperText} />
-          )}
-
-          {showTooltip && (
-            <GCTooltip
-              content={this.props.tooltip}
-              name={this.props.name}
-              active={this.state.showTooltip}
-              toggleTooltip={active => this.toggleTooltip(active)}
+            <GCMappedInput
+              handleInputValidation={this.handleInputValidation}
+              handleInputChange={this.handleInputChange}
+              {...this.props}
             />
-          )}
-        </div>
-      )
+
+            {showValidationMessage && (
+              <GCErrorMessage text={validationMessage} />
+            )}
+
+            {helperText && (
+              <GCHelperText text={helperText} />
+            )}
+
+            {showTooltip && (
+              <GCTooltip
+                content={this.props.tooltip}
+                name={this.props.name}
+                active={this.state.showTooltip}
+                toggleTooltip={active => this.toggleTooltip(active)}
+              />
+            )}
+          </div>
+        )
+      } else {
+        return (
+          <div className={inputClasses}>
+            {displayLabel && (
+              <GCLabel label={label} htmlFor={name} required={required} />
+            )}
+
+            {customComponent({
+              ...this.props,
+              isValid: !showValidationMessage,
+              handleInputValidation: this.handleInputValidation,
+              handleInputChange: this.handleInputChange
+            })}
+
+            {showValidationMessage && (
+              <GCErrorMessage text={validationMessage} />
+            )}
+
+            {helperText && (
+              <GCHelperText text={helperText} />
+            )}
+
+            {showTooltip && (
+              <GCTooltip
+                content={this.props.tooltip}
+                name={this.props.name}
+                active={this.state.showTooltip}
+                toggleTooltip={active => this.toggleTooltip(active)}
+              />
+            )}
+          </div>
+        )
+      }
     }
     return null
   }
@@ -272,7 +306,7 @@ Input.defaultProps = {
   hidden: false,
   tooltip: '',
   formSubmitted: false,
-  customComponent: null,
+  customComponent: () => false,
   defaultText: 'All Options',
   defaultAll: false,
   allowAll: false,

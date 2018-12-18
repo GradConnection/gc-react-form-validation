@@ -22,6 +22,23 @@ $gc-form-primary-colour: #e8bddb !default;
   margin-bottom: 0.5rem;
 }
 
+.gc-form-error {
+  margin-bottom: 2rem;
+  border-radius: 0.2rem;
+  padding: 0.4rem 0.8rem;
+  background-color: $gc-form-red;
+  color: $gc-form-input-bg;
+
+  p, li {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+}
+
+ul.gc-form-error {
+  padding-left: 2rem;
+}
+
 .gc-error,
 .gc-helper-text {
   font-size: 1rem;
