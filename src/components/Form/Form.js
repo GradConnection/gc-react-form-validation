@@ -72,7 +72,7 @@ class Form extends Component {
   }
 
   handleErrorMessageRender () {
-    const { displayErrorMessage, errorObj } = this.state
+    const { errorObj } = this.state
     const { submissionErrorMessages } = this.props
     const errorMessage = 'Please make sure that you have filled in all the fields correctly'
 
@@ -98,7 +98,7 @@ class Form extends Component {
       }
     }
 
-    if( displayErrorMessage ) {
+    if(!isEmptyObject(errorObj)) {
       return (
         <div className='gc-form-error'>
           <p>{ReactHtmlParser(errorMessage)}</p>
