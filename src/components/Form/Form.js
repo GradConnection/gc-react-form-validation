@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import classnames from 'classnames'
-import isArray from 'lodash/isArray'
-import uniqueId from 'lodash/uniqueId'
-import has from 'lodash/has'
-import get from 'lodash/get'
 
 import ReactHtmlParser from 'react-html-parser'
 
@@ -158,7 +154,7 @@ class Form extends Component {
     if (results !== this.state.errorObj) {
       if (results) {
         copiedObj[name] = results
-      } else if (!results && has(copiedObj, name)) {
+      } else if (!results && copiedObj.hasOwnProperty(name)) {
         delete copiedObj[name]
       }
 

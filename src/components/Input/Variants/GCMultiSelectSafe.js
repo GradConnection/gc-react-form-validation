@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import uniqueId from 'lodash/uniqueId'
-import isArray from 'lodash/isArray'
-import filter from 'lodash/filter'
-import without from 'lodash/without'
-import throttle from 'lodash/throttle'
+// import uniqueId from 'lodash/uniqueId'
+// import isArray from 'lodash/isArray'
+// import filter from 'lodash/filter'
+// import without from 'lodash/without'
+// import throttle from 'lodash/throttle'
 
 // import GCInputSVG from './GCInputSVG'
 
