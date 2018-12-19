@@ -62,7 +62,6 @@ class Form extends Component {
             onChange={onInputChange}
             sendResultsToForm={this.updateErrorObj}
             inForm
-            formRef={ref}
             name={name}
             formSubmitted={formSubmitted}
             {...d}
