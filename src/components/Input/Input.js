@@ -79,7 +79,7 @@ class Input extends Component {
 
   handleInputChange (v) {
     if (!this.props.disabled || !this.props.loading) {
-      this.props.onChange(v, this.props.name)
+      this.props.onChange(v, this.props.stateName || this.props.name)
     }
   }
 
@@ -137,7 +137,7 @@ class Input extends Component {
       'gc-input--disabled': disabled,
       [extendedClassNames]: extendedClassNames
     })
-  
+
     const displayLabel = (label && type !== 'checkbox') || (label && type === 'checkbox' && options.length > 0)
     if (!hidden) {
       if(!customComponent()) {
