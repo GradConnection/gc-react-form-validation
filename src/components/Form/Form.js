@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 
 import classnames from 'classnames'
 
-import ReactHtmlParser from 'react-html-parser'
 
 import { isEmpty, isEmptyObject } from 'utils'
 
 import Input from '../Input/Input'
+import GCFormErrorMessage from './GCFormErrorMessage'
 
 class Form extends Component {
   constructor (props, context) {
@@ -71,37 +71,17 @@ class Form extends Component {
   }
 
   handleErrorMessageRender () {
-    const { errorObj } = this.state
+    const { errorObj, displayErrorMessage } = this.state
     const { submissionErrorMessages } = this.props
     const errorMessage = 'Please make sure that you have filled in all the fields correctly'
 
-    if (!isEmpty(submissionErrorMessages) && isEmptyObject(errorObj)) {
-      if (Array.isArray(submissionErrorMessages) && submissionErrorMessages.length > 1) {
-        return (
-          <ul className='gc-form-error'>
-           {submissionErrorMessages.map(error => <li><p>{ReactHtmlParser(error)}</p></li>)}
-          </ul>
-        )
-      } else if (Array.isArray(submissionErrorMessages) && submissionErrorMessages.length === 1) {
-        return (
-          <div className='gc-form-error'>
-            <p>{ReactHtmlParser(submissionErrorMessages[0])}</p>
-          </div>
-        )
-      } else {
-        return (
-          <div className='gc-form-error'>
-            <p>{ReactHtmlParser(submissionErrorMessages)}</p>
-          </div>
-        )
-      }
+    if (displayErrorMessage && !isEmpty(submissionErrorMessages) && isEmptyObject(errorObj)) {
+      return (<GCFormErrorMessage error={submissionErrorMessages} />)
     }
 
-    if(!isEmptyObject(errorObj)) {
+    if(displayErrorMessage && !isEmptyObject(errorObj)) {
       return (
-        <div className='gc-form-error'>
-          <p>{ReactHtmlParser(errorMessage)}</p>
-        </div>
+        <GCFormErrorMessage error={errorMessage} />
       )
     }
     return null
