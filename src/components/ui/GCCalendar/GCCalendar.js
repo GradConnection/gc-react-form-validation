@@ -118,7 +118,7 @@ class GCCalendar extends Component {
         </div>
       )
     }
-    console.log('Value', value)
+    
     const endDateView = getNextMonth(displayValue)
     return (
       <div className='gc-calendar__main gc-calendar__main--range'>

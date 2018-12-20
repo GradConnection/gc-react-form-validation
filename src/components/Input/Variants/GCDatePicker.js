@@ -79,7 +79,7 @@ class GCDatePicker extends Component {
           <input
             className='gc-drop-down__value__text gc-drop-down__value__text--input'
             type='text'
-            defaultValue={isEmpty(value) ? '' : this.formatDate(value)}
+            value={isEmpty(value) ? '' : this.formatDate(value)}
             placeholder={placeholder}
             readOnly
             onFocus={this.handleOnFocusEffect}

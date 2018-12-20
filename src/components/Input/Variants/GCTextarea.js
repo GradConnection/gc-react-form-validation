@@ -22,6 +22,7 @@ const GCTextarea = ({
     minLength={min}
     maxLength={max}
     rows={rows}
+    defaultValue={value}
     {...restProps}
     />
 )

@@ -29,7 +29,6 @@ const CalendarBody = ({ displayDate, valueDate, onDateClick, type = 'picker' }) 
   let counter = 1
   const valueDateTested = getValueDate(valueDate, type)
   const selectedDate = getSelectedDates(valueDateTested, type)
-  console.log('SELECTED DATE: ', selectedDate)
 
   const onActiveDateClick = (e, day) => {
     if (type.startsWith('range')) {
