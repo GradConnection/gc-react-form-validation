@@ -137,7 +137,7 @@ class Input extends Component {
       'gc-input--disabled': disabled,
       [extendedClassNames]: extendedClassNames
     })
-
+  
     const displayLabel = (label && type !== 'checkbox') || (label && type === 'checkbox' && options.length > 0)
     if (!hidden) {
       if(!customComponent()) {

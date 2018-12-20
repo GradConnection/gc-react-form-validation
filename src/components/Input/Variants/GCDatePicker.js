@@ -31,8 +31,10 @@ class GCDatePicker extends Component {
   }
 
   handleActivateCalendar (e) {
-    if (!this.datePicker.current.contains(e.target) && this.state.isActive) {
-      this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
+    if(this.datePicker.current) {
+      if (!this.datePicker.current.contains(e.target) && this.state.isActive) {
+        this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
+      }
     }
   }
 
@@ -46,7 +48,7 @@ class GCDatePicker extends Component {
 
   onDateChange (newValue) {
     // Must receive date obj
-    this.props.onInputChange(newValue)
+    this.props.onInputChange(this.formatDate(newValue))
   }
 
   onDropDownClick (e) {
@@ -55,7 +57,8 @@ class GCDatePicker extends Component {
   }
 
   formatDate (date) {
-    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
+    const dateObj = new Date(date)
+    return `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`
   }
 
   render () {
