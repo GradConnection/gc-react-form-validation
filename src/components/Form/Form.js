@@ -110,7 +110,6 @@ class Form extends Component {
   onFormSubmission (e) {
     e.preventDefault()
     e.stopPropagation()
-
     this.setState(
       {
         formSubmitted: true,

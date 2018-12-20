@@ -46,7 +46,7 @@ const GCRadio = ({
 GCRadio.propTypes = {
   onRadioBtnClick: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   name: PropTypes.string.isRequired,
   title: PropTypes.string,
   required: PropTypes.bool

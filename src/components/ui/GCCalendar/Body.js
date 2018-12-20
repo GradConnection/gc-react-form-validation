@@ -53,7 +53,7 @@ const CalendarBody = ({ displayDate, valueDate, onDateClick, type = 'picker' }) 
         }
         cells.push(
           <div
-            className='gc-calendar__body__cell gc-calendar__body__cell--disabled' >{date}</div>
+            className='gc-calendar__body__cell gc-calendar__body__cell--disabled' key={`${cellI}_${date}`}>{date}</div>
         )
       } else if ((rowI === 0 && cellI >= firstDayI) || (rowI > 0 && counter <= monthLength)) {
         // Current month dates
@@ -65,6 +65,7 @@ const CalendarBody = ({ displayDate, valueDate, onDateClick, type = 'picker' }) 
         cells.push(
           <button
             className={`gc-calendar__body__cell gc-calendar__body__cell--btn ${activeClass}`}
+            key={`${cellI}_${counter}`}
             onClick={e => onActiveDateClick(e, num)}>{counter}</button>
         )
         counter++
