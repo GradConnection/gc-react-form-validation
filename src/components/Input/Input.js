@@ -122,6 +122,7 @@ class Input extends Component {
       helperText,
       tooltip,
       title,
+      customUI = false,
       label = title,
       name,
       options
@@ -139,7 +140,7 @@ class Input extends Component {
     })
 
     const displayLabel = (label && type !== 'checkbox') || (label && type === 'checkbox' && options.length > 0)
-    if (!hidden) {
+    if (!hidden || !customUI) {
       if(!customComponent()) {
         return (
           <div className={inputClasses}>
