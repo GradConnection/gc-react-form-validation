@@ -56,7 +56,12 @@ class GCDatePicker extends Component {
 
   onDateChange (newValue) {
     // Must receive date obj
-    this.props.onInputChange(this.formatDate(newValue))
+    const newValueFormatted = this.formatDate(newValue)
+    if (newValueFormatted !== this.props.value) {
+      this.props.onInputChange(newValueFormatted)
+    } else {
+      this.props.onInputChange('')
+    }
   }
 
   onDropDownClick (e) {
