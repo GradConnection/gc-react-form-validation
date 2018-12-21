@@ -1,5 +1,7 @@
 # GC React form-validation
 
+_React form validation and UI library_
+
 This library has two components
 
 1.  Input
@@ -12,8 +14,6 @@ Form checks to see whether all the Inputs have been passed validation and
 submits the form accordingly. At the moment custom inputs are not supported, as
 form data needs to be in the object to be validated.
 
-Input
-
 ## Installation
 
 ```
@@ -25,20 +25,22 @@ npm install gc-react-form-validation
 ### Styles
 
 gc-react-form-validation exposes the stylesheets as both the original scss form
-(`lib/styles.scss`) and the processed css form (`lib/styles.css`). Import either
+(`lib/scss`) and the processed css form (`lib/main.css`). Import either
 in whichever way makes sense for your own project (e.g. via a webpack loader, or
 via a scss entry point).
 
 Below are variables available to override colour pallette:
 
 ```scss
+$gc-form-light-grey: #e2e2e2;
+$gc-form-grey: #f3f3f3;
+$gc-form-med-grey: #cfcfcf;
+$gc-form-dark-grey: #909090;
+$gc-form-black: #44474b;
+
+$gc-form-red: #c46e6b;
+$gc-form-input-bg: #ffffff;
 $gc-form-primary-colour: #e8bddb;
-$gc-form-light-grey: #f2f3f4;
-$gc-form-grey: #7a848e;
-$gc-form-med-grey: #8e979f;
-$gc-form-dark-grey: #43484c;
-$gc-form-red: #b80c0c;
-$gc-form-light-red: #f59393;
 ```
 
 To change the font edit this variable:
@@ -61,6 +63,7 @@ constructor(props) {
   this.state = {
     serverErrors: [],
     name: '',
+    lastName: '',
     email: '',
     birthdate: '',
     favoriteAnimal: '',
@@ -68,9 +71,9 @@ constructor(props) {
   }
 }
 
-handleChange(value, stateName) {
+handleChange(value, name) {
   // Receives input value and state name
-  this.setState({[stateName]: value});
+  this.setState({[name]: value});
 }
 
 formSubmitted() {
@@ -84,40 +87,39 @@ render() {
 
   // Form data object.
   const formFields = {
-    name: {
+    firstName: {
       name: 'name', // Required
-      stateName: 'name', // Required
-      type: 'text', // Required
-      title: 'Name',
+      stateName: 'name', // Optional if missing name of object will be used e.g. firstName
+      type: 'text', // Required or validation
+      label: 'Name',
       value: this.state.name, // Required
       required: true
     },
+    lastName: { // Minimum fields
+      type: 'text',
+      label: 'Surname',
+      value: this.state.lastName
+    },
     email: {
-      name: 'emailAddress',
-      stateName: 'email',
       type: 'email',
-      title: 'Email Address',
+      label: 'Email Address',
       value: this.state.email,
       customRegex: '/asdf@*/',
       required: true
     },
     birthdate: {
-      name: 'birthdate',
-      stateName: 'birthdate',
       type: 'date',
-      title: 'Date of Birth',
+      label: 'Date of Birth',
       value: this.state.birthdate,
       customErrorMessage: 'User must be at least 5 years old',
       maxDate: minAgeDate,
     },
     favoriteAnimal: {
-      name: 'favoriteAnimal',
-      stateName: 'favoriteAnimal',
       type: 'select',
-      title: 'Favorite Animal',
+      label: 'Favourite Animal',
       search: true,
       required: true,
-      isVisible: false // Replace with conditional statement to show particular field
+      hidden: false,
       value: this.state.favoriteAnimal,
       options: [{
           label: 'Unicorn',
@@ -134,10 +136,8 @@ render() {
       }]
     },
     multi: {
-      name: 'multi',
-      stateName: 'multi',
       type: 'select',
-      title: 'Muliple Select Label',
+      label: 'Muliple Select Label',
       value: this.state.multi,
       multi: true,
       search: true,
@@ -162,14 +162,14 @@ render() {
     <div>
       <Form
         data={formFields}
-        formRef={form => this.formElement = form}
         extendedClassNames="custom-classes"
         submissionErrorMessages={this.state.serverErrors} // For displaying errors after submission
         onSubmit={() => this.formSubmitted()}
-        handleInputChange={(v, t) => this.handleChange(v, t)}>
+        onInputChange={(v, t) => this.handleChange(v, t)}>
           {({ fields }) => (
             <div>
-              {fields.name}
+              {fields.firstName}
+              {fields.lastName}
               {fields.email}
               <div className="float-left">
                 {fields.birthdate}
@@ -203,17 +203,26 @@ import { Input } from 'gc-react-form-validation';
 />
 ```
 
-### Using Custom UI
+### Using Custom Input Components
 
-To add custom UI to Form, put the custom component inside the template with a reference to the field below it. The reference represents where the error validation message would appear.
+There are two ways of adding custom input components to the Form, ie. adding it to the Form template or adding it via the `customComponent` input field object property if you are using a wrapper of some sort
+
+#### Via Template
+
+To add custom UI Components to Form via the template, put the custom component inside the template with a reference to the field below it. The reference represents where the error validation message would appear.
 
 In the field object add the prop `customUI: true` to prevent the library UI from rendering.
 
 The input would be validated everytime the input value changes.
 
-Template
-
 ```js
+
+customDatePicker: {
+  ...
+  customUI: true,
+  type: 'date'
+  ...
+}
 ...
 
 {({ fields }) => (
@@ -228,67 +237,62 @@ Template
 ...
 ```
 
-### Disabling submission button
+#### Via `customComponent`
+To add a custom input component via the `customComponent` callback. The custom input component will be passed all the input properties including `handleInputChange` and `handleInputValidation` callbacks.
 
-To control the disabling the submit button you need to pass a function that changes the state of the parent component and use it to control the button's appearance
+This method is best when dealing with more complicated form structures like when wrapping the form in its own wrapper to handle state and fields are created dynamically.
 
 ```js
-...
 
-changeBtnState(newState) {
-  this.setState({
-    isDisabled: newState
-  });
+customDatePicker: {
+  ...
+  customComponent: ({
+    value,
+    handleInputChange,
+    handleInputValidation
+  }) => (
+    <CustomDatePicker
+    date={value}
+    onChange={ newValue => handleInputChange(newValue)}
+    onBlur={() => handleInputValidation(value)} />
+  ),
+  type: 'date'
+  ...
 }
-
 ...
 
-<Form
-  data={formFields}
-  onSubmit={() => this.formSubmitted()}
-  handleInputChange={(v, t) => this.handleChange(v, t)}
-  submissionErrorMessages={this.state.error}
-  disableSubmitButton={btnState => this.changeBtnState(btnState)}
->
-  {({ fields }) => (
-    <Fragment>
-      <input
-        type="text"
-        onChange={e => this.handleChange(e.target.value, 'name')}
-      />
-      {fields.name}
-      {fields.email}
-      <button disabled={this.state.isDisabled} type="submit">
-        Submit Form
-      </button>
-    </Fragment>
-  )}
-</Form>
+{({ fields }) => (
+  <div>
+    {fields.customDatePicker}
+    {fields.email}
+    <button>Submit Form</button>
+  </div>
+)}
+
+...
 ```
 
 ### Input Props
 
 Some more props you can use.
 
-| Property           | Definition                                                             | Required                          | Options                                                    |
-| ------------------ | :--------------------------------------------------------------------- | :-------------------------------- | :--------------------------------------------------------- |
-| type               | Determines the type of validation and type of input to render          | Required                          | text, email, password, date, range, name, textarea, select |
-| stateName          | Accepts state variables to change the input                            | Required                          |                                                            |
-| customUI           | Accepts boolean value                                                  | Not required                      |                                                            |
-| onChange           | Pass function to control value.                                        | Required                          |                                                            |
-| extendedClassNames | CSS class for adding custom styling.                                   | Not required                      |                                                            |
-| value              | Accepts values for input                                               | Not required                      |                                                            |
-| disabled           | When disabled is `false` the input field is disabled                   | Not required                      | true, false                                                |
-| name               | Requirement for input element                                          | Not required for component render |                                                            |  |
-| maxLength          | Maximum character length                                               | Not required                      |                                                            |
-| minLength          | Minimum character length                                               | Not required                      |                                                            |
-| maxDate            | Latest date, accepts date object                                       | Not required                      |                                                            |
-| minDate            | Earliest date, accepts date object                                     | Not required                      |                                                            |
-| max                | Highest accepted number                                                | Not required                      |                                                            |
-| min                | Lowest accepted number                                                 | Not required                      |                                                            |
-| autocomplete       | Information for browser autocomplete                                   | Not required                      |                                                            |
-| accordian          | Activates a little animation for opening and closing select drop-downs | Not required                      |                                                            |
-| multi              | When used with 'select' type allows for a multiple select list         | Not required                      |                                                            |
+| Property | Definition | Required | Options |
+| --- | :--- | :--- | :--- |
+| type | Determines the type of validation and type of input to render | Required                          | text, email, password, date, range, name, textarea, select |
+| stateName | Accepts state variables to change the input _name of input field object_ | Optional | |
+| customUI | Accepts boolean value | Optional| true, false (_default_) |
+| onChange | Pass function to handle state changes when input value is changed| Required |                                                            |
+| extendedClassNames | CSS class for adding custom styling. | Optional | |
+| value | Accepts values for input | Required | |
+| disabled | When disabled is `false` the input field is disabled | Optional | true, false (_default_)|
+| maxLength | Maximum character length | Optional ||
+| minLength | Minimum character length | Optional ||
+| maxDate | Latest date, accepts date object |Optional||
+| minDate | Earliest date, accepts date object | Optional ||
+| max | Highest accepted number | Optional | |
+| min | Lowest accepted number | Optional | |
+| autocomplete | Information for browser autocomplete | Optional | |                                                           |
+| multi | When used with 'select' type allows for a multiple select list | Optional | |
 
 ### Translations
 
@@ -325,3 +329,23 @@ const translationsExample = {
 >
 ...
 ```
+
+## Updates
+Gc-react-form-validation recently underwent an update with a few breaking changes.
+
+The ui has also changed. Floating labels was removed in favour of bordered input containers.
+
+### Property name changes
+- `handleInputChange` on the Form component becomes `onInputChange`.
+- `isVisible` on the Input component is no longer used instead use `hidden`.
+- `title` on the Input component is no longer used instead use `label`.
+
+### New features
+- `stateName` is no longer required, instead input field object name will be used when no `stateName` is provided.
+- `onInputValidationSuccess` and `onFormValidationSuccess` are callbacks that can be passed to the Input and Form components, respectively, that get triggered when they are successfully validated. Useful for disabling submission buttons.
+- `onInputValidationFailure` and `onFormValidationFailure` are callbacks that can be passed to Input and Form components respectively that are triggered when the Input or Form component fails validation. `onInputValidationFailure` returns an error message relative to the input. `onFormValidationFailure` returns an error object with all the errors in the Form component.
+
+
+Last stable release before update: 0.7.83
+
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)

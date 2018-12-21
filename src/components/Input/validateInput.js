@@ -1,13 +1,14 @@
-import React from 'react'
-import { getTranslation } from '../../translations'
+import { getTranslation } from 'translations'
+import { toArray, isEmpty } from 'utils'
 
 const validateInput = async (
   {
     open,
     type,
+    customValidationType,
     name,
     value,
-    isVisible = true,
+    disabled = false,
     required = false,
     from = null,
     to = null,
@@ -20,20 +21,11 @@ const validateInput = async (
     inForm = false,
     sendResultsToForm = null,
     defaultAll = false,
-    allowAll = false
+    allowAll = false,
+    hidden = false
   },
   userTranslations
 ) => {
-  const isEmpty = v => {
-    return (
-      v === null ||
-      v === undefined ||
-      (typeof v === 'string' && v !== '') ||
-      (typeof v === 'object' && v !== {}) ||
-      (typeof v === 'boolean' && v && required)
-    )
-  }
-
   const validateEmail = () => {
     const pattern = handleRegExp(
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -189,10 +181,15 @@ const validateInput = async (
     if (options.length > 0) {
       const minL = min
       const maxL = max
-      if (minL && minL > value.length) {
+      const valueArray = toArray(value)
+      if (minL && minL > valueArray.length) {
         res = getTranslation('minSelectOptions', userTranslations, minL)
-      } else if (maxL && maxL < value.length) {
+      } else if (maxL && maxL < valueArray.length) {
         res = getTranslation('maxSelectOptions', userTranslations, maxL)
+      }
+    } else {
+      if (!value && required) {
+        res = res = getTranslation('requiredField', userTranslations)
       }
     }
     return res
@@ -224,53 +221,45 @@ const validateInput = async (
     return new RegExp(regX)
   }
 
-  const getErrorMessage = () => {
-    if (isEmpty(value) && isVisible) {
-      switch (type) {
+  const getErrorMessage = (renderType, hidden, value, disabled) => {
+    // if not empty and not hidden
+    if (!isEmpty(value) && !hidden && !disabled) {
+      switch (renderType) {
+        case 'custom':
+          return getErrorMessage(customValidationType, hidden, value, disabled)
         case 'email':
           return validateEmail()
-          break
         case 'password':
           return validatePassword()
-          break
         case 'name':
           return validateName()
-          break
-        case 'custom':
         case 'text':
           return validateText()
-          break
         case 'date':
           return validateDate()
-          break
         case 'number':
           return validateNumber()
-          break
         case 'textarea':
           return validateTextarea()
-          break
         case 'array':
         case 'checkbox':
           return validateCheckbox()
-          break
         case 'url':
           return validateUrl()
-          break
         case 'select':
           return validateSelect()
         case 'range':
         default:
           return null
-          break
       }
-    } else if (required && isVisible) {
+    } else if (required && !hidden) {
       return getTranslation('requiredField', userTranslations)
     } else {
       return null
     }
   }
 
-  const error = await getErrorMessage()
+  const error = await getErrorMessage(type, hidden, value, disabled)
 
   if (inForm) {
     sendResultsToForm(name, error)

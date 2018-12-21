@@ -13,11 +13,13 @@ const translationDefaults = {
   maxSelectOptions: max => `May not select more than ${max} options`,
   minSelectOptions: min => `May not select less than ${min} options`,
   requiredField: () => 'This is a required field',
-  defaultInvalidInput: () => 'Invalid input'
+  defaultInvalidInput: () => 'Invalid input',
+  selectDate: () => 'Select a date',
+  typeToSearch: () => 'Start typing to search'
 }
 
 export const getTranslation = (name, userTranslations, ...args) => {
-  if (userTranslations[name] !== undefined) {
+  if (userTranslations !== undefined && userTranslations[name] !== undefined) {
     return userTranslations[name](...args)
   }
   return translationDefaults[name](...args)

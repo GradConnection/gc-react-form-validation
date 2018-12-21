@@ -1,0 +1,73 @@
+$gc-form-light-grey: #e2e2e2 !default;
+$gc-form-grey: #f3f3f3 !default;
+$gc-form-med-grey: #cfcfcf !default;
+$gc-form-dark-grey: #909090 !default;
+$gc-form-black: #44474b !default;
+
+$gc-form-red: #c46e6b !default;
+$gc-form-input-bg: #ffffff !default;
+$gc-form-primary-colour: #e8bddb !default;
+
+* {
+  box-sizing: border-box;
+}
+
+.gc-form {
+  width: 100%;
+}
+
+.gc-description {
+  color: $gc-form-dark-grey;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.gc-form-error {
+  margin-bottom: 2rem;
+  border-radius: 0.2rem;
+  padding: 0.4rem 0.8rem;
+  background-color: $gc-form-red;
+  color: $gc-form-input-bg;
+
+  p, li {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+}
+
+ul.gc-form-error {
+  padding-left: 2rem;
+}
+
+.gc-error,
+.gc-helper-text {
+  font-size: 1rem;
+  text-align: right;
+  margin: 0;
+  margin-top: 0.3rem;
+}
+
+.gc-error {
+  background-color: $gc-form-red;
+  color: $gc-form-input-bg;
+  border-radius: 0.2rem;
+  padding: 0.4rem 0.8rem;
+  right: 0;
+  position: absolute;
+  z-index: 2;
+}
+
+.gc-helper-text {
+  color: $gc-form-black;
+}
+
+.gc-icon {
+  display: block;
+
+  svg {
+    width: 2rem;
+  }
+  path {
+    fill: $gc-form-dark-grey;
+  }
+}

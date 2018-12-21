@@ -1,213 +1,196 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import isArray from 'lodash/isArray';
-import mapValues from 'lodash/mapValues';
-import uniqueId from 'lodash/uniqueId';
-import has from 'lodash/has';
-import get from 'lodash/get';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import ReactHtmlParser from 'react-html-parser';
+import classnames from 'classnames'
 
-import Input from '../Input/Input';
+
+import { isEmpty, isEmptyObject } from 'utils'
+
+import Input from '../Input/Input'
+import GCFormErrorMessage from './GCFormErrorMessage'
 
 class Form extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor (props, context) {
+    super(props, context)
     this.state = {
       formSubmitted: false,
-      errorMessage: '',
+      displayErrorMessage: false,
       errorObj: {}
-    };
+    }
+
+    this.updateErrorObj = this.updateErrorObj.bind(this)
   }
 
-  componentDidMount() {
-    this.props.disableSubmitButton(this.hasRequiredFields(this.props.data));
-  }
-
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate (prevProps, prevState) {
     if (
       prevProps.submissionErrorMessages !== this.props.submissionErrorMessages
     ) {
-      this.setState({ errorMessage: this.props.submissionErrorMessages });
+      this.setState({ errorMessage: this.props.submissionErrorMessages })
+    }
+
+    if (!prevState.formSubmitted && this.state.formSubmitted) {
+      this.resetForm()
+    }
+
+    if (prevState.formSubmitted && !this.state.formSubmitted) {
+      setTimeout(() => {
+        if(Object.keys(this.state.errorObj).length === 0) {
+          this.onValidationSuccess()
+        } else {
+          this.onValidationFailure()
+        }
+      }, 500)
     }
   }
 
-  hasRequiredFields(
-    data,
-    condition = () => {
-      return true;
-    }
-  ) {
-    const requiredFields = Object.keys(data).filter(d => {
-      return (
-        (has(data[d], 'required') &&
-          get(data[d], 'required') &&
-          has(data[d], 'isVisible') &&
-          get(data[d], 'isVisible') &&
-          condition(d)) ||
-        (has(data[d], 'required') &&
-          get(data[d], 'required') &&
-          !has(data[d], 'isVisible') &&
-          condition(d))
-      );
-    });
-    return requiredFields.length > 0;
+  resetForm() {
+    this.setState({
+      formSubmitted: false
+    })
   }
 
-  validateRequiredFields(data) {
-    return !this.hasRequiredFields(data, d => {
-      if (data[d].type === 'checkbox' && data[d].options === undefined) {
-        return !data[d].value;
-      } else {
-        return this.isEmpty(data[d].value);
-      }
-    });
+  getFields (data) {
+    const { onInputChange, ref } = this.props
+    const { formSubmitted } = this.state
+
+    // const hiddenInput = {}
+    return Object.entries(data)
+      .reduce((a, [name, d]) => {
+        return Object.assign({ [name]: (
+          <Input
+            autoComplete={d.autoComplete || d.type}
+            onChange={onInputChange}
+            sendResultsToForm={this.updateErrorObj}
+            inForm
+            name={name}
+            formSubmitted={formSubmitted}
+            {...d}
+          />
+        ) }, a)
+      }, {})
   }
 
-  allowSubmission(errorObj, data) {
-    return (
-      Object.keys(errorObj).length === 0 && this.validateRequiredFields(data)
-    );
-  }
+  handleErrorMessageRender () {
+    const { errorObj, displayErrorMessage } = this.state
+    const { submissionErrorMessages } = this.props
+    const errorMessage = 'Please make sure that you have filled in all the fields correctly'
 
-  isEmpty(v) {
-    return v === '' || v === [] || v === {} || v === undefined || v === null;
-  }
-
-  getFields() {
-    const renderTemplate = mapValues(this.props.data, d => {
-      return (
-        <Input
-          {...d}
-          autoComplete={d.autoComplete || d.type}
-          onChange={this.props.handleInputChange}
-          sendResultsToForm={(n, r) => this.validateForm(n, r)}
-          inForm={true}
-          formSubmitted={this.state.formSubmitted}
-          translations={this.props.translations}
-        />
-      );
-    });
-
-    const hiddenInput = {};
-    return renderTemplate;
-  }
-
-  getErrorMessages() {
-    if (!this.state.errorMessage === '') {
-      return (
-        <div className="gc-form__error-message">
-          <p>{ReactHtmlParser(this.state.errorMessage)}</p>
-        </div>
-      );
-    } else if (
-      !this.isEmpty(this.props.submissionErrorMessages) &&
-      this.state.displayErrorMessage
-    ) {
-      if (isArray(this.props.submissionErrorMessages)) {
-        const errorList = this.props.submissionErrorMessages.map(err => {
-          return <li key={uniqueId()}>{ReactHtmlParser(err)}</li>;
-        });
-        return <ul className="gc-form__error-message">{errorList}</ul>;
-      } else {
-        return (
-          <div className="gc-form__error-message">
-            <p>{ReactHtmlParser(this.props.submissionErrorMessages)}</p>
-          </div>
-        );
-      }
+    if (displayErrorMessage && !isEmpty(submissionErrorMessages) && isEmptyObject(errorObj)) {
+      return (<GCFormErrorMessage error={submissionErrorMessages} />)
     }
 
-    return null;
+    if(displayErrorMessage && !isEmptyObject(errorObj)) {
+      return (
+        <GCFormErrorMessage error={errorMessage} />
+      )
+    }
+    return null
   }
 
-  submitForm(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (this.allowSubmission(this.state.errorObj, this.props.data)) {
-      this.setState(
-        {
-          formSubmitted: true,
-          displayErrorMessage: true,
-          errorMessage: '',
-          errorObj: {}
-        },
-        () => this.props.onSubmit(this.state.errorObj)
-      );
-    } else {
-      this.setState({
+  onFormSubmission (e) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.setState(
+      {
         formSubmitted: true,
         displayErrorMessage: true,
-        errorMessage:
-          'Please make sure that you have filled in the fields correctly'
-      }, () => {
-        if(this.props.sendSubmissionValidationErrors) {
-          this.props.onSubmit(this.state.errorObj)
-        }
-      });
+        errorObj: {}
+      })
+  }
+
+  onValidationSuccess() {
+    this.setState(
+          {
+            displayErrorMessage: false,
+            errorObj: {}
+          },
+          () => {
+            console.log('%c Form has been validated and thinks its okay to submit', 'background: #bada55; color: #fff')
+            this.props.onSubmit()
+            if (typeof onFormValidationSuccess === 'function') {
+              this.props.onFormValidationSuccess()
+            }
+          }
+        )
+  }
+
+  onValidationFailure() {
+    this.setState(
+          {
+            displayErrorMessage: true,
+          },
+          () => {
+            if (typeof this.props.onFormValidationFailure === 'function') {
+              this.props.onFormValidationFailure(this.state.errorObj)
+            }
+          }
+        )
+  }
+
+  updateErrorObj (name, results) {
+    const copiedObj = this.state.errorObj
+    if (results !== this.state.errorObj) {
+      if (results) {
+        copiedObj[name] = results
+      } else if (!results && copiedObj.hasOwnProperty(name)) {
+        delete copiedObj[name]
+      }
+
+      this.setState({ errorObj: copiedObj })
+    }
+
+    this.handleFormValidationCallbacks(isEmptyObject(copiedObj), copiedObj)
+  }
+
+  handleFormValidationCallbacks (isFormValid, errorObj) {
+    if (isFormValid && typeof this.props.onFormValidationSuccess === 'function') {
+      this.props.onFormValidationSuccess()
+    } else if (!isFormValid && typeof this.props.onFormValidationFailure === 'function') {
+      this.props.onFormValidationFailure(errorObj)
     }
   }
 
-  validateForm(name, results) {
-    const copiedObj = this.state.errorObj;
-    if (!!results) {
-      copiedObj[name] = results;
-    } else if (!results && has(copiedObj, name)) {
-      delete copiedObj[name];
-    }
-    this.setState({ errorObj: copiedObj }, () => {
-      this.props.disableSubmitButton(
-        !this.allowSubmission(this.state.errorObj, this.props.data)
-      );
-      this.props.handleFormErrors(this.state.errorObj);
-    });
-  }
+  render () {
+    const { extendedClassNames, ref, id, description, children, data } = this.props
 
-  render() {
+    const formClasses = classnames('gc-form', {
+      [extendedClassNames]: extendedClassNames
+    })
+
     return (
       <form
-        ref={this.props.formRef}
-        id={this.props.formId}
-        className={`gc-form ${this.props.extendedClassNames}`}
-        onSubmit={e => this.submitForm(e)}
+        ref={ref}
+        id={id}
+        className={formClasses}
+        onSubmit={e => this.onFormSubmission(e)}
+        noValidate
       >
-        {this.props.description !== '' && <p>{this.props.description}</p>}
-        {this.getErrorMessages()}
-        {this.props.children({ fields: this.getFields() })}
+        {description !== '' && <p>{description}</p>}
+        {this.handleErrorMessageRender()}
+        {children({ fields: this.getFields(data) })}
       </form>
-    );
+    )
   }
 }
 
 Form.propTypes = {
-  handleInputChange: PropTypes.func.isRequired,
-  formRef: PropTypes.func,
-  children: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+  children: PropTypes.func.isRequired,
+
+  ref: PropTypes.func,
   description: PropTypes.string,
   submissionErrorMessages: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.string
-  ]),
-  disableSubmitButton: PropTypes.func,
-  handleFormErrors: PropTypes.func,
-  sendSubmissionValidationErrors: PropTypes.bool, // For troubleshooting
-  translations: PropTypes.object
-};
+  ])
+}
 
 Form.defaultProps = {
   description: '',
   submissionErrorMessages: '',
-  disableSubmitButton: isDisabled => {
-    return isDisabled;
-  },
-  handleFormErrors: () => {
-    return {};
-  },
-  sendSubmissionValidationErrors: false,
-  translations: {}
-};
+  handleFormErrors: () => ({})
+}
 
-export default Form;
+export default Form

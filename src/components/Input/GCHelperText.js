@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 
 import ReactHtmlParser from 'react-html-parser'
 
-const GCErrorMessage = ({ text }) => (
-  <p className='gc-error'>{ReactHtmlParser(text)} </p>
+const GCHelperText = ({ text }) => (
+  <p className='gc-helper-text'>{ReactHtmlParser(text)} </p>
   )
 
-GCErrorMessage.propTypes = {
+GCHelperText.propTypes = {
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired
 }
 
-export default GCErrorMessage
+export default GCHelperText

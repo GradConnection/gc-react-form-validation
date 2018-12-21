@@ -1,0 +1,16 @@
+.gc-label {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.gc-label__text {
+  color: $gc-form-black;
+  font-weight: bold;
+}
+
+.gc-label__text--required::after {
+  content: '*';
+  display: inline;
+  color: $gc-form-red;
+}

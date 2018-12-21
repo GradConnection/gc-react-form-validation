@@ -1,0 +1,36 @@
+.gc-tag {
+  border-radius: 0.2rem;
+  display: inline-flex;
+  font-size: 0;
+  background-color: $gc-form-grey;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-right: 0.5rem;
+
+  .gc-tag__label {
+    display: inline-block;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    padding: 0.2rem 0.5rem;
+    line-height: 1.5rem;
+    color: $gc-form-black;
+  }
+
+  .gc-tag__btn {
+    border: none;
+    background-color: $gc-form-med-grey;
+
+      path {
+        fill: $gc-form-black;
+      }
+  }
+
+  .gc-tag__btn,
+  .gc-tag__label {
+    vertical-align: middle;
+  }
+
+  // &:last-of-type {
+  //   margin-right: 0;
+  // }
+}

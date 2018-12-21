@@ -1,0 +1,12 @@
+.gc-checkbox__icon {
+  border-radius: 0.2rem;
+}
+
+.gc-input__btn-hidden:checked + .gc-checkbox__icon::after {
+  content: '✓';
+  display: block;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  margin-top: 50%;
+  margin-left: 50%;
+}
