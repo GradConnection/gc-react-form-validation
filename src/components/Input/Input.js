@@ -109,6 +109,13 @@ class Input extends Component {
     return this.props.value
   }
 
+  onInputClick(e,disabled) {
+    if(disabled) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+  }
+
   render () {
     const {
       type,
@@ -143,7 +150,7 @@ class Input extends Component {
     if (!hidden || !customUI) {
       if(!customComponent()) {
         return (
-          <div className={inputClasses}>
+          <div className={inputClasses} onClick={e => this.onInputClick(e, disabled)}>
             {displayLabel && (
               <GCLabel label={label} htmlFor={name} required={required} />
             )}
@@ -182,7 +189,7 @@ class Input extends Component {
         )
       } else {
         return (
-          <div className={inputClasses}>
+          <div className={inputClasses} onMouseDown={e => this.onInputClick(e, disabled)}>
             {displayLabel && (
               <GCLabel label={label} htmlFor={name} required={required} />
             )}

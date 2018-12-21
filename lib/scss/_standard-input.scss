@@ -1,4 +1,5 @@
 .gc-input {
+  width: 100%;
   position: relative;
   margin-bottom: 2rem;
 }
@@ -40,10 +41,7 @@ input.gc-input__el,
   border-color: $gc-form-red;
 }
 
-// TEXT
-.gc-input--text .gc-input__el {
 
-}
 
 // PASSWORD
 .gc-input--password {
@@ -141,4 +139,24 @@ input.gc-input__el,
 .gc-input--invalid .gc-input--list,
 .gc-input--invalid.gc-input--checkbox .gc-input__el {
   background-color: lighten($gc-form-red, 40%);
+}
+
+.gc-input.gc-input--disabled {
+  border-color: $gc-form-light-grey;
+  color: $gc-form-med-grey;
+
+  .gc-input__el,
+  .gc-input__el::placeholder,
+  .gc-input__el ::placeholder  {
+    border-color: $gc-form-light-grey;
+    color: $gc-form-med-grey !important;
+  }
+
+  .gc-label__text {
+    color: $gc-form-med-grey;
+  }
+
+  .gc-drop-down__value__text {
+    color: $gc-form-med-grey;
+  }
 }

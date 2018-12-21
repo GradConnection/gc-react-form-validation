@@ -30,6 +30,12 @@ class GCDatePicker extends Component {
     document.removeEventListener('click', this.handleActivateCalendar)
   }
 
+  componentDidUpdate(prevProps) {
+    if(!prevProps.disabled && this.props.disabled) {
+      this.setState({ isActive: false })
+    }
+  }
+
   handleActivateCalendar (e) {
     if(this.datePicker.current) {
       if (!this.datePicker.current.contains(e.target) && this.state.isActive) {
@@ -39,7 +45,9 @@ class GCDatePicker extends Component {
   }
 
   handleOnFocusEffect (e) {
-    this.setState({ isActive: true })
+    if(!this.props.disabled) {
+      this.setState({ isActive: true })
+    }
   }
 
   handleOnBlurEffect (e) {
@@ -53,7 +61,9 @@ class GCDatePicker extends Component {
 
   onDropDownClick (e) {
     e.preventDefault()
-    this.setState(state => ({ isActive: !state.isActive }))
+    if(!this.props.disabled){
+      this.setState(state => ({ isActive: !state.isActive }))
+    }
   }
 
   formatDate (date) {

@@ -1,5 +1,7 @@
 # GC React form-validation
 
+_React form validation and UI library_
+
 This library has two components
 
 1.  Input

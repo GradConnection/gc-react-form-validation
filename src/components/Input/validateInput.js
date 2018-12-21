@@ -222,7 +222,7 @@ const validateInput = async (
 
   const getErrorMessage = (renderType, hidden, value) => {
     // if not empty and not hidden
-    if (!isEmpty(value) && !hidden) {
+    if (!isEmpty(value) && !hidden && !disabled) {
       switch (renderType) {
         case 'custom':
           return getErrorMessage(customValidationType, hidden, value)
