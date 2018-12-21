@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import { CalendarHeader } from './Header'
-import { CalendarBody } from './Body'
+import { DateView, MonthView, YearView } from './Views'
 import { CalendarControls } from './Controls'
 
 import { getPrevMonth, getNextMonth, monthNameArray, isEmpty } from 'utils'
@@ -10,13 +10,19 @@ class GCCalendar extends Component {
   constructor (props) {
     super(props)
     const { value, defaultValue, type } = props
-    this.state = this.computeNewState(value, defaultValue, type)
+    this.state = {
+      mode: 'date',
+      ...this.computeNewState(value, defaultValue, type)
+    }
 
     this.onLeftArrowBtnClick = this.onLeftArrowBtnClick.bind(this)
     this.onRightArrowBtnClick = this.onRightArrowBtnClick.bind(this)
+    this.onHeaderBtnClick = this.onHeaderBtnClick.bind(this)
 
     // picker
     this.onDateClick = this.onDateClick.bind(this)
+    this.onMonthClick = this.onMonthClick.bind(this)
+    this.onYearClick = this.onYearClick.bind(this)
 
     // range
     this.onRangeDateClick = this.onRangeDateClick.bind(this)
@@ -45,15 +51,30 @@ class GCCalendar extends Component {
   onLeftArrowBtnClick (e) {
     e.preventDefault()
     // picker
-    const newDisplayDate = getPrevMonth(this.state.displayValue)
-    this.setState(this.computeNewState(newDisplayDate, this.props.defaultValue, this.props.type))
+    if (this.state.mode !== 'year') {
+      const newDisplayDate = getPrevMonth(this.state.displayValue)
+      this.setState(this.computeNewState(newDisplayDate, this.props.defaultValue, this.props.type))
+    } else {
+      const { year, month, displayValue } = this.state
+      const day = displayValue.getDate()
+      const newDisplayDate = new Date(year-10, month, day)
+      this.setState(this.computeNewState(newDisplayDate, this.props.defaultValue, this.props.type))
+    }
   }
 
   onRightArrowBtnClick (e) {
     e.preventDefault()
     // picker
-    const newDisplayDate = getNextMonth(this.state.displayValue)
-    this.setState(this.computeNewState(newDisplayDate, this.props.defaultValue, this.props.type))
+    if(this.state.mode !== 'year') {
+      const newDisplayDate = getNextMonth(this.state.displayValue)
+      this.setState(this.computeNewState(newDisplayDate, this.props.defaultValue, this.props.type))
+    } else {
+      const { year, month, displayValue } = this.state
+      const day = displayValue.getDate()
+      const newDisplayDate = new Date(year+10, month, day)
+      this.setState(this.computeNewState(newDisplayDate, this.props.defaultValue, this.props.type))
+    }
+
   }
 
   onDateClick (e, date) {
@@ -65,6 +86,24 @@ class GCCalendar extends Component {
       this.props.onDateChange(newValue)
     } else {
       this.props.onDateChange('')
+    }
+  }
+
+  onMonthClick (e, newMonth) {
+    e.preventDefault()
+    const { year, month, displayValue } = this.state
+    const day = displayValue.getDate()
+    if(newMonth !== month) {
+      this.setState({ mode: 'date', month: newMonth, displayValue: new Date(year, newMonth, day) })
+    }
+  }
+
+  onYearClick (e, newYear) {
+    e.preventDefault()
+    const { year, month, displayValue } = this.state
+    const day = displayValue.getDate()
+    if(newYear !== year) {
+      this.setState({ mode: 'month', year: newYear, displayValue: new Date(newYear, month, day) })
     }
   }
 
@@ -96,29 +135,49 @@ class GCCalendar extends Component {
     this.props.onDateChange(date)
   }
 
+  onHeaderBtnClick(newMode) {
+    this.setState({ mode: newMode })
+  }
+
   render () {
     const { value, type } = this.props
-    const { year, month, displayValue } = this.state
+    const { year, month, displayValue, mode } = this.state
     if (type === 'picker') {
       return (
         <div className='gc-calendar__main'>
-          <CalendarControls onLeftArrowBtnClick={this.onLeftArrowBtnClick}
+          <CalendarControls
+            view={mode}
+            onLeftArrowBtnClick={this.onLeftArrowBtnClick}
             onRightArrowBtnClick={this.onRightArrowBtnClick}>
             <div className='gc-calendar__content'>
               <CalendarHeader
                 month={monthNameArray[month]}
-                year={year} />
-              <CalendarBody
-                displayDate={displayValue}
-                valueDate={value}
-                onDateClick={this.onDateClick} />
+                year={year}
+                onHeaderBtnClick={this.onHeaderBtnClick}
+                />
+              {mode === 'date' && (
+                <DateView
+                  displayDate={displayValue}
+                  valueDate={value}
+                  onDateClick={this.onDateClick} />
+              )}
+              {mode === 'month' && (
+                <MonthView
+                  selectedMonth={month}
+                  onMonthClick={this.onMonthClick} />
+              )}
+              {mode === 'year' && (
+                <YearView
+                  selectedYear={year}
+                  onYearClick={this.onYearClick} />
+              )}
             </div>
           </CalendarControls>
 
         </div>
       )
     }
-    
+
     const endDateView = getNextMonth(displayValue)
     return (
       <div className='gc-calendar__main gc-calendar__main--range'>

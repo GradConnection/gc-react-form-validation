@@ -8,6 +8,7 @@ const validateInput = async (
     customValidationType,
     name,
     value,
+    disabled = false,
     required = false,
     from = null,
     to = null,
@@ -220,12 +221,12 @@ const validateInput = async (
     return new RegExp(regX)
   }
 
-  const getErrorMessage = (renderType, hidden, value) => {
+  const getErrorMessage = (renderType, hidden, value, disabled) => {
     // if not empty and not hidden
     if (!isEmpty(value) && !hidden && !disabled) {
       switch (renderType) {
         case 'custom':
-          return getErrorMessage(customValidationType, hidden, value)
+          return getErrorMessage(customValidationType, hidden, value, disabled)
         case 'email':
           return validateEmail()
         case 'password':
@@ -258,7 +259,7 @@ const validateInput = async (
     }
   }
 
-  const error = await getErrorMessage(type, hidden, value)
+  const error = await getErrorMessage(type, hidden, value, disabled)
 
   if (inForm) {
     sendResultsToForm(name, error)

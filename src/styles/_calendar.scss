@@ -78,6 +78,10 @@
         cursor: pointer;
       }
     }
+
+    &.gc-calendar__body__cell--month {
+      width: 33%;
+    }
   }
 
   .gc-calendar__main--range {

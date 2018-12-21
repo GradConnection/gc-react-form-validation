@@ -2,7 +2,8 @@ import React from 'react'
 
 import { dayShortNameArray, getFirstDayOfMonth, getLastDayOfMonth, getMonthLength, getPrevMonth, getNextMonth } from 'utils'
 
-const CalendarBody = ({ displayDate, valueDate, onDateClick, type = 'picker' }) => {
+const DateView
+ = ({ displayDate, valueDate, onDateClick, type = 'picker' }) => {
   const getValueDate = (valueDate, type) => {
     if (type.startsWith('range')) {
       return [new Date(valueDate.start), new Date(valueDate.end)]
@@ -58,8 +59,11 @@ const CalendarBody = ({ displayDate, valueDate, onDateClick, type = 'picker' }) 
         // Current month dates
         const num = counter
         let activeClass = ''
-        if ((!Array.isArray(selectedDate) && selectedDate && num === selectedDate) || (Array.isArray(selectedDate) && selectedDate.includes(num))) {
-          activeClass = 'gc-calendar__body__cell--active'
+        const meh = new Date(valueDate)
+        if(displayDate.getMonth() === meh.getMonth()) {
+          if ((!Array.isArray(selectedDate) && selectedDate && num === selectedDate) || (Array.isArray(selectedDate) && selectedDate.includes(num))) {
+            activeClass = 'gc-calendar__body__cell--active'
+          }
         }
         cells.push(
           <button
@@ -93,4 +97,4 @@ const CalendarBody = ({ displayDate, valueDate, onDateClick, type = 'picker' }) 
   )
 }
 
-export { CalendarBody }
+export { DateView }

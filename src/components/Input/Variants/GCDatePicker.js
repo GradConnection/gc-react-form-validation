@@ -38,7 +38,8 @@ class GCDatePicker extends Component {
 
   handleActivateCalendar (e) {
     if(this.datePicker.current) {
-      if (!this.datePicker.current.contains(e.target) && this.state.isActive) {
+      const touchedMonth = e.target.classList.contains('gc-calendar__body__cell--month')
+      if (!this.datePicker.current.contains(e.target) && this.state.isActive && !touchedMonth && !touchedYear) {
         this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
       }
     }
@@ -51,7 +52,11 @@ class GCDatePicker extends Component {
   }
 
   handleOnBlurEffect (e) {
-    this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
+    console.log(e.target)
+    if (!this.datePicker.current.contains(e.target)) {
+      console.log('blur')
+      this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
+    }
   }
 
   onDateChange (newValue) {
