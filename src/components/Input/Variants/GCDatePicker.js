@@ -39,7 +39,7 @@ class GCDatePicker extends Component {
   handleActivateCalendar (e) {
     if(this.datePicker.current) {
       const touchedMonth = e.target.classList.contains('gc-calendar__body__cell--month')
-      if (!this.datePicker.current.contains(e.target) && this.state.isActive && !touchedMonth && !touchedYear) {
+      if (!this.datePicker.current.contains(e.target) && this.state.isActive && !touchedMonth) {
         this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
       }
     }

@@ -46,7 +46,7 @@ class GCPassword extends Component {
           onChange={e => handleInputChange(e.target.value)}
           onKeyDown={e => this.handleKeyDown(e)}/>
 
-        <button
+        <div
           tabIndex={-1}
           className='gc-btn--icon'
           onClick={this.onIconBtnClick}>
@@ -55,7 +55,7 @@ class GCPassword extends Component {
           ) : (
             <GCIcon kind='hideIcon' />
           )}
-        </button>
+        </div>
       </div>
     )
   }
