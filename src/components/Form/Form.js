@@ -10,7 +10,7 @@ import Input from '../Input/Input'
 import GCFormErrorMessage from './GCFormErrorMessage'
 
 class Form extends Component {
-  constructor (props, context) {
+  constructor(props, context) {
     super(props, context)
     this.state = {
       formSubmitted: false,
@@ -21,11 +21,11 @@ class Form extends Component {
     this.updateErrorObj = this.updateErrorObj.bind(this)
   }
 
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.submissionErrorMessages !== this.props.submissionErrorMessages
     ) {
-      this.setState({ errorMessage: this.props.submissionErrorMessages })
+      this.setState({ displayErrorMessage: true })
     }
 
     if (!prevState.formSubmitted && this.state.formSubmitted) {
@@ -34,7 +34,7 @@ class Form extends Component {
 
     if (prevState.formSubmitted && !this.state.formSubmitted) {
       setTimeout(() => {
-        if(Object.keys(this.state.errorObj).length === 0) {
+        if (Object.keys(this.state.errorObj).length === 0) {
           this.onValidationSuccess()
         } else {
           this.onValidationFailure()
@@ -49,28 +49,30 @@ class Form extends Component {
     })
   }
 
-  getFields (data) {
+  getFields(data) {
     const { onInputChange, ref } = this.props
     const { formSubmitted } = this.state
 
     // const hiddenInput = {}
     return Object.entries(data)
       .reduce((a, [name, d]) => {
-        return Object.assign({ [name]: (
-          <Input
-            autoComplete={d.autoComplete || d.type}
-            onChange={onInputChange}
-            sendResultsToForm={this.updateErrorObj}
-            inForm
-            name={name}
-            formSubmitted={formSubmitted}
-            {...d}
-          />
-        ) }, a)
+        return Object.assign({
+          [name]: (
+            <Input
+              autoComplete={d.autoComplete || d.type}
+              onChange={onInputChange}
+              sendResultsToForm={this.updateErrorObj}
+              inForm
+              name={name}
+              formSubmitted={formSubmitted}
+              {...d}
+            />
+          )
+        }, a)
       }, {})
   }
 
-  handleErrorMessageRender () {
+  handleErrorMessageRender() {
     const { errorObj, displayErrorMessage } = this.state
     const { submissionErrorMessages } = this.props
     const errorMessage = 'Please make sure that you have filled in all the fields correctly'
@@ -79,7 +81,7 @@ class Form extends Component {
       return (<GCFormErrorMessage error={submissionErrorMessages} />)
     }
 
-    if(displayErrorMessage && !isEmptyObject(errorObj)) {
+    if (displayErrorMessage && !isEmptyObject(errorObj)) {
       return (
         <GCFormErrorMessage error={errorMessage} />
       )
@@ -87,47 +89,45 @@ class Form extends Component {
     return null
   }
 
-  onFormSubmission (e) {
+  onFormSubmission(e) {
     e.preventDefault()
     e.stopPropagation()
     this.setState(
       {
         formSubmitted: true,
-        displayErrorMessage: true,
+        displayErrorMessage: false,
         errorObj: {}
       })
   }
 
   onValidationSuccess() {
     this.setState(
-          {
-            displayErrorMessage: false,
-            errorObj: {}
-          },
-          () => {
-            console.log('%c Form has been validated and thinks its okay to submit', 'background: #bada55; color: #fff')
-            this.props.onSubmit()
-            if (typeof onFormValidationSuccess === 'function') {
-              this.props.onFormValidationSuccess()
-            }
-          }
-        )
+      {
+        errorObj: {}
+      },
+      () => {
+        console.log('%c Form has been validated and thinks its okay to submit', 'background: #bada55; color: #fff')
+        this.props.onSubmit()
+        if (typeof onFormValidationSuccess === 'function') {
+          this.props.onFormValidationSuccess()
+        }
+      }
+    )
   }
 
   onValidationFailure() {
     this.setState(
-          {
-            displayErrorMessage: true,
-          },
-          () => {
-            if (typeof this.props.onFormValidationFailure === 'function') {
-              this.props.onFormValidationFailure(this.state.errorObj)
-            }
-          }
-        )
+      {
+      },
+      () => {
+        if (typeof this.props.onFormValidationFailure === 'function') {
+          this.props.onFormValidationFailure(this.state.errorObj)
+        }
+      }
+    )
   }
 
-  updateErrorObj (name, results) {
+  updateErrorObj(name, results) {
     const copiedObj = this.state.errorObj
     if (results !== this.state.errorObj) {
       if (results) {
@@ -142,7 +142,7 @@ class Form extends Component {
     this.handleFormValidationCallbacks(isEmptyObject(copiedObj), copiedObj)
   }
 
-  handleFormValidationCallbacks (isFormValid, errorObj) {
+  handleFormValidationCallbacks(isFormValid, errorObj) {
     if (isFormValid && typeof this.props.onFormValidationSuccess === 'function') {
       this.props.onFormValidationSuccess()
     } else if (!isFormValid && typeof this.props.onFormValidationFailure === 'function') {
@@ -150,7 +150,7 @@ class Form extends Component {
     }
   }
 
-  render () {
+  render() {
     const { extendedClassNames, ref, id, description, children, data } = this.props
 
     const formClasses = classnames('gc-form', {
