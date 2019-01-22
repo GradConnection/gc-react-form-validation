@@ -33,6 +33,19 @@
     color: $gc-form-black;
   }
 
+  &__header__btn {
+    .gc-icon {
+      display: inline-block;
+      transform: rotate(90deg);
+      svg {
+        margin: 0 0.5rem;
+        width: 0.5rem;
+        stroke-width: 10px;
+        stroke: $gc-form-dark-grey;
+      }
+    }
+  }
+
   .gc-calendar__controls__btn {
     background: none;
     border: none;
