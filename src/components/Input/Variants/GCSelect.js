@@ -245,7 +245,7 @@ class GCSelect extends Component {
           <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
         </div>
 
-        {isActive && (
+        {isActive && !this.props.disabled && (
           <ul className='gc-drop-down__el gc-select__list'>
             { options.length > 0 ?
               options.map((opt, i) => (
