@@ -239,7 +239,7 @@ class GCMultiSelect extends Component {
 
   renderTags (valueArray) {
     return toArray(valueArray).map(value => (
-      <GCTag
+      <GCTag key={value}
         onCrossBtnClick={e => this.onTagCrossBtnClick(e, value)}>{getLabel(value, this.props.options)}</GCTag>
     ))
   }
