@@ -129,7 +129,9 @@ class GCSelect extends Component {
 
   handleOnFocusEffect (e) {
     e.preventDefault()
-
+    this.setState({
+      options: this.props.options
+    })
     if (this.props.search) {
       this.setState({
         isActive: true,

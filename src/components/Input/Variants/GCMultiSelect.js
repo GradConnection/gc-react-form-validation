@@ -138,6 +138,10 @@ class GCMultiSelect extends Component {
   }
 
   handleOnFocusEffect () {
+    this.setState({
+      options: this.props.options
+    })
+
     if (this.props.search) {
       this.setState({
         isActive: true,
@@ -157,7 +161,7 @@ class GCMultiSelect extends Component {
       isActive: false,
       isFocussed: false,
       index: -1,
-      ...this.resetSearch
+      ...this.searchReset
     })
     this.props.handleInputValidation(this.props.value)
   }
