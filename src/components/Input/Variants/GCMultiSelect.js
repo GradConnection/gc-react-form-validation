@@ -10,18 +10,16 @@ class GCMultiSelect extends Component {
   constructor (props) {
     super(props)
 
+    this.searchActivate = {
+      isSearchActive: true,
+      placeholder: 'Start typing to search'
+    }
     this.searchReset = {
       options: props.options,
       searchTerm: '',
       isSearchActive: false,
       placeholder: props.placeholder || 'Select options'
     }
-
-    this.searchActivate = {
-      isSearchActive: true,
-      placeholder: 'Start typing to search'
-    }
-
     this.state = {
       isActive: false,
       isFocussed: false,
@@ -258,7 +256,6 @@ class GCMultiSelect extends Component {
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
       'gc-input__el--active': isActive || isFocussed
     })
-
     return (
       <div
         className={selectClasses}

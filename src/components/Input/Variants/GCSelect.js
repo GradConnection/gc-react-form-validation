@@ -97,19 +97,24 @@ class GCSelect extends Component {
 
   onEnterKeyPress (e) {
     e.preventDefault()
-
-    const { options, index } = this.state
     const { value, handleInputChange } = this.props
+    const { options, index } = this.state
     this.setState({
       isActive: false,
       index: -1,
       ...this.searchReset
     }, () => {
-      if (index > -1 && options[index].value !== value) {
+      if (options && index > -1 && options[index].value !== value) {
+        console.log('options && index > -1 && options[index].value !== value')
         handleInputChange(options[index].value)
-      } else if (options[index].value === value) {
-        handleInputChange('')
-      }
+      }  else {
+              console.log('setstate')
+              handleInputChange('')
+              this.setState({
+                isActive: false,
+                index: -1,
+                ...this.searchReset
+              })}
     })
   }
 
