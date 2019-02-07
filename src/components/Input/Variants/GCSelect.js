@@ -105,10 +105,8 @@ class GCSelect extends Component {
       ...this.searchReset
     }, () => {
       if (options && index > -1 && options[index].value !== value) {
-        console.log('options && index > -1 && options[index].value !== value')
         handleInputChange(options[index].value)
       }  else {
-              console.log('setstate')
               handleInputChange('')
               this.setState({
                 isActive: false,

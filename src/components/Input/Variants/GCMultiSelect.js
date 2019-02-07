@@ -52,11 +52,17 @@ class GCMultiSelect extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    const { isSearchActive } = this.state
-    if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
-      this.textInput.current.focus()
-    }
+    const { isSearchActive, searchTerm, options } = this.state
+if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
+  if (searchTerm === '') {
+    this.setState({
+      options: this.props.options
+    })
   }
+  this.textInput.current.focus()
+      }
+    }
+  
 
   handleWindowClick (e) {
     if (!this.select.current.contains(e.target) && this.state.isFocussed) {
