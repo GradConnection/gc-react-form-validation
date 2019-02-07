@@ -78,7 +78,14 @@ class Form extends Component {
     const errorMessage = 'Please make sure that you have filled in all the fields correctly'
 
     if (displayErrorMessage && !isEmpty(submissionErrorMessages) && isEmptyObject(errorObj)) {
-      return (<GCFormErrorMessage error={submissionErrorMessages} />)
+      let submissionError = submissionErrorMessages
+      if (typeof submissionErrorMessages === 'object') {
+        Object.keys(submissionErrorMessages).map(function(key, index) {
+        console.log('submissionErrorMessages', submissionErrorMessages[key])
+        submissionError = submissionErrorMessages[key]
+        })
+      }
+      return (<GCFormErrorMessage error={submissionError} />)
     }
 
     if (displayErrorMessage && !isEmptyObject(errorObj)) {
