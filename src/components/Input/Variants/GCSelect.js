@@ -53,6 +53,14 @@ class GCSelect extends Component {
     if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
       this.textInput.current.focus()
     }
+    if (
+      prevProps.options !== this.props.options
+    ) {
+      const filteredOptions = this.props.options.filter(opt => opt.label.toLowerCase().includes(this.state.searchTerm.toLowerCase()))  
+      this.setState({
+        options: filteredOptions
+      })
+    }
   }
 
   handleWindowClick(e) {
