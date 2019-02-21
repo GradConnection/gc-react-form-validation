@@ -58,9 +58,6 @@ class GCSelectExternalSearch extends Component {
       prevProps.options !== this.props.options
     ) {
       const filteredOptions = this.props.options.filter(opt => opt.label.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
-      if (this.state.searchTerm.length == 0) {
-        filteredOptions = [];
-      }
       this.setState({
         options: filteredOptions,
         localLoadingNewResults: false
@@ -189,13 +186,7 @@ class GCSelectExternalSearch extends Component {
         options: filteredOptions
       })
     }
-    else {
-      this.setState({
-        searchTerm: e.target.value,
-        options: [],
-        localLoadingNewResults: false
-      })
-    }
+
   }
 
   onInputMouseUp(e) {
@@ -241,13 +232,6 @@ class GCSelectExternalSearch extends Component {
     })
   }
 
-  computeInputValue(value, options, isSearchActive, searchTerm) {
-    if (isSearchActive) {
-      return searchTerm
-    } else {
-      return isEmpty(value) ? '' : getLabel(value, this.props.options)
-    }
-  }
 
   render() {
     const { value, name } = this.props
@@ -269,7 +253,7 @@ class GCSelectExternalSearch extends Component {
             ref={this.textInput}
             className='gc-drop-down__value__text gc-drop-down__value__text--input'
             type='text'
-            value={this.computeInputValue(value, options, isSearchActive, searchTerm)}
+            value={searchTerm}
             onChange={this.onSearchInputChange}
             onFocus={this.handleOnFocusEffect}
             onBlur={this.handleOnBlurEffect}
