@@ -282,7 +282,7 @@ class GCSelectExternalSearch extends Component {
                   (<li
                     key={`$noOpt_select_${name}`}
                     className='gc-select__list-item gc-select__list-item--no-opt'>
-                    <i>Start typing to search</i>
+                    <i>{placeholder}</i>
                   </li>)
                   : (
                     <li
