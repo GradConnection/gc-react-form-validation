@@ -309,7 +309,7 @@ Input.defaultProps = {
   data: null,
   multi: false,
   search: true,
-  onSearchInputFunction: () => ({}),
+  onSearchInputFunction: null,
   tooltip: null,
   autoComplete: 'off',
   loading: false,

@@ -66,7 +66,8 @@ const GCMappedInput = props => {
           handleInputChange={handleInputChange}
           handleInputValidation={handleInputValidation} />
       ) : (
-          onSearchInputFunction ? (<GCSelectExternalSearch
+        typeof onSearchInputFunction === "function"
+         ? (<GCSelectExternalSearch
             name={xtra.name}
             value={xtra.value}
             options={xtra.options}
