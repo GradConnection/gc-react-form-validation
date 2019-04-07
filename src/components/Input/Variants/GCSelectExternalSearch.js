@@ -232,6 +232,13 @@ class GCSelectExternalSearch extends Component {
     })
   }
 
+  computeInputValue(value, options, isSearchActive, searchTerm) {
+    if (isSearchActive) {
+      return searchTerm
+    } else {
+      return isEmpty(value) ? '' : getLabel(value, this.props.options)
+    }
+  }
 
   render() {
     const { value, name } = this.props
@@ -244,7 +251,7 @@ class GCSelectExternalSearch extends Component {
       <div
         className={selectClasses}
         ref={this.select}>
-        {/* {"localLoadingNewResults " + this.state.localLoadingNewResults + " tester" } */}
+
         <div
           role='button'
           className='gc-drop-down__value'
@@ -253,7 +260,7 @@ class GCSelectExternalSearch extends Component {
             ref={this.textInput}
             className='gc-drop-down__value__text gc-drop-down__value__text--input'
             type='text'
-            value={searchTerm}
+            value={this.computeInputValue(value, options, isSearchActive, searchTerm)}
             onChange={this.onSearchInputChange}
             onFocus={this.handleOnFocusEffect}
             onBlur={this.handleOnBlurEffect}
@@ -261,7 +268,7 @@ class GCSelectExternalSearch extends Component {
             readOnly={!isSearchActive}
           />
           {this.state.localLoadingNewResults && (
-            <div id="loading"></div>
+            <div id='loading' />
           )}
 
           <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
@@ -269,7 +276,7 @@ class GCSelectExternalSearch extends Component {
 
         {isActive && !this.props.disabled && (
           <ul className='gc-drop-down__el gc-select__list'>
-            {options.length > 0 && searchTerm.length > 0 ?
+            {options.length > 0 ?
               options.map((opt, i) => (
                 <li
                   key={`${i}_select_${name}`}
@@ -278,7 +285,7 @@ class GCSelectExternalSearch extends Component {
                   {opt.label}
                 </li>
               )) : (
-                searchTerm.length == 0 ?
+                searchTerm.length === 0 ?
                   (<li
                     key={`$noOpt_select_${name}`}
                     className='gc-select__list-item gc-select__list-item--no-opt'>
