@@ -36,7 +36,10 @@ export const determineRenderType = type => {
 
 export const getLabel = (v, options) => {
   const obj = options.find(opt => opt.value === v)
-  return obj.label
+  if (obj) {
+    return obj.label
+  }
+  return ''
 }
 
 export const removeOption = (v, options) => {

@@ -1,5 +1,6 @@
 export * from './GCTextarea'
 export * from './GCSelect'
+export * from './GCSelectExternalSearch'
 export * from './GCMultiSelect'
 export * from './GCRadio'
 export * from './GCCheckbox'

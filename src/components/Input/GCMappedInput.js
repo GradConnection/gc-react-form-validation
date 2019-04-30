@@ -9,6 +9,7 @@ import {
   GCCheckbox,
   GCMultiSelect,
   GCSelect,
+  GCSelectExternalSearch,
   GCDatePicker,
   GCDateRangePicker
 } from './Variants'
@@ -65,17 +66,27 @@ const GCMappedInput = props => {
           handleInputChange={handleInputChange}
           handleInputValidation={handleInputValidation} />
       ) : (
-        <GCSelect
-          name={xtra.name}
-          value={xtra.value}
-          options={xtra.options}
-          search={search}
-          onSearchInputFunction={onSearchInputFunction}
-          disabled={xtra.disabled}
-          placeholder={xtra.placeholder}
-          handleInputChange={handleInputChange}
-          handleInputValidation={handleInputValidation} />
-      )
+        typeof onSearchInputFunction === "function"
+         ? (<GCSelectExternalSearch
+            name={xtra.name}
+            value={xtra.value}
+            options={xtra.options}
+            search={search}
+            onSearchInputFunction={onSearchInputFunction}
+            disabled={xtra.disabled}
+            placeholder={xtra.placeholder}
+            handleInputChange={handleInputChange}
+            handleInputValidation={handleInputValidation} />) :
+            (<GCSelect
+              name={xtra.name}
+              value={xtra.value}
+              options={xtra.options}
+              search={search}
+               disabled={xtra.disabled}
+              placeholder={xtra.placeholder}
+              handleInputChange={handleInputChange}
+              handleInputValidation={handleInputValidation} />)
+        )
     case 'password':
       return <GCPassword {...props} />
     default:

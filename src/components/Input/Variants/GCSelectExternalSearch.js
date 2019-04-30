@@ -7,7 +7,7 @@ import { isEmpty, getLabel } from 'utils'
 import { GCIcon } from 'ui'
 
 
-class GCSelect extends Component {
+class GCSelectExternalSearch extends Component {
   constructor(props) {
     super(props)
 
@@ -22,6 +22,7 @@ class GCSelect extends Component {
       isActive: false,
       isFocussed: false,
       index: -1,
+      localLoadingNewResults: false,
       ...this.searchReset
     }
 
@@ -52,7 +53,16 @@ class GCSelect extends Component {
     const { isSearchActive } = this.state
     if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
       this.textInput.current.focus()
-    }   
+    }
+    if (
+      prevProps.options !== this.props.options
+    ) {
+      const filteredOptions = this.props.options.filter(opt => opt.label.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
+      this.setState({
+        options: filteredOptions,
+        localLoadingNewResults: false
+      })
+    }
   }
 
   handleWindowClick(e) {
@@ -164,14 +174,19 @@ class GCSelect extends Component {
 
   onSearchInputChange(e) {
     const searchTerm = e.target.value
-    const { options } = this.props
-    const filteredOptions = options.filter(opt => opt.label.toLowerCase().includes(searchTerm.toLowerCase()))
-    
+    if (searchTerm.length > 0) {
+      const { options } = this.props
+      const filteredOptions = options.filter(opt => opt.label.toLowerCase().includes(searchTerm.toLowerCase()))
+      if (this.props.onSearchInputFunction) {
+        this.props.onSearchInputFunction(e.target.value)
+        this.setState({ localLoadingNewResults: true });
+      }
+      this.setState({
+        searchTerm: e.target.value,
+        options: filteredOptions
+      })
+    }
 
-    this.setState({
-      searchTerm: e.target.value,
-      options: filteredOptions
-    })
   }
 
   onInputMouseUp(e) {
@@ -252,6 +267,10 @@ class GCSelect extends Component {
             placeholder={placeholder}
             readOnly={!isSearchActive}
           />
+          {this.state.localLoadingNewResults && (
+            <div id='loading' />
+          )}
+
           <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
         </div>
 
@@ -266,11 +285,18 @@ class GCSelect extends Component {
                   {opt.label}
                 </li>
               )) : (
-                <li
-                  key={`$noOpt_select_${name}`}
-                  className='gc-select__list-item gc-select__list-item--no-opt'>
-                  <i>There are no available options</i>
-                </li>
+                searchTerm.length === 0 ?
+                  (<li
+                    key={`$noOpt_select_${name}`}
+                    className='gc-select__list-item gc-select__list-item--no-opt'>
+                    <i>{placeholder}</i>
+                  </li>)
+                  : (
+                    <li
+                      key={`$noOpt_select_${name}`}
+                      className='gc-select__list-item gc-select__list-item--no-opt'>
+                      <i>There are no available options</i>
+                    </li>)
               )}
           </ul>
         )}
@@ -279,7 +305,7 @@ class GCSelect extends Component {
   }
 }
 
-GCSelect.propTypes = {
+GCSelectExternalSearch.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   options: PropTypes.array,
@@ -289,4 +315,4 @@ GCSelect.propTypes = {
   handleInputValidation: PropTypes.func.isRequired
 }
 
-export { GCSelect }
+export { GCSelectExternalSearch }

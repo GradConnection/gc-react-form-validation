@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react'
 import { GCIcon } from 'ui'
 
 class GCPassword extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       mode: 'password'
@@ -12,7 +12,7 @@ class GCPassword extends Component {
     this.onIconBtnClick = this.onIconBtnClick.bind(this)
   }
 
-  onIconBtnClick (e) {
+  onIconBtnClick(e) {
     e.preventDefault()
     const { mode } = this.state
     const newMode = mode === 'password' ? 'text' : 'password'
@@ -23,13 +23,8 @@ class GCPassword extends Component {
     })
   }
 
-  handleKeyDown(e) {
-    if (e.keyCode === 13) {
-      e.preventDefault()
-    }
-  }
 
-  render () {
+  render() {
     const { mode } = this.state
     const { value, name, handleInputValidation, handleInputChange } = this.props
 
@@ -44,7 +39,7 @@ class GCPassword extends Component {
           autoComplete='current-password'
           onBlur={e => handleInputValidation(e.target.value)}
           onChange={e => handleInputChange(e.target.value)}
-          onKeyDown={e => this.handleKeyDown(e)}/>
+        />
 
         <div
           tabIndex={-1}
@@ -53,8 +48,8 @@ class GCPassword extends Component {
           {mode === 'password' ? (
             <GCIcon kind='showIcon' />
           ) : (
-            <GCIcon kind='hideIcon' />
-          )}
+              <GCIcon kind='hideIcon' />
+            )}
         </div>
       </div>
     )
