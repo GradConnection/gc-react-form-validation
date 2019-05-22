@@ -11,6 +11,7 @@ import {
   GCSelect,
   GCSelectExternalSearch,
   GCDatePicker,
+  DatePicker,
   GCDateRangePicker
 } from './Variants'
 
@@ -40,6 +41,15 @@ const GCMappedInput = props => {
         {...xtra} />
     case 'date':
       return <GCDatePicker
+        onInputChange={handleInputChange}
+        handleInputValidation={handleInputValidation}
+        name={xtra.name}
+        value={xtra.value}
+        defaultValue={xtra.defaultValue}
+        disabled={xtra.disabled}
+        placeholder={xtra.placeholder} />
+    case 'date-single':
+      return <DatePicker
         onInputChange={handleInputChange}
         handleInputValidation={handleInputValidation}
         name={xtra.name}
