@@ -10,13 +10,15 @@ class DatePicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isActive: false,
       value: this.props.value || this.props.placeholder
     };
     this.pickerRef = null;
+    
+    this.onDropDownClick = this.onDropDownClick.bind(this)
   }
 
   componentDidMount() {
-    document.addEventListener('click', this.handleOffClick)
     const { yearSpan } = this.props;
     const defaultMaxYear = parseInt(moment().add(10, 'years').format('YYYY'))
     
@@ -30,23 +32,39 @@ class DatePicker extends Component {
     })
   }
 
+  componentDidUpdate(prevProps) {
+    if(!prevProps.value && this.props.value) {
+      this.setState({ isActive: false })
+    }
+  }
+
+  onDropDownClick () {
+      this.setState(state => ({ isActive: !state.isActive }))
+  }
+
   render() {
-    const { placeholder } = this.props;
+    console.log('this.props', this.props)
+    console.log('this.state', this.state)
+    const { placeholder, disabled } = this.props;
+    const { isActive } = this.state;
+    
     return (
       <div
       ref={picker => {
             this.pickerRef = $(picker);
           }}
-          className={`gc-input__el gc-input__el--no-padding`}>
+          className={`gc-input__el gc-input__el--no-padding ${isActive ? 'gc-input__el--active' : ''}`}
+          onMouseDown={this.onDropDownClick}>
       <div
-        role='button'
         className='gc-drop-down__value'>
         <input
-          className="gc-drop-down__value__text gc-drop-down__value__text--input"
+          className='gc-input__el gc-drop-down__value__text gc-drop-down__value__text--input'
           type='text'
           value={this.state.value}
           placeholder={placeholder}
           readOnly
+          onFocus={() => this.setState({ isActive: true })}
+          onBlur={() => this.setState({ isActive: false })}
           />
         <GCIcon kind='calendarIcon' extendedClassNames='gc-drop-down__caret' />
       </div>
@@ -56,11 +74,12 @@ class DatePicker extends Component {
 }
 
 DatePicker.propTypes = {
-    yearSpan: PropTypes.array
+  disabled: PropTypes.bool,
+  yearSpan: PropTypes.array,
   };
 
 DatePicker.defaultProps = {
-  placeholder: 'Select Date'
+  placeholder: 'Select Date',
 }
 
 export { DatePicker };
