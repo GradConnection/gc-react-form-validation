@@ -95,7 +95,7 @@ const GCMappedInput = props => {
         min={xtra.min}
         max={xtra.max}
         handleInputChange={handleInputChange}
-        defaultValue={xtra.defaultValue}
+        defaultValue={defaultValue}
       />
     default:
       return (
