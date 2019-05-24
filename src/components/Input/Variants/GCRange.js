@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import Slider from 'rc-slider';
+import PropTypes from 'prop-types';
 
 class GCRange extends PureComponent {
   render() {
@@ -25,6 +26,13 @@ class GCRange extends PureComponent {
         marks={{ [min]: min, [max]: max }}
       />);
   }
+}
+
+GCRange.propTypes = {
+  min: PropTypes.number,
+  max: PropTypes.number,
+  handleInputChange: PropTypes.func,
+  defaultValue: PropTypes.arrayOf(PropTypes.number)
 }
 
 export { GCRange };
