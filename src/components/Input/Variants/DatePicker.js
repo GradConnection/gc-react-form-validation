@@ -1,9 +1,10 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import $ from "jquery";
-import "daterangepicker";
-import { GCIcon } from "ui";
+import $ from 'jquery';
+import moment from 'moment';
+import 'daterangepicker';
+import { GCIcon } from 'ui';
 
 class DatePicker extends Component {
   constructor(props) {
@@ -16,20 +17,21 @@ class DatePicker extends Component {
 
   componentDidMount() {
     document.addEventListener('click', this.handleOffClick)
+    const { yearSpan } = this.props;
+    const defaultMaxYear = parseInt(moment().add(10, 'years').format('YYYY'))
+    
     this.pickerRef.daterangepicker({
-      singleDatePicker: true
+      singleDatePicker: true,
+      showDropdowns: true,
+      minYear: yearSpan.min || 1930,
+      maxYear: yearSpan.max || defaultMaxYear
     }, (date) => {
       this.setState({value: date.format('l')})
     })
   }
 
-  componentWillUnmount () {
-    document.removeEventListener('click', this.handleOffClick);
-  };
-
-
-
   render() {
+    const { placeholder } = this.props;
     return (
       <div
       ref={picker => {
@@ -42,8 +44,8 @@ class DatePicker extends Component {
         <input
           className="gc-drop-down__value__text gc-drop-down__value__text--input"
           type='text'
-          value={!this.state.value ? '' : this.state.value}
-          placeholder={this.props.placeholder}
+          value={this.state.value}
+          placeholder={placeholder}
           readOnly
           />
         <GCIcon kind='calendarIcon' extendedClassNames='gc-drop-down__caret' />
@@ -53,6 +55,9 @@ class DatePicker extends Component {
   }
 }
 
+DatePicker.propTypes = {
+    yearSpan: PropTypes.array
+  };
 
 DatePicker.defaultProps = {
   placeholder: 'Select Date'
