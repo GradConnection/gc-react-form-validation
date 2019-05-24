@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
 import { CalendarHeader } from './Header'
-import { DateView, MonthView, YearView } from './Views'
-import { CalendarControls } from './Controls'
+import { DateView, MonthView, YearView } from '../../UI/GCCalendar/Views'
+import { CalendarControls } from '../../UI/GCCalendar/Controls'
 
 import { getPrevMonth, getNextMonth, monthNameArray, isEmpty } from 'utils'
 
