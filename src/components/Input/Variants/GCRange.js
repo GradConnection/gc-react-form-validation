@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import Slider from 'rc-slider';
 
 class GCRange extends PureComponent {
