@@ -6,19 +6,19 @@ const GCRange = ({
   min,
   max,
   handleInputChange,
-  value
+  defaultValue
 }) => {
   const { createSliderWithTooltip } = Slider;
   const Range = createSliderWithTooltip(Slider.Range);
 
-  const currentValue = Array.isArray(value) ? value : [min, max];
+  const defaultRange = Array.isArray(defaultValue) ? defaultValue : [min, max];
 
   return (
     <Range
       min={min}
       max={max}
       onAfterChange={handleInputChange}
-      value={currentValue}
+      defaultValue={defaultRange}
       tipFormatter={v => `${v}`}
       marks={{ [min]: min, [max]: max }}
     />);
