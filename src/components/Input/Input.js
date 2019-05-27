@@ -38,8 +38,7 @@ class Input extends Component {
       nextProps.description !== this.props.description ||
       nextProps.helperText !== this.props.helperText ||
       nextProps.formSubmitted !== this.props.formSubmitted ||
-      nextProps.disabled !== this.props.disabled ||
-      nextProps.defaultValue !== this.props.defaultValue
+      nextProps.disabled !== this.props.disabled
     )
   }
 
