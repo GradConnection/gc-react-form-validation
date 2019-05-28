@@ -27,7 +27,7 @@ class GCDateRangePicker extends Component {
     document.addEventListener('click', this.handleActivateCalendar)
   }
 
-  componentWillMount () {
+  componentWillUnmount () {
     document.removeEventListener('click', this.handleActivateCalendar)
   }
 
