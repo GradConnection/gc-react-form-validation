@@ -7,7 +7,7 @@ import { isEmpty, getLabel, toArray } from 'utils'
 import { GCIcon, GCTag } from 'ui'
 
 class GCMultiSelect extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.searchActivate = {
@@ -41,30 +41,30 @@ class GCMultiSelect extends Component {
     this.onInputClick = this.onInputClick.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     document.addEventListener('click', this.handleWindowClick)
     document.addEventListener('keydown', this.handleKeyPress)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     document.removeEventListener('click', this.handleWindowClick)
     document.removeEventListener('keydown', this.handleKeyPress)
   }
 
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     const { isSearchActive, searchTerm, options } = this.state
-if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
-  if (searchTerm === '') {
-    this.setState({
-      options: this.props.options
-    })
-  }
-  this.textInput.current.focus()
+    if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
+      if (searchTerm === '') {
+        this.setState({
+          options: this.props.options
+        })
       }
+      this.textInput.current.focus()
     }
-  
+  }
 
-  handleWindowClick (e) {
+
+  handleWindowClick(e) {
     if (!this.select.current.contains(e.target) && this.state.isFocussed) {
       this.setState({
         isActive: false,
@@ -76,7 +76,7 @@ if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
     }
   }
 
-  handleKeyPress (e) {
+  handleKeyPress(e) {
     const { options, index, isActive, isFocussed } = this.state
     if (isActive && isFocussed) {
       if (e.keyCode === 13) {
@@ -95,7 +95,7 @@ if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
     }
   }
 
-  activateDropDown () {
+  activateDropDown() {
     const activeState = {
       isActive: true,
       isFocussed: true
@@ -109,7 +109,7 @@ if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
     this.setState(activeState)
   }
 
-  onEnterKeyPress (e) {
+  onEnterKeyPress(e) {
     e.preventDefault()
 
     const { options, index } = this.state
@@ -122,26 +122,26 @@ if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
     })
   }
 
-  onUpKeyPress (e) {
+  onUpKeyPress(e) {
     const { index } = this.state
 
     e.preventDefault()
     this.setState({ index: index - 1 })
   }
 
-  onDownKeyPress (e) {
+  onDownKeyPress(e) {
     const { index } = this.state
     e.preventDefault()
     this.setState({ index: index + 1 })
   }
 
-  onTagCrossBtnClick (e, value) {
+  onTagCrossBtnClick(e, value) {
     e.preventDefault()
     const newValueArray = this.removeItemFromValueArray(value)
     this.props.handleInputChange(newValueArray)
   }
 
-  handleOnFocusEffect () {
+  handleOnFocusEffect() {
     this.setState({
       options: this.props.options
     })
@@ -160,7 +160,7 @@ if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
     }
   }
 
-  handleOnBlurEffect () {
+  handleOnBlurEffect() {
     this.setState({
       isActive: false,
       isFocussed: false,
@@ -170,7 +170,7 @@ if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
     this.props.handleInputValidation(this.props.value)
   }
 
-  onSearchInputChange (e) {
+  onSearchInputChange(e) {
     const searchTerm = e.target.value
     const { options } = this.props
 
@@ -187,7 +187,7 @@ if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
     this.setState(newState)
   }
 
-  onInputClick (e) {
+  onInputClick(e) {
     e.preventDefault()
     if (this.props.search) {
       if (!this.state.isActive) {
@@ -207,7 +207,7 @@ if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
     }
   }
 
-  onOptionMouseDown (e, value) {
+  onOptionMouseDown(e, value) {
     e.preventDefault()
     this.handleInputChange(value)
     this.setState({
@@ -215,7 +215,7 @@ if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
     })
   }
 
-  handleInputChange (newValue) {
+  handleInputChange(newValue) {
     const { value } = this.props
 
     let newValueArray = []
@@ -228,66 +228,85 @@ if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
     this.props.handleInputChange(newValueArray)
   }
 
-  removeItemFromValueArray (item) {
+  removeItemFromValueArray(item) {
     return this.props.value.filter(v => v !== item)
   }
 
-  addItemToValueArray (item) {
+  addItemToValueArray(item) {
     const newValueArray = toArray(this.props.value).splice(0)
     newValueArray.push(item)
     return newValueArray
   }
 
-  computeItemClassList (selectV, itemV, index) {
+  computeItemClassList(selectV, itemV, index) {
     return classNames('gc-select__list-item', {
       'gc-select__list-item--selected': selectV.includes(itemV),
       'gc-select__list-item--hovered': this.state.index === index
     })
   }
 
-  renderTags (valueArray) {
+  renderTags(valueArray) {
     return toArray(valueArray).map(value => (
       <GCTag key={value}
         onCrossBtnClick={e => this.onTagCrossBtnClick(e, value)}>{getLabel(value, this.props.options)}</GCTag>
     ))
   }
 
-  render () {
+  render() {
     const {
       value,
       name
     } = this.props
-    const { isActive, isFocussed, options, placeholder } = this.state
+    const { isActive, isFocussed, options, placeholder } = this.state;
 
-    const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
-      'gc-input__el--active': isActive || isFocussed
-    })
+    const selectClasses = classNames(
+      'gc-input__el',
+      'gc-input__el--no-padding', {
+        'gc-input__el--active': isActive || isFocussed
+      });
+
+    const containerClasses = classNames('gc-select__list-container', {
+      'gc-select__list-container__empty': isEmpty(value)
+    });
+
+    const listInputClasses = classNames(
+      'gc-drop-down__value__text', 'gc-select__input', {
+        'gc-drop-down__value__text--input gc-drop-down__value__text--input-inline': !isEmpty(value),
+        'gc-input__el': isEmpty(value)
+      });
+
     return (
-      <div
-        className={selectClasses}
-        ref={this.select}>
+      <div className='gc-select__multi-container'>
         <div
-          ref={this.textInput}
-          role='button'
-          className='gc-drop-down__value'
-          onFocus={this.handleOnFocusEffect}
-          onClick={this.onInputClick}>
-          {isEmpty(value) && !isFocussed && (
-            <input
+          className={selectClasses}
+          ref={this.select}>
+          <div
+            ref={this.textInput}
+            role='button'
+            className='gc-drop-down__value'
+            onFocus={this.handleOnFocusEffect}
+            onClick={this.onInputClick}>
+            {isEmpty(value) && (
+              <input
+                className='gc-drop-down__value__text gc-drop-down__value__text--input'
+                value=''
+                placeholder={placeholder}
+                readOnly
+              />
+            )}
+            <span
               className='gc-drop-down__value__text gc-drop-down__value__text--input'
-              value=''
-              placeholder={placeholder}
-              readOnly
-            />
-          )}
-          <span
-            className='gc-drop-down__value__text gc-drop-down__value__text--input'
-            onBlur={this.handleOnBlurEffect}
-          >
-            {this.renderTags(value)}
+              onBlur={this.handleOnBlurEffect}
+            >
+              {this.renderTags(value)}
+            </span>
+            <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
+          </div>
+
+          <div className={containerClasses}>
             {this.props.search && isFocussed && (
               <input
-                className='gc-drop-down__value__text gc-drop-down__value__text--input gc-drop-down__value__text--input-inline'
+                className={listInputClasses}
                 type='text'
                 autoFocus
                 value={this.state.searchTerm}
@@ -297,29 +316,27 @@ if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
                 placeholder='Start typing to search'
               />
             )}
-          </span>
-          <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
+            {isActive && (
+              <ul className='gc-drop-down__el gc-select__list'>
+                {options.length > 0 ?
+                  options.map((opt, i) => (
+                    <li
+                      key={`${i}_select_${name}`}
+                      className={this.computeItemClassList(value, opt.value, i)}
+                      onMouseDown={e => this.onOptionMouseDown(e, opt.value)}>
+                      {opt.label}
+                    </li>
+                  )) : (
+                    <li
+                      key={`$noOpt_select_${name}`}
+                      className='gc-select__list-item gc-select__list-item--no-opt'>
+                      <i>There are no available options</i>
+                    </li>
+                  )}
+              </ul>
+            )}
+          </div>
         </div>
-
-        {isActive && (
-          <ul className='gc-drop-down__el gc-select__list'>
-            { options.length > 0 ?
-              options.map((opt, i) => (
-                <li
-                  key={`${i}_select_${name}`}
-                  className={this.computeItemClassList(value, opt.value, i)}
-                  onMouseDown={e => this.onOptionMouseDown(e, opt.value)}>
-                  {opt.label}
-                </li>
-              )) : (
-                <li
-                  key={`$noOpt_select_${name}`}
-                  className='gc-select__list-item gc-select__list-item--no-opt'>
-                  <i>There are no available options</i>
-                </li>
-              )}
-          </ul>
-        )}
       </div>
     )
   }

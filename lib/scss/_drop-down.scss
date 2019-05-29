@@ -54,6 +54,8 @@
   }
 
   .gc-drop-down__caret {
+    z-index: 1;
+
     svg {
       margin-top: 0.2rem;
       height: 1.5rem;
