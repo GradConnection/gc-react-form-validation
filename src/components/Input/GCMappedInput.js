@@ -11,7 +11,8 @@ import {
   GCSelect,
   GCSelectExternalSearch,
   GCDatePicker,
-  GCDateRangePicker
+  GCDateRangePicker,
+  GCRange
 } from './Variants'
 
 const GCMappedInput = props => {
@@ -66,29 +67,36 @@ const GCMappedInput = props => {
           handleInputChange={handleInputChange}
           handleInputValidation={handleInputValidation} />
       ) : (
-        typeof onSearchInputFunction === "function"
-         ? (<GCSelectExternalSearch
-            name={xtra.name}
-            value={xtra.value}
-            options={xtra.options}
-            search={search}
-            onSearchInputFunction={onSearchInputFunction}
-            disabled={xtra.disabled}
-            placeholder={xtra.placeholder}
-            handleInputChange={handleInputChange}
-            handleInputValidation={handleInputValidation} />) :
+          typeof onSearchInputFunction === "function"
+            ? (<GCSelectExternalSearch
+              name={xtra.name}
+              value={xtra.value}
+              options={xtra.options}
+              search={search}
+              onSearchInputFunction={onSearchInputFunction}
+              disabled={xtra.disabled}
+              placeholder={xtra.placeholder}
+              handleInputChange={handleInputChange}
+              handleInputValidation={handleInputValidation} />) :
             (<GCSelect
               name={xtra.name}
               value={xtra.value}
               options={xtra.options}
               search={search}
-               disabled={xtra.disabled}
+              disabled={xtra.disabled}
               placeholder={xtra.placeholder}
               handleInputChange={handleInputChange}
               handleInputValidation={handleInputValidation} />)
         )
     case 'password':
       return <GCPassword {...props} />
+    case 'range':
+      return <GCRange
+        min={xtra.min}
+        max={xtra.max}
+        handleInputChange={handleInputChange}
+        defaultValue={defaultValue}
+      />
     default:
       return (
         <input
