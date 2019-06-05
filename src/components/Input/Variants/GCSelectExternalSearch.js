@@ -11,8 +11,7 @@ class GCSelectExternalSearch extends Component {
   constructor(props) {
     super(props)
 
-    this.searchReset = {
-      options: props.options,
+    this.searchReset = {      
       searchTerm: '',
       isSearchActive: false,
       placeholder: props.placeholder || 'Select an option'
@@ -23,6 +22,7 @@ class GCSelectExternalSearch extends Component {
       isFocussed: false,
       index: -1,
       localLoadingNewResults: false,
+      options: props.options, // it's important not to put options in searchReset, otherwise SSR might not initially populate options
       ...this.searchReset
     }
 
@@ -69,7 +69,8 @@ class GCSelectExternalSearch extends Component {
     if (!this.select.current.contains(e.target) && e.target !== this.textInput) {
       this.setState({
         isActive: false,
-        ...this.searchReset
+        ...this.searchReset,
+        options: this.props.options
       })
     }
   }
@@ -113,7 +114,8 @@ class GCSelectExternalSearch extends Component {
     this.setState({
       isActive: false,
       index: -1,
-      ...this.searchReset
+      ...this.searchReset,
+      options: this.props.options
     }, () => {
       if (options && index > -1 && options[index].value !== value) {
         handleInputChange(options[index].value)
@@ -122,7 +124,8 @@ class GCSelectExternalSearch extends Component {
         this.setState({
           isActive: false,
           index: -1,
-          ...this.searchReset
+          ...this.searchReset,
+          options: this.props.options
         })
       }
     })
@@ -215,7 +218,8 @@ class GCSelectExternalSearch extends Component {
 
     this.setState({
       isActive: false,
-      ...this.searchReset
+      ...this.searchReset,
+      options: this.props.options
     }, () => {
       if (value === this.props.value) {
         handleInputChange('')

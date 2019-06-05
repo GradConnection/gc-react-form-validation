@@ -15,7 +15,6 @@ class GCMultiSelect extends Component {
       placeholder: 'Start typing to search'
     }
     this.searchReset = {
-      options: props.options,
       searchTerm: '',
       isSearchActive: false,
       placeholder: props.placeholder || 'Select options'
@@ -24,7 +23,8 @@ class GCMultiSelect extends Component {
       isActive: false,
       isFocussed: false,
       index: -1,
-      ...this.searchReset
+      options: props.options, // it's important not to put options in searchReset, otherwise SSR might not initially populate options
+      ...this.searchReset 
     }
 
     this.textInput = React.createRef()
@@ -70,7 +70,8 @@ class GCMultiSelect extends Component {
         isActive: false,
         isFocussed: false,
         index: -1,
-        ...this.searchReset
+        ...this.searchReset,
+        options:this.props.options
       })
       this.props.handleInputValidation(this.props.value)
     }
@@ -114,7 +115,8 @@ class GCMultiSelect extends Component {
 
     const { options, index } = this.state
     this.setState({
-      ...this.searchReset
+      ...this.searchReset,
+      options:this.props.options
     }, () => {
       if (index > -1) {
         this.handleInputChange(options[index].value)
@@ -165,7 +167,8 @@ class GCMultiSelect extends Component {
       isActive: false,
       isFocussed: false,
       index: -1,
-      ...this.searchReset
+      ...this.searchReset,
+      options:this.props.options
     })
     this.props.handleInputValidation(this.props.value)
   }
@@ -211,7 +214,8 @@ class GCMultiSelect extends Component {
     e.preventDefault()
     this.handleInputChange(value)
     this.setState({
-      ...this.searchReset
+      ...this.searchReset,
+      options:this.props.options
     })
   }
 

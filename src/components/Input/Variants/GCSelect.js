@@ -12,7 +12,6 @@ class GCSelect extends Component {
     super(props)
 
     this.searchReset = {
-      options: props.options,
       searchTerm: '',
       isSearchActive: false,
       placeholder: props.placeholder || 'Select an option'
@@ -22,7 +21,8 @@ class GCSelect extends Component {
       isActive: false,
       isFocussed: false,
       index: -1,
-      ...this.searchReset
+      options: props.options, // it's important not to put options in searchReset, otherwise SSR might not initially populate options
+      ...this.searchReset 
     }
 
     this.textInput = React.createRef()
@@ -59,7 +59,8 @@ class GCSelect extends Component {
     if (!this.select.current.contains(e.target) && e.target !== this.textInput) {
       this.setState({
         isActive: false,
-        ...this.searchReset
+        ...this.searchReset,
+        options: this.props.options
       })
     }
   }
@@ -103,7 +104,8 @@ class GCSelect extends Component {
     this.setState({
       isActive: false,
       index: -1,
-      ...this.searchReset
+      ...this.searchReset,
+      options: this.props.options
     }, () => {
       if (options && index > -1 && options[index].value !== value) {
         handleInputChange(options[index].value)
@@ -112,7 +114,8 @@ class GCSelect extends Component {
         this.setState({
           isActive: false,
           index: -1,
-          ...this.searchReset
+          ...this.searchReset,
+          options: this.props.options
         })
       }
     })
@@ -200,7 +203,8 @@ class GCSelect extends Component {
 
     this.setState({
       isActive: false,
-      ...this.searchReset
+      ...this.searchReset,
+      options: this.props.options
     }, () => {
       if (value === this.props.value) {
         handleInputChange('')
