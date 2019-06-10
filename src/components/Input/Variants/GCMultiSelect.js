@@ -273,7 +273,7 @@ class GCMultiSelect extends Component {
       name
     } = this.props
     const { isActive, isFocussed, options, placeholder } = this.state;
-    
+
     const selectClasses = classNames(
       'gc-input__el',
       'gc-input__el--no-padding', {
