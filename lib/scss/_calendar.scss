@@ -3,18 +3,40 @@
   justify-content: center;
   padding: 0 0.8rem;
 
+  //Edge
+  @supports (-ms-ime-align: auto) {
+    width: 290px;
+  }
+
+  // IE 11
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    width: 290px;
+  }
+
   .gc-calendar__main {
     display: flex;
     padding: 1rem 0;
+
+    //Edge
+    @supports (-ms-ime-align: auto) {
+      flex-grow: 1;
+    }
+
+    // IE 11
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      flex-grow: 1;
+    }
   }
 
   .gc-calendar__content--wrapper {
     display: flex;
+    flex-grow: inherit;
   }
 
   .gc-calendar__content {
     min-width: 220px;
     min-height: 180px;
+    flex-grow: inherit;
   }
 
   .gc-calendar__content--right {
@@ -42,6 +64,11 @@
         width: 0.5rem;
         stroke-width: 10px;
         stroke: $gc-form-dark-grey;
+
+        // IE 11
+        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+          height: 0.5rem;
+        }
       }
     }
   }
@@ -63,6 +90,14 @@
 
     &.gc-calendar__controls__btn--left svg {
       transform: rotateZ(180deg);
+    }
+  }
+
+  .gc-calendar__body__row {
+
+    //Edge
+    @supports (-ms-ime-align: auto) {
+      display: flex;
     }
   }
 

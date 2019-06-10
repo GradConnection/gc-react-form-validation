@@ -35,17 +35,14 @@
       position: relative;
       padding: 0.5rem 1rem;
       width: 100%;
-
-      &:focus {
-        border-left: 1px solid $gc-form-dark-grey;
-        border-right: 1px solid $gc-form-dark-grey;
-      }
-      
+      border-left: 1px solid $gc-form-dark-grey;
+      border-right: 1px solid $gc-form-dark-grey;      
     }
 
     .gc-select__list {
       overflow-y: scroll;
       max-height: 300px;
+      overflow-x: hidden;
     }
 
     .gc-select__list-item {

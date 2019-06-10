@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import { GCIcon, GCCalendar } from 'ui'
-import { isEmpty } from 'utils'
+import { isEmpty, getDateFromString } from 'utils'
 
 class GCDatePicker extends Component {
   constructor (props) {
@@ -83,7 +83,7 @@ class GCDatePicker extends Component {
   }
 
   formatDate (date) {
-    const dateObj = new Date(date)
+    const dateObj = getDateFromString(date);
     const formatDayForSafari = dateObj.getDate() < 10 ? `0${dateObj.getDate()}` : dateObj.getDate()
     const formatMonthForSafari = dateObj.getMonth() + 1 < 10 ? `0${dateObj.getMonth() + 1}` : dateObj.getMonth() + 1
     return `${dateObj.getFullYear()}-${formatMonthForSafari}-${formatDayForSafari}`

@@ -75,6 +75,10 @@ input.gc-input__el,
   svg {
     width: 0.5rem;
 
+    // IE 11
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      height: 0.5rem;
+    }
   }
 }
 

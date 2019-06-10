@@ -29,6 +29,8 @@ class GCMultiSelect extends Component {
 
     this.textInput = React.createRef()
     this.select = React.createRef()
+    this.input = React.createRef()
+    this.listContainer = React.createRef()
 
     this.onSearchInputChange = this.onSearchInputChange.bind(this)
 
@@ -39,6 +41,7 @@ class GCMultiSelect extends Component {
 
     this.onTagCrossBtnClick = this.onTagCrossBtnClick.bind(this)
     this.onInputClick = this.onInputClick.bind(this)
+    this.onContainerMouseDown = this.onContainerMouseDown.bind(this)
   }
 
   componentDidMount() {
@@ -143,34 +146,38 @@ class GCMultiSelect extends Component {
     this.props.handleInputChange(newValueArray)
   }
 
-  handleOnFocusEffect() {
-    this.setState({
-      options: this.props.options
-    })
-
-    if (this.props.search) {
-      this.setState({
-        isActive: true,
-        isFocussed: true,
-        ...this.searchActivate
-      })
+  handleOnFocusEffect(e) {
+    if(e.target === this.textInput.current && this.input.current) {
+      this.input.current.focus();
     } else {
-      this.setState({
-        isActive: true,
-        isFocussed: true
-      })
+      if (this.props.search) {
+        this.setState({
+          isActive: true,
+          isFocussed: true,
+          ...this.searchActivate
+        })
+      } else {
+        this.setState({
+          isActive: true,
+          isFocussed: true
+        })
+      }
     }
   }
 
-  handleOnBlurEffect() {
-    this.setState({
-      isActive: false,
-      isFocussed: false,
-      index: -1,
-      ...this.searchReset,
-      options:this.props.options
-    })
-    this.props.handleInputValidation(this.props.value)
+  handleOnBlurEffect(e) {
+    if (document.activeElement !== this.listContainer.current && 
+        document.activeElement !== this.textInput.current &&
+        document.activeElement !== this.input.current) {
+      this.setState({
+        isActive: false,
+        isFocussed: false,
+        index: -1,
+        ...this.searchReset,
+        options:this.props.options
+      })
+      this.props.handleInputValidation(this.props.value)
+    }
   }
 
   onSearchInputChange(e) {
@@ -256,13 +263,17 @@ class GCMultiSelect extends Component {
     ))
   }
 
+  onContainerMouseDown(e) {
+    this.textInput.current.focus();
+  }
+
   render() {
     const {
       value,
       name
     } = this.props
     const { isActive, isFocussed, options, placeholder } = this.state;
-
+    
     const selectClasses = classNames(
       'gc-input__el',
       'gc-input__el--no-padding', {
@@ -283,7 +294,8 @@ class GCMultiSelect extends Component {
       <div className='gc-select__multi-container'>
         <div
           className={selectClasses}
-          ref={this.select}>
+          ref={this.select}
+          onMouseDown={this.onContainerMouseDown}>
           <div
             ref={this.textInput}
             role='button'
@@ -307,9 +319,12 @@ class GCMultiSelect extends Component {
             <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
           </div>
 
-          <div className={containerClasses}>
+          <div 
+            className={containerClasses}
+            ref={this.listContainer}>
             {this.props.search && isFocussed && (
               <input
+                ref={this.input}
                 className={listInputClasses}
                 type='text'
                 autoFocus
