@@ -48,6 +48,15 @@ input.gc-input__el,
   .gc-input__el {
     padding-right: 4rem;
   }
+
+  .gc-icon {
+    svg {
+      // IE 11
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        height: 2rem;
+      }
+    }
+  }
 }
 
 .gc-btn--icon {
