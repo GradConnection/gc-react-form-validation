@@ -58,7 +58,7 @@ class GCCheckbox extends Component {
   }
 
   renderSingleCheckbox () {
-    const { name, value, label, required } = this.props
+    const { name, value, label, required, disabled } = this.props
 
     return (
       <div
@@ -72,14 +72,14 @@ class GCCheckbox extends Component {
           checked={!!value}
           onChange={e => e.preventDefault()}
         />
-        <span className='gc-input__inline-icon gc-checkbox__icon' onClick={this.onSingleCheckboxClick} />
+        <span className='gc-input__inline-icon gc-checkbox__icon' onClick={!disabled && this.onSingleCheckboxClick} />
         <label className={`gc-input__inline-label ${required ? 'gc-label__text--required' : ''}`}>{ReactHtmlParser(label)}</label>
       </div>
     )
   }
 
   renderMultipleCheckboxes () {
-    const { name, value, options, title } = this.props
+    const { name, value, options, title } = this.props;
     return (
       <ul
         className='gc-input__el gc-input--list'
