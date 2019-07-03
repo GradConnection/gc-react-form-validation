@@ -28,6 +28,9 @@ const DateView
         return displayDate.getMonth() === d.getMonth() ? d.getDate() : undefined
       })
     }
+
+    if (!date || !(date instanceof Date)) return undefined;
+    
     return date.getDate()
   }
 
