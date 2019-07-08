@@ -172,4 +172,10 @@ input.gc-input__el,
   .gc-drop-down__value__text {
     color: $gc-form-med-grey;
   }
+  
+  // Checkbox disable
+  .gc-input__inline-icon {
+    border-color: $gc-form-med-grey;
+    cursor: initial;
+  }
 }
