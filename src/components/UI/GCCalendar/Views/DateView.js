@@ -1,14 +1,25 @@
 import React from 'react'
 
-import { dayShortNameArray, getFirstDayOfMonth, getLastDayOfMonth, getMonthLength, getPrevMonth, getNextMonth } from 'utils'
+import { 
+  dayShortNameArray, 
+  getFirstDayOfMonth, 
+  getLastDayOfMonth, 
+  getMonthLength, 
+  getPrevMonth, 
+  getDateFromString
+} from 'utils'
 
 const DateView
  = ({ displayDate, valueDate, onDateClick, type = 'picker' }) => {
   const getValueDate = (valueDate, type) => {
     if (type.startsWith('range')) {
-      return [new Date(valueDate.start), new Date(valueDate.end)]
+      return [
+        getDateFromString(valueDate.start),
+        getDateFromString(valueDate.end)
+      ]
     }
-    return new Date(valueDate)
+    
+    return getDateFromString(valueDate);
   }
 
   const getSelectedDates = (date, type) => {
@@ -17,6 +28,9 @@ const DateView
         return displayDate.getMonth() === d.getMonth() ? d.getDate() : undefined
       })
     }
+
+    if (!date || !(date instanceof Date)) return undefined;
+    
     return date.getDate()
   }
 
@@ -84,9 +98,8 @@ const DateView
     </div>)
   }
 
-  const dayArray = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
   const weekDays = (<div className='gc-calendar__body__row gc-calendar__body__row--weekdays'>
-    {dayArray.map(day => (<div className='gc-calendar__body__cell' >{day}</div>))}
+    {dayShortNameArray.map(day => (<div className='gc-calendar__body__cell' >{day[0]}</div>))}
   </div>)
 
   return (
