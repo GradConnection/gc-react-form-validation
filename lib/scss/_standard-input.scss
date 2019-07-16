@@ -48,6 +48,15 @@ input.gc-input__el,
   .gc-input__el {
     padding-right: 4rem;
   }
+
+  .gc-icon {
+    svg {
+      // IE 11
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        height: 2rem;
+      }
+    }
+  }
 }
 
 .gc-btn--icon {
@@ -75,6 +84,10 @@ input.gc-input__el,
   svg {
     width: 0.5rem;
 
+    // IE 11
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      height: 0.5rem;
+    }
   }
 }
 
@@ -158,5 +171,11 @@ input.gc-input__el,
 
   .gc-drop-down__value__text {
     color: $gc-form-med-grey;
+  }
+  
+  // Checkbox disable
+  .gc-input__inline-icon {
+    border-color: $gc-form-med-grey;
+    cursor: initial;
   }
 }

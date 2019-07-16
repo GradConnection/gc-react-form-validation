@@ -17,7 +17,7 @@ module.exports = {
     alias: {
       utils: path.resolve(__dirname, 'src/utils.js'),
       translations: path.resolve(__dirname, 'src/translations.js'),
-      ui: path.resolve(__dirname, 'src/components/ui/index.js')
+      ui: path.resolve(__dirname, 'src/components/UI/index.js')
     }
   },
   module: {

@@ -97,3 +97,11 @@ export const getMonthName = date => {
 export const getMonthLength = date => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
 
 export const getYear = date => date.getFullYear()
+
+export const getDateFromString = dateString => {
+  if (typeof dateString !== 'string') return dateString;
+  let date = new Date(dateString);
+  // Differrent timezones issue fix
+  date.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+  return date;
+}

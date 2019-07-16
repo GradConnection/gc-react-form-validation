@@ -1,9 +1,48 @@
 .gc-input--select {
+
+  .gc-select__multi-container {
+    position: relative;
+    width: 100%;
+  }
+
   .gc-input__el {
+
+    .gc-select__list-container {
+      width: 100%;
+      position: absolute;
+      left: 0;
+
+      &__empty {
+        top: 0;
+        border-left: 0;
+        border-right: 0;
+
+        .gc-select__input {
+          padding-right: 2rem;
+          z-index: 0;
+          height: auto;
+
+          &:focus {
+            border-radius: 0.2rem 0.2rem 0 0;
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+    
+    .gc-select__input {
+      z-index: 1;
+      position: relative;
+      padding: 0.5rem 1rem;
+      width: 100%;
+      border-left: 1px solid $gc-form-dark-grey;
+      border-right: 1px solid $gc-form-dark-grey;      
+    }
 
     .gc-select__list {
       overflow-y: scroll;
       max-height: 300px;
+      overflow-x: hidden;
     }
 
     .gc-select__list-item {
