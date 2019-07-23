@@ -80,9 +80,9 @@ class Form extends Component {
     if (displayErrorMessage && !isEmpty(submissionErrorMessages) && isEmptyObject(errorObj)) {
       let submissionError = submissionErrorMessages
       if (typeof submissionErrorMessages === 'object') {
-        Object.keys(submissionErrorMessages).map(function(key, index) {
-        console.log('submissionErrorMessages', submissionErrorMessages[key])
-        submissionError = submissionErrorMessages[key]
+        Object.keys(submissionErrorMessages).map(function (key, index) {
+          console.log('submissionErrorMessages', submissionErrorMessages[key])
+          submissionError = submissionErrorMessages[key]
         })
       }
       return (<GCFormErrorMessage error={submissionError} />)
@@ -158,7 +158,7 @@ class Form extends Component {
   }
 
   render() {
-    const { extendedClassNames, ref, id, description, children, data } = this.props
+    const { extendedClassNames, formRef, id, description, children, data } = this.props
 
     const formClasses = classnames('gc-form', {
       [extendedClassNames]: extendedClassNames
@@ -166,7 +166,7 @@ class Form extends Component {
 
     return (
       <form
-        ref={ref}
+        ref={formRef}
         id={id}
         className={formClasses}
         onSubmit={e => this.onFormSubmission(e)}
@@ -186,7 +186,7 @@ Form.propTypes = {
   data: PropTypes.object.isRequired,
   children: PropTypes.func.isRequired,
 
-  ref: PropTypes.func,
+  formRef: PropTypes.object,
   description: PropTypes.string,
   submissionErrorMessages: PropTypes.oneOfType([
     PropTypes.array,
