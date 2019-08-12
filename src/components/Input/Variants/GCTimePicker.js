@@ -13,11 +13,14 @@ class GCTimePicker extends Component {
   }
 
   render() {
-    <div className="gc-input__el" >
-      <TimePicker
-        onChange={this.handleValueChange}
-      />
-    </div>
+    return (
+      <div className="gc-input__el" >
+        <TimePicker
+          {...this.props}
+          onChange={this.handleValueChange}
+        />
+      </div>
+    )
   }
 };
 
