@@ -13,6 +13,7 @@ import {
   GCDatePicker,
   GCDateRangePicker,
   GCRange
+  GCTimePicker
 } from './Variants'
 
 const GCMappedInput = props => {
@@ -97,6 +98,8 @@ const GCMappedInput = props => {
         handleInputChange={handleInputChange}
         defaultValue={defaultValue}
       />
+    case 'time':
+      return <GCTimePicker {...props} />
     default:
       return (
         <input
