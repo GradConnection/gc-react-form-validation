@@ -12,7 +12,7 @@ import {
   GCSelectExternalSearch,
   GCDatePicker,
   GCDateRangePicker,
-  GCRange
+  GCRange,
   GCTimePicker
 } from './Variants'
 

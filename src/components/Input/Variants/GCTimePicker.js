@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import TimePicker from 'rc-time-picker';
 
 class GCTimePicker extends Component {
+  constructor(props) {
+    super(props);
 
-  handleValueChange = () => {
+    this.handleValueChange = this.handleValueChange.bind(this);
+  }
+
+  handleValueChange() {
     console.log('handleValueChange');
   }
 
