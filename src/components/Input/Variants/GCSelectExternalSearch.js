@@ -11,7 +11,7 @@ class GCSelectExternalSearch extends Component {
   constructor(props) {
     super(props)
 
-    this.searchReset = {      
+    this.searchReset = {
       searchTerm: '',
       isSearchActive: false,
       placeholder: props.placeholder || 'Select an option'
@@ -187,7 +187,7 @@ class GCSelectExternalSearch extends Component {
         this.props.onSearchInputFunction(e.target.value)
         this.setState({ localLoadingNewResults: true });
       }
-      newState.options = filteredOptions;      
+      newState.options = filteredOptions;
     }
     this.setState(newState);
   }
@@ -251,6 +251,8 @@ class GCSelectExternalSearch extends Component {
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
       'gc-input__el--active': isActive || isFocussed
     })
+    const inputClasses = 'gc-drop-down__value__text gc-drop-down__value__text__autoselect gc-drop-down__value__text--input'
+
     return (
       <div
         className={selectClasses}
@@ -262,7 +264,7 @@ class GCSelectExternalSearch extends Component {
           onMouseUp={this.onInputMouseUp}>
           <input
             ref={this.textInput}
-            className='gc-drop-down__value__text gc-drop-down__value__text--input'
+            className={inputClasses}
             type='text'
             value={this.computeInputValue(value, options, isSearchActive, searchTerm)}
             onChange={this.onSearchInputChange}

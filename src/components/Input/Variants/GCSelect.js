@@ -22,7 +22,7 @@ class GCSelect extends Component {
       isFocussed: false,
       index: -1,
       options: props.options, // it's important not to put options in searchReset, otherwise SSR might not initially populate options
-      ...this.searchReset 
+      ...this.searchReset
     }
 
     this.textInput = React.createRef()
@@ -52,7 +52,7 @@ class GCSelect extends Component {
     const { isSearchActive } = this.state
     if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
       this.textInput.current.focus()
-    }   
+    }
   }
 
   handleWindowClick(e) {
@@ -169,7 +169,7 @@ class GCSelect extends Component {
     const searchTerm = e.target.value
     const { options } = this.props
     const filteredOptions = options.filter(opt => opt.label.toLowerCase().includes(searchTerm.toLowerCase()))
-    
+
 
     this.setState({
       searchTerm: e.target.value,
@@ -236,6 +236,8 @@ class GCSelect extends Component {
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
       'gc-input__el--active': isActive || isFocussed
     })
+    const inputClasses = 'gc-drop-down__value__text gc-drop-down__value__text__autoselect gc-drop-down__value__text--input'
+
     return (
       <div
         className={selectClasses}
@@ -247,7 +249,7 @@ class GCSelect extends Component {
           onMouseUp={this.onInputMouseUp}>
           <input
             ref={this.textInput}
-            className='gc-drop-down__value__text gc-drop-down__value__text--input'
+            className={inputClasses}
             type='text'
             value={this.computeInputValue(value, options, isSearchActive, searchTerm)}
             onChange={this.onSearchInputChange}
