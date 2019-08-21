@@ -99,7 +99,16 @@ const GCMappedInput = props => {
         defaultValue={defaultValue}
       />
     case 'time':
-      return <GCTimePicker {...props} />
+      return <GCTimePicker
+        onInputChange={handleInputChange}
+        handleInputValidation={handleInputValidation}
+        name={xtra.name}
+        value={xtra.value}
+        defaultValue={xtra.defaultValue}
+        disabled={xtra.disabled}
+        format={xtra.format}
+        date={xtra.date}
+      />
     default:
       return (
         <input
