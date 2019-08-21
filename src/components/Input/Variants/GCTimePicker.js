@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import TimePicker from 'rc-time-picker';
 import moment from 'moment';
+import PropTypes from 'prop-types'
 
 class GCTimePicker extends Component {
   constructor(props) {
     super(props);
 
-    this.defaultFormat = 'HH:mm';
     this.getTimeFormat = this.getTimeFormat.bind(this);
     this.getMomentTime = this.getMomentTime.bind(this);
     this.handleValueChange = this.handleValueChange.bind(this);
@@ -14,7 +14,7 @@ class GCTimePicker extends Component {
   }
 
   getTimeFormat() {
-    return this.props.format || this.defaultFormat;
+    return this.props.format;
   }
 
   getMomentTime(value) {
@@ -62,6 +62,20 @@ class GCTimePicker extends Component {
       </div>
     )
   }
+};
+
+GCTimePicker.propTypes = {
+  onInputChange: PropTypes.func,
+  handleInputValidation: PropTypes.func,
+  name: PropTypes.string,
+  value: PropTypes.string,
+  defaultValue: PropTypes.string,
+  disabled: PropTypes.bool,
+  format: PropTypes.string
+};
+
+GCTimePicker.defaultProps = {
+  format: 'HH:mm'
 };
 
 export { GCTimePicker };

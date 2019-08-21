@@ -107,7 +107,6 @@ const GCMappedInput = props => {
         defaultValue={xtra.defaultValue}
         disabled={xtra.disabled}
         format={xtra.format}
-        date={xtra.date}
       />
     default:
       return (
