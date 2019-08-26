@@ -24,7 +24,7 @@ class GCMultiSelect extends Component {
       isFocussed: false,
       index: -1,
       options: props.options, // it's important not to put options in searchReset, otherwise SSR might not initially populate options
-      ...this.searchReset 
+      ...this.searchReset
     }
 
     this.textInput = React.createRef()
@@ -74,7 +74,7 @@ class GCMultiSelect extends Component {
         isFocussed: false,
         index: -1,
         ...this.searchReset,
-        options:this.props.options
+        options: this.props.options
       })
       this.props.handleInputValidation(this.props.value)
     }
@@ -119,7 +119,7 @@ class GCMultiSelect extends Component {
     const { options, index } = this.state
     this.setState({
       ...this.searchReset,
-      options:this.props.options
+      options: this.props.options
     }, () => {
       if (index > -1) {
         this.handleInputChange(options[index].value)
@@ -147,7 +147,7 @@ class GCMultiSelect extends Component {
   }
 
   handleOnFocusEffect(e) {
-    if(e.target === this.textInput.current && this.input.current) {
+    if (e.target === this.textInput.current && this.input.current) {
       this.input.current.focus();
     } else {
       if (this.props.search) {
@@ -166,15 +166,15 @@ class GCMultiSelect extends Component {
   }
 
   handleOnBlurEffect(e) {
-    if (document.activeElement !== this.listContainer.current && 
-        document.activeElement !== this.textInput.current &&
-        document.activeElement !== this.input.current) {
+    if (document.activeElement !== this.listContainer.current &&
+      document.activeElement !== this.textInput.current &&
+      document.activeElement !== this.input.current) {
       this.setState({
         isActive: false,
         isFocussed: false,
         index: -1,
         ...this.searchReset,
-        options:this.props.options
+        options: this.props.options
       })
       this.props.handleInputValidation(this.props.value)
     }
@@ -222,7 +222,7 @@ class GCMultiSelect extends Component {
     this.handleInputChange(value)
     this.setState({
       ...this.searchReset,
-      options:this.props.options
+      options: this.props.options
     })
   }
 
@@ -285,7 +285,8 @@ class GCMultiSelect extends Component {
     });
 
     const listInputClasses = classNames(
-      'gc-drop-down__value__text', 'gc-select__input', {
+      'gc-drop-down__value__text', 'gc-select__input',
+      'gc-drop-down__value__text__autoselect', {
         'gc-drop-down__value__text--input gc-drop-down__value__text--input-inline': !isEmpty(value),
         'gc-input__el': isEmpty(value)
       });
@@ -319,7 +320,7 @@ class GCMultiSelect extends Component {
             <GCIcon kind='caretIcon' extendedClassNames='gc-drop-down__caret' />
           </div>
 
-          <div 
+          <div
             className={containerClasses}
             ref={this.listContainer}>
             {this.props.search && isFocussed && (
