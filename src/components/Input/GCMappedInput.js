@@ -12,7 +12,8 @@ import {
   GCSelectExternalSearch,
   GCDatePicker,
   GCDateRangePicker,
-  GCRange
+  GCRange,
+  GCTimePicker
 } from './Variants'
 
 const GCMappedInput = props => {
@@ -96,6 +97,16 @@ const GCMappedInput = props => {
         max={xtra.max}
         handleInputChange={handleInputChange}
         defaultValue={defaultValue}
+      />
+    case 'time':
+      return <GCTimePicker
+        onInputChange={handleInputChange}
+        handleInputValidation={handleInputValidation}
+        name={xtra.name}
+        value={xtra.value}
+        defaultValue={xtra.defaultValue}
+        disabled={xtra.disabled}
+        format={xtra.format}
       />
     default:
       return (

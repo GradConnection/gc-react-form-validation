@@ -14,7 +14,7 @@ import GCHelperText from './GCHelperText'
 import { GCIcon } from 'ui'
 
 class Input extends Component {
-  constructor (props, context) {
+  constructor(props, context) {
     super(props, context)
     this.state = {
       validationMessage: null,
@@ -27,7 +27,7 @@ class Input extends Component {
     this.onTooltipIconClick = this.onTooltipIconClick.bind(this)
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     return (
       nextState.validationMessage !== this.state.validationMessage ||
       nextState.showTooltip !== this.state.showTooltip ||
@@ -39,23 +39,25 @@ class Input extends Component {
       nextProps.helperText !== this.props.helperText ||
       nextProps.formSubmitted !== this.props.formSubmitted ||
       nextProps.disabled !== this.props.disabled ||
-      nextProps.defaultValue !== this.props.defaultValue
+      nextProps.defaultValue !== this.props.defaultValue ||
+      nextProps.lastUpdateStamp !== this.props.lastUpdateStamp
     )
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (
       (prevProps.value !== this.props.value && this.props.hidden) ||
       (prevProps.value !== this.props.value && this.props.customUI) ||
       (prevProps.value !== this.props.value && this.props.type === 'radio') ||
       (!prevProps.formSubmitted && this.props.formSubmitted) ||
-      prevProps.required !== this.props.required
+      prevProps.required !== this.props.required ||
+      prevProps.lastUpdateStamp !== this.props.lastUpdateStamp
     ) {
       this.handleInputValidation(this.props.value)
     }
   }
 
-  async handleInputValidation (value, cb = () => {}) {
+  async handleInputValidation(value, cb = () => { }) {
     const { onInputValidationFailure, onInputValidationSuccess } = this.props
     const validationResponse = await validateInput({
       ...this.props,
@@ -78,22 +80,22 @@ class Input extends Component {
     )
   }
 
-  handleInputChange (v) {
+  handleInputChange(v) {
     if (!this.props.disabled || !this.props.loading) {
       this.props.onChange(v, this.props.stateName || this.props.name)
     }
   }
 
-  onTooltipIconClick (e) {
+  onTooltipIconClick(e) {
     e.preventDefault()
     this.toggleTooltip(!this.state.showTooltip)
   }
 
-  toggleTooltip (active) {
+  toggleTooltip(active) {
     this.setState({ showTooltip: active })
   }
 
-  getValue () {
+  getValue() {
     if (
       this.props.defaultAll &&
       this.props.multi &&
@@ -110,14 +112,14 @@ class Input extends Component {
     return this.props.value
   }
 
-  onInputClick(e,disabled) {
-    if(disabled) {
+  onInputClick(e, disabled) {
+    if (disabled) {
       e.preventDefault()
       e.stopPropagation()
     }
   }
 
-  render () {
+  render() {
     const {
       type,
       extendedClassNames,
@@ -149,7 +151,7 @@ class Input extends Component {
 
     const displayLabel = (label && type !== 'checkbox') || (label && type === 'checkbox' && options.length > 0)
     if (!hidden || !customUI) {
-      if(!customComponent()) {
+      if (!customComponent()) {
         return (
           <div className={inputClasses} onClick={e => this.onInputClick(e, disabled)}>
             {displayLabel && (
@@ -287,7 +289,8 @@ Input.propTypes = {
   defaultAll: PropTypes.bool,
   defaultText: PropTypes.string,
   onInputValidationSuccess: PropTypes.func,
-  onInputValidationFailure: PropTypes.func
+  onInputValidationFailure: PropTypes.func,
+  lastUpdateStamp: PropTypes.number
 }
 
 Input.defaultProps = {

@@ -195,6 +195,25 @@ const validateInput = async (
     return res
   }
 
+  const validateTime = () => {
+    if (min && max && min.length && max.length) {
+      return handleErrorMessage(
+        min <= value && max >= value,
+        getTranslation('timeRange', userTranslations, min, max)
+      )
+    } else if (min !== null && min.length) {
+      return handleErrorMessage(
+        min <= value,
+        getTranslation('minTime', userTranslations, min)
+      )
+    } else if (max !== null && max.length) {
+      return handleErrorMessage(
+        max >= value,
+        getTranslation('maxTime', userTranslations, max)
+      )
+    }
+  }
+
   const handleErrorMessage = (
     v,
     msg = getTranslation('defaultInvalidInput', userTranslations),
@@ -248,6 +267,8 @@ const validateInput = async (
           return validateUrl()
         case 'select':
           return validateSelect()
+        case 'time':
+          return validateTime()
         case 'range':
         default:
           return null
