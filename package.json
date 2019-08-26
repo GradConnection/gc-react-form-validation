@@ -24,6 +24,7 @@
     "classnames": "^2.2.6",
     "prop-types": "^15.6.2",
     "rc-slider": "^8.6.11",
+    "rc-time-picker": "^3.7.1",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
     "react-html-parser": "^2.0.1"
