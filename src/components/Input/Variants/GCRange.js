@@ -21,6 +21,7 @@ const GCRange = ({
       tipFormatter={v => `${v}`}
       marks={{ [min]: min, [max]: max }}
       dots
+      pushable
       />
   )
 }
