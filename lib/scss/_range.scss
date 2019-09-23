@@ -97,7 +97,7 @@
     margin-left: -4px;
     width: 8px;
     height: 8px;
-    border: 2px solid #e9e9e9;
+    border: 1px solid #e9e9e9;
     background-color: #fff;
     cursor: pointer;
     border-radius: 50%;
@@ -162,6 +162,7 @@
   .rc-slider-vertical .rc-slider-dot:last-child {
     margin-bottom: -4px;
   }
+}
   .rc-slider-tooltip-zoom-down-enter,
   .rc-slider-tooltip-zoom-down-appear {
     animation-duration: 0.3s;
@@ -261,4 +262,3 @@
     border-top: 8px solid $primary-dark;
     border-bottom: 0rem solid $primary-dark;
   }
-}
