@@ -10,7 +10,6 @@ const GCRange = ({
 }) => {
   const { createSliderWithTooltip } = Slider;
   const Range = createSliderWithTooltip(Slider.Range);
-
   const defaultRange = Array.isArray(defaultValue) ? defaultValue : [min, max];
 
   return (
@@ -21,7 +20,10 @@ const GCRange = ({
       defaultValue={defaultRange}
       tipFormatter={v => `${v}`}
       marks={{ [min]: min, [max]: max }}
-    />);
+      dots
+      pushable
+      />
+  )
 }
 
 GCRange.propTypes = {
