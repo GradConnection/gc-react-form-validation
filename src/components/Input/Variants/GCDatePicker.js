@@ -29,7 +29,7 @@ class GCDatePicker extends Component {
     }
   }
 
-  componentWillMount () {
+  componentWillUnmount () {
     if(document)
     {
       document.removeEventListener('click', this.handleActivateCalendar)
