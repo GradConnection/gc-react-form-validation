@@ -3,6 +3,7 @@
     position: relative;
     height: 14px;
     padding: 5px 0;
+    width: auto;
     border-radius: 6px;
     -ms-touch-action: none;
     touch-action: none;
@@ -10,7 +11,6 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     margin: 0 20px 0 0;
     margin-bottom: 2rem;
-    width: auto;
   }
   .rc-slider * {
     box-sizing: border-box;
@@ -33,7 +33,6 @@
   .rc-slider-handle {
     position: absolute;
     margin-top: -5px;
-    margin-left: -7px;
     width: 14px;
     height: 14px;
     cursor: pointer;
@@ -139,7 +138,6 @@
   }
   .rc-slider-vertical .rc-slider-handle {
     margin-left: -5px;
-    margin-bottom: -7px;
     -ms-touch-action: pan-y;
     touch-action: pan-y;
   }
@@ -235,7 +233,6 @@
     padding: 4px 0 8px 0;
   }
   .rc-slider-tooltip-inner {
-    transform: translateX(50%);
     padding: 6px 2px;
     min-width: 24px;
     height: 24px;
@@ -256,7 +253,7 @@
     border-style: solid;
   }
   .rc-slider-tooltip-placement-top .rc-slider-tooltip-arrow {
-    bottom: 3px;
+    bottom: 4px;
     left: 50%;
     border-left: 0px solid transparent;
     border-right: 8px solid transparent;
