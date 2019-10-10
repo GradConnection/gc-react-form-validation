@@ -1,130 +1,99 @@
-import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 
-import classNames from 'classnames'
-
-import { GCIcon, GCCalendar } from 'ui'
-import { isEmpty } from 'utils'
+import RangeCalendar from 'rc-calendar/lib/RangeCalendar';
+// import zhCN from 'rc-calendar/lib/locale/zh_CN';
+import enUS from 'rc-calendar/lib/locale/en_US';
+import TimePickerPanel from 'rc-time-picker/lib/Panel';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+import 'moment/locale/en-gb';
 
 class GCDateRangePicker extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      isActive: false
-    }
+      formatStr: 'YYYY-MM-DD HH:mm Z'
+    };
+    this.onStandaloneChange = this.onStandaloneChange.bind(this);
+    // Default value
+    if (!props.value[0] || !props.value[1]) {
+      const defaultCalendarStart = moment();
+      defaultCalendarStart.set({
+        hour: '08',
+        minute: '00',
+        second: '00'
+      });
 
-    this.datePicker = React.createRef()
-
-    this.onDropDownClick = this.onDropDownClick.bind(this)
-    this.onDateChange = this.onDateChange.bind(this)
-
-    this.handleActivateCalendar = this.handleActivateCalendar.bind(this)
-    this.handleOnFocusEffect = this.handleOnFocusEffect.bind(this)
-    this.handleOnBlurEffect = this.handleOnBlurEffect.bind(this)
-  }
-
-  componentDidMount () {
-    document.addEventListener('click', this.handleActivateCalendar)
-  }
-
-  componentWillMount () {
-    document.removeEventListener('click', this.handleActivateCalendar)
-  }
-
-  handleActivateCalendar (e) {
-    if (!this.datePicker.current.contains(e.target)) {
-      this.setState({ isActive: false })
+      const defaultCalendarEnd = defaultCalendarStart.clone();
+      defaultCalendarEnd.add(1, 'month');
+      defaultCalendarEnd.set({
+        hour: '23',
+        minute: '59',
+        second: '59'
+      });
+      this.props.onInputChange([defaultCalendarStart, defaultCalendarEnd]);
     }
   }
 
-  handleOnFocusEffect (e) {
-    this.setState({ isActive: true })
+  onStandaloneChange(value) {
+    this.props.onInputChange([this.format(value[0]), this.format(value[1])]);
   }
 
-  handleOnBlurEffect (e) {
-    this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
+  format(v) {
+    return v ? v.format(this.state.formatStr) : '';
   }
 
-  onDateChange (newValue) {
-    this.props.onInputChange(newValue)
-  }
+  render() {
+    const { value } = this.props;
+    moment.locale('en-gb');
+    const defaultCalendarStart = moment();
+    defaultCalendarStart.set({
+      hour: '08',
+      minute: '00',
+      second: '00'
+    });
 
-  onDropDownClick (e) {
-    e.preventDefault()
-    this.setState(state => ({ isActive: !state.isActive }))
-  }
+    const defaultCalendarEnd = defaultCalendarStart.clone();
+    defaultCalendarEnd.add(1, 'month');
+    defaultCalendarEnd.set({
+      hour: '23',
+      minute: '59',
+      second: '59'
+    });
 
-  formatDate (date) {
-    if (isEmpty(date)) {
-      return ''
-    }
-    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
-  }
+    const timePickerElement = (
+      <TimePickerPanel
+        showSecond={false}
+        defaultValue={[moment('08:00:00', 'HH:mm'), moment('23:59:00', 'HH:mm')]}
+      />
+    );
 
-  render () {
-    const { placeholder = 'Select Date', value, defaultValue } = this.props
-    const { isActive } = this.state
-
-    const dateClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
-      'gc-input__el--active': isActive
-    })
     return (
-      <div
-        className={dateClasses}
-        ref={this.datePicker}>
-        <div
-          role='button'
-          className='gc-drop-down__value'
-          >
-          <input
-            className='gc-drop-down__value__text gc-drop-down__value__text--input'
-            type='text'
-            defaultValue={isEmpty(value) ? '' : this.formatDate(value.start)}
-            placeholder={placeholder}
-            readOnly
-            onFocus={this.handleOnFocusEffect}
-            onBlur={this.handleOnBlurEffect} />
-          <input
-            className='gc-drop-down__value__text gc-drop-down__value__text--input'
-            type='text'
-            defaultValue={isEmpty(value) ? '' : this.formatDate(value.end)}
-            placeholder={placeholder}
-            readOnly
-            onFocus={this.handleOnFocusEffect}
-            onBlur={this.handleOnBlurEffect} />
-          <button
-            className='gc-drop-down__btn'
-            onClick={this.onDropDownClick}>
-            <GCIcon kind='calendarIcon' extendedClassNames='gc-drop-down__caret' />
-          </button>
-
-        </div>
-        {isActive && (
-          <div className='gc-calendar gc-calendar--range gc-drop-down__el'>
-            <GCCalendar
-              value={value}
-              defaultValue={defaultValue}
-              type='range'
-              onDateChange={this.onDateChange}
-            />
-          </div>
-        )}
+      <div>
+        <RangeCalendar
+          showToday
+          dateInputPlaceholder={['start', 'end']}
+          locale={enUS}
+          showOk={false}
+          format={this.state.formatStr}
+          onChange={this.onStandaloneChange}
+          timePicker={timePickerElement}
+          selectedValue={
+            value[0] && value[0]
+              ? [moment(value[0]), moment(value[1])]
+              : [defaultCalendarStart, defaultCalendarEnd]
+          }
+          // renderFooter={() => <span>extra footer</span>}
+        />
       </div>
-    )
+    );
   }
 }
 
 GCDateRangePicker.propTypes = {
-  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   value: PropTypes.any,
-  defaultValue: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
-  handleInputValidation: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired
-}
+};
 
-GCDateRangePicker.defaultProps = {
-  placeholder: 'Select Date',
-  defaultValue: ''
-}
-
-export {GCDateRangePicker}
+export { GCDateRangePicker };

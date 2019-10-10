@@ -50,13 +50,7 @@ const GCMappedInput = props => {
         disabled={xtra.disabled}
         placeholder={xtra.placeholder} />
     case 'date-range':
-      return <GCDateRangePicker
-        onInputChange={handleInputChange}
-        handleInputValidation={handleInputValidation}
-        name={xtra.name}
-        value={xtra.value}
-        defaultValue={xtra.defaultValue}
-        placeholder={xtra.placeholder} />
+      return <GCDateRangePicker value={xtra.value} onInputChange={handleInputChange} />
     case 'select':
       return props.multi ? (
         <GCMultiSelect
