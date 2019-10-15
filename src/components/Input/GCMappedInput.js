@@ -80,6 +80,7 @@ const GCMappedInput = props => {
               search={search}
               disabled={xtra.disabled}
               placeholder={xtra.placeholder}
+              unselectable={xtra.unselectable}
               handleInputChange={handleInputChange}
               handleInputValidation={handleInputValidation} />)
         )

@@ -99,7 +99,9 @@ class GCSelect extends Component {
 
   onEnterKeyPress(e) {
     e.preventDefault()
-    const { value, handleInputChange } = this.props
+    const { value, handleInputChange, unselectable } = this.props
+    console.log('value', value)
+    console.log('unselectable', unselectable)
     const { options, index } = this.state
     this.setState({
       isActive: false,
@@ -110,7 +112,7 @@ class GCSelect extends Component {
       if (options && index > -1 && options[index].value !== value) {
         handleInputChange(options[index].value)
       } else {
-        handleInputChange('')
+        unselectable ? handleInputChange('') : handleInputChange(options[index].value)
         this.setState({
           isActive: false,
           index: -1,
@@ -199,14 +201,14 @@ class GCSelect extends Component {
   onOptionMouseDown(e, value) {
     e.preventDefault()
 
-    const { handleInputChange } = this.props
+    const { handleInputChange, unselectable } = this.props
 
     this.setState({
       isActive: false,
       ...this.searchReset,
       options: this.props.options
     }, () => {
-      if (value === this.props.value) {
+      if (value === this.props.value && unselectable) {
         handleInputChange('')
       } else {
         handleInputChange(value)
@@ -232,7 +234,6 @@ class GCSelect extends Component {
   render() {
     const { value, name } = this.props
     const { isActive, isFocussed, options, isSearchActive, searchTerm, placeholder } = this.state
-
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
       'gc-input__el--active': isActive || isFocussed
     })
@@ -285,6 +286,10 @@ class GCSelect extends Component {
   }
 }
 
+GCSelect.defaultProps = {
+  unselectable: true
+};
+
 GCSelect.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
@@ -292,7 +297,8 @@ GCSelect.propTypes = {
   search: PropTypes.bool,
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   handleInputChange: PropTypes.func.isRequired,
-  handleInputValidation: PropTypes.func.isRequired
+  handleInputValidation: PropTypes.func.isRequired,
+  unselectable: PropTypes.bool
 }
 
 export { GCSelect }
