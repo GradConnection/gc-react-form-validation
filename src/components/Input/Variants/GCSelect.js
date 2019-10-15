@@ -100,8 +100,6 @@ class GCSelect extends Component {
   onEnterKeyPress(e) {
     e.preventDefault()
     const { value, handleInputChange, unselectable } = this.props
-    console.log('value', value)
-    console.log('unselectable', unselectable)
     const { options, index } = this.state
     this.setState({
       isActive: false,
