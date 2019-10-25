@@ -79,6 +79,7 @@ class GCDateRangePicker extends Component {
           format={this.state.formatStr}
           onChange={this.onStandaloneChange}
           timePicker={timePickerElement}
+          defaultSelectedValue={[defaultCalendarStart, defaultCalendarEnd]}
           selectedValue={
             value[0] && value[0]
               ? [moment(value[0]), moment(value[1])]
