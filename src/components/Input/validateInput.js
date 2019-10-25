@@ -147,6 +147,32 @@ const validateInput = async (
     }
   }
 
+  const validateDaterange = () => {
+    const selectedFromDate = new Date(value[0])
+    const selectedToDate = value[1] ? new Date(value[1]) : null
+    let min, max
+    if (to !== null && from !== null) {
+      min = new Date(from)
+      max = new Date(to)
+      return handleErrorMessage(
+        (min <= selectedFromDate) && (!selectedToDate || max >= selectedToDate),
+        getTranslation('dateRange', userTranslations, min, max)
+      )
+    } else if (from !== null && value[0]) {
+      min = new Date(from)
+      return handleErrorMessage(
+        min <= selectedFromDate,
+        getTranslation('minDateRange', userTranslations, min)
+      )
+    } else if (to !== null && value[1]) {
+      max = new Date(to)
+      return handleErrorMessage(
+        max >= selectedToDate,
+        getTranslation('maxDateRange', userTranslations, max)
+      )
+    }
+  }
+
   const validateNumber = () => {
     let res = ''
     if (min && min > value) {
@@ -269,6 +295,8 @@ const validateInput = async (
           return validateSelect()
         case 'time':
           return validateTime()
+        case 'daterange':
+          return validateDaterange()
         case 'range':
         default:
           return null
