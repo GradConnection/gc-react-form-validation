@@ -73,7 +73,7 @@ class GCDateRangePicker extends Component {
       <div>
         <RangeCalendar
           showToday
-          dateInputPlaceholder={['start', 'end']}
+          dateInputPlaceholder={['Select a Start Date', 'Select an End Date']}
           locale={enUS}
           showOk={false}
           format={this.state.formatStr}
@@ -81,9 +81,7 @@ class GCDateRangePicker extends Component {
           timePicker={timePickerElement}
           defaultSelectedValue={[defaultCalendarStart, defaultCalendarEnd]}
           selectedValue={
-            value[0] && value[0]
-              ? [moment(value[0]), moment(value[1])]
-              : [defaultCalendarStart, defaultCalendarEnd]
+            [value[0] ? moment(value[0]) : defaultCalendarStart, value[1] ? moment(value[1]) : defaultCalendarEnd]
           }
           // renderFooter={() => <span>extra footer</span>}
         />
