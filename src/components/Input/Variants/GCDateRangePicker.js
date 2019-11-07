@@ -69,6 +69,14 @@ class GCDateRangePicker extends Component {
       />
     );
 
+    const disableDates = (current) => {
+        const date = min ;
+        date.hour(0);
+        date.minute(0);
+        date.second(0);
+        return current.isBefore(date); // cannot select days before min
+      }
+
     return (
       <div>
         <RangeCalendar
@@ -77,6 +85,7 @@ class GCDateRangePicker extends Component {
           locale={enUS}
           showOk={false}
           format={this.state.formatStr}
+          disabledDate={current => disableDates(current)}
           onChange={this.onStandaloneChange}
           timePicker={timePickerElement}
           defaultSelectedValue={[defaultCalendarStart, defaultCalendarEnd]}
