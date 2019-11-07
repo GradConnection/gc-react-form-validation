@@ -1,19 +1,19 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 
-import RangeCalendar from 'rc-calendar/lib/RangeCalendar';
+import RangeCalendar from "rc-calendar/lib/RangeCalendar";
 // import zhCN from 'rc-calendar/lib/locale/zh_CN';
-import enUS from 'rc-calendar/lib/locale/en_US';
-import TimePickerPanel from 'rc-time-picker/lib/Panel';
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-import 'moment/locale/en-gb';
+import enUS from "rc-calendar/lib/locale/en_US";
+import TimePickerPanel from "rc-time-picker/lib/Panel";
+import moment from "moment";
+import "moment/locale/zh-cn";
+import "moment/locale/en-gb";
 
 class GCDateRangePicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formatStr: 'YYYY-MM-DD HH:mm Z'
+      formatStr: "YYYY-MM-DD HH:mm Z"
     };
     this.onStandaloneChange = this.onStandaloneChange.bind(this);
     // Default value
@@ -26,11 +26,11 @@ class GCDateRangePicker extends Component {
       });
 
       const defaultCalendarEnd = defaultCalendarStart.clone();
-      defaultCalendarEnd.add(1, 'month');
+      defaultCalendarEnd.add(1, "month");
       defaultCalendarEnd.set({
-        hour: '23',
-        minute: '59',
-        second: '59'
+        hour: "23",
+        minute: "59",
+        second: "59"
       });
       this.props.onInputChange([defaultCalendarStart, defaultCalendarEnd]);
     }
@@ -41,31 +41,20 @@ class GCDateRangePicker extends Component {
   }
 
   format(v) {
-    return v ? v.format(this.state.formatStr) : '';
+    return v ? v.format(this.state.formatStr) : "";
   }
 
   render() {
-    const { value } = this.props;
-    moment.locale('en-gb');
-    const defaultCalendarStart = moment();
-    defaultCalendarStart.set({
-      hour: '08',
-      minute: '00',
-      second: '00'
-    });
-
-    const defaultCalendarEnd = defaultCalendarStart.clone();
-    defaultCalendarEnd.add(1, 'month');
-    defaultCalendarEnd.set({
-      hour: '23',
-      minute: '59',
-      second: '59'
-    });
+    const { value, min } = this.props;
+    moment.locale("en-gb");
 
     const timePickerElement = (
       <TimePickerPanel
         showSecond={false}
-        defaultValue={[moment('08:00:00', 'HH:mm'), moment('23:59:00', 'HH:mm')]}
+        defaultValue={[
+          moment("08:00:00", "HH:mm"),
+          moment("23:59:59", "HH:mm")
+        ]}
       />
     );
 
@@ -78,20 +67,20 @@ class GCDateRangePicker extends Component {
       }
 
     return (
-      <div>
+      <div className="gc-rangecalendar">
         <RangeCalendar
           showToday
-          dateInputPlaceholder={['Select a Start Date', 'Select an End Date']}
+          dateInputPlaceholder={["Select a start date", "Select an end date"]}
           locale={enUS}
           showOk={false}
           format={this.state.formatStr}
           disabledDate={current => disableDates(current)}
           onChange={this.onStandaloneChange}
           timePicker={timePickerElement}
-          defaultSelectedValue={[defaultCalendarStart, defaultCalendarEnd]}
-          selectedValue={
-            [value[0] ? moment(value[0]) : defaultCalendarStart, value[1] ? moment(value[1]) : defaultCalendarEnd]
-          }
+          selectedValue={[
+            value[0] ? moment(value[0]) : GCDateRangePicker.defaultCalendarStart,
+            value[1] ? moment(value[1]) : GCDateRangePicker.defaultCalendarEnd
+          ]}
           // renderFooter={() => <span>extra footer</span>}
         />
       </div>
