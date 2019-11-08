@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import classNames from 'classnames'
-
-import { GCIcon, GCCalendar } from 'ui'
+import Calendar from 'rc-calendar';
+import { GCIcon } from 'ui'
 import { isEmpty, getDateFromString } from 'utils'
+import 'moment/locale/zh-cn';
+import 'moment/locale/en-gb';
 
 class GCDatePicker extends Component {
   constructor (props) {
@@ -83,7 +85,8 @@ class GCDatePicker extends Component {
   }
 
   formatDate (date) {
-    const dateObj = getDateFromString(date);
+    const makeDateObj = new Date(date)
+    const dateObj = getDateFromString(makeDateObj);
     const formatDayForSafari = dateObj.getDate() < 10 ? `0${dateObj.getDate()}` : dateObj.getDate()
     const formatMonthForSafari = dateObj.getMonth() + 1 < 10 ? `0${dateObj.getMonth() + 1}` : dateObj.getMonth() + 1
     return `${dateObj.getFullYear()}-${formatMonthForSafari}-${formatDayForSafari}`
@@ -115,12 +118,20 @@ class GCDatePicker extends Component {
           <GCIcon kind='calendarIcon' extendedClassNames='gc-drop-down__caret' />
         </div>
         {isActive && (
-          <div className='gc-calendar gc-drop-down__el'>
-            <GCCalendar
-              value={value}
-              defaultValue={defaultValue}
-              type='picker'
-              onDateChange={this.onDateChange} />
+          <div className="gc-rc-calendar">
+            <Calendar
+              showDateInput={false}
+              style={{ zIndex: 1000, width: "100%" }}
+              dateInputPlaceholder={defaultValue}
+              format={'YYYY-MM-DD'}
+              onSelect={(value) => this.onDateSelect(value)}
+              focusablePanel={true}
+              // defaultValue={defaultValue}
+              // value={moment(sanitisedValue)}
+              // onChange={(value) => console.log('value change', value)}//this.onDateChange}
+              // locale={cn ? zhCN : enUS}
+              // disabledDate={disabledDate}
+              />
           </div>
         )}
       </div>
