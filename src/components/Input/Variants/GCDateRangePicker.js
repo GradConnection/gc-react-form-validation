@@ -45,7 +45,17 @@ class GCDateRangePicker extends Component {
   }
 
   render() {
-    const { value, min } = this.props;
+    const { value, min, max } = this.props;
+    const minDate = min !== null && moment(min).set({
+      hour: '00',
+      minute: '00',
+      second: '00'
+    });
+    const maxDate = (max !== null) && moment(max).set({
+      hour: '23',
+      minute: '59',
+      second: '59'
+    });
     moment.locale("en-gb");
 
     const timePickerElement = (
@@ -59,11 +69,19 @@ class GCDateRangePicker extends Component {
     );
 
     const disableDates = (current) => {
-        const date = min ;
-        date.hour(0);
-        date.minute(0);
-        date.second(0);
-        return current.isBefore(date); // cannot select days before min
+      if (min && max) {
+        console.log('minDate and maxdate')
+        return (current.isBefore(minDate) || current.isAfter(maxDate))
+      }
+      else if (min) {
+        console.log('just minDate')
+        return current.isBefore(minDate) // cannot select days before min
+      } 
+      else if (max) {
+        console.log('just maxDate')
+        return current.isAfter(maxDate) // cannot select days after max
+      }
+      else false;
       }
 
     return (
