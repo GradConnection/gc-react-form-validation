@@ -18,7 +18,6 @@ class GCDatePicker extends Component {
     this.datePicker = React.createRef()
 
     this.onDropDownClick = this.onDropDownClick.bind(this)
-    this.onDateChange = this.onDateChange.bind(this)
     this.handleActivateCalendar = this.handleActivateCalendar.bind(this)
     this.handleOnFocusEffect = this.handleOnFocusEffect.bind(this)
     this.handleOnBlurEffect = this.handleOnBlurEffect.bind(this)
@@ -67,14 +66,9 @@ class GCDatePicker extends Component {
     }
   }
 
-  onDateChange (newValue) {
-    // Must receive date obj
-    const newValueFormatted = this.formatDate(newValue)
-    if (newValueFormatted !== this.props.value) {
-      this.props.onInputChange(newValueFormatted)
-    } else {
-      this.props.onInputChange('')
-    }
+  onDateSelect (value) {
+    const valueFormatted = this.formatDate(value)
+      this.props.onInputChange(valueFormatted)
   }
 
   onDropDownClick (e) {
