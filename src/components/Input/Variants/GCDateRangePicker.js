@@ -13,7 +13,7 @@ class GCDateRangePicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formatStr: 'YYYY-MM-DD HH:mm Z'
+      formatStr: 'YYYY-MM-DD HH:mmZ'
     };
     this.onStandaloneChange = this.onStandaloneChange.bind(this);
     // Default value
