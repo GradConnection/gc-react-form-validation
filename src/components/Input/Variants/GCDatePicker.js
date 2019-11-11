@@ -41,12 +41,16 @@ class GCDatePicker extends Component {
     if(!prevProps.disabled && this.props.disabled) {
       this.setState({ isActive: false })
     }
+    if(prevProps.value !== this.props.value) {
+      this.setState({ isActive: false })
+    }
   }
 
   handleActivateCalendar (e) {
     if(this.datePicker.current) {
-      const touchedMonth = e.target.classList.contains('gc-calendar__body__cell--month')
-      if (!this.datePicker.current.contains(e.target) && this.state.isActive && !touchedMonth) {
+      const touchedMonth = e.target.classList.contains('rc-calendar-month-panel-month')
+      const touchedYear = e.target.classList.contains('rc-calendar-year-panel-year')
+      if (!this.datePicker.current.contains(e.target) && this.state.isActive && !touchedMonth && !touchedYear) {
         this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
       }
     }
@@ -59,16 +63,14 @@ class GCDatePicker extends Component {
   }
 
   handleOnBlurEffect (e) {
-    console.log(e.target)
     if (!this.datePicker.current.contains(e.target)) {
-      console.log('blur')
       this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
     }
   }
 
   onDateSelect (value) {
     const valueFormatted = this.formatDate(value)
-      this.props.onInputChange(valueFormatted)
+    this.props.onInputChange(valueFormatted)
   }
 
   onDropDownClick (e) {
