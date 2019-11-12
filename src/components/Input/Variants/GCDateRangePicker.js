@@ -12,9 +12,6 @@ import "moment/locale/en-gb";
 class GCDateRangePicker extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      formatStr: "YYYY-MM-DD HH:mm Z"
-    };
     this.onStandaloneChange = this.onStandaloneChange.bind(this);
     // Default value
     if (!props.value[0] || !props.value[1]) {
@@ -41,21 +38,14 @@ class GCDateRangePicker extends Component {
   }
 
   format(v) {
-    return v ? v.format(this.state.formatStr) : "";
+    return v ? v.format('YYYY-MM-DD HH:mm Z') : "";
   }
 
   render() {
-    const { value, min, max } = this.props;
-    const minDate = min !== null && moment(min).set({
-      hour: '00',
-      minute: '00',
-      second: '00'
-    });
-    const maxDate = (max !== null) && moment(max).set({
-      hour: '23',
-      minute: '59',
-      second: '59'
-    });
+    const { value } = this.props;
+    const min = this.props.min && new Date(new Date(this.props.min).setHours(0,0,0,0));
+    const max = this.props.max && new Date(new Date(this.props.max).setHours(23,59,59,59));
+
     moment.locale("en-gb");
 
     const timePickerElement = (
@@ -69,19 +59,17 @@ class GCDateRangePicker extends Component {
     );
 
     const disableDates = (current) => {
+      const currentDateObj = new Date(current)
       if (min && max) {
-        console.log('minDate and maxdate')
-        return (current.isBefore(minDate) || current.isAfter(maxDate))
-      }
-      else if (min) {
-        console.log('just minDate')
-        return current.isBefore(minDate) // cannot select days before min
-      } 
-      else if (max) {
-        console.log('just maxDate')
-        return current.isAfter(maxDate) // cannot select days after max
-      }
-      else false;
+           return (currentDateObj < min || currentDateObj > max)
+         }
+         else if (min) {
+           return currentDateObj < min // cannot select days before min
+         } 
+         else if (max) {
+           return currentDateObj > max // cannot select days after max
+         }
+         else false;
       }
 
     return (
@@ -91,7 +79,7 @@ class GCDateRangePicker extends Component {
           dateInputPlaceholder={["Select a start date", "Select an end date"]}
           locale={enUS}
           showOk={false}
-          format={this.state.formatStr}
+          format={'YYYY-MM-DD HH:mm Z'}
           disabledDate={current => disableDates(current)}
           onChange={this.onStandaloneChange}
           timePicker={timePickerElement}
