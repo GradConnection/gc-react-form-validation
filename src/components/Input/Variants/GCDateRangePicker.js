@@ -33,6 +33,12 @@ class GCDateRangePicker extends Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.value[1]) {
+        this.props.handleInputValidation(this.props.value)
+    }
+  }
+
   onStandaloneChange(value) {
     this.props.onInputChange([this.format(value[0]), this.format(value[1])]);
   }

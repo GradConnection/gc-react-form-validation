@@ -5,6 +5,7 @@ const translationDefaults = {
   minCharLength: min => `May not contain less than ${min} characters`,
   invalidURL: () => 'This URL is invalid',
   minPasswordCharLength: min => `Password may not contain less than ${min} characters`,
+  dateRangeEnd: () => `End date should be in the future`,
   timeRange: (fromTime, toTime) => `Choose a time between ${fromTime} and ${toTime}`,
   maxTime: toTime => `Choose a time earlier than or equal to ${toTime}`,
   minTime: fromTime => `Choose a time later than or equal to ${fromTime}`,

@@ -8,6 +8,7 @@ const validateInput = async (
     customValidationType,
     name,
     value,
+    endDateCanBePast,
     disabled = false,
     required = false,
     from = null,
@@ -146,6 +147,15 @@ const validateInput = async (
     }
   }
 
+  const validateDateRange = () => {
+    const endValue = value[1] ? new Date(value[1]) : null
+if (!endDateCanBePast) {
+  return handleErrorMessage(
+    endValue === null || (endValue > new Date(Date.now())),
+    getTranslation('dateRangeEnd', userTranslations))
+  }
+}
+
   const validateNumber = () => {
     let res = ''
     if (min && min > value) {
@@ -255,6 +265,8 @@ const validateInput = async (
           return validateText()
         case 'date':
           return validateDate()
+        case 'daterange':
+          return validateDateRange()
         case 'number':
           return validateNumber()
         case 'textarea':
