@@ -927,12 +927,20 @@
   color: rgba(0, 0, 0, 0.25);
 }
 .rc-calendar-range {
-  width: 502px;
   overflow: hidden;
+  width: 100%;
 }
 .rc-calendar-range-part {
-  width: 250px;
+  width: 100%;
   position: relative;
+}
+@media (min-width: 560px) {
+  .rc-calendar-range {
+    width: 502px;
+  }
+  .rc-calendar-range-part {
+    width: 250px;
+  }
 }
 .rc-calendar-range-part .rc-calendar-time-picker {
   top: 69px;
