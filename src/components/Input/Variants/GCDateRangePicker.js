@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import RangeCalendar from "rc-calendar/lib/RangeCalendar";
@@ -13,6 +13,10 @@ class GCDateRangePicker extends Component {
   constructor(props) {
     super(props);
     this.onStandaloneChange = this.onStandaloneChange.bind(this);
+    this.state = {
+      formatStr: 'YYYY-MM-DD HH:mm Z'
+    }
+
     // Default value
     if (!props.value[0] || !props.value[1]) {
       const defaultCalendarStart = moment();
@@ -40,11 +44,7 @@ class GCDateRangePicker extends Component {
   }
 
   onStandaloneChange(value) {
-    this.props.onInputChange([this.format(value[0]), this.format(value[1])]);
-  }
-
-  format(v) {
-    return v ? v.format('YYYY-MM-DD HH:mm Z') : "";
+    this.props.onInputChange([value[0], value[1]]);
   }
 
   render() {
@@ -85,14 +85,15 @@ class GCDateRangePicker extends Component {
           dateInputPlaceholder={["Select a start date", "Select an end date"]}
           locale={enUS}
           showOk={false}
-          format={'YYYY-MM-DD HH:mm Z'}
+          format={this.state.formatStr}
           disabledDate={current => disableDates(current)}
           onChange={this.onStandaloneChange}
           timePicker={timePickerElement}
-          selectedValue={[
-            value[0] ? moment(value[0]) : GCDateRangePicker.defaultCalendarStart,
-            value[1] ? moment(value[1]) : GCDateRangePicker.defaultCalendarEnd
-          ]}
+          selectedValue={([
+            value[0] ? moment(value[0], this.state.formatStr) : GCDateRangePicker.defaultCalendarStart,
+            value[1] ? moment(value[1], this.state.formatStr) : GCDateRangePicker.defaultCalendarEnd
+          ])
+        }
           // renderFooter={() => <span>extra footer</span>}
         />
       </div>

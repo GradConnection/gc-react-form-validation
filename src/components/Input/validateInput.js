@@ -1,5 +1,6 @@
 import { getTranslation } from 'translations'
 import { toArray, isEmpty } from 'utils'
+import moment from 'moment';
 
 const validateInput = async (
   {
@@ -148,12 +149,13 @@ const validateInput = async (
   }
 
   const validateDateRange = () => {
-    const endValue = value[1] ? new Date(value[1]) : null
-if (!endDateCanBePast) {
-  return handleErrorMessage(
-    endValue === null || (endValue > new Date(Date.now())),
-    getTranslation('dateRangeEnd', userTranslations))
-  }
+    const currentDate = moment()
+    const endValue = value[1] ? moment(value[1]) : null;
+    if (!endDateCanBePast) {
+      return handleErrorMessage(
+      endValue === null || (endValue >= currentDate),
+      getTranslation('dateRangeEnd', userTranslations))
+    }
 }
 
   const validateNumber = () => {
