@@ -1,5 +1,6 @@
 import { getTranslation } from 'translations'
 import { toArray, isEmpty } from 'utils'
+import moment from 'moment';
 
 const validateInput = async (
   {
@@ -8,6 +9,7 @@ const validateInput = async (
     customValidationType,
     name,
     value,
+    endDateCanBePast,
     disabled = false,
     required = false,
     from = null,
@@ -124,7 +126,6 @@ const validateInput = async (
   const validateDate = () => {
     const selectedDate = new Date(value)
     let min, max
-
     if (to !== null && from !== null) {
       max = new Date(to)
       min = new Date(from)
@@ -146,6 +147,16 @@ const validateInput = async (
       )
     }
   }
+
+  const validateDateRange = () => {
+    const currentDate = moment()
+    const endValue = value[1] ? moment(value[1]) : null;
+    if (!endDateCanBePast) {
+      return handleErrorMessage(
+      endValue === null || (endValue >= currentDate),
+      getTranslation('dateRangeEnd', userTranslations))
+    }
+}
 
   const validateNumber = () => {
     let res = ''
@@ -256,6 +267,8 @@ const validateInput = async (
           return validateText()
         case 'date':
           return validateDate()
+        case 'daterange':
+          return validateDateRange()
         case 'number':
           return validateNumber()
         case 'textarea':

@@ -53,7 +53,7 @@ const GCMappedInput = props => {
         {...xtra}
         />
     case 'daterange':
-      return <GCDateRangePicker value={xtra.value} onInputChange={handleInputChange} />
+      return <GCDateRangePicker value={xtra.value} min={xtra.from} max={xtra.to} onInputChange={handleInputChange} handleInputValidation={handleInputValidation} />
     case 'select':
       return props.multi ? (
         <GCMultiSelect
