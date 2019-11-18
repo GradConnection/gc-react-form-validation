@@ -2,18 +2,23 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import classNames from 'classnames'
-import Calendar from 'rc-calendar';
 import { GCIcon } from 'ui'
 import { isEmpty, getDateFromString } from 'utils'
-import 'moment/locale/zh-cn';
-import 'moment/locale/en-gb';
+import Calendar from 'rc-calendar';
+import moment from 'moment';
 
 class GCDatePicker extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isActive: false
+      isActive: false,
+      defaultValue: props.defaultValue && new Date(props.defaultValue),
+      changeValue: '',
+      value: props.value && new Date(props.value),
+      min: props.min && new Date(new Date(props.min).setHours(0,0,0,0)),
+      max: props.max && new Date(new Date(props.max).setHours(23,59,59,59))
     }
+
 
     this.datePicker = React.createRef()
 
@@ -70,6 +75,9 @@ class GCDatePicker extends Component {
 
   onDateSelect (value) {
     const valueFormatted = this.formatDate(value)
+    this.setState({
+      value: new Date(value),
+    });
     this.props.onInputChange(valueFormatted)
   }
 
@@ -89,12 +97,34 @@ class GCDatePicker extends Component {
   }
 
   render () {
-    const { placeholder = 'Select Date', value, defaultValue } = this.props
-    const { isActive } = this.state
+    const { placeholder = 'Select date', defaultValue, min, max, mode } = this.props
+    const { isActive, value } = this.state
     const dateClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
       'gc-input__el--active': isActive
     })
 
+    const disableDates = (current) => {
+      const currentDateObj = new Date(current)
+      if (min && max) {
+           return (currentDateObj < this.state.min || currentDateObj > this.state.max)
+         }
+         else if (min) {
+           return currentDateObj < this.state.min // cannot select days before min
+         } 
+         else if (max) {
+           return currentDateObj > this.state.max // cannot select days after max
+         }
+         else false;
+      }
+
+    const onChange = (value) => {
+      console.log('DatePicker change: ', (value && value));
+      this.setState({
+        changeValue: value,
+      });
+    }
+
+    console.log('this.props', this.props)
     return (
       <div
         className={dateClasses}
@@ -118,15 +148,13 @@ class GCDatePicker extends Component {
             <Calendar
               showDateInput={false}
               style={{ zIndex: 1000, width: "100%" }}
-              dateInputPlaceholder={defaultValue}
               format={'YYYY-MM-DD'}
-              onSelect={(value) => this.onDateSelect(value)}
-              focusablePanel={true}
-              // defaultValue={defaultValue}
-              // value={moment(sanitisedValue)}
-              // onChange={(value) => console.log('value change', value)}//this.onDateChange}
-              // locale={cn ? zhCN : enUS}
-              // disabledDate={disabledDate}
+              disabledDate={current => disableDates(current)}
+              onChange={(v) => onChange(v)}
+              onSelect={(v) => this.onDateSelect(v)}
+              selectedValue={value ? moment(value) : ''}
+              dateInputPlaceholder={placeholder}
+              defaultValue={defaultValue && moment(defaultValue)}
               />
           </div>
         )}
@@ -144,7 +172,6 @@ GCDatePicker.propTypes = {
 }
 
 GCDatePicker.defaultProps = {
-  placeholder: 'Select Date',
   defaultValue: ''
 }
 
