@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import classNames from 'classnames'
 import { GCIcon } from 'ui'
-import { isEmpty, getDateFromString } from 'utils'
 import Calendar from 'rc-calendar';
 import moment from 'moment';
 
@@ -32,10 +31,6 @@ class GCDatePicker extends Component {
     const timePickerElement = <TimePickerPanel showSecond={false} defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
 
     const onChange = value => {
-      console.log('onChange value', value);
-      this.setState({
-        value,
-      });
       const val = value ? value.format(this.state.format) : '';
       this.props.handleInputValidation(val)
       this.props.onInputChange(val)
