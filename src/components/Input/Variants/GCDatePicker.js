@@ -13,7 +13,8 @@ class GCDatePicker extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      format: 'YYYY-MM-DD'
+      format: 'YYYY-MM-DD',
+      open: false
     }
 
   }
@@ -21,7 +22,7 @@ class GCDatePicker extends Component {
   render () {
     const { placeholder = 'Select date', disabled = false, value, disabledDates} = this.props
     const dateClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
-            'gc-input__el--active': false//isActive
+            'gc-input__el--active': open
           })
     const onChange = value => {
       console.log('onChange value', value);
@@ -49,6 +50,7 @@ class GCDatePicker extends Component {
       animation="slide-up"
       value={this.props.value ? moment(this.props.value) : ''}
       onChange={onChange}
+      onOpenChange={(openstate) => {this.setState({open: openstate})}}
       // disabled={disabled}
       calendar={<Calendar
         format={this.state.format}
@@ -57,16 +59,18 @@ class GCDatePicker extends Component {
       {
         ({ value }) => {
           return (
-            <div className={dateClasses}>
-              {console.log('value in component', value)}
+            <div className={dateClasses} >
+              <div role="button" className="gc-drop-down__value">
                 <input
                   placeholder={placeholder}
                   disabled={disabled}
                   readOnly
+                  type="text"
                   value={value ? moment(new Date(value)).format(this.state.format) : ''}
                   className='gc-drop-down__value__text gc-drop-down__value__text--input'
                 />
                  <GCIcon kind='calendarIcon' extendedClassNames='gc-drop-down__caret' />
+                </div>  
                 </div>
           );
         }
