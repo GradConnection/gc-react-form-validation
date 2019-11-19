@@ -15,6 +15,9 @@ class GCDatePicker extends Component {
     super(props)
     this.state = {
       format: props.showTime ? 'YYYY-MM-DD HH:mm Z' : 'YYYY-MM-DD',
+      open: false,
+      min: props.min && new Date(new Date(props.min).setHours(0,0,0,0)),
+      max: props.max && new Date(new Date(props.max).setHours(23,59,59,59))
     }
 
   }
@@ -34,22 +37,23 @@ class GCDatePicker extends Component {
         value,
       });
       const val = value ? value.format(this.state.format) : '';
+      this.props.handleInputValidation(val)
       this.props.onInputChange(val)
     }
-    // const disableDates = (current) => {
-    //   const currentDateObj = new Date(current)
-    //   if (min && max) {
-    //        return (currentDateObj < this.state.min || currentDateObj > this.state.max)
-    //      }
-    //      else if (min) {
-    //        return currentDateObj < this.state.min // cannot select days before min
-    //      } 
-    //      else if (max) {
-    //        return currentDateObj > this.state.max // cannot select days after max
-    //      }
-    //      else false;
-    //   }
-    console.log('this.props', this.props)
+
+    const disableDates = (current) => {
+      const currentDateObj = new Date(current)
+      if (min && max) {
+           return (currentDateObj < this.state.min || currentDateObj > this.state.max)
+         }
+         else if (min) {
+           return currentDateObj < this.state.min // cannot select days before min
+         } 
+         else if (max) {
+           return currentDateObj > this.state.max // cannot select days after max
+         }
+         else false;
+      }
     return (
       <DatePicker
       animation="slide-up"
@@ -59,6 +63,7 @@ class GCDatePicker extends Component {
       // disabled={disabled}
       calendar={<Calendar
         format={this.state.format}
+        disabledDate={disableConstraints ? disableDates : null}
         timePicker={showTime ? timePickerElement : null}
       />}
     >
