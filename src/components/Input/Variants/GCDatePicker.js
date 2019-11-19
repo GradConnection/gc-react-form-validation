@@ -60,7 +60,7 @@ class GCDatePicker extends Component {
       value={this.props.value ? moment(this.props.value) : ''}
       onChange={onChange}
       onOpenChange={(openstate) => {this.setState({open: openstate})}}
-      // disabled={disabled}
+      disabled={disabled}
       calendar={<Calendar
         format={this.state.format}
         dateInputPlaceholder={placeholder}
