@@ -63,6 +63,7 @@ class GCDatePicker extends Component {
       // disabled={disabled}
       calendar={<Calendar
         format={this.state.format}
+        dateInputPlaceholder={placeholder}
         disabledDate={disableConstraints ? disableDates : null}
         timePicker={showTime ? timePickerElement : null}
       />}
