@@ -9,27 +9,32 @@ import moment from 'moment';
 
 import DatePicker from 'rc-calendar/lib/Picker';
 
+import TimePickerPanel from 'rc-time-picker/lib/Panel';
 class GCDatePicker extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      format: 'YYYY-MM-DD',
-      open: false
+      format: props.showTime ? 'YYYY-MM-DD HH:mm Z' : 'YYYY-MM-DD',
     }
 
   }
 
   render () {
-    const { placeholder = 'Select date', disabled = false, value, disabledDates} = this.props
+    const { placeholder = 'Select date', disabled = false, showTime, min, max, value, disableConstraints} = this.props
+    const { open } = this.state
     const dateClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
             'gc-input__el--active': open
           })
+
+    const timePickerElement = <TimePickerPanel showSecond={false} defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
+
     const onChange = value => {
       console.log('onChange value', value);
       this.setState({
         value,
       });
-      this.props.onInputChange(value.format('YYYY-MM-DD'))
+      const val = value ? value.format(this.state.format) : '';
+      this.props.onInputChange(val)
     }
     // const disableDates = (current) => {
     //   const currentDateObj = new Date(current)
@@ -54,6 +59,7 @@ class GCDatePicker extends Component {
       // disabled={disabled}
       calendar={<Calendar
         format={this.state.format}
+        timePicker={showTime ? timePickerElement : null}
       />}
     >
       {
