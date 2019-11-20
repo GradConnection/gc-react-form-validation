@@ -44,12 +44,6 @@ const GCMappedInput = props => {
       return <GCDatePicker
         onInputChange={handleInputChange}
         handleInputValidation={handleInputValidation}
-        value={xtra.value}
-        min={xtra.from}
-        max={xtra.to}
-        defaultValue={xtra.defaultValue}
-        disabled={xtra.disabled}
-        name={xtra.name}
         {...xtra}
         />
     case 'daterange':
