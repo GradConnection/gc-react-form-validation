@@ -11,6 +11,8 @@ const translationDefaults = {
   minTime: fromTime => `Choose a time later than or equal to ${fromTime}`,
   maxNumber: max => `Choose a number lower than ${max}`,
   minNumber: min => `Choose a number higher than ${min}`,
+  maxDateRange: toDate => `Choose a date earlier than ${toDate}`,
+  minDateRange: fromDate => `Choose a date later than ${fromDate}`,
   maxSelectOptions: max => `May not select more than ${max} options`,
   minSelectOptions: min => `May not select less than ${min} options`,
   requiredField: () => 'This is a required field',
@@ -21,7 +23,10 @@ const translationDefaults = {
 
 export const getTranslation = (name, userTranslations, ...args) => {
   if (userTranslations !== undefined && userTranslations[name] !== undefined) {
-    return userTranslations[name](...args)
+    return userTranslations[name](...args);
   }
-  return translationDefaults[name](...args)
-}
+  if (translationDefaults[name]) {
+    return translationDefaults[name](...args);
+  }
+  return translationDefaults['defaultInvalidInput'](...args);
+};
