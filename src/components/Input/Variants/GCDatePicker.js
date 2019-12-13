@@ -57,10 +57,8 @@ class GCDatePicker extends Component {
     }
   }
 
-  handleOnBlurEffect (e) {
-    console.log(e.target)
-    if (!this.datePicker.current.contains(e.target)) {
-      console.log('blur')
+  handleOnBlurEffect (e) {    
+    if (!this.datePicker.current.contains(e.target)) {      
       this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
     }
   }

@@ -22,7 +22,7 @@ class GCMultiSelect extends Component {
     this.state = {
       isActive: false,
       isFocussed: false,
-      index: -1,
+      index: 0,
       options: props.options, // it's important not to put options in searchReset, otherwise SSR might not initially populate options
       ...this.searchReset
     }
@@ -59,7 +59,8 @@ class GCMultiSelect extends Component {
     if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
       if (searchTerm === '') {
         this.setState({
-          options: this.props.options
+          options: this.props.options,
+          index: 0
         })
       }
       this.textInput.current.focus()
@@ -72,7 +73,7 @@ class GCMultiSelect extends Component {
       this.setState({
         isActive: false,
         isFocussed: false,
-        index: -1,
+        index: 0,
         ...this.searchReset,
         options: this.props.options
       })
@@ -115,15 +116,21 @@ class GCMultiSelect extends Component {
 
   onEnterKeyPress(e) {
     e.preventDefault()
-
     const { options, index } = this.state
+
     this.setState({
       ...this.searchReset,
       options: this.props.options
     }, () => {
-      if (index > -1) {
+      if (index > -1 && options[index] && options[index].value) {
         this.handleInputChange(options[index].value)
       }
+      else if(index > -1 && (index +1) > options.length && options.length >=1 && options[0] && options[0].value){
+        this.handleInputChange(options[0].value)
+      }
+      else{
+        this.setState({ index: 0 })
+      }      
     })
   }
 
@@ -172,7 +179,7 @@ class GCMultiSelect extends Component {
       this.setState({
         isActive: false,
         isFocussed: false,
-        index: -1,
+        index: 0,
         ...this.searchReset,
         options: this.props.options
       })
@@ -187,7 +194,8 @@ class GCMultiSelect extends Component {
     const filteredOptions = options.filter(opt => opt.label.toLowerCase().includes(searchTerm.toLowerCase()))
     const newState = {
       searchTerm: e.target.value,
-      options: filteredOptions
+      options: filteredOptions,
+      index: 0
     }
 
     if (!this.state.isActive) {
@@ -235,7 +243,7 @@ class GCMultiSelect extends Component {
     } else {
       newValueArray = this.addItemToValueArray(newValue)
     }
-
+    this.setState({ index: 0 })
     this.props.handleInputChange(newValueArray)
   }
 
@@ -334,6 +342,7 @@ class GCMultiSelect extends Component {
                 onFocus={this.handleOnFocusEffect}
                 onBlur={this.handleOnBlurEffect}
                 placeholder='Start typing to search'
+                // onkeydown={this.handleKeyDown}
               />
             )}
             {isActive && (

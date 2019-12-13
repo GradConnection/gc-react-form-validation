@@ -20,7 +20,7 @@ class GCSelect extends Component {
     this.state = {
       isActive: false,
       isFocussed: false,
-      index: -1,
+      index: 0,
       options: props.options, // it's important not to put options in searchReset, otherwise SSR might not initially populate options
       ...this.searchReset
     }
@@ -103,17 +103,17 @@ class GCSelect extends Component {
     const { options, index } = this.state
     this.setState({
       isActive: false,
-      index: -1,
+      index: 0,
       ...this.searchReset,
       options: this.props.options
     }, () => {
-      if (options && index > -1 && options[index].value !== value) {
+      if (options && index > -1 && options[index] && options[index].value !== value) {
         handleInputChange(options[index].value)
       } else {
         unselectable ? handleInputChange('') : handleInputChange(options[index].value)
         this.setState({
           isActive: false,
-          index: -1,
+          index: 0,
           ...this.searchReset,
           options: this.props.options
         })
@@ -173,6 +173,7 @@ class GCSelect extends Component {
 
     this.setState({
       searchTerm: e.target.value,
+      index: 0,
       options: filteredOptions
     })
   }
