@@ -2,126 +2,88 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import classNames from 'classnames'
+import { GCIcon } from 'ui'
+import Calendar from 'rc-calendar';
+import moment from 'moment';
 
-import { GCIcon, GCCalendar } from 'ui'
-import { isEmpty, getDateFromString } from 'utils'
+import DatePicker from 'rc-calendar/lib/Picker';
 
+import TimePickerPanel from 'rc-time-picker/lib/Panel';
 class GCDatePicker extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isActive: false
+      format: props.showTime ? 'YYYY-MM-DD HH:mm Z' : 'YYYY-MM-DD',
+      open: false
     }
-
-    this.datePicker = React.createRef()
-
-    this.onDropDownClick = this.onDropDownClick.bind(this)
-    this.onDateChange = this.onDateChange.bind(this)
-    this.handleActivateCalendar = this.handleActivateCalendar.bind(this)
-    this.handleOnFocusEffect = this.handleOnFocusEffect.bind(this)
-    this.handleOnBlurEffect = this.handleOnBlurEffect.bind(this)
-  }
-
-  componentDidMount () {
-    if(document)
-    {
-      document.addEventListener('click', this.handleActivateCalendar)
-    }
-  }
-
-  componentWillUnmount () {
-    if(document)
-    {
-      document.removeEventListener('click', this.handleActivateCalendar)
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if(!prevProps.disabled && this.props.disabled) {
-      this.setState({ isActive: false })
-    }
-  }
-
-  handleActivateCalendar (e) {
-    if(this.datePicker.current) {
-      const touchedMonth = e.target.classList.contains('gc-calendar__body__cell--month')
-      if (!this.datePicker.current.contains(e.target) && this.state.isActive && !touchedMonth) {
-        this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
-      }
-    }
-  }
-
-  handleOnFocusEffect (e) {
-    if(!this.props.disabled) {
-      this.setState({ isActive: true })
-    }
-  }
-
-  handleOnBlurEffect (e) {    
-    if (!this.datePicker.current.contains(e.target)) {      
-      this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
-    }
-  }
-
-  onDateChange (newValue) {
-    // Must receive date obj
-    const newValueFormatted = this.formatDate(newValue)
-    if (newValueFormatted !== this.props.value) {
-      this.props.onInputChange(newValueFormatted)
-    } else {
-      this.props.onInputChange('')
-    }
-  }
-
-  onDropDownClick (e) {
-    e.preventDefault()
-    if(!this.props.disabled){
-      this.setState(state => ({ isActive: !state.isActive }))
-    }
-  }
-
-  formatDate (date) {
-    const dateObj = getDateFromString(date);
-    const formatDayForSafari = dateObj.getDate() < 10 ? `0${dateObj.getDate()}` : dateObj.getDate()
-    const formatMonthForSafari = dateObj.getMonth() + 1 < 10 ? `0${dateObj.getMonth() + 1}` : dateObj.getMonth() + 1
-    return `${dateObj.getFullYear()}-${formatMonthForSafari}-${formatDayForSafari}`
   }
 
   render () {
-    const { placeholder = 'Select Date', value, defaultValue } = this.props
-    const { isActive } = this.state
+    const { placeholder = 'Select date', disabled = false, showTime, from, to} = this.props
+    const { open } = this.state
+    const sanitisedFrom = from && new Date(new Date(from).setHours(0,0,0,0))
+    const sanitisedTo = to && new Date(new Date(to).setHours(23,59,59,59))
+
     const dateClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
-      'gc-input__el--active': isActive
-    })
+            'gc-input__el--active': open
+          })
+
+    const timePickerElement = <TimePickerPanel showSecond={false} defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
+
+    const onChange = value => {
+      const val = value ? value.format(this.state.format) : '';
+      this.props.handleInputValidation(val)
+      this.props.onInputChange(val)
+    }
+
+    const disableDates = (current) => {
+      const currentDateObj = new Date(current)
+      if (from && to) {
+           return (currentDateObj < sanitisedFrom || currentDateObj > sanitisedTo)
+         }
+         else if (from) {
+           return currentDateObj < sanitisedFrom // cannot select days before "from" date
+         } 
+         else if (to) {
+           return currentDateObj > sanitisedTo // cannot select days after "to" date
+         }
+         else false;
+      }
 
     return (
-      <div
-        className={dateClasses}
-        ref={this.datePicker}>
-        <div
-          role='button'
-          className='gc-drop-down__value'
-          onMouseDown={this.onDropDownClick}>
-          <input
-            className='gc-drop-down__value__text gc-drop-down__value__text--input'
-            type='text'
-            value={isEmpty(value) ? '' : this.formatDate(value)}
-            placeholder={placeholder}
-            readOnly
-            onFocus={this.handleOnFocusEffect}
-            onBlur={this.handleOnBlurEffect} />
-          <GCIcon kind='calendarIcon' extendedClassNames='gc-drop-down__caret' />
-        </div>
-        {isActive && (
-          <div className='gc-calendar gc-drop-down__el'>
-            <GCCalendar
-              value={value}
-              defaultValue={defaultValue}
-              type='picker'
-              onDateChange={this.onDateChange} />
-          </div>
-        )}
-      </div>
+      <DatePicker
+      animation="slide-up"
+      value={this.props.value ? moment(this.props.value) : ''}
+      onChange={onChange}
+      onOpenChange={(openstate) => {this.setState({open: openstate})}}
+      disabled={disabled}
+      calendar={<Calendar
+        format={this.state.format}
+        dateInputPlaceholder={placeholder}
+        disabledDate={(from || to) ? disableDates : null}
+        timePicker={showTime ? timePickerElement : null}
+      />}
+    >
+      {
+        ({ value }) => {
+          return (
+            <div className={dateClasses} >
+              <div role="button" className="gc-drop-down__value">
+                <input
+                  placeholder={placeholder}
+                  disabled={disabled}
+                  readOnly
+                  type="text"
+                  value={value ? moment(new Date(value)).format(this.state.format) : ''}
+                  className='gc-drop-down__value__text gc-drop-down__value__text--input'
+                />
+                 <GCIcon kind='calendarIcon' extendedClassNames='gc-drop-down__caret' />
+                </div>  
+                </div>
+          );
+        }
+      }
+    </DatePicker>
     )
   }
 }
@@ -135,7 +97,6 @@ GCDatePicker.propTypes = {
 }
 
 GCDatePicker.defaultProps = {
-  placeholder: 'Select Date',
   defaultValue: ''
 }
 

@@ -134,16 +134,16 @@ const validateInput = async (
         getTranslation('dateRange', userTranslations, min, max)
       )
     } else if (from !== null) {
-      min = new Date(from)
+      min =  new Date(from)
       return handleErrorMessage(
         min <= selectedDate,
-        getTranslation('minDateRange', userTranslations, min)
+        getTranslation('minDate', userTranslations, min)
       )
     } else if (to !== null) {
       max = new Date(to)
       return handleErrorMessage(
         max >= selectedDate,
-        getTranslation('maxDateRange', userTranslations, max)
+        getTranslation('maxDate', userTranslations, max)
       )
     }
   }
