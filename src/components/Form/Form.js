@@ -38,6 +38,7 @@ class Form extends Component {
           this.onValidationSuccess()
         } else {
           this.onValidationFailure()
+          this.onSubmissionFailure(this.state.errorObj)
         }
       }, 500)
     }
@@ -127,11 +128,18 @@ class Form extends Component {
       {
       },
       () => {
-        if (typeof this.props.onFormValidationFailure === 'function') {
+        console.log('%c Form has been validated and its NOT okay to submit!!', 'background: #a55; color: #fff')
+        if (typeof this.props.onFormValidationFailure === 'function') { 
           this.props.onFormValidationFailure(this.state.errorObj)
         }
       }
     )
+  }
+
+  onSubmissionFailure() {
+    if (typeof this.props.onSubmissionFailure === 'function') { 
+      this.props.onSubmissionFailure(this.state.errorObj)
+    }
   }
 
   updateErrorObj(name, results) {
@@ -185,7 +193,7 @@ Form.propTypes = {
   onInputChange: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   children: PropTypes.func.isRequired,
-
+  onSubmissionFailure: PropTypes.func,
   formRef: PropTypes.object,
   description: PropTypes.string,
   submissionErrorMessages: PropTypes.oneOfType([

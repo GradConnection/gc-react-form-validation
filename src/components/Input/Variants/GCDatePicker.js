@@ -49,6 +49,55 @@ class GCDatePicker extends Component {
          }
          else false;
       }
+// <<<<<<< HEAD
+// =======
+  //   }
+  // }
+
+  // handleOnFocusEffect (e) {
+  //   if(!this.props.disabled) {
+  //     this.setState({ isActive: true })
+  //   }
+  // }
+
+  // handleOnBlurEffect (e) {    
+  //   if (!this.datePicker.current.contains(e.target)) {      
+  //     this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
+  //   }
+  // }
+
+  // onDateChange (newValue) {
+  //   // Must receive date obj
+  //   const newValueFormatted = this.formatDate(newValue)
+  //   if (newValueFormatted !== this.props.value) {
+  //     this.props.onInputChange(newValueFormatted)
+  //   } else {
+  //     this.props.onInputChange('')
+  //   }
+  // }
+
+  // onDropDownClick (e) {
+  //   e.preventDefault()
+  //   if(!this.props.disabled){
+  //     this.setState(state => ({ isActive: !state.isActive }))
+  //   }
+  // }
+
+  // formatDate (date) {
+  //   const dateObj = getDateFromString(date);
+  //   const formatDayForSafari = dateObj.getDate() < 10 ? `0${dateObj.getDate()}` : dateObj.getDate()
+  //   const formatMonthForSafari = dateObj.getMonth() + 1 < 10 ? `0${dateObj.getMonth() + 1}` : dateObj.getMonth() + 1
+  //   return `${dateObj.getFullYear()}-${formatMonthForSafari}-${formatDayForSafari}`
+  // }
+
+  // render () {
+  //   const { placeholder = 'Select Date', value, defaultValue } = this.props
+  //   const { isActive } = this.state
+  //   const dateClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
+  //     'gc-input__el--active': isActive
+  //   })
+
+// >>>>>>> master
     return (
       <DatePicker
       animation="slide-up"
