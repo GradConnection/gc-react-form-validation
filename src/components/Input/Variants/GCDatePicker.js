@@ -14,16 +14,17 @@ class GCDatePicker extends Component {
     super(props)
     this.state = {
       format: props.showTime ? 'YYYY-MM-DD HH:mm Z' : 'YYYY-MM-DD',
-      open: false,
-      min: props.min && new Date(new Date(props.min).setHours(0,0,0,0)),
-      max: props.max && new Date(new Date(props.max).setHours(23,59,59,59))
+      open: false
     }
-
   }
 
   render () {
-    const { placeholder = 'Select date', disabled = false, showTime, min, max, value, disableConstraints} = this.props
+    console.log('this.props', this.props)
+    const { placeholder = 'Select date', disabled = false, showTime, from, to} = this.props
     const { open } = this.state
+    const sanitisedFrom = from && new Date(new Date(from).setHours(0,0,0,0))
+    const sanitisedTo = to && new Date(new Date(to).setHours(23,59,59,59))
+    
     const dateClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
             'gc-input__el--active': open
           })
@@ -38,66 +39,18 @@ class GCDatePicker extends Component {
 
     const disableDates = (current) => {
       const currentDateObj = new Date(current)
-      if (min && max) {
-           return (currentDateObj < this.state.min || currentDateObj > this.state.max)
+      if (from && to) {
+           return (currentDateObj < sanitisedFrom || currentDateObj > sanitisedTo)
          }
-         else if (min) {
-           return currentDateObj < this.state.min // cannot select days before min
+         else if (from) {
+           return currentDateObj < sanitisedFrom // cannot select days before "from" date
          } 
-         else if (max) {
-           return currentDateObj > this.state.max // cannot select days after max
+         else if (to) {
+           return currentDateObj > sanitisedTo // cannot select days after "to" date
          }
          else false;
       }
-// <<<<<<< HEAD
-// =======
-  //   }
-  // }
 
-  // handleOnFocusEffect (e) {
-  //   if(!this.props.disabled) {
-  //     this.setState({ isActive: true })
-  //   }
-  // }
-
-  // handleOnBlurEffect (e) {    
-  //   if (!this.datePicker.current.contains(e.target)) {      
-  //     this.setState({ isActive: false }, () => this.props.handleInputValidation(this.props.value))
-  //   }
-  // }
-
-  // onDateChange (newValue) {
-  //   // Must receive date obj
-  //   const newValueFormatted = this.formatDate(newValue)
-  //   if (newValueFormatted !== this.props.value) {
-  //     this.props.onInputChange(newValueFormatted)
-  //   } else {
-  //     this.props.onInputChange('')
-  //   }
-  // }
-
-  // onDropDownClick (e) {
-  //   e.preventDefault()
-  //   if(!this.props.disabled){
-  //     this.setState(state => ({ isActive: !state.isActive }))
-  //   }
-  // }
-
-  // formatDate (date) {
-  //   const dateObj = getDateFromString(date);
-  //   const formatDayForSafari = dateObj.getDate() < 10 ? `0${dateObj.getDate()}` : dateObj.getDate()
-  //   const formatMonthForSafari = dateObj.getMonth() + 1 < 10 ? `0${dateObj.getMonth() + 1}` : dateObj.getMonth() + 1
-  //   return `${dateObj.getFullYear()}-${formatMonthForSafari}-${formatDayForSafari}`
-  // }
-
-  // render () {
-  //   const { placeholder = 'Select Date', value, defaultValue } = this.props
-  //   const { isActive } = this.state
-  //   const dateClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
-  //     'gc-input__el--active': isActive
-  //   })
-
-// >>>>>>> master
     return (
       <DatePicker
       animation="slide-up"
@@ -108,7 +61,7 @@ class GCDatePicker extends Component {
       calendar={<Calendar
         format={this.state.format}
         dateInputPlaceholder={placeholder}
-        disabledDate={disableConstraints ? disableDates : null}
+        disabledDate={(from || to) ? disableDates : null}
         timePicker={showTime ? timePickerElement : null}
       />}
     >
