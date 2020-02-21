@@ -19,12 +19,11 @@ class GCDatePicker extends Component {
   }
 
   render () {
-    console.log('this.props', this.props)
     const { placeholder = 'Select date', disabled = false, showTime, from, to} = this.props
     const { open } = this.state
     const sanitisedFrom = from && new Date(new Date(from).setHours(0,0,0,0))
     const sanitisedTo = to && new Date(new Date(to).setHours(23,59,59,59))
-    
+
     const dateClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
             'gc-input__el--active': open
           })
