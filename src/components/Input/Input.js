@@ -267,6 +267,7 @@ Input.propTypes = {
     PropTypes.number,
     PropTypes.string
   ]),
+  selection_type: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   customRegex: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   customErrorMessage: PropTypes.string,
@@ -304,6 +305,7 @@ Input.defaultProps = {
   from: null,
   max: null,
   min: null,
+  selection_type: 'both',
   customRegex: null,
   inForm: false,
   customErrorMessage: null,

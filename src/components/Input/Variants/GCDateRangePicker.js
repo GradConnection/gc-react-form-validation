@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import RangeCalendar from "rc-calendar/lib/RangeCalendar";
 // import zhCN from 'rc-calendar/lib/locale/zh_CN';
+import Picker from 'rc-calendar/lib/Picker';
 import enUS from "rc-calendar/lib/locale/en_US";
 import TimePickerPanel from "rc-time-picker/lib/Panel";
 import moment from "moment";
@@ -14,26 +15,23 @@ class GCDateRangePicker extends Component {
     super(props);
     this.onStandaloneChange = this.onStandaloneChange.bind(this);
     this.state = {
-      formatStr: 'YYYY-MM-DD HH:mm Z'
+      formatStr: 'YYYY-MM-DD HH:mm Z',
+      formatDisplayStr: 'YYYY-MM-DD HH:mm',
+      dateRange:[
+        props.value[0] ? moment(props.value[0], 'YYYY-MM-DD HH:mm Z') : moment().set({
+          hour: '08',
+          minute: '00',
+          second: '00'
+        }),
+        props.value[1] ? moment(props.value[1], 'YYYY-MM-DD HH:mm Z') : moment().add(1, "month").set({
+          hour: "23",
+          minute: "59",
+          second: "59"
+        })
+      ]      
     }
-
-    // Default value
     if (!props.value[0] || !props.value[1]) {
-      const defaultCalendarStart = moment();
-      defaultCalendarStart.set({
-        hour: '08',
-        minute: '00',
-        second: '00'
-      });
-
-      const defaultCalendarEnd = defaultCalendarStart.clone();
-      defaultCalendarEnd.add(1, "month");
-      defaultCalendarEnd.set({
-        hour: "23",
-        minute: "59",
-        second: "59"
-      });
-      this.props.onInputChange([defaultCalendarStart, defaultCalendarEnd]);
+      this.props.onInputChange([this.state.dateRange[0], this.state.dateRange[1]]);
     }
   }
 
@@ -45,10 +43,12 @@ class GCDateRangePicker extends Component {
 
   onStandaloneChange(value) {
     this.props.onInputChange([value[0], value[1]]);
+    this.setState({dateRange:[value[0], value[1]]});
   }
-
+  // onPickerChange(value)  {
+  //   console.log('onChange', value);
+  // }
   render() {
-    const { value } = this.props;
     const min = this.props.min && new Date(new Date(this.props.min).setHours(0,0,0,0));
     const max = this.props.max && new Date(new Date(this.props.max).setHours(23,59,59,59));
 
@@ -78,24 +78,51 @@ class GCDateRangePicker extends Component {
          else false;
       }
 
-    return (
-      <div className="gc-rangecalendar">
+      const calendar = (
         <RangeCalendar
           showToday
           dateInputPlaceholder={["Select a start date", "Select an end date"]}
           locale={enUS}
+          type={this.props.selection_type || 'both'}
           showOk={false}
-          format={this.state.formatStr}
+          format={this.state.formatDisplayStr}
           disabledDate={current => disableDates(current)}
           onChange={this.onStandaloneChange}
           timePicker={timePickerElement}
           selectedValue={([
-            value[0] ? moment(value[0], this.state.formatStr) : GCDateRangePicker.defaultCalendarStart,
-            value[1] ? moment(value[1], this.state.formatStr) : GCDateRangePicker.defaultCalendarEnd
+            this.state.dateRange[0],this.state.dateRange[1]
+            // value[0] ? moment(value[0], this.state.formatStr) : GCDateRangePicker.defaultCalendarStart,
+            // value[1] ? moment(value[1], this.state.formatStr) : GCDateRangePicker.defaultCalendarEnd
           ])
         }
           // renderFooter={() => <span>extra footer</span>}
         />
+      );
+    
+    return (
+      <div className="gc-input__el">
+      {/* <div className="gc-drop-down__value"> */}
+        <Picker
+        value={this.state.dateRange}
+        // onChange={value => this.onPickerChange(value)}
+        animation="slide-up"
+        calendar={calendar}
+        >
+        {
+          ({ value }) => {
+            return ( 
+                <input
+                  placeholder="please select"
+                  style={{ width: '100%' }}
+                  className="gc-drop-down__value__text--input"
+                  // disabled={state.disabled}
+                  readOnly
+                  value={ `${moment(value[0], this.state.formatStr).format(this.state.formatDisplayStr)}  -  ${moment(value[1], this.state.formatStr).format(this.state.formatDisplayStr)}` || ''}
+                />
+                 );
+          }
+        }
+      </Picker>
       </div>
     );
   }
