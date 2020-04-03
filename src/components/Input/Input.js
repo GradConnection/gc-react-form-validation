@@ -268,6 +268,7 @@ Input.propTypes = {
     PropTypes.string
   ]),
   selection_type: PropTypes.string,
+  custom_time_zone: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   customRegex: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   customErrorMessage: PropTypes.string,
@@ -306,6 +307,7 @@ Input.defaultProps = {
   max: null,
   min: null,
   selection_type: 'both',
+  custom_time_zone: 'Australia/Sydney',
   customRegex: null,
   inForm: false,
   customErrorMessage: null,

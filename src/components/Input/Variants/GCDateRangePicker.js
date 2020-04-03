@@ -6,6 +6,7 @@ import RangeCalendar from "rc-calendar/lib/RangeCalendar";
 import Picker from 'rc-calendar/lib/Picker';
 import enUS from "rc-calendar/lib/locale/en_US";
 import TimePickerPanel from "rc-time-picker/lib/Panel";
+import 'moment-timezone';
 import moment from "moment";
 import "moment/locale/zh-cn";
 import "moment/locale/en-gb";
@@ -18,23 +19,30 @@ class GCDateRangePicker extends Component {
       formatStr: 'YYYY-MM-DD HH:mm Z',
       formatDisplayStr: 'YYYY-MM-DD HH:mm',
       dateRange:[
-        props.value[0] ? moment(props.value[0], 'YYYY-MM-DD HH:mm Z') : moment().set({
+        props.value[0] ? moment(props.value[0], 'YYYY-MM-DD HH:mm Z').tz(this.props.custom_time_zone) : moment().set({
           hour: '08',
           minute: '00',
           second: '00'
         }),
-        props.value[1] ? moment(props.value[1], 'YYYY-MM-DD HH:mm Z') : moment().add(1, "month").set({
+        props.value[1] ? moment(props.value[1], 'YYYY-MM-DD HH:mm Z').tz(this.props.custom_time_zone) : moment().add(1, "month").set({
           hour: "23",
           minute: "59",
           second: "59"
         })
-      ]      
+      ]        
     }
     if (!props.value[0] || !props.value[1]) {
       this.props.onInputChange([this.state.dateRange[0], this.state.dateRange[1]]);
     }
   }
-
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log("gcdaterange update prevProps",prevProps)
+  //   console.log("gcdaterange update prevState",prevState)
+  //   if(prevProps.custom_time_zone !== this.props.custom_time_zone)
+  //   {
+  //     this.onStandaloneChange(this.state.dateRange)
+  //   }
+  // }
   componentDidMount() {
     if (this.props.value[1]) {
         this.props.handleInputValidation(this.props.value)
@@ -42,6 +50,14 @@ class GCDateRangePicker extends Component {
   }
 
   onStandaloneChange(value) {
+    console.log("gcdaterange onStandaloneChange in date picker",value);
+    // const startDate = moment(value[0], this.state.formatStr).tz(this.props.custom_time_zone, true).format(this.state.formatDisplayStr)
+    // const endDate = moment(value[1], this.state.formatStr).tz(this.props.custom_time_zone, true).format(this.state.formatDisplayStr)
+    // console.log("gcdaterange onStandaloneChange this.props.custom_time_zone",this.props.custom_time_zone);
+    // console.log("gcdaterange onStandaloneChange startDate",startDate);
+    // console.log("gcdaterange onStandaloneChange endDate",endDate);
+    // this.props.onInputChange([startDate, endDate]);
+    // this.setState({dateRange:[startDate, endDate]});
     this.props.onInputChange([value[0], value[1]]);
     this.setState({dateRange:[value[0], value[1]]});
   }
@@ -51,7 +67,9 @@ class GCDateRangePicker extends Component {
   render() {
     const min = this.props.min && new Date(new Date(this.props.min).setHours(0,0,0,0));
     const max = this.props.max && new Date(new Date(this.props.max).setHours(23,59,59,59));
-
+    console.log("gcdaterange custom_time_zone in date picker",this.props.custom_time_zone);
+    console.log("gcdaterange this.state.dateRange[0] in date picker", this.state.dateRange[0]);
+    console.log("gcdaterange this.state.dateRange[1] in date picker", this.state.dateRange[0]);
     moment.locale("en-gb");
 
     const timePickerElement = (
@@ -101,6 +119,7 @@ class GCDateRangePicker extends Component {
     
     return (
       <div className="gc-input__el">
+        {this.props.custom_time_zone}
       {/* <div className="gc-drop-down__value"> */}
         <Picker
         value={this.state.dateRange}
@@ -118,6 +137,7 @@ class GCDateRangePicker extends Component {
                   // disabled={state.disabled}
                   readOnly
                   value={ `${moment(value[0], this.state.formatStr).format(this.state.formatDisplayStr)}  -  ${moment(value[1], this.state.formatStr).format(this.state.formatDisplayStr)}` || ''}
+                  // value={ `${moment(value[0], this.state.formatStr).format(this.state.formatDisplayStr)}  -  ${moment(value[1], this.state.formatStr).format(this.state.formatDisplayStr)}` || ''}
                 />
                  );
           }
