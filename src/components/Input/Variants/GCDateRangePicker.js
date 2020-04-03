@@ -35,14 +35,7 @@ class GCDateRangePicker extends Component {
       this.props.onInputChange([this.state.dateRange[0], this.state.dateRange[1]]);
     }
   }
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log("gcdaterange update prevProps",prevProps)
-  //   console.log("gcdaterange update prevState",prevState)
-  //   if(prevProps.custom_time_zone !== this.props.custom_time_zone)
-  //   {
-  //     this.onStandaloneChange(this.state.dateRange)
-  //   }
-  // }
+
   componentDidMount() {
     if (this.props.value[1]) {
         this.props.handleInputValidation(this.props.value)
@@ -50,14 +43,6 @@ class GCDateRangePicker extends Component {
   }
 
   onStandaloneChange(value) {
-    console.log("gcdaterange onStandaloneChange in date picker",value);
-    // const startDate = moment(value[0], this.state.formatStr).tz(this.props.custom_time_zone, true).format(this.state.formatDisplayStr)
-    // const endDate = moment(value[1], this.state.formatStr).tz(this.props.custom_time_zone, true).format(this.state.formatDisplayStr)
-    // console.log("gcdaterange onStandaloneChange this.props.custom_time_zone",this.props.custom_time_zone);
-    // console.log("gcdaterange onStandaloneChange startDate",startDate);
-    // console.log("gcdaterange onStandaloneChange endDate",endDate);
-    // this.props.onInputChange([startDate, endDate]);
-    // this.setState({dateRange:[startDate, endDate]});
     this.props.onInputChange([value[0], value[1]]);
     this.setState({dateRange:[value[0], value[1]]});
   }
@@ -67,9 +52,6 @@ class GCDateRangePicker extends Component {
   render() {
     const min = this.props.min && new Date(new Date(this.props.min).setHours(0,0,0,0));
     const max = this.props.max && new Date(new Date(this.props.max).setHours(23,59,59,59));
-    console.log("gcdaterange custom_time_zone in date picker",this.props.custom_time_zone);
-    console.log("gcdaterange this.state.dateRange[0] in date picker", this.state.dateRange[0]);
-    console.log("gcdaterange this.state.dateRange[1] in date picker", this.state.dateRange[0]);
     moment.locale("en-gb");
 
     const timePickerElement = (
@@ -109,8 +91,6 @@ class GCDateRangePicker extends Component {
           timePicker={timePickerElement}
           selectedValue={([
             this.state.dateRange[0],this.state.dateRange[1]
-            // value[0] ? moment(value[0], this.state.formatStr) : GCDateRangePicker.defaultCalendarStart,
-            // value[1] ? moment(value[1], this.state.formatStr) : GCDateRangePicker.defaultCalendarEnd
           ])
         }
           // renderFooter={() => <span>extra footer</span>}
@@ -119,8 +99,6 @@ class GCDateRangePicker extends Component {
     
     return (
       <div className="gc-input__el">
-        {this.props.custom_time_zone}
-      {/* <div className="gc-drop-down__value"> */}
         <Picker
         value={this.state.dateRange}
         // onChange={value => this.onPickerChange(value)}
@@ -137,7 +115,6 @@ class GCDateRangePicker extends Component {
                   // disabled={state.disabled}
                   readOnly
                   value={ `${moment(value[0], this.state.formatStr).format(this.state.formatDisplayStr)}  -  ${moment(value[1], this.state.formatStr).format(this.state.formatDisplayStr)}` || ''}
-                  // value={ `${moment(value[0], this.state.formatStr).format(this.state.formatDisplayStr)}  -  ${moment(value[1], this.state.formatStr).format(this.state.formatDisplayStr)}` || ''}
                 />
                  );
           }
