@@ -19,12 +19,12 @@ class GCDateRangePicker extends Component {
       formatStr: 'YYYY-MM-DD HH:mm Z',
       formatDisplayStr: 'YYYY-MM-DD HH:mm',
       dateRange:[
-        props.value[0] ? moment(props.value[0], 'YYYY-MM-DD HH:mm Z').tz(this.props.custom_time_zone) : moment().set({
+        props.value[0] ? moment(props.value[0], 'YYYY-MM-DD HH:mm Z').tz(this.props.custom_time_zone) : moment().tz(this.props.custom_time_zone).set({
           hour: '08',
           minute: '00',
           second: '00'
         }),
-        props.value[1] ? moment(props.value[1], 'YYYY-MM-DD HH:mm Z').tz(this.props.custom_time_zone) : moment().add(1, "month").set({
+        props.value[1] ? moment(props.value[1], 'YYYY-MM-DD HH:mm Z').tz(this.props.custom_time_zone) : moment().tz(this.props.custom_time_zone).add(1, "month").set({
           hour: "23",
           minute: "59",
           second: "59"
