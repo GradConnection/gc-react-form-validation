@@ -6,6 +6,7 @@ import RangeCalendar from "rc-calendar/lib/RangeCalendar";
 import Picker from 'rc-calendar/lib/Picker';
 import enUS from "rc-calendar/lib/locale/en_US";
 import TimePickerPanel from "rc-time-picker/lib/Panel";
+import 'moment-timezone';
 import moment from "moment";
 import "moment/locale/zh-cn";
 import "moment/locale/en-gb";
@@ -18,17 +19,17 @@ class GCDateRangePicker extends Component {
       formatStr: 'YYYY-MM-DD HH:mm Z',
       formatDisplayStr: 'YYYY-MM-DD HH:mm',
       dateRange:[
-        props.value[0] ? moment(props.value[0], 'YYYY-MM-DD HH:mm Z') : moment().set({
+        props.value[0] ? moment(props.value[0], 'YYYY-MM-DD HH:mm Z').tz(this.props.custom_time_zone) : moment().tz(this.props.custom_time_zone).set({
           hour: '08',
           minute: '00',
           second: '00'
         }),
-        props.value[1] ? moment(props.value[1], 'YYYY-MM-DD HH:mm Z') : moment().add(1, "month").set({
+        props.value[1] ? moment(props.value[1], 'YYYY-MM-DD HH:mm Z').tz(this.props.custom_time_zone) : moment().tz(this.props.custom_time_zone).add(1, "month").set({
           hour: "23",
           minute: "59",
           second: "59"
         })
-      ]      
+      ]        
     }
     if (!props.value[0] || !props.value[1]) {
       this.props.onInputChange([this.state.dateRange[0], this.state.dateRange[1]]);
@@ -51,7 +52,6 @@ class GCDateRangePicker extends Component {
   render() {
     const min = this.props.min && new Date(new Date(this.props.min).setHours(0,0,0,0));
     const max = this.props.max && new Date(new Date(this.props.max).setHours(23,59,59,59));
-
     moment.locale("en-gb");
 
     const timePickerElement = (
@@ -91,8 +91,6 @@ class GCDateRangePicker extends Component {
           timePicker={timePickerElement}
           selectedValue={([
             this.state.dateRange[0],this.state.dateRange[1]
-            // value[0] ? moment(value[0], this.state.formatStr) : GCDateRangePicker.defaultCalendarStart,
-            // value[1] ? moment(value[1], this.state.formatStr) : GCDateRangePicker.defaultCalendarEnd
           ])
         }
           // renderFooter={() => <span>extra footer</span>}
@@ -101,7 +99,6 @@ class GCDateRangePicker extends Component {
     
     return (
       <div className="gc-input__el">
-      {/* <div className="gc-drop-down__value"> */}
         <Picker
         value={this.state.dateRange}
         // onChange={value => this.onPickerChange(value)}
