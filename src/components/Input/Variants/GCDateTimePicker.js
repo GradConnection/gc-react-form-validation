@@ -10,11 +10,12 @@ import DatePicker from "rc-calendar/lib/Picker";
 
 import TimePickerPanel from "rc-time-picker/lib/Panel";
 
-class GCDatePicker extends Component {
+class GCDateTimePicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      format: props.showTime ? "YYYY-MM-DD HH:mm Z" : "YYYY-MM-DD",
+      format: props.showTime ? "YYYY-MM-DD HH:mm" : "YYYY-MM-DD",
+      // format: props.showTime ? 'YYYY-MM-DD HH:mm Z' : 'YYYY-MM-DD',
       open: false,
     };
   }
@@ -38,9 +39,12 @@ class GCDatePicker extends Component {
     const timePickerElement = (
       <TimePickerPanel
         showSecond={false}
+        use12Hours
+        format="h:mm a"
         defaultValue={moment("00:00:00", "HH:mm:ss")}
       />
     );
+    // const timePickerElement = <span>extra footer</span>;
 
     const onChange = (value) => {
       const val = value ? value.format(this.state.format) : "";
@@ -48,18 +52,15 @@ class GCDatePicker extends Component {
       this.props.onInputChange(val);
     };
 
-    const disableDates = (current) => {
+    const disableDates = current => {
       const currentDateObj = new Date(current);
       if (from && to) {
         return currentDateObj < sanitisedFrom || currentDateObj > sanitisedTo;
-      }
-      if (from) {
+      } else if (from) {
         return currentDateObj < sanitisedFrom; // cannot select days before "from" date
-      }
-      if (to) {
+      } else if (to) {
         return currentDateObj > sanitisedTo; // cannot select days after "to" date
-      }
-      false;
+      } else false;
     };
 
     return (
@@ -71,6 +72,7 @@ class GCDatePicker extends Component {
           this.setState({ open: openstate });
         }}
         disabled={disabled}
+        // renderFooter={() => <span>extra footer</span>}
         calendar={
           <Calendar
             format={this.state.format}
@@ -80,32 +82,36 @@ class GCDatePicker extends Component {
           />
         }
       >
-        {({ value }) => (
-          <div className={dateClasses}>
-            <div role="button" className="gc-drop-down__value">
-              <input
-                placeholder={placeholder}
-                disabled={disabled}
-                readOnly
-                type="text"
-                value={
-                  value ? moment(new Date(value)).format(this.state.format) : ""
-                }
-                className="gc-drop-down__value__text gc-drop-down__value__text--input"
-              />
-              <GCIcon
-                kind="calendarIcon"
-                extendedClassNames="gc-drop-down__caret"
-              />
+        {({ value }) => {
+          return (
+            <div className={dateClasses}>
+              <div role="button" className="gc-drop-down__value">
+                <input
+                  placeholder={placeholder}
+                  disabled={disabled}
+                  readOnly
+                  type="text"
+                  value={
+                    value
+                      ? moment(new Date(value)).format(this.state.format)
+                      : ""
+                  }
+                  className="gc-drop-down__value__text gc-drop-down__value__text--input"
+                />
+                <GCIcon
+                  kind="calendarIcon"
+                  extendedClassNames="gc-drop-down__caret"
+                />
+              </div>
             </div>
-          </div>
-        )}
+          );
+        }}
       </DatePicker>
     );
   }
 }
 
-GCDatePicker.propTypes = {
+GCDateTimePicker.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   value: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
   defaultValue: PropTypes.oneOfType([
@@ -116,8 +122,8 @@ GCDatePicker.propTypes = {
   onInputChange: PropTypes.func.isRequired,
 };
 
-GCDatePicker.defaultProps = {
+GCDateTimePicker.defaultProps = {
   defaultValue: "",
 };
 
-export { GCDatePicker };
+export { GCDateTimePicker };

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import TimePicker from 'rc-time-picker';
-import moment from 'moment';
-import PropTypes from 'prop-types'
+import React, { Component } from "react";
+import TimePicker from "rc-time-picker";
+import moment from "moment";
+import PropTypes from "prop-types";
 
 class GCTimePicker extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class GCTimePicker extends Component {
   }
 
   handleValueChange(newValue) {
-    let formattedValue = '';
+    let formattedValue = "";
     const format = this.getTimeFormat();
 
     if (newValue) {
@@ -34,7 +34,7 @@ class GCTimePicker extends Component {
     if (formattedValue !== this.props.value) {
       this.props.onInputChange(formattedValue);
     } else {
-      this.props.onInputChange('');
+      this.props.onInputChange("");
     }
   }
 
@@ -60,9 +60,9 @@ class GCTimePicker extends Component {
           placeholder={this.props.placeholder}
         />
       </div>
-    )
+    );
   }
-};
+}
 
 GCTimePicker.propTypes = {
   onInputChange: PropTypes.func,
@@ -71,11 +71,11 @@ GCTimePicker.propTypes = {
   value: PropTypes.string,
   defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
-  format: PropTypes.string
+  format: PropTypes.string,
 };
 
 GCTimePicker.defaultProps = {
-  format: 'HH:mm'
+  format: "HH:mm",
 };
 
 export { GCTimePicker };

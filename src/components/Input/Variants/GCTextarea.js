@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
 
 // import GCStaticLabel from './Labels/GCStaticLabel'
 
@@ -24,8 +24,8 @@ const GCTextarea = ({
     rows={rows}
     value={value}
     {...restProps}
-    />
-)
+  />
+);
 
 GCTextarea.propTypes = {
   name: PropTypes.string.isRequired,
@@ -35,14 +35,14 @@ GCTextarea.propTypes = {
   rows: PropTypes.number,
   size: PropTypes.string,
   min: PropTypes.number,
-  max: PropTypes.number
-}
+  max: PropTypes.number,
+};
 
 GCTextarea.defaultProps = {
   rows: 4,
-  size: 'med',
+  size: "med",
   min: undefined,
-  max: undefined
-}
+  max: undefined,
+};
 
-export { GCTextarea }
+export { GCTextarea };

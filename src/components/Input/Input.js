@@ -1,30 +1,30 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import classnames from 'classnames'
+import classnames from "classnames";
 
-import validateInput from './validateInput'
+import validateInput from "./validateInput";
 
-import GCLabel from './GCLabel'
-import GCDescription from './GCDescription'
-import GCMappedInput from './GCMappedInput'
-import { GCTooltip } from './GCTooltip'
-import GCErrorMessage from './GCErrorMessage'
-import GCHelperText from './GCHelperText'
-import { GCIcon } from 'ui'
+import GCLabel from "./GCLabel";
+import GCDescription from "./GCDescription";
+import GCMappedInput from "./GCMappedInput";
+import { GCTooltip } from "./GCTooltip";
+import GCErrorMessage from "./GCErrorMessage";
+import GCHelperText from "./GCHelperText";
+import { GCIcon } from "ui";
 
 class Input extends Component {
   constructor(props, context) {
-    super(props, context)
+    super(props, context);
     this.state = {
       validationMessage: null,
       showTooltip: false,
-      showValidationMessage: false
-    }
+      showValidationMessage: false,
+    };
 
-    this.handleInputChange = this.handleInputChange.bind(this)
-    this.handleInputValidation = this.handleInputValidation.bind(this)
-    this.onTooltipIconClick = this.onTooltipIconClick.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInputValidation = this.handleInputValidation.bind(this);
+    this.onTooltipIconClick = this.onTooltipIconClick.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -41,81 +41,81 @@ class Input extends Component {
       nextProps.disabled !== this.props.disabled ||
       nextProps.defaultValue !== this.props.defaultValue ||
       nextProps.lastUpdateStamp !== this.props.lastUpdateStamp
-    )
+    );
   }
 
   componentDidUpdate(prevProps) {
     if (
       (prevProps.value !== this.props.value && this.props.hidden) ||
       (prevProps.value !== this.props.value && this.props.customUI) ||
-      (prevProps.value !== this.props.value && this.props.type === 'radio') ||
+      (prevProps.value !== this.props.value && this.props.type === "radio") ||
       (!prevProps.formSubmitted && this.props.formSubmitted) ||
       prevProps.required !== this.props.required ||
       prevProps.lastUpdateStamp !== this.props.lastUpdateStamp
     ) {
-      this.handleInputValidation(this.props.value)
+      this.handleInputValidation(this.props.value);
     }
   }
 
-  async handleInputValidation(value, cb = () => { }) {
-    const { onInputValidationFailure, onInputValidationSuccess } = this.props
+  async handleInputValidation(value, cb = () => {}) {
+    const { onInputValidationFailure, onInputValidationSuccess } = this.props;
     const validationResponse = await validateInput({
       ...this.props,
-      value: value
-    })
-    const isValid = !validationResponse.validationMessage
+      value,
+    });
+    const isValid = !validationResponse.validationMessage;
     this.setState(
       {
         ...validationResponse,
-        showValidationMessage: !isValid
+        showValidationMessage: !isValid,
       },
       () => {
         if (isValid) {
-          onInputValidationSuccess()
-          cb()
+          onInputValidationSuccess();
+          cb();
         } else {
-          onInputValidationFailure(validationResponse)
+          onInputValidationFailure(validationResponse);
         }
       }
-    )
+    );
   }
 
   handleInputChange(v) {
     if (!this.props.disabled || !this.props.loading) {
-      this.props.onChange(v, this.props.stateName || this.props.name)
+      this.props.onChange(v, this.props.stateName || this.props.name);
     }
   }
 
   onTooltipIconClick(e) {
-    e.preventDefault()
-    this.toggleTooltip(!this.state.showTooltip)
+    e.preventDefault();
+    this.toggleTooltip(!this.state.showTooltip);
   }
 
   toggleTooltip(active) {
-    this.setState({ showTooltip: active })
+    this.setState({ showTooltip: active });
   }
 
   getValue() {
     if (
       this.props.defaultAll &&
       this.props.multi &&
-      this.props.type === 'select'
+      this.props.type === "select"
     ) {
       if (
         (Array.isArray(this.props.value) && this.props.value.length === 0) ||
-        this.props.value === ''
+        this.props.value === ""
       ) {
-        return this.props.options.map(o => o.value)
+        return this.props.options.map((o) => o.value);
       }
     }
 
-    return this.props.value
+    return this.props.value;
   }
 
   onInputClick(e, disabled) {
     if (disabled) {
-      e.preventDefault()
-      e.stopPropagation()
+      e.preventDefault();
+      e.stopPropagation();
     }
   }
 
@@ -135,35 +135,44 @@ class Input extends Component {
       customUI = false,
       label = title,
       name,
-      options
-    } = this.props
+      options,
+    } = this.props;
     const {
       validationMessage,
       showValidationMessage,
-      showTooltip
-    } = this.state
+      showTooltip,
+    } = this.state;
 
-    const inputClasses = classnames('gc-input', `gc-input--${type}`, {
-      'gc-input--invalid': showValidationMessage,
-      'gc-input--disabled': disabled,
-      [extendedClassNames]: extendedClassNames
-    })
+    const inputClasses = classnames("gc-input", `gc-input--${type}`, {
+      "gc-input--invalid": showValidationMessage,
+      "gc-input--disabled": disabled,
+      [extendedClassNames]: extendedClassNames,
+    });
 
-    const displayLabel = (label && type !== 'checkbox') || (label && type === 'checkbox' && options.length > 0)
+    const displayLabel =
+      (label && type !== "checkbox") ||
+      (label && type === "checkbox" && options.length > 0);
     if (!hidden || !customUI) {
       if (!customComponent()) {
         return (
-          <div className={inputClasses} onClick={e => this.onInputClick(e, disabled)}>
+          <div
+            className={inputClasses}
+            onClick={e => this.onInputClick(e, disabled)}
+          >
             {displayLabel && (
               <GCLabel label={label} htmlFor={name} required={required} />
             )}
 
-            {description && (
-              <GCDescription text={description} />
-            )}
+            {description && <GCDescription text={description} />}
 
             {tooltip && (
-              <span className='gc-btn--icon gc-tooltip__icon' onClick={this.onTooltipIconClick} tabIndex={-1}><GCIcon kind='infoIcon' /></span>
+              <span
+                className="gc-btn--icon gc-tooltip__icon"
+                onClick={this.onTooltipIconClick}
+                tabIndex={-1}
+              >
+                <GCIcon kind="infoIcon" />
+              </span>
             )}
 
             <GCMappedInput
@@ -176,9 +185,7 @@ class Input extends Component {
               <GCErrorMessage text={validationMessage} />
             )}
 
-            {helperText && (
-              <GCHelperText text={helperText} />
-            )}
+            {helperText && <GCHelperText text={helperText} />}
 
             {showTooltip && (
               <GCTooltip
@@ -189,42 +196,40 @@ class Input extends Component {
               />
             )}
           </div>
-        )
-      } else {
-        return (
-          <div className={inputClasses} onMouseDown={e => this.onInputClick(e, disabled)}>
-            {displayLabel && (
-              <GCLabel label={label} htmlFor={name} required={required} />
-            )}
-
-            {customComponent({
-              ...this.props,
-              isValid: !showValidationMessage,
-              handleInputValidation: this.handleInputValidation,
-              handleInputChange: this.handleInputChange
-            })}
-
-            {showValidationMessage && (
-              <GCErrorMessage text={validationMessage} />
-            )}
-
-            {helperText && (
-              <GCHelperText text={helperText} />
-            )}
-
-            {showTooltip && (
-              <GCTooltip
-                content={this.props.tooltip}
-                name={this.props.name}
-                active={this.state.showTooltip}
-                toggleTooltip={active => this.toggleTooltip(active)}
-              />
-            )}
-          </div>
-        )
+        );
       }
+      return (
+        <div
+          className={inputClasses}
+          onMouseDown={e => this.onInputClick(e, disabled)}
+        >
+          {displayLabel && (
+            <GCLabel label={label} htmlFor={name} required={required} />
+          )}
+
+          {customComponent({
+            ...this.props,
+            isValid: !showValidationMessage,
+            handleInputValidation: this.handleInputValidation,
+            handleInputChange: this.handleInputChange,
+          })}
+
+          {showValidationMessage && <GCErrorMessage text={validationMessage} />}
+
+          {helperText && <GCHelperText text={helperText} />}
+
+          {showTooltip && (
+            <GCTooltip
+              content={this.props.tooltip}
+              name={this.props.name}
+              active={this.state.showTooltip}
+              toggleTooltip={active => this.toggleTooltip(active)}
+            />
+          )}
+        </div>
+      );
     }
-    return null
+    return null;
   }
 }
 
@@ -236,12 +241,12 @@ Input.propTypes = {
     PropTypes.bool,
     PropTypes.array,
     PropTypes.object,
-    PropTypes.number
+    PropTypes.number,
   ]),
   defaultValue: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
-    PropTypes.array
+    PropTypes.array,
   ]),
   type: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
@@ -250,22 +255,22 @@ Input.propTypes = {
   to: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.number,
-    PropTypes.string
+    PropTypes.string,
   ]),
   from: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.number,
-    PropTypes.string
+    PropTypes.string,
   ]),
   max: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.number,
-    PropTypes.string
+    PropTypes.string,
   ]),
   min: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.number,
-    PropTypes.string
+    PropTypes.string,
   ]),
   selection_type: PropTypes.string,
   custom_time_zone: PropTypes.string,
@@ -292,22 +297,22 @@ Input.propTypes = {
   defaultText: PropTypes.string,
   onInputValidationSuccess: PropTypes.func,
   onInputValidationFailure: PropTypes.func,
-  lastUpdateStamp: PropTypes.number
-}
+  lastUpdateStamp: PropTypes.number,
+};
 
 Input.defaultProps = {
-  description: '',
-  extendedClassNames: '',
-  value: '',
+  description: "",
+  extendedClassNames: "",
+  value: "",
   defaultValue: null,
   disabled: false,
-  name: '',
+  name: "",
   to: null,
   from: null,
   max: null,
   min: null,
-  selection_type: 'both',
-  custom_time_zone: 'Australia/Sydney',
+  selection_type: "both",
+  custom_time_zone: "Australia/Sydney",
   customRegex: null,
   inForm: false,
   customErrorMessage: null,
@@ -319,17 +324,17 @@ Input.defaultProps = {
   search: true,
   onSearchInputFunction: null,
   tooltip: null,
-  autoComplete: 'off',
+  autoComplete: "off",
   loading: false,
   hidden: false,
-  tooltip: '',
+  tooltip: "",
   formSubmitted: false,
   customComponent: () => false,
-  defaultText: 'All Options',
+  defaultText: "All Options",
   defaultAll: false,
   allowAll: false,
   onInputValidationSuccess: () => ({}),
-  onInputValidationFailure: () => ({})
-}
+  onInputValidationFailure: () => ({}),
+};
 
-export default Input
+export default Input;

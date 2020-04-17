@@ -1,13 +1,8 @@
-import React from 'react';
-import Slider from 'rc-slider';
-import PropTypes from 'prop-types';
+import React from "react";
+import Slider from "rc-slider";
+import PropTypes from "prop-types";
 
-const GCRange = ({
-  min,
-  max,
-  handleInputChange,
-  defaultValue
-}) => {
+const GCRange = ({ min, max, handleInputChange, defaultValue }) => {
   const { createSliderWithTooltip } = Slider;
   const Range = createSliderWithTooltip(Slider.Range);
   const defaultRange = Array.isArray(defaultValue) ? defaultValue : [min, max];
@@ -22,15 +17,15 @@ const GCRange = ({
       marks={{ [min]: min, [max]: max }}
       dots
       pushable
-      />
-  )
-}
+    />
+  );
+};
 
 GCRange.propTypes = {
   min: PropTypes.number,
   max: PropTypes.number,
   handleInputChange: PropTypes.func,
-  defaultValue: PropTypes.arrayOf(PropTypes.number)
-}
+  defaultValue: PropTypes.arrayOf(PropTypes.number),
+};
 
 export { GCRange };
