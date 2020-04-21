@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import classnames from "classnames";
+import classnames from 'classnames';
 
-import { isEmpty, isEmptyObject } from "utils";
+import { isEmpty, isEmptyObject } from 'utils';
 
-import Input from "../Input/Input";
-import GCFormErrorMessage from "./GCFormErrorMessage";
+import Input from '../Input/Input';
+import GCFormErrorMessage from './GCFormErrorMessage';
 
 class Form extends Component {
   constructor(props, context) {
@@ -14,7 +14,7 @@ class Form extends Component {
     this.state = {
       formSubmitted: false,
       displayErrorMessage: false,
-      errorObj: {},
+      errorObj: {}
     };
 
     this.updateErrorObj = this.updateErrorObj.bind(this);
@@ -45,7 +45,7 @@ class Form extends Component {
 
   resetForm() {
     this.setState({
-      formSubmitted: false,
+      formSubmitted: false
     });
   }
 
@@ -67,7 +67,7 @@ class Form extends Component {
             {...d}
           />
         ),
-        ...a,
+        ...a
       };
     }, {});
   }
@@ -76,7 +76,7 @@ class Form extends Component {
     const { errorObj, displayErrorMessage } = this.state;
     const { submissionErrorMessages } = this.props;
     const errorMessage =
-      "Please make sure that you have filled in all the fields correctly";
+      'Please make sure that you have filled in all the fields correctly';
 
     if (
       displayErrorMessage &&
@@ -84,9 +84,9 @@ class Form extends Component {
       isEmptyObject(errorObj)
     ) {
       let submissionError = submissionErrorMessages;
-      if (typeof submissionErrorMessages === "object") {
+      if (typeof submissionErrorMessages === 'object') {
         Object.keys(submissionErrorMessages).map(function (key, index) {
-          console.log("submissionErrorMessages", submissionErrorMessages[key]);
+          console.log('submissionErrorMessages', submissionErrorMessages[key]);
           submissionError = submissionErrorMessages[key];
         });
       }
@@ -105,22 +105,22 @@ class Form extends Component {
     this.setState({
       formSubmitted: true,
       displayErrorMessage: false,
-      errorObj: {},
+      errorObj: {}
     });
   }
 
   onValidationSuccess() {
     this.setState(
       {
-        errorObj: {},
+        errorObj: {}
       },
       () => {
         console.log(
-          "%c Form has been validated and thinks its okay to submit",
-          "background: #bada55; color: #fff"
+          '%c Form has been validated and thinks its okay to submit',
+          'background: #bada55; color: #fff'
         );
         this.props.onSubmit();
-        if (typeof onFormValidationSuccess === "function") {
+        if (typeof onFormValidationSuccess === 'function') {
           this.props.onFormValidationSuccess();
         }
       }
@@ -130,17 +130,17 @@ class Form extends Component {
   onValidationFailure() {
     this.setState({}, () => {
       console.log(
-        "%c Form has been validated and its NOT okay to submit!!",
-        "background: #a55; color: #fff"
+        '%c Form has been validated and its NOT okay to submit!!',
+        'background: #a55; color: #fff'
       );
-      if (typeof this.props.onFormValidationFailure === "function") {
+      if (typeof this.props.onFormValidationFailure === 'function') {
         this.props.onFormValidationFailure(this.state.errorObj);
       }
     });
   }
 
   onSubmissionFailure() {
-    if (typeof this.props.onSubmissionFailure === "function") {
+    if (typeof this.props.onSubmissionFailure === 'function') {
       this.props.onSubmissionFailure(this.state.errorObj);
     }
   }
@@ -163,12 +163,12 @@ class Form extends Component {
   handleFormValidationCallbacks(isFormValid, errorObj) {
     if (
       isFormValid &&
-      typeof this.props.onFormValidationSuccess === "function"
+      typeof this.props.onFormValidationSuccess === 'function'
     ) {
       this.props.onFormValidationSuccess();
     } else if (
       !isFormValid &&
-      typeof this.props.onFormValidationFailure === "function"
+      typeof this.props.onFormValidationFailure === 'function'
     ) {
       this.props.onFormValidationFailure(errorObj);
     }
@@ -181,11 +181,11 @@ class Form extends Component {
       id,
       description,
       children,
-      data,
+      data
     } = this.props;
 
-    const formClasses = classnames("gc-form", {
-      [extendedClassNames]: extendedClassNames,
+    const formClasses = classnames('gc-form', {
+      [extendedClassNames]: extendedClassNames
     });
 
     return (
@@ -196,7 +196,7 @@ class Form extends Component {
         onSubmit={e => this.onFormSubmission(e)}
         noValidate
       >
-        {description !== "" && <p>{description}</p>}
+        {description !== '' && <p>{description}</p>}
         {this.handleErrorMessageRender()}
         {children({ fields: this.getFields(data) })}
       </form>
@@ -214,14 +214,14 @@ Form.propTypes = {
   description: PropTypes.string,
   submissionErrorMessages: PropTypes.oneOfType([
     PropTypes.array,
-    PropTypes.string,
-  ]),
+    PropTypes.string
+  ])
 };
 
 Form.defaultProps = {
-  description: "",
-  submissionErrorMessages: "",
-  handleFormErrors: () => ({}),
+  description: '',
+  submissionErrorMessages: '',
+  handleFormErrors: () => ({})
 };
 
 export default Form;

@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class GCInputSVG extends Component {
   render() {
     const { type, className } = this.props;
     switch (type) {
-      case "chevronIcon":
+      case 'chevronIcon':
         return (
           <svg
             id="layer_chevronIcon"
             className={className}
-            style={{ maxHeight: "50px" }}
+            style={{ maxHeight: '50px' }}
             viewBox="0 0 50 50"
           >
             <title id={type}>{type}</title>
@@ -23,12 +23,12 @@ class GCInputSVG extends Component {
             </g>
           </svg>
         );
-      case "chevronUp":
+      case 'chevronUp':
         return (
           <svg
             id="layer_chevronUp"
             className={className}
-            style={{ maxHeight: "50px" }}
+            style={{ maxHeight: '50px' }}
             viewBox="0 0 50 50"
           >
             <title id={type}>{type}</title>
@@ -41,12 +41,12 @@ class GCInputSVG extends Component {
             </g>
           </svg>
         );
-      case "close":
+      case 'close':
         return (
           <svg
             id="layer_closeUp"
             className={className}
-            style={{ maxHeight: "50px" }}
+            style={{ maxHeight: '50px' }}
             viewBox="0 0 50 50"
           >
             <title id={type}>{type}</title>
@@ -65,7 +65,7 @@ class GCInputSVG extends Component {
 
 GCInputSVG.propTypes = {
   className: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
 };
 
 export default GCInputSVG;

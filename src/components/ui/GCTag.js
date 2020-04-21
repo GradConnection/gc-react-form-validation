@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { GCIcon } from "ui";
+import { GCIcon } from 'ui';
 
 const GCTag = ({ children, onCrossBtnClick }) => (
   <div className="gc-tag">
@@ -14,7 +14,7 @@ const GCTag = ({ children, onCrossBtnClick }) => (
 
 GCTag.propTypes = {
   children: PropTypes.node.isRequired,
-  onCrossBtnClick: PropTypes.func.isRequired,
+  onCrossBtnClick: PropTypes.func.isRequired
 };
 
 export { GCTag };

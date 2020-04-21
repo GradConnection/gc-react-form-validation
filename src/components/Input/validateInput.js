@@ -1,6 +1,6 @@
-import { getTranslation } from "translations";
-import { toArray, isEmpty } from "utils";
-import moment from "moment";
+import { getTranslation } from 'translations';
+import { toArray, isEmpty } from 'utils';
+import moment from 'moment';
 
 const validateInput = async (
   {
@@ -24,7 +24,7 @@ const validateInput = async (
     sendResultsToForm = null,
     defaultAll = false,
     allowAll = false,
-    hidden = false,
+    hidden = false
   },
   userTranslations
 ) => {
@@ -35,7 +35,7 @@ const validateInput = async (
     const valid = pattern.test(value);
     return handleErrorMessage(
       valid,
-      getTranslation("invalidEmailAddress", userTranslations)
+      getTranslation('invalidEmailAddress', userTranslations)
     );
   };
 
@@ -53,12 +53,12 @@ const validateInput = async (
     }
     return handleErrorMessage(
       valid,
-      getTranslation("maxCharLength", userTranslations, maxL)
+      getTranslation('maxCharLength', userTranslations, maxL)
     );
   };
 
   const validateText = () => {
-    const pattern = handleRegExp("");
+    const pattern = handleRegExp('');
     const maxL = max;
     let valid;
 
@@ -68,12 +68,12 @@ const validateInput = async (
     }
     return handleErrorMessage(
       valid,
-      getTranslation("maxCharLength", userTranslations, maxL)
+      getTranslation('maxCharLength', userTranslations, maxL)
     );
   };
 
   const validateUrl = () => {
-    let usableUrl = "";
+    let usableUrl = '';
     if (/^(https:\/\/|http:\/\/)/.test(value)) {
       usableUrl = value;
     } else {
@@ -82,25 +82,25 @@ const validateInput = async (
     const valid = /[.]+/.test(usableUrl);
     return handleErrorMessage(
       valid,
-      getTranslation("invalidURL", userTranslations)
+      getTranslation('invalidURL', userTranslations)
     );
   };
 
   const validateTextarea = () => {
-    const pattern = handleRegExp("");
+    const pattern = handleRegExp('');
     const minL = min;
     const maxL = max;
     let valid;
     if (minL && value.length < minL) {
       return handleErrorMessage(
         valid,
-        getTranslation("minCharLength", userTranslations, minL)
+        getTranslation('minCharLength', userTranslations, minL)
       );
     }
     if (maxL && value.length > maxL) {
       return handleErrorMessage(
         valid,
-        getTranslation("maxCharLength", userTranslations, maxL)
+        getTranslation('maxCharLength', userTranslations, maxL)
       );
     }
     valid = pattern.test(value);
@@ -109,11 +109,11 @@ const validateInput = async (
 
   const validatePassword = () => {
     const minL = min && min !== 0 ? min : 8;
-    const pattern = handleRegExp("");
+    const pattern = handleRegExp('');
     if (value.length < min) {
       return handleErrorMessage(
         false,
-        getTranslation("minPasswordCharLength", userTranslations, minL),
+        getTranslation('minPasswordCharLength', userTranslations, minL),
         true
       );
     }
@@ -131,21 +131,21 @@ const validateInput = async (
       min = new Date(from);
       return handleErrorMessage(
         min <= selectedDate && max >= selectedDate,
-        getTranslation("dateRange", userTranslations, min, max)
+        getTranslation('dateRange', userTranslations, min, max)
       );
     }
     if (from !== null) {
       min = new Date(from);
       return handleErrorMessage(
         min <= selectedDate,
-        getTranslation("minDate", userTranslations, min)
+        getTranslation('minDate', userTranslations, min)
       );
     }
     if (to !== null) {
       max = new Date(to);
       return handleErrorMessage(
         max >= selectedDate,
-        getTranslation("maxDate", userTranslations, max)
+        getTranslation('maxDate', userTranslations, max)
       );
     }
   };
@@ -156,22 +156,22 @@ const validateInput = async (
     if (!endDateCanBePast) {
       return handleErrorMessage(
         endValue === null || endValue >= currentDate,
-        getTranslation("dateRangeEnd", userTranslations)
+        getTranslation('dateRangeEnd', userTranslations)
       );
     }
   };
 
   const validateNumber = () => {
-    let res = "";
+    let res = '';
     if (min && min > value) {
       res = handleErrorMessage(
         false,
-        getTranslation("minNumber", userTranslations, min)
+        getTranslation('minNumber', userTranslations, min)
       );
     } else if (max && max < value) {
       res = handleErrorMessage(
         false,
-        getTranslation("maxNumber", userTranslations, max)
+        getTranslation('maxNumber', userTranslations, max)
       );
     }
     return res;
@@ -197,12 +197,12 @@ const validateInput = async (
       const maxL = max;
       const valueArray = toArray(value);
       if (minL && minL > valueArray.length) {
-        res = getTranslation("minSelectOptions", userTranslations, minL);
+        res = getTranslation('minSelectOptions', userTranslations, minL);
       } else if (maxL && maxL < valueArray.length) {
-        res = getTranslation("maxSelectOptions", userTranslations, maxL);
+        res = getTranslation('maxSelectOptions', userTranslations, maxL);
       }
     } else if (!value && required) {
-      res = res = getTranslation("requiredField", userTranslations);
+      res = res = getTranslation('requiredField', userTranslations);
     }
     return res;
   };
@@ -211,26 +211,26 @@ const validateInput = async (
     if (min && max && min.length && max.length) {
       return handleErrorMessage(
         min <= value && max >= value,
-        getTranslation("timeRange", userTranslations, min, max)
+        getTranslation('timeRange', userTranslations, min, max)
       );
     }
     if (min !== null && min.length) {
       return handleErrorMessage(
         min <= value,
-        getTranslation("minTime", userTranslations, min)
+        getTranslation('minTime', userTranslations, min)
       );
     }
     if (max !== null && max.length) {
       return handleErrorMessage(
         max >= value,
-        getTranslation("maxTime", userTranslations, max)
+        getTranslation('maxTime', userTranslations, max)
       );
     }
   };
 
   const handleErrorMessage = (
     v,
-    msg = getTranslation("defaultInvalidInput", userTranslations),
+    msg = getTranslation('defaultInvalidInput', userTranslations),
     ignoreCustom = false
   ) => {
     if (!v) {
@@ -239,11 +239,11 @@ const validateInput = async (
     return null;
   };
 
-  const handleRegExp = (regX) => {
+  const handleRegExp = regX => {
     if (customRegex) {
       let cleanPattern = customRegex;
       if (
-        typeof customRegex === "string" &&
+        typeof customRegex === 'string' &&
         customRegex.match(/^\//) &&
         customRegex.match(/\/$/)
       ) {
@@ -258,39 +258,39 @@ const validateInput = async (
     // if not empty and not hidden
     if (!isEmpty(value) && !hidden && !disabled) {
       switch (renderType) {
-        case "custom":
+        case 'custom':
           return getErrorMessage(customValidationType, hidden, value, disabled);
-        case "email":
+        case 'email':
           return validateEmail();
-        case "password":
+        case 'password':
           return validatePassword();
-        case "name":
+        case 'name':
           return validateName();
-        case "text":
+        case 'text':
           return validateText();
-        case "date":
+        case 'date':
           return validateDate();
-        case "daterange":
+        case 'daterange':
           return validateDateRange();
-        case "number":
+        case 'number':
           return validateNumber();
-        case "textarea":
+        case 'textarea':
           return validateTextarea();
-        case "array":
-        case "checkbox":
+        case 'array':
+        case 'checkbox':
           return validateCheckbox();
-        case "url":
+        case 'url':
           return validateUrl();
-        case "select":
+        case 'select':
           return validateSelect();
-        case "time":
+        case 'time':
           return validateTime();
-        case "range":
+        case 'range':
         default:
           return null;
       }
     } else if (required && !hidden) {
-      return getTranslation("requiredField", userTranslations);
+      return getTranslation('requiredField', userTranslations);
     } else {
       return null;
     }
@@ -304,7 +304,7 @@ const validateInput = async (
 
   return {
     validationMessage: error,
-    activeInput: open,
+    activeInput: open
   };
 };
 

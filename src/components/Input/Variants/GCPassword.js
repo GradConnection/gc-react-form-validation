@@ -1,12 +1,12 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment } from 'react';
 
-import { GCIcon } from "ui";
+import { GCIcon } from 'ui';
 
 class GCPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: "password",
+      mode: 'password'
     };
     this.input = React.createRef();
     this.onIconBtnClick = this.onIconBtnClick.bind(this);
@@ -15,7 +15,7 @@ class GCPassword extends Component {
   onIconBtnClick(e) {
     e.preventDefault();
     const { mode } = this.state;
-    const newMode = mode === "password" ? "text" : "password";
+    const newMode = mode === 'password' ? 'text' : 'password';
     this.setState({ mode: newMode }, () => {
       if (!this.input.current.isFocussed) {
         this.input.current.focus();
@@ -29,7 +29,7 @@ class GCPassword extends Component {
       value,
       name,
       handleInputValidation,
-      handleInputChange,
+      handleInputChange
     } = this.props;
 
     return (
@@ -41,8 +41,8 @@ class GCPassword extends Component {
           value={value}
           name={name}
           autoComplete="current-password"
-          onBlur={(e) => handleInputValidation(e.target.value)}
-          onChange={(e) => handleInputChange(e.target.value)}
+          onBlur={e => handleInputValidation(e.target.value)}
+          onChange={e => handleInputChange(e.target.value)}
         />
 
         <div
@@ -50,7 +50,7 @@ class GCPassword extends Component {
           className="gc-btn--icon"
           onClick={this.onIconBtnClick}
         >
-          {mode === "password" ? (
+          {mode === 'password' ? (
             <GCIcon kind="showIcon" />
           ) : (
             <GCIcon kind="hideIcon" />

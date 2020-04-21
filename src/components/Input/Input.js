@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import classnames from "classnames";
+import classnames from 'classnames';
 
-import validateInput from "./validateInput";
+import validateInput from './validateInput';
 
-import GCLabel from "./GCLabel";
-import GCDescription from "./GCDescription";
-import GCMappedInput from "./GCMappedInput";
-import { GCTooltip } from "./GCTooltip";
-import GCErrorMessage from "./GCErrorMessage";
-import GCHelperText from "./GCHelperText";
-import { GCIcon } from "ui";
+import GCLabel from './GCLabel';
+import GCDescription from './GCDescription';
+import GCMappedInput from './GCMappedInput';
+import { GCTooltip } from './GCTooltip';
+import GCErrorMessage from './GCErrorMessage';
+import GCHelperText from './GCHelperText';
+import { GCIcon } from 'ui';
 
 class Input extends Component {
   constructor(props, context) {
@@ -19,7 +19,7 @@ class Input extends Component {
     this.state = {
       validationMessage: null,
       showTooltip: false,
-      showValidationMessage: false,
+      showValidationMessage: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -48,7 +48,7 @@ class Input extends Component {
     if (
       (prevProps.value !== this.props.value && this.props.hidden) ||
       (prevProps.value !== this.props.value && this.props.customUI) ||
-      (prevProps.value !== this.props.value && this.props.type === "radio") ||
+      (prevProps.value !== this.props.value && this.props.type === 'radio') ||
       (!prevProps.formSubmitted && this.props.formSubmitted) ||
       prevProps.required !== this.props.required ||
       prevProps.lastUpdateStamp !== this.props.lastUpdateStamp
@@ -61,13 +61,13 @@ class Input extends Component {
     const { onInputValidationFailure, onInputValidationSuccess } = this.props;
     const validationResponse = await validateInput({
       ...this.props,
-      value,
+      value
     });
     const isValid = !validationResponse.validationMessage;
     this.setState(
       {
         ...validationResponse,
-        showValidationMessage: !isValid,
+        showValidationMessage: !isValid
       },
       () => {
         if (isValid) {
@@ -99,13 +99,13 @@ class Input extends Component {
     if (
       this.props.defaultAll &&
       this.props.multi &&
-      this.props.type === "select"
+      this.props.type === 'select'
     ) {
       if (
         (Array.isArray(this.props.value) && this.props.value.length === 0) ||
-        this.props.value === ""
+        this.props.value === ''
       ) {
-        return this.props.options.map((o) => o.value);
+        return this.props.options.map(o => o.value);
       }
     }
 
@@ -135,23 +135,23 @@ class Input extends Component {
       customUI = false,
       label = title,
       name,
-      options,
+      options
     } = this.props;
     const {
       validationMessage,
       showValidationMessage,
-      showTooltip,
+      showTooltip
     } = this.state;
 
-    const inputClasses = classnames("gc-input", `gc-input--${type}`, {
-      "gc-input--invalid": showValidationMessage,
-      "gc-input--disabled": disabled,
-      [extendedClassNames]: extendedClassNames,
+    const inputClasses = classnames('gc-input', `gc-input--${type}`, {
+      'gc-input--invalid': showValidationMessage,
+      'gc-input--disabled': disabled,
+      [extendedClassNames]: extendedClassNames
     });
 
     const displayLabel =
-      (label && type !== "checkbox") ||
-      (label && type === "checkbox" && options.length > 0);
+      (label && type !== 'checkbox') ||
+      (label && type === 'checkbox' && options.length > 0);
     if (!hidden || !customUI) {
       if (!customComponent()) {
         return (
@@ -211,7 +211,7 @@ class Input extends Component {
             ...this.props,
             isValid: !showValidationMessage,
             handleInputValidation: this.handleInputValidation,
-            handleInputChange: this.handleInputChange,
+            handleInputChange: this.handleInputChange
           })}
 
           {showValidationMessage && <GCErrorMessage text={validationMessage} />}
@@ -241,12 +241,12 @@ Input.propTypes = {
     PropTypes.bool,
     PropTypes.array,
     PropTypes.object,
-    PropTypes.number,
+    PropTypes.number
   ]),
   defaultValue: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
-    PropTypes.array,
+    PropTypes.array
   ]),
   type: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
@@ -255,22 +255,22 @@ Input.propTypes = {
   to: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.number,
-    PropTypes.string,
+    PropTypes.string
   ]),
   from: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.number,
-    PropTypes.string,
+    PropTypes.string
   ]),
   max: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.number,
-    PropTypes.string,
+    PropTypes.string
   ]),
   min: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.number,
-    PropTypes.string,
+    PropTypes.string
   ]),
   selection_type: PropTypes.string,
   custom_time_zone: PropTypes.string,
@@ -297,22 +297,22 @@ Input.propTypes = {
   defaultText: PropTypes.string,
   onInputValidationSuccess: PropTypes.func,
   onInputValidationFailure: PropTypes.func,
-  lastUpdateStamp: PropTypes.number,
+  lastUpdateStamp: PropTypes.number
 };
 
 Input.defaultProps = {
-  description: "",
-  extendedClassNames: "",
-  value: "",
+  description: '',
+  extendedClassNames: '',
+  value: '',
   defaultValue: null,
   disabled: false,
-  name: "",
+  name: '',
   to: null,
   from: null,
   max: null,
   min: null,
-  selection_type: "both",
-  custom_time_zone: "Australia/Sydney",
+  selection_type: 'both',
+  custom_time_zone: 'Australia/Sydney',
   customRegex: null,
   inForm: false,
   customErrorMessage: null,
@@ -324,17 +324,17 @@ Input.defaultProps = {
   search: true,
   onSearchInputFunction: null,
   tooltip: null,
-  autoComplete: "off",
+  autoComplete: 'off',
   loading: false,
   hidden: false,
-  tooltip: "",
+  tooltip: '',
   formSubmitted: false,
   customComponent: () => false,
-  defaultText: "All Options",
+  defaultText: 'All Options',
   defaultAll: false,
   allowAll: false,
   onInputValidationSuccess: () => ({}),
-  onInputValidationFailure: () => ({}),
+  onInputValidationFailure: () => ({})
 };
 
 export default Input;

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { determineRenderType } from "../../utils";
+import { determineRenderType } from '../../utils';
 
 import {
   GCTextarea,
@@ -14,8 +14,8 @@ import {
   GCDateTimePicker,
   GCDateRangePicker,
   GCRange,
-  GCTimePicker,
-} from "./Variants";
+  GCTimePicker
+} from './Variants';
 
 const GCMappedInput = props => {
   const {
@@ -53,7 +53,7 @@ const GCMappedInput = props => {
   const renderType = determineRenderType(type);
   // NOTE: From here on out the Input.props.type will be used for validation only
   switch (renderType) {
-    case "textarea":
+    case 'textarea':
       return (
         <GCTextarea
           handleInputValidation={handleInputValidation}
@@ -61,7 +61,7 @@ const GCMappedInput = props => {
           {...xtra}
         />
       );
-    case "radio":
+    case 'radio':
       return (
         <GCRadio
           onRadioBtnClick={handleInputChange}
@@ -72,7 +72,7 @@ const GCMappedInput = props => {
           required={xtra.required}
         />
       );
-    case "checkbox":
+    case 'checkbox':
       return (
         <GCCheckbox
           onInputChange={handleInputChange}
@@ -80,7 +80,7 @@ const GCMappedInput = props => {
           {...xtra}
         />
       );
-    case "date":
+    case 'date':
       return (
         <GCDatePicker
           onInputChange={handleInputChange}
@@ -88,7 +88,7 @@ const GCMappedInput = props => {
           {...xtra}
         />
       );
-    case "datetime":
+    case 'datetime':
       return (
         <GCDateTimePicker
           onInputChange={handleInputChange}
@@ -96,7 +96,7 @@ const GCMappedInput = props => {
           {...xtra}
         />
       );
-    case "daterange":
+    case 'daterange':
       return (
         <GCDateRangePicker
           value={xtra.value}
@@ -108,7 +108,7 @@ const GCMappedInput = props => {
           handleInputValidation={handleInputValidation}
         />
       );
-    case "select":
+    case 'select':
       return props.multi ? (
         <GCMultiSelect
           name={xtra.name}
@@ -119,7 +119,7 @@ const GCMappedInput = props => {
           handleInputChange={handleInputChange}
           handleInputValidation={handleInputValidation}
         />
-      ) : typeof onSearchInputFunction === "function" ? (
+      ) : typeof onSearchInputFunction === 'function' ? (
         <GCSelectExternalSearch
           name={xtra.name}
           value={xtra.value}
@@ -144,9 +144,9 @@ const GCMappedInput = props => {
           handleInputValidation={handleInputValidation}
         />
       );
-    case "password":
+    case 'password':
       return <GCPassword {...props} />;
-    case "range":
+    case 'range':
       return (
         <GCRange
           min={xtra.min}
@@ -155,7 +155,7 @@ const GCMappedInput = props => {
           defaultValue={defaultValue}
         />
       );
-    case "time":
+    case 'time':
       return (
         <GCTimePicker
           onInputChange={handleInputChange}

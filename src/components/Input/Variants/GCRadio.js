@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const GCRadio = ({
   onRadioBtnClick,
@@ -7,11 +7,11 @@ const GCRadio = ({
   value,
   name,
   title,
-  required,
+  required
 }) => {
   const onListItemClick = newValue => {
     if (newValue === value && !required) {
-      onRadioBtnClick("");
+      onRadioBtnClick('');
     } else {
       onRadioBtnClick(newValue, name);
     }
@@ -50,12 +50,12 @@ GCRadio.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   name: PropTypes.string.isRequired,
   title: PropTypes.string,
-  required: PropTypes.bool,
+  required: PropTypes.bool
 };
 
 GCRadio.defaultProps = {
-  title: "",
-  required: false,
+  title: '',
+  required: false
 };
 
 export { GCRadio };

@@ -1,54 +1,54 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import classNames from "classnames";
-import { GCIcon } from "ui";
-import Calendar from "rc-calendar";
-import moment from "moment";
+import classNames from 'classnames';
+import { GCIcon } from 'ui';
+import Calendar from 'rc-calendar';
+import moment from 'moment';
 
-import DatePicker from "rc-calendar/lib/Picker";
+import DatePicker from 'rc-calendar/lib/Picker';
 
-import TimePickerPanel from "rc-time-picker/lib/Panel";
+import TimePickerPanel from 'rc-time-picker/lib/Panel';
 
 class GCDatePicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      format: props.showTime ? "YYYY-MM-DD HH:mm Z" : "YYYY-MM-DD",
-      open: false,
+      format: props.showTime ? 'YYYY-MM-DD HH:mm Z' : 'YYYY-MM-DD',
+      open: false
     };
   }
 
   render() {
     const {
-      placeholder = "Select date",
+      placeholder = 'Select date',
       disabled = false,
       showTime,
       from,
-      to,
+      to
     } = this.props;
     const { open } = this.state;
     const sanitisedFrom = from && new Date(new Date(from).setHours(0, 0, 0, 0));
     const sanitisedTo = to && new Date(new Date(to).setHours(23, 59, 59, 59));
 
-    const dateClasses = classNames("gc-input__el", "gc-input__el--no-padding", {
-      "gc-input__el--active": open,
+    const dateClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
+      'gc-input__el--active': open
     });
 
     const timePickerElement = (
       <TimePickerPanel
         showSecond={false}
-        defaultValue={moment("00:00:00", "HH:mm:ss")}
+        defaultValue={moment('00:00:00', 'HH:mm:ss')}
       />
     );
 
-    const onChange = (value) => {
-      const val = value ? value.format(this.state.format) : "";
+    const onChange = value => {
+      const val = value ? value.format(this.state.format) : '';
       this.props.handleInputValidation(val);
       this.props.onInputChange(val);
     };
 
-    const disableDates = (current) => {
+    const disableDates = current => {
       const currentDateObj = new Date(current);
       if (from && to) {
         return currentDateObj < sanitisedFrom || currentDateObj > sanitisedTo;
@@ -65,9 +65,9 @@ class GCDatePicker extends Component {
     return (
       <DatePicker
         animation="slide-up"
-        value={this.props.value ? moment(this.props.value) : ""}
+        value={this.props.value ? moment(this.props.value) : ''}
         onChange={onChange}
-        onOpenChange={(openstate) => {
+        onOpenChange={openstate => {
           this.setState({ open: openstate });
         }}
         disabled={disabled}
@@ -89,7 +89,7 @@ class GCDatePicker extends Component {
                 readOnly
                 type="text"
                 value={
-                  value ? moment(new Date(value)).format(this.state.format) : ""
+                  value ? moment(new Date(value)).format(this.state.format) : ''
                 }
                 className="gc-drop-down__value__text gc-drop-down__value__text--input"
               />
@@ -110,14 +110,14 @@ GCDatePicker.propTypes = {
   value: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
   defaultValue: PropTypes.oneOfType([
     PropTypes.instanceOf(Date),
-    PropTypes.string,
+    PropTypes.string
   ]),
   handleInputValidation: PropTypes.func.isRequired,
-  onInputChange: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired
 };
 
 GCDatePicker.defaultProps = {
-  defaultValue: "",
+  defaultValue: ''
 };
 
 export { GCDatePicker };

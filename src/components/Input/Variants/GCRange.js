@@ -1,6 +1,6 @@
-import React from "react";
-import Slider from "rc-slider";
-import PropTypes from "prop-types";
+import React from 'react';
+import Slider from 'rc-slider';
+import PropTypes from 'prop-types';
 
 const GCRange = ({ min, max, handleInputChange, defaultValue }) => {
   const { createSliderWithTooltip } = Slider;
@@ -25,7 +25,7 @@ GCRange.propTypes = {
   min: PropTypes.number,
   max: PropTypes.number,
   handleInputChange: PropTypes.func,
-  defaultValue: PropTypes.arrayOf(PropTypes.number),
+  defaultValue: PropTypes.arrayOf(PropTypes.number)
 };
 
 export { GCRange };

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   dayShortNameArray,
@@ -6,15 +6,15 @@ import {
   getLastDayOfMonth,
   getMonthLength,
   getPrevMonth,
-  getDateFromString,
-} from "utils";
+  getDateFromString
+} from 'utils';
 
-const DateView = ({ displayDate, valueDate, onDateClick, type = "picker" }) => {
+const DateView = ({ displayDate, valueDate, onDateClick, type = 'picker' }) => {
   const getValueDate = (valueDate, type) => {
-    if (type.startsWith("range")) {
+    if (type.startsWith('range')) {
       return [
         getDateFromString(valueDate.start),
-        getDateFromString(valueDate.end),
+        getDateFromString(valueDate.end)
       ];
     }
 
@@ -47,7 +47,7 @@ const DateView = ({ displayDate, valueDate, onDateClick, type = "picker" }) => {
   const selectedDate = getSelectedDates(valueDateTested, type);
 
   const onActiveDateClick = (e, day) => {
-    if (type.startsWith("range")) {
+    if (type.startsWith('range')) {
       onDateClick(e, day, displayDate.getMonth(), displayDate.getFullYear());
     } else {
       onDateClick(e, day);
@@ -80,7 +80,7 @@ const DateView = ({ displayDate, valueDate, onDateClick, type = "picker" }) => {
       ) {
         // Current month dates
         const num = counter;
-        let activeClass = "";
+        let activeClass = '';
         const meh = new Date(valueDate);
         if (displayDate.getMonth() === meh.getMonth()) {
           if (
@@ -89,7 +89,7 @@ const DateView = ({ displayDate, valueDate, onDateClick, type = "picker" }) => {
               num === selectedDate) ||
             (Array.isArray(selectedDate) && selectedDate.includes(num))
           ) {
-            activeClass = "gc-calendar__body__cell--active";
+            activeClass = 'gc-calendar__body__cell--active';
           }
         }
         cells.push(

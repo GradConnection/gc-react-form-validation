@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { monthNameArray } from "utils";
+import { monthNameArray } from 'utils';
 
 const YearView = ({ selectedYear, onYearClick }) => {
   let counter = selectedYear - 5;
@@ -12,13 +12,13 @@ const YearView = ({ selectedYear, onYearClick }) => {
   }
   return (
     <div className="gc-calendar__body">
-      {yearArray.map((yr) => (
+      {yearArray.map(yr => (
         <button
           className={`gc-calendar__body__cell gc-calendar__body__cell--btn gc-calendar__body__cell--month ${
-            yr === selectedYear ? "gc-calendar__body__cell--active" : ""
+            yr === selectedYear ? 'gc-calendar__body__cell--active' : ''
           }`}
           key={`year--${yr}`}
-          onClick={(e) => onYearClick(e, yr)}
+          onClick={e => onYearClick(e, yr)}
         >
           {yr}
         </button>
