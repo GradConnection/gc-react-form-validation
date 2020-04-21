@@ -72,8 +72,6 @@ class GCDateRangePicker extends Component {
     const timePickerElement = (
       <TimePickerPanel
         showSecond={false}
-        use12Hours
-        format="h:mm a"
         defaultValue={[
           moment("08:00:00", "HH:mm"),
           moment("23:59:59", "HH:mm"),
@@ -81,7 +79,7 @@ class GCDateRangePicker extends Component {
       />
     );
 
-    const disableDates = (current) => {
+    const disableDates = current => {
       const currentDateObj = new Date(current);
       if (min && max) {
         return currentDateObj < min || currentDateObj > max;
@@ -100,7 +98,7 @@ class GCDateRangePicker extends Component {
         type={this.props.selection_type || "both"}
         showOk={false}
         format={this.state.formatDisplayStr}
-        disabledDate={current => disableDates(current)}
+        disabledDate={(current) => disableDates(current)}
         onChange={this.onStandaloneChange}
         timePicker={timePickerElement}
         selectedValue={[this.state.dateRange[0], this.state.dateRange[1]]}
@@ -142,6 +140,7 @@ class GCDateRangePicker extends Component {
 
 GCDateRangePicker.propTypes = {
   value: PropTypes.any,
+  custom_time_zone: PropTypes.string,
   onInputChange: PropTypes.func.isRequired,
 };
 

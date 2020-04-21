@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class GCIcon extends React.Component {
   renderIcon(kind) {
@@ -7,7 +7,7 @@ class GCIcon extends React.Component {
     switch (kind) {
       default:
         return null;
-      case "calendarIcon":
+      case 'calendarIcon':
         return (
           <svg
             id="layer_calnedarIcon"
@@ -23,7 +23,7 @@ class GCIcon extends React.Component {
             </g>
           </svg>
         );
-      case "chevronIcon":
+      case 'chevronIcon':
         return (
           <svg
             id="layer_chevronIcon"
@@ -39,7 +39,7 @@ class GCIcon extends React.Component {
             </g>
           </svg>
         );
-      case "caretIcon":
+      case 'caretIcon':
         return (
           <svg
             id="layer_caretIcon"
@@ -55,7 +55,7 @@ class GCIcon extends React.Component {
             </g>
           </svg>
         );
-      case "closeIcon":
+      case 'closeIcon':
         return (
           <svg
             id="layer_closeIcon"
@@ -71,7 +71,7 @@ class GCIcon extends React.Component {
             </g>
           </svg>
         );
-      case "hideIcon":
+      case 'hideIcon':
         return (
           <svg
             id="layer_hideIcon"
@@ -90,7 +90,7 @@ class GCIcon extends React.Component {
             </g>
           </svg>
         );
-      case "showIcon":
+      case 'showIcon':
         return (
           <svg
             id="layer_showIcon"
@@ -109,7 +109,7 @@ class GCIcon extends React.Component {
             </g>
           </svg>
         );
-      case "cloudIcon":
+      case 'cloudIcon':
         return (
           <svg
             id="layer_cloudIcon"
@@ -139,7 +139,7 @@ class GCIcon extends React.Component {
             </g>
           </svg>
         );
-      case "ZoomInIcon":
+      case 'ZoomInIcon':
         return (
           <svg
             id="layer_zoomInIcon"
@@ -165,7 +165,7 @@ class GCIcon extends React.Component {
             </g>
           </svg>
         );
-      case "ZoomOutIcon":
+      case 'ZoomOutIcon':
         return (
           <svg
             id="layer_zoomOutIcon"
@@ -190,7 +190,7 @@ class GCIcon extends React.Component {
             </g>
           </svg>
         );
-      case "infoIcon":
+      case 'infoIcon':
         return (
           <svg
             id="layer_infoIcon"
@@ -214,6 +214,26 @@ class GCIcon extends React.Component {
             </g>
           </svg>
         );
+      case 'clock':
+        return (
+          <svg
+            id="layer_clock"
+            height={height || size}
+            width={width || size}
+            viewBox="0 0 50 50"
+            aria-labelledby={iconTitle}
+            className={this.props.extendedClassName}
+          >
+            <title id={iconTitle}>{iconTitle}</title>
+
+            <g id="clock">
+              <path
+                fill={mainFill}
+                d="M25,0C11.193,0,0,11.193,0,25s11.193,25,25,25c13.807,0,25-11.193,25-25S38.807,0,25,0z M25,47.458  C12.617,47.458,2.542,37.383,2.542,25C2.542,12.617,12.617,2.542,25,2.542c12.383,0,22.458,10.074,22.458,22.458  C47.458,37.383,37.383,47.458,25,47.458z M27.965,11.662l0.001,18.2c0,0.337-0.134,0.66-0.372,0.899s-0.562,0.372-0.899,0.372  H13.983c-0.702,0-1.271-0.569-1.271-1.271c0-0.702,0.569-1.271,1.271-1.271h11.441l-0.001-16.929c0-0.702,0.569-1.271,1.271-1.271  C27.396,10.391,27.965,10.96,27.965,11.662z"
+              />
+            </g>
+          </svg>
+        );
     }
   }
 
@@ -222,7 +242,7 @@ class GCIcon extends React.Component {
     return (
       <span
         className={
-          extendedClassNames ? `gc-icon ${extendedClassNames}` : "gc-icon"
+          extendedClassNames ? `gc-icon ${extendedClassNames}` : 'gc-icon'
         }
       >
         {this.renderIcon(kind)}
