@@ -51,11 +51,13 @@ class GCDateTimePicker extends Component {
       this.props.onInputChange(val);
     };
     const onTimeChange = value => {
-      if (!value) {
+      // Could also add validation for time, as in hours under 24, mins under 60
+      // mainly this is extra support for Safari
+      if (!value || value.length !== 5) {
         // in case they clear the value
         return null;
       }
-      const currentDate = moment(this.props.value)
+      const currentDate = moment(this.props.value, this.state.format)
         .tz(this.props.custom_time_zone)
         .format('YYYY-MM-DD');
       const newTime = moment(`${currentDate}T${value}`).tz(
@@ -84,7 +86,9 @@ class GCDateTimePicker extends Component {
         animation="slide-up"
         value={
           this.props.value
-            ? moment(this.props.value).tz(this.props.custom_time_zone)
+            ? moment(this.props.value, this.state.format).tz(
+                this.props.custom_time_zone
+              )
             : ''
         }
         onChange={onChange}
@@ -109,7 +113,7 @@ class GCDateTimePicker extends Component {
                   type="time"
                   name="calendar-time"
                   defaultValue={
-                    moment(this.props.value)
+                    moment(this.props.value, this.state.format)
                       .tz(this.props.custom_time_zone)
                       .format('HH:mm') ||
                     this.props.defaultTime ||
