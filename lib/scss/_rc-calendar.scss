@@ -469,6 +469,10 @@
   color: #f46830;
   font-weight: bold;
 }
+.gc-single-date-time-picker .rc-calendar-time-picker-btn {
+  display: none;
+}
+
 .rc-calendar-today-btn:hover,
 .rc-calendar-ok-btn:hover,
 .rc-calendar-time-picker-btn:hover {

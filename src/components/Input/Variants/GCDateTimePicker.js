@@ -16,9 +16,8 @@ class GCDateTimePicker extends Component {
     super(props);
     this.state = {
       format: 'YYYY-MM-DD HH:mm Z',
-      formatDisplayStr: 'YYYY-MM-DD HH:mm',
+      formatDisplayStr: 'YYYY-MM-DD HH:mm'
       // format: props.showTime ? 'YYYY-MM-DD HH:mm Z' : 'YYYY-MM-DD',
-      open: false
     };
   }
 
@@ -29,22 +28,17 @@ class GCDateTimePicker extends Component {
       from,
       to
     } = this.props;
-    const { open } = this.state;
     const sanitisedFrom = from && new Date(new Date(from).setHours(0, 0, 0, 0));
     const sanitisedTo = to && new Date(new Date(to).setHours(23, 59, 59, 59));
 
-    const dateClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
-      'gc-input__el--active': open
-    });
+    const dateClasses = classNames(
+      'gc-singledatetimepicker',
+      'gc-input__el',
+      'gc-input__el--no-padding'
+    );
 
-    // const timePickerElement = (
-    //   <TimePickerPanel
-    //     showSecond={false}
-    //     use12Hours
-    //     format="h:mm a"
-    //     defaultValue={moment('08:00:00', 'HH:mm')}
-    //   />
-    // );
+    // This is a hack to keep the calendar drop down open as it waits for the user to input a time
+    const timePickerElement = <div />;
 
     const onChange = value => {
       const val = value ? value.format(this.state.format) : '';
@@ -78,12 +72,13 @@ class GCDateTimePicker extends Component {
       if (to) {
         return currentDateObj > sanitisedTo; // cannot select days after "to" date
       }
-      false;
+      return false;
     };
 
     return (
       <DatePicker
         animation="slide-up"
+        dropdownClassName="gc-single-date-time-picker"
         value={
           this.props.value
             ? moment(this.props.value, this.state.format).tz(
@@ -92,16 +87,13 @@ class GCDateTimePicker extends Component {
             : ''
         }
         onChange={onChange}
-        onOpenChange={openstate => {
-          this.setState({ open: openstate });
-        }}
         disabled={disabled}
         calendar={
           <Calendar
             format={this.state.formatDisplayStr}
             dateInputPlaceholder={placeholder}
             disabledDate={from || to ? disableDates : null}
-            timePicker={null}
+            timePicker={timePickerElement}
             showToday={false}
             showOk={false}
             renderFooter={() => (
