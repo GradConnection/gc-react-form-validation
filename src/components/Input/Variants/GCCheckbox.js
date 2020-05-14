@@ -66,8 +66,9 @@ class GCCheckbox extends Component {
     return (
       <div className="gc-input__el gc-input__el--no-deco" ref={this.checkbox}>
         <input
-          className="gc-input__btn-hidden"
-          type="checkbox"
+          id={`gc-input-checkbox_${name}`}
+          className='gc-input__btn-hidden'
+          type='checkbox'
           name={name}
           title={label}
           checked={!!value}

@@ -35,7 +35,8 @@ class GCPassword extends Component {
     return (
       <div>
         <input
-          className="gc-input__el"
+          id={`gc-input-password_${name}`}
+          className='gc-input__el'
           type={mode}
           ref={this.input}
           value={value}

@@ -259,10 +259,12 @@ class GCSelectExternalSearch extends Component {
         ref={this.select}>
 
         <div
+          id={`gc-drop-down_${name}`}
           role='button'
           className='gc-drop-down__value'
           onMouseUp={this.onInputMouseUp}>
           <input
+            id={`gc-input-search_${name}`}
             ref={this.textInput}
             className={inputClasses}
             type='text'
@@ -285,6 +287,7 @@ class GCSelectExternalSearch extends Component {
             {options.length > 0 ?
               options.map((opt, i) => (
                 <li
+                  id={`${i}_select_${name}`}
                   key={`${i}_select_${name}`}
                   className={this.computeItemClassList(value, opt.value, i)}
                   onMouseDown={e => this.onOptionMouseDown(e, opt.value)}>
@@ -293,12 +296,14 @@ class GCSelectExternalSearch extends Component {
               )) : (
                 searchTerm.length === 0 ?
                   (<li
+                    id={`$noOpt_select_${name}`}
                     key={`$noOpt_select_${name}`}
                     className='gc-select__list-item gc-select__list-item--no-opt'>
                     <i>{placeholder}</i>
                   </li>)
                   : (
                     <li
+                      id={`$noOpt_select_${name}`}
                       key={`$noOpt_select_${name}`}
                       className='gc-select__list-item gc-select__list-item--no-opt'>
                       <i>There are no available options</i>

@@ -268,11 +268,12 @@ class GCSelect extends Component {
     return (
       <div className={selectClasses} ref={this.select}>
         <div
-          role="button"
-          className="gc-drop-down__value"
-          onMouseUp={this.onInputMouseUp}
-        >
+          id={`gc-drop-down_${name}`}
+          role='button'
+          className='gc-drop-down__value'
+          onMouseUp={this.onInputMouseUp}>
           <input
+            id={`gc-input-select_${name}`}
             ref={this.textInput}
             className={inputClasses}
             type="text"
@@ -296,6 +297,7 @@ class GCSelect extends Component {
             {options.length > 0 ? (
               options.map((opt, i) => (
                 <li
+                  id={`${i}_select_${name}`}
                   key={`${i}_select_${name}`}
                   className={this.computeItemClassList(value, opt.value, i)}
                   onMouseDown={e => this.onOptionMouseDown(e, opt.value)}
@@ -304,13 +306,13 @@ class GCSelect extends Component {
                 </li>
               ))
             ) : (
-              <li
-                key={`$noOpt_select_${name}`}
-                className="gc-select__list-item gc-select__list-item--no-opt"
-              >
-                <i>There are no available options</i>
-              </li>
-            )}
+                <li
+                  id={`$noOpt_select_${name}`}
+                  key={`$noOpt_select_${name}`}
+                  className='gc-select__list-item gc-select__list-item--no-opt'>
+                  <i>There are no available options</i>
+                </li>
+              )}
           </ul>
         )}
       </div>
@@ -323,6 +325,7 @@ GCSelect.defaultProps = {
 };
 
 GCSelect.propTypes = {
+  id: PropTypes.string,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   options: PropTypes.array,

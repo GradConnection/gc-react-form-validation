@@ -27,8 +27,9 @@ const GCRadio = ({
           role="radio"
         >
           <input
-            className="gc-input__btn-hidden"
-            type="radio"
+            id={`gc-input-radio_${name}`}
+            className='gc-input__btn-hidden'
+            type='radio'
             value={opt.value}
             name={name}
             title={title}

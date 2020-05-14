@@ -316,11 +316,12 @@ class GCMultiSelect extends Component {
     return (
       <div className="gc-select__multi-container">
         <div
+          id={`gc-drop-down${name}`}
           className={selectClasses}
           ref={this.select}
-          onMouseDown={this.onContainerMouseDown}
-        >
-          <div
+          onMouseDown={this.onContainerMouseDown}>
+          <div 
+            id={`gc-input-multi_${name}`}
             ref={this.textInput}
             role="button"
             className="gc-drop-down__value"
