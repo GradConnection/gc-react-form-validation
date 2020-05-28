@@ -76,7 +76,7 @@ class GCCheckbox extends Component {
         />
         <span
           className="gc-input__inline-icon gc-checkbox__icon"
-          onClick={!disabled && this.onSingleCheckboxClick}
+          onClick={!disabled ? this.onSingleCheckboxClick : undefined}
         />
         <label
           className={`gc-input__inline-label ${
