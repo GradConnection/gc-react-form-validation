@@ -26,7 +26,8 @@ class GCDateTimePicker extends Component {
       placeholder = 'Select date',
       disabled = false,
       from,
-      to
+      to,
+      name
     } = this.props;
     const sanitisedFrom = from && new Date(new Date(from).setHours(0, 0, 0, 0));
     const sanitisedTo = to && new Date(new Date(to).setHours(23, 59, 59, 59));
@@ -123,8 +124,13 @@ class GCDateTimePicker extends Component {
         {({ value }) => {
           return (
             <div className={dateClasses}>
-              <div role="button" className="gc-drop-down__value">
+              <div
+                role="button"
+                aria-label={`input ${name}`}
+                className="gc-drop-down__value"
+              >
                 <input
+                  id={name}
                   placeholder={placeholder}
                   disabled={disabled}
                   readOnly

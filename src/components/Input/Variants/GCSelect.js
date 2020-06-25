@@ -269,11 +269,12 @@ class GCSelect extends Component {
       <div className={selectClasses} ref={this.select}>
         <div
           id={`gc-drop-down_${name}`}
+          aria-label={name}
           role='button'
           className='gc-drop-down__value'
           onMouseUp={this.onInputMouseUp}>
           <input
-            id={`gc-input-select_${name}`}
+            id={name}
             ref={this.textInput}
             className={inputClasses}
             type="text"

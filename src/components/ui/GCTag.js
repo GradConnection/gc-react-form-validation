@@ -6,7 +6,11 @@ import { GCIcon } from 'ui';
 const GCTag = ({ children, onCrossBtnClick }) => (
   <div className="gc-tag">
     <span className="gc-tag__label">{children}</span>
-    <button className="gc-tag__btn gc-btn--icon-sml" onClick={onCrossBtnClick}>
+    <button
+      className="gc-tag__btn gc-btn--icon-sml"
+      onClick={onCrossBtnClick}
+      aria-label="remove filter item"
+    >
       <GCIcon kind="closeIcon" />
     </button>
   </div>

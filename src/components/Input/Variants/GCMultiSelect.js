@@ -316,20 +316,24 @@ class GCMultiSelect extends Component {
     return (
       <div className="gc-select__multi-container">
         <div
-          id={`gc-drop-down${name}`}
+          id={`gc-drop-down_${name}`}
           className={selectClasses}
           ref={this.select}
-          onMouseDown={this.onContainerMouseDown}>
-          <div 
+          onMouseDown={this.onContainerMouseDown}
+        >
+          <div
             id={`gc-input-multi_${name}`}
             ref={this.textInput}
             role="button"
+            tabIndex="0"
+            aria-label={`input ${name}`}
             className="gc-drop-down__value"
             onFocus={this.handleOnFocusEffect}
             onClick={this.onInputClick}
           >
             {isEmpty(value) && (
               <input
+                id={name}
                 className="gc-drop-down__value__text gc-drop-down__value__text--input"
                 value=""
                 placeholder={placeholder}
@@ -348,6 +352,7 @@ class GCMultiSelect extends Component {
           <div className={containerClasses} ref={this.listContainer}>
             {this.props.search && isFocussed && (
               <input
+                id={name}
                 ref={this.input}
                 className={listInputClasses}
                 type="text"
@@ -365,6 +370,7 @@ class GCMultiSelect extends Component {
                 {options.length > 0 ? (
                   options.map((opt, i) => (
                     <li
+                      id={`${i}_select_${name}`}
                       key={`${i}_select_${name}`}
                       className={this.computeItemClassList(value, opt.value, i)}
                       onMouseDown={(e) => this.onOptionMouseDown(e, opt.value)}

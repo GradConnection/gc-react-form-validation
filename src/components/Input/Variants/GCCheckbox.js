@@ -73,6 +73,7 @@ class GCCheckbox extends Component {
           title={label}
           checked={!!value}
           onChange={(e) => e.preventDefault()}
+          aria-label={label}
         />
         <span
           className="gc-input__inline-icon gc-checkbox__icon"

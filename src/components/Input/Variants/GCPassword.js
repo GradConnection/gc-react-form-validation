@@ -29,13 +29,15 @@ class GCPassword extends Component {
       value,
       name,
       handleInputValidation,
-      handleInputChange
+      handleInputChange,
+      label
     } = this.props;
 
     return (
       <div>
+        {console.log('label', label)}
         <input
-          id={`gc-input-password_${name}`}
+          id={name}
           className='gc-input__el'
           type={mode}
           ref={this.input}

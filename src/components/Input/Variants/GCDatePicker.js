@@ -25,7 +25,8 @@ class GCDatePicker extends Component {
       disabled = false,
       showTime,
       from,
-      to
+      to,
+      name
     } = this.props;
     const { open } = this.state;
     const sanitisedFrom = from && new Date(new Date(from).setHours(0, 0, 0, 0));
@@ -82,8 +83,13 @@ class GCDatePicker extends Component {
       >
         {({ value }) => (
           <div className={dateClasses}>
-            <div role="button" className="gc-drop-down__value">
+            <div
+              role="button"
+              className="gc-drop-down__value"
+              aria-label={`input ${name}`}
+            >
               <input
+                id={name}
                 placeholder={placeholder}
                 disabled={disabled}
                 readOnly
@@ -113,7 +119,8 @@ GCDatePicker.propTypes = {
     PropTypes.string
   ]),
   handleInputValidation: PropTypes.func.isRequired,
-  onInputChange: PropTypes.func.isRequired
+  onInputChange: PropTypes.func.isRequired,
+  name: PropTypes.string
 };
 
 GCDatePicker.defaultProps = {

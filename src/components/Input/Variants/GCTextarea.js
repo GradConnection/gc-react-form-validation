@@ -15,7 +15,7 @@ const GCTextarea = ({
   ...restProps
 }) => (
   <textarea
-    id={`gc-input-text_${name}`}
+    id={name}
     name={name}
     className={`gc-input__el gc-input__textarea--${size}`}
     onBlur={e => handleInputValidation(e.target.value)}

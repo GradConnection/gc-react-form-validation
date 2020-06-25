@@ -245,7 +245,7 @@ class GCSelectExternalSearch extends Component {
   }
 
   render() {
-    const { value, name } = this.props
+    const { value, name } = this.props;
     const { isActive, isFocussed, options, isSearchActive, searchTerm, placeholder } = this.state
 
     const selectClasses = classNames('gc-input__el', 'gc-input__el--no-padding', {
@@ -254,21 +254,26 @@ class GCSelectExternalSearch extends Component {
     const inputClasses = 'gc-drop-down__value__text gc-drop-down__value__text__autoselect gc-drop-down__value__text--input'
 
     return (
-      <div
-        className={selectClasses}
-        ref={this.select}>
-
+      <div className={selectClasses} ref={this.select}>
         <div
           id={`gc-drop-down_${name}`}
-          role='button'
-          className='gc-drop-down__value'
-          onMouseUp={this.onInputMouseUp}>
+          role="button"
+          tabIndex="0"
+          aria-label={`input ${name}`}
+          className="gc-drop-down__value"
+          onMouseUp={this.onInputMouseUp}
+        >
           <input
-            id={`gc-input-search_${name}`}
+            id={name}
             ref={this.textInput}
             className={inputClasses}
-            type='text'
-            value={this.computeInputValue(value, options, isSearchActive, searchTerm)}
+            type="text"
+            value={this.computeInputValue(
+              value,
+              options,
+              isSearchActive,
+              searchTerm
+            )}
             onChange={this.onSearchInputChange}
             onFocus={this.handleOnFocusEffect}
             onBlur={this.handleOnBlurEffect}

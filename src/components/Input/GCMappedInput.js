@@ -83,6 +83,7 @@ const GCMappedInput = props => {
     case 'date':
       return (
         <GCDatePicker
+          name={xtra.name}
           onInputChange={handleInputChange}
           handleInputValidation={handleInputValidation}
           {...xtra}
@@ -91,6 +92,7 @@ const GCMappedInput = props => {
     case 'datetime':
       return (
         <GCDateTimePicker
+          name={xtra.name}
           onInputChange={handleInputChange}
           handleInputValidation={handleInputValidation}
           {...xtra}
@@ -99,6 +101,7 @@ const GCMappedInput = props => {
     case 'daterange':
       return (
         <GCDateRangePicker
+          name={xtra.name}
           value={xtra.value}
           min={xtra.from}
           max={xtra.to}
@@ -170,6 +173,7 @@ const GCMappedInput = props => {
     default:
       return (
         <input
+          id={xtra.name}
           className="gc-input__el"
           type={renderType}
           onBlur={e => handleInputValidation(e.target.value)}
@@ -177,6 +181,7 @@ const GCMappedInput = props => {
           maxLength={props.max}
           minLength={props.min}
           autoComplete={xtra.autoComplete || xtra.name}
+          aria-label={`input ${xtra.name}`}
           {...xtra}
         />
       );
