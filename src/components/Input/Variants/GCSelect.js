@@ -26,6 +26,7 @@ class GCSelect extends Component {
 
     this.textInput = React.createRef();
     this.select = React.createRef();
+    this.optionList = React.createRef();
 
     this.onSearchInputChange = this.onSearchInputChange.bind(this);
 
@@ -76,6 +77,12 @@ class GCSelect extends Component {
         this.onUpKeyPress(e);
       } else if (e.keyCode === 40 && options.length - 1 > index) {
         this.onDownKeyPress(e);
+      } else if (e.keyCode === 9) {
+        this.setState({
+          isFocussed: false,
+          isActive: false,
+          placeholder: this.props.placeholder || 'Select options'
+        });
       }
     }
 
@@ -137,6 +144,14 @@ class GCSelect extends Component {
     const { index } = this.state;
 
     e.preventDefault();
+    if (index === 0) this.input.current.focus();
+    this.optionList.current.scrollTo({
+      left: 0,
+      top:
+        document.querySelector(`#${this.props.name}_option_${index}`)
+          .offsetTop - this.optionList.current.offsetHeight,
+      behavior: 'smooth'
+    });
     this.setState({ index: index - 1 });
   }
 
@@ -144,6 +159,17 @@ class GCSelect extends Component {
     const { index } = this.state;
 
     e.preventDefault();
+    const nextEl = document.querySelector(
+      `#${this.props.name}_option_${index + 1}`
+    );
+    this.optionList.current.scrollTo({
+      left: 0,
+      top:
+        nextEl.offsetTop +
+        nextEl.offsetHeight -
+        this.optionList.current.offsetHeight,
+      behavior: 'smooth'
+    });
     this.setState({ index: index + 1 });
   }
 
@@ -246,7 +272,7 @@ class GCSelect extends Component {
   }
 
   render() {
-    const { value, name } = this.props;
+    const { value, name, disabled } = this.props;
     const {
       isActive,
       isFocussed,
@@ -278,6 +304,7 @@ class GCSelect extends Component {
             ref={this.textInput}
             className={inputClasses}
             type="text"
+            tabIndex={disabled? "-1" : "0"}
             value={this.computeInputValue(
               value,
               options,
@@ -294,12 +321,12 @@ class GCSelect extends Component {
         </div>
 
         {isActive && !this.props.disabled && (
-          <ul className="gc-drop-down__el gc-select__list">
+          <ul ref={this.optionList} className="gc-drop-down__el gc-select__list">
             {options.length > 0 ? (
               options.map((opt, i) => (
                 <li
-                  id={`${i}_select_${name}`}
-                  key={`${i}_select_${name}`}
+                  id={`${name}_option_${i}`}
+                  key={`${name}_option_${i}`}
                   className={this.computeItemClassList(value, opt.value, i)}
                   onMouseDown={e => this.onOptionMouseDown(e, opt.value)}
                 >
@@ -335,6 +362,7 @@ GCSelect.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   handleInputValidation: PropTypes.func.isRequired,
   unselectable: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 export { GCSelect };

@@ -30,6 +30,7 @@ class GCMultiSelect extends Component {
     this.textInput = React.createRef();
     this.select = React.createRef();
     this.input = React.createRef();
+    this.optionList = React.createRef();
     this.listContainer = React.createRef();
 
     this.onSearchInputChange = this.onSearchInputChange.bind(this);
@@ -63,7 +64,11 @@ class GCMultiSelect extends Component {
           index: 0,
         });
       }
-      this.textInput.current.focus();
+      if (this.input.current) {
+        this.input.current.focus();
+      } else {
+        this.textInput.current.focus();
+      }
     }
   }
 
@@ -89,6 +94,12 @@ class GCMultiSelect extends Component {
         this.onUpKeyPress(e);
       } else if (e.keyCode === 40 && options.length - 1 > index) {
         this.onDownKeyPress(e);
+      } else if (e.keyCode === 9) {
+        this.setState({
+          isFocussed: false,
+          isActive: false,
+          placeholder: this.props.placeholder || "Select options",
+        });
       }
     }
 
@@ -144,13 +155,34 @@ class GCMultiSelect extends Component {
     const { index } = this.state;
 
     e.preventDefault();
-    this.setState({ index: index - 1 });
+    if (index === 0) this.input.current.focus();
+    else {
+      this.optionList.current.scrollTo({
+        left: 0,
+        top:
+          document.querySelector(`#${this.props.name}_option_${index}`)
+            .offsetTop - this.optionList.current.offsetHeight,
+        behavior: 'smooth'
+      });
+      this.setState({ index: index - 1 });
+    }
   }
 
   onDownKeyPress(e) {
     const { index } = this.state;
     e.preventDefault();
     this.setState({ index: index + 1 });
+    const nextEl = document.querySelector(
+      `#${this.props.name}_option_${index + 1}`
+    );
+    this.optionList.current.scrollTo({
+      left: 0,
+      top:
+        nextEl.offsetTop +
+        nextEl.offsetHeight -
+        this.optionList.current.offsetHeight,
+      behavior: 'smooth'
+    });
   }
 
   onTagCrossBtnClick(e, value) {
@@ -325,7 +357,6 @@ class GCMultiSelect extends Component {
             id={`gc-input-multi_${name}`}
             ref={this.textInput}
             role="button"
-            tabIndex="0"
             aria-label={`input ${name}`}
             className="gc-drop-down__value"
             onFocus={this.handleOnFocusEffect}
@@ -356,22 +387,21 @@ class GCMultiSelect extends Component {
                 ref={this.input}
                 className={listInputClasses}
                 type="text"
-                autoFocus
                 value={this.state.searchTerm}
                 onChange={this.onSearchInputChange}
                 onFocus={this.handleOnFocusEffect}
                 onBlur={this.handleOnBlurEffect}
-                placeholder="Start typing to search"
+                placeholder={placeholder}
                 // onkeydown={this.handleKeyDown}
               />
             )}
             {isActive && (
-              <ul className="gc-drop-down__el gc-select__list">
+              <ul ref={this.optionList} className="gc-drop-down__el gc-select__list">
                 {options.length > 0 ? (
                   options.map((opt, i) => (
                     <li
-                      id={`${i}_select_${name}`}
-                      key={`${i}_select_${name}`}
+                      id={`${this.props.name}_option_${i}`}
+                      key={`${this.props.name}_option_${i}`}
                       className={this.computeItemClassList(value, opt.value, i)}
                       onMouseDown={(e) => this.onOptionMouseDown(e, opt.value)}
                     >
