@@ -287,7 +287,7 @@ Input.propTypes = {
   search: PropTypes.bool,
   onSearchInputFunction: PropTypes.func,
   tooltip: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  autocomplete: PropTypes.string,
+  autoComplete: PropTypes.string,
   loading: PropTypes.bool,
   hidden: PropTypes.bool,
   tooltip: PropTypes.string,

@@ -272,7 +272,7 @@ class GCSelect extends Component {
   }
 
   render() {
-    const { value, name, disabled } = this.props;
+    const { value, name, disabled, autoComplete } = this.props;
     const {
       isActive,
       isFocussed,
@@ -316,6 +316,7 @@ class GCSelect extends Component {
             onBlur={this.handleOnBlurEffect}
             placeholder={placeholder}
             readOnly={!isSearchActive}
+            autoComplete={autoComplete}
           />
           <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" />
         </div>
@@ -350,6 +351,7 @@ class GCSelect extends Component {
 
 GCSelect.defaultProps = {
   unselectable: true,
+  autoComplete: "off"
 };
 
 GCSelect.propTypes = {
@@ -362,7 +364,8 @@ GCSelect.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   handleInputValidation: PropTypes.func.isRequired,
   unselectable: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  autoComplete:PropTypes.string
 };
 
 export { GCSelect };

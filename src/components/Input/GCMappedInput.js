@@ -38,7 +38,6 @@ const GCMappedInput = props => {
     multi,
     search,
     onSearchInputFunction,
-    autoComplete,
     defaultText,
     customComponent,
     customUI,
@@ -109,6 +108,7 @@ const GCMappedInput = props => {
           selection_type={xtra.selection_type}
           onInputChange={handleInputChange}
           handleInputValidation={handleInputValidation}
+          {...xtra}
         />
       );
     case 'select':
@@ -121,6 +121,7 @@ const GCMappedInput = props => {
           placeholder={xtra.placeholder}
           handleInputChange={handleInputChange}
           handleInputValidation={handleInputValidation}
+          {...xtra}
         />
       ) : typeof onSearchInputFunction === 'function' ? (
         <GCSelectExternalSearch
@@ -133,6 +134,7 @@ const GCMappedInput = props => {
           placeholder={xtra.placeholder}
           handleInputChange={handleInputChange}
           handleInputValidation={handleInputValidation}
+          {...xtra}
         />
       ) : (
         <GCSelect
@@ -145,6 +147,7 @@ const GCMappedInput = props => {
           unselectable={xtra.unselectable}
           handleInputChange={handleInputChange}
           handleInputValidation={handleInputValidation}
+          {...xtra}
         />
       );
     case 'password':

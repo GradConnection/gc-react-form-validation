@@ -318,7 +318,7 @@ class GCMultiSelect extends Component {
   }
 
   render() {
-    const { value, name } = this.props;
+    const { value, name,autoCompete } = this.props;
     const { isActive, isFocussed, options, placeholder } = this.state;
 
     const selectClasses = classNames(
@@ -392,6 +392,7 @@ class GCMultiSelect extends Component {
                 onFocus={this.handleOnFocusEffect}
                 onBlur={this.handleOnBlurEffect}
                 placeholder={placeholder}
+                autoComplete={autoCompete}
                 // onkeydown={this.handleKeyDown}
               />
             )}
@@ -438,10 +439,12 @@ GCMultiSelect.propTypes = {
   handleInputValidation: PropTypes.func.isRequired,
   selectAll: PropTypes.bool,
   selectAllValue: PropTypes.array,
+  autoComplete: PropTypes.string
 };
 
 GCMultiSelect.defaultProps = {
   selectAll: false,
+  autoCompete: 'off'
 };
 
 export { GCMultiSelect };
