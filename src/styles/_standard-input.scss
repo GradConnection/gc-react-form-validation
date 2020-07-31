@@ -119,6 +119,7 @@ input.gc-input__el,
 .gc-input-list__item {
   position: relative;
   margin-bottom: 0.5rem;
+  display: flex;
 
   &:last-of-type {
     margin-bottom: 0;
