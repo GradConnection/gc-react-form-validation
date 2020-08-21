@@ -9,7 +9,17 @@ class GCPassword extends Component {
       mode: 'password'
     };
     this.input = React.createRef();
+    this.passwordToggle = React.createRef();
     this.onIconBtnClick = this.onIconBtnClick.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyPress);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyPress);
   }
 
   onIconBtnClick(e) {
@@ -21,6 +31,11 @@ class GCPassword extends Component {
         this.input.current.focus();
       }
     });
+  }
+  handleKeyPress(e) {
+      if (e.keyCode === 13 && this.passwordToggle.current === document.activeElement) {
+        this.onIconBtnClick(e);
+      } 
   }
 
   render() {
@@ -35,7 +50,6 @@ class GCPassword extends Component {
 
     return (
       <div>
-        {console.log('label', label)}
         <input
           id={name}
           className='gc-input__el'
@@ -49,9 +63,10 @@ class GCPassword extends Component {
         />
 
         <div
-          tabIndex={-1}
+          tabIndex={0}
           className="gc-btn--icon"
           onClick={this.onIconBtnClick}
+          ref={this.passwordToggle}
         >
           {mode === 'password' ? (
             <GCIcon kind="showIcon" />
