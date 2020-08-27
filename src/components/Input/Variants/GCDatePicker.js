@@ -82,13 +82,14 @@ class GCDatePicker extends Component {
         }
       >
         {({ value }) => (
-          <div className={dateClasses}>
+          <div className={dateClasses} tabIndex={0}>
             <div
               role="button"
               className="gc-drop-down__value"
               aria-label={`input ${name}`}
             >
               <input
+                tabIndex={-1}
                 id={name}
                 placeholder={placeholder}
                 disabled={disabled}
