@@ -13,6 +13,7 @@ class GCCheckbox extends Component {
     this.checkbox = React.createRef();
     this.handleBlur = this.handleBlur.bind(this);
     this.onSingleCheckboxClick = this.onSingleCheckboxClick.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +45,12 @@ class GCCheckbox extends Component {
   onSingleCheckboxClick() {
     this.props.onInputChange(!this.props.value);
     this.props.handleInputValidation(!this.props.value);
+  }
+
+  handleKeyPress(e){
+    if(e.key === "Enter"){
+      this.onSingleCheckboxClick()
+    }
   }
 
   onCheckboxItemClick(newValue) {
@@ -78,6 +85,9 @@ class GCCheckbox extends Component {
         <span
           className="gc-input__inline-icon gc-checkbox__icon"
           onClick={!disabled ? this.onSingleCheckboxClick : undefined}
+          tabIndex={0}
+          onKeyPress={!disabled ? this.handleKeyPress : undefined}
+          role='checkbox'
         />
         <label
           className={`gc-input__inline-label ${
