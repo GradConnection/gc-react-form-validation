@@ -369,11 +369,11 @@ class GCMultiSelect extends Component {
                 value=""
                 placeholder={placeholder}
                 readOnly
+                onBlur={this.handleOnBlurEffect}
               />
             )}
             <span
               className="gc-drop-down__value__text gc-drop-down__value__text--input"
-              onBlur={this.handleOnBlurEffect}
             >
               {this.renderTags(value)}
             </span>
