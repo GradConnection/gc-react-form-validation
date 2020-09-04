@@ -357,6 +357,7 @@ class GCMultiSelect extends Component {
             id={`gc-input-multi_${name}`}
             ref={this.textInput}
             role="button"
+            aria-haspopup="listbox"
             aria-label={`input ${name}`}
             className="gc-drop-down__value"
             onFocus={this.handleOnFocusEffect}
@@ -397,10 +398,11 @@ class GCMultiSelect extends Component {
               />
             )}
             {isActive && (
-              <ul ref={this.optionList} className="gc-drop-down__el gc-select__list">
+              <ul role="listbox" ref={this.optionList} className="gc-drop-down__el gc-select__list">
                 {options.length > 0 ? (
                   options.map((opt, i) => (
                     <li
+                      role="option"
                       id={`${this.props.name}_option_${i}`}
                       key={`${this.props.name}_option_${i}`}
                       className={this.computeItemClassList(value, opt.value, i)}

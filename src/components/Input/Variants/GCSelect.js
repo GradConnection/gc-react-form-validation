@@ -296,6 +296,7 @@ class GCSelect extends Component {
         <div
           id={`gc-drop-down_${name}`}
           aria-label={name}
+          aria-haspopup="listbox"
           role='button'
           className='gc-drop-down__value'
           onMouseUp={this.onInputMouseUp}>
@@ -322,10 +323,11 @@ class GCSelect extends Component {
         </div>
 
         {isActive && !this.props.disabled && (
-          <ul ref={this.optionList} className="gc-drop-down__el gc-select__list">
+          <ul role="listbox" ref={this.optionList} className="gc-drop-down__el gc-select__list">
             {options.length > 0 ? (
               options.map((opt, i) => (
                 <li
+                  role="option"
                   id={`${name}_option_${i}`}
                   key={`${name}_option_${i}`}
                   className={this.computeItemClassList(value, opt.value, i)}
