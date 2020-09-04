@@ -63,10 +63,13 @@ class GCPassword extends Component {
         />
 
         <div
+          role="button"
           tabIndex={0}
           className="gc-btn--icon"
           onClick={this.onIconBtnClick}
           ref={this.passwordToggle}
+          aria-controls={name}
+          aria-expanded={mode !== 'password'}
         >
           {mode === 'password' ? (
             <GCIcon kind="showIcon" />

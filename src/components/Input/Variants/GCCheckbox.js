@@ -79,6 +79,8 @@ class GCCheckbox extends Component {
           name={name}
           title={label}
           checked={!!value}
+          aria-checked={!!value}
+          role="checkbox"
           onChange={(e) => e.preventDefault()}
           aria-label={label}
         />
@@ -87,7 +89,6 @@ class GCCheckbox extends Component {
           onClick={!disabled ? this.onSingleCheckboxClick : undefined}
           tabIndex={0}
           onKeyPress={!disabled ? this.handleKeyPress : undefined}
-          role='checkbox'
         />
         <label
           className={`gc-input__inline-label ${
@@ -109,7 +110,6 @@ class GCCheckbox extends Component {
             className="gc-input-list__item"
             onClick={() => this.onCheckboxItemClick(opt.value)}
             key={`${name}__${i}`}
-            role="checkbox"
           >
             <input
               className="gc-input__btn-hidden"
@@ -118,6 +118,8 @@ class GCCheckbox extends Component {
               name={name}
               title={title}
               checked={toArray(value).includes(opt.value)}
+              aria-checked={toArray(value).includes(opt.value)}
+              role="checkbox"
               onChange={(e) => e.preventDefault()}
             />
             <span className="gc-input__inline-icon gc-checkbox__icon" />
