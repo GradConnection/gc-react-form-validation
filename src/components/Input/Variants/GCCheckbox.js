@@ -13,6 +13,7 @@ class GCCheckbox extends Component {
     this.checkbox = React.createRef();
     this.handleBlur = this.handleBlur.bind(this);
     this.onSingleCheckboxClick = this.onSingleCheckboxClick.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +47,12 @@ class GCCheckbox extends Component {
     this.props.handleInputValidation(!this.props.value);
   }
 
+  handleKeyPress(e){
+    if(e.key === "Enter"){
+      this.onSingleCheckboxClick()
+    }
+  }
+
   onCheckboxItemClick(newValue) {
     const { value, onInputChange } = this.props;
     const valueArray = toArray(value);
@@ -72,12 +79,16 @@ class GCCheckbox extends Component {
           name={name}
           title={label}
           checked={!!value}
+          aria-checked={!!value}
+          role="checkbox"
           onChange={(e) => e.preventDefault()}
           aria-label={label}
         />
         <span
           className="gc-input__inline-icon gc-checkbox__icon"
           onClick={!disabled ? this.onSingleCheckboxClick : undefined}
+          tabIndex={0}
+          onKeyPress={!disabled ? this.handleKeyPress : undefined}
         />
         <label
           className={`gc-input__inline-label ${
@@ -99,7 +110,6 @@ class GCCheckbox extends Component {
             className="gc-input-list__item"
             onClick={() => this.onCheckboxItemClick(opt.value)}
             key={`${name}__${i}`}
-            role="checkbox"
           >
             <input
               className="gc-input__btn-hidden"
@@ -108,6 +118,8 @@ class GCCheckbox extends Component {
               name={name}
               title={title}
               checked={toArray(value).includes(opt.value)}
+              aria-checked={toArray(value).includes(opt.value)}
+              role="checkbox"
               onChange={(e) => e.preventDefault()}
             />
             <span className="gc-input__inline-icon gc-checkbox__icon" />
