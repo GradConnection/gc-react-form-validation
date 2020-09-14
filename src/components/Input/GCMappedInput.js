@@ -14,7 +14,8 @@ import {
   GCDateTimePicker,
   GCDateRangePicker,
   GCRange,
-  GCTimePicker
+  GCTimePicker,
+  GCMultiSelectFilter
 } from './Variants';
 
 const GCMappedInput = props => {
@@ -47,10 +48,27 @@ const GCMappedInput = props => {
     onInputValidationSuccess,
     onInputValidationFailure,
     onChange,
+    isFilter,
     ...xtra
   } = props;
   const renderType = determineRenderType(type);
   // NOTE: From here on out the Input.props.type will be used for validation only
+  
+  if (isFilter && renderType === 'select') {
+      return props.multi && (
+        <GCMultiSelectFilter
+          name={xtra.name}
+          value={xtra.value}
+          options={xtra.options}
+          search={search}
+          placeholder={xtra.placeholder}
+          handleInputChange={handleInputChange}
+          handleInputValidation={handleInputValidation}
+          {...xtra}
+        />
+      ) 
+    }
+  
   switch (renderType) {
     case 'textarea':
       return (

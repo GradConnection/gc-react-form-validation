@@ -1,0 +1,17 @@
+.filter {
+    .gc-input__el {
+      .gc-drop-down__el {
+        background-color: white;
+      }
+      .gc-drop-down__value {
+        display: block;
+      }
+      .gc-select__list-container {
+        .gc-select__input {
+          border: none;
+        }
+    }
+  }
+}
+
+

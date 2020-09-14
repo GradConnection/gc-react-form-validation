@@ -135,7 +135,8 @@ class Input extends Component {
       customUI = false,
       label = title,
       name,
-      options
+      options,
+      isFilter
     } = this.props;
     const {
       validationMessage,
@@ -144,6 +145,7 @@ class Input extends Component {
     } = this.state;
 
     const inputClasses = classnames('gc-input', `gc-input--${type}`, {
+      'filter': isFilter,
       'gc-input--invalid': showValidationMessage,
       'gc-input--disabled': disabled,
       [extendedClassNames]: extendedClassNames
@@ -152,6 +154,7 @@ class Input extends Component {
     const displayLabel =
       (label && type !== 'checkbox') ||
       (label && type === 'checkbox' && options.length > 0);
+
     if (!hidden || !customUI) {
       if (!customComponent()) {
         return (
