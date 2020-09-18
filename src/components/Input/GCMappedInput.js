@@ -53,9 +53,10 @@ const GCMappedInput = props => {
   } = props;
   const renderType = determineRenderType(type);
   // NOTE: From here on out the Input.props.type will be used for validation only
-  
+
   if (isFilter && renderType === 'select') {
-      return props.multi && (
+    return (
+      props.multi && (
         <GCMultiSelectFilter
           name={xtra.name}
           value={xtra.value}
@@ -66,9 +67,10 @@ const GCMappedInput = props => {
           handleInputValidation={handleInputValidation}
           {...xtra}
         />
-      ) 
-    }
-  
+      )
+    );
+  }
+
   switch (renderType) {
     case 'textarea':
       return (

@@ -145,15 +145,16 @@ class Input extends Component {
     } = this.state;
 
     const inputClasses = classnames('gc-input', `gc-input--${type}`, {
-      'filter': isFilter,
+      filter: isFilter,
       'gc-input--invalid': showValidationMessage,
       'gc-input--disabled': disabled,
       [extendedClassNames]: extendedClassNames
     });
 
     const displayLabel =
-      (label && type !== 'checkbox') ||
-      (label && type === 'checkbox' && options.length > 0);
+      this.props.displayLabel &&
+      ((label && type !== 'checkbox') ||
+        (label && type === 'checkbox' && options.length > 0));
 
     if (!hidden || !customUI) {
       if (!customComponent()) {
@@ -337,7 +338,8 @@ Input.defaultProps = {
   defaultAll: false,
   allowAll: false,
   onInputValidationSuccess: () => ({}),
-  onInputValidationFailure: () => ({})
+  onInputValidationFailure: () => ({}),
+  displayLabel: true
 };
 
 export default Input;

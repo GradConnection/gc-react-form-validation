@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 import { isEmpty, getLabel, toArray } from 'utils';
 import { GCIcon, GCTag } from 'ui';
+import GCLabel from '../GCLabel';
 
 class GCMultiSelectFilter extends Component {
   constructor(props) {
@@ -192,20 +193,27 @@ class GCMultiSelectFilter extends Component {
   }
 
   handleOnFocusEffect(e) {
-    if (e.target === this.textInput.current && this.input.current) {
-      this.input.current.focus();
-    } else if (this.props.search) {
-      this.setState({
-        isActive: true,
-        isFocussed: true,
-        ...this.searchActivate
-      });
-    } else {
-      this.setState({
-        isActive: true,
-        isFocussed: true
-      });
-    }
+    console.log(' handleOnFocusEffect clicked me');
+    this.input.current.focus();
+    this.setState({
+      isActive: true,
+      isFocussed: true,
+      ...this.searchActivate
+    });
+    // if (e.target === this.textInput.current && this.input.current) {
+    //   this.input.current.focus();
+    // } else if (this.props.search) {
+    //   this.setState({
+    //     isActive: true,
+    //     isFocussed: true,
+    //     ...this.searchActivate
+    //   });
+    // } else {
+    //   this.setState({
+    //     isActive: true,
+    //     isFocussed: true
+    //   });
+    // }
   }
 
   handleOnBlurEffect(e) {
@@ -261,6 +269,7 @@ class GCMultiSelectFilter extends Component {
     } else {
       this.setState({ isActive: true, isFocussed: true });
     }
+    this.activateDropDown();
   }
 
   onOptionMouseDown(e, value) {
@@ -318,7 +327,7 @@ class GCMultiSelectFilter extends Component {
   }
 
   render() {
-    const { value, name, autoComplete } = this.props;
+    const { value, name, autoComplete, label, required } = this.props;
     const { isActive, isFocussed, options, placeholder } = this.state;
 
     const selectClasses = classNames(
@@ -326,10 +335,10 @@ class GCMultiSelectFilter extends Component {
       'gc-input__el--no-padding',
       {
         'gc-input__el--active': isActive || isFocussed
-      },
-      {
-        'gc-input__el--inactive': !(isActive || isFocussed)
       }
+      // {
+      //   'gc-input__el--inactive': !(isActive || isFocussed)
+      // }
     );
 
     const containerClasses = classNames('gc-select__list-container', {
@@ -347,19 +356,23 @@ class GCMultiSelectFilter extends Component {
         'gc-input__el': isEmpty(value)
       }
     );
+    console.log('this.props', this.props);
 
     return (
       <div
         className="gc-select__multi-container"
-        onClick={this.handleOnFocusEffect}
         onFocus={this.handleOnFocusEffect}
-        onBlur={this.handleOnBlurEffect}
+        onClick={this.onInputClick}
+        onMouseDown={this.onContainerMouseDown}
+        ref={this.select}
+        // onFocus={this.handleOnFocusEffect}
+        // onBlur={this.handleOnBlurEffect}
       >
         <div
           id={`gc-drop-down_${name}`}
           className={selectClasses}
-          ref={this.select}
-          onMouseDown={this.onContainerMouseDown}
+          // ref={this.select}
+          // onMouseDown={this.onContainerMouseDown}
         >
           <div
             id={`gc-input-multi_${name}`}
@@ -367,23 +380,31 @@ class GCMultiSelectFilter extends Component {
             role="button"
             aria-haspopup="listbox"
             aria-label={`input ${name}`}
-            className="gc-drop-down__value"
-            onFocus={this.handleOnFocusEffect}
-            onClick={this.onInputClick}
+            // className="gc-drop-down__value"
+            className={`${
+              isActive ? 'gc-drop-down__value--shrink' : 'gc-drop-down__value'
+            }`}
+            // gc-drop-down__value--shrink
+            // onFocus={this.handleOnFocusEffect}
+            // onClick={this.onInputClick}
           >
-            {isEmpty(value) && (
-              <input
-                id={name}
-                className="gc-drop-down__value__text gc-drop-down__value__text--input"
-                value=""
-                placeholder={placeholder}
-                readOnly
-                onBlur={this.handleOnBlurEffect}
-              />
+            <GCLabel
+              label={label}
+              htmlFor={name}
+              required={required}
+              activeShrink={isActive}
+            />
+            {!isEmpty(value) && (
+              <div>2</div>
+              // <input
+              //   id={name}
+              //   className="gc-drop-down__value__text gc-drop-down__value__text--input"
+              //   value=""
+              //   placeholder={placeholder}
+              //   readOnly
+              //   onBlur={this.handleOnBlurEffect}
+              // />
             )}
-            <span className="gc-drop-down__value__text gc-drop-down__value__text--input">
-              {this.renderTags(value)}
-            </span>
             <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" />
           </div>
 
@@ -404,32 +425,42 @@ class GCMultiSelectFilter extends Component {
               />
             )}
             {isActive && (
-              <ul
-                role="listbox"
-                ref={this.optionList}
-                className="gc-drop-down__el gc-select__list"
-              >
-                {options.length > 0 ? (
-                  options.map((opt, i) => (
+              <div className="gc-drop-down__el gc-select__list">
+                <span className="gc-drop-down__value__text gc-drop-down__value__text--input">
+                  Selected: {this.renderTags(value)}
+                </span>
+                <ul
+                  role="listbox"
+                  ref={this.optionList}
+                  className="gc-drop-down__el filter-drop-down"
+                >
+                  {options.length > 0 ? (
+                    options.map((opt, i) => (
+                      <li
+                        role="option"
+                        id={`${this.props.name}_option_${i}`}
+                        key={`${this.props.name}_option_${i}`}
+                        className={this.computeItemClassList(
+                          value,
+                          opt.value,
+                          i
+                        )}
+                        onMouseDown={e => this.onOptionMouseDown(e, opt.value)}
+                      >
+                        {opt.label}
+                      </li>
+                    ))
+                  ) : (
                     <li
-                      role="option"
-                      id={`${this.props.name}_option_${i}`}
-                      key={`${this.props.name}_option_${i}`}
-                      className={this.computeItemClassList(value, opt.value, i)}
-                      onMouseDown={e => this.onOptionMouseDown(e, opt.value)}
+                      key={`$noOpt_select_${name}`}
+                      className="gc-select__list-item gc-select__list-item--no-opt"
                     >
-                      {opt.label}
+                      <i>There are no available options</i>
                     </li>
-                  ))
-                ) : (
-                  <li
-                    key={`$noOpt_select_${name}`}
-                    className="gc-select__list-item gc-select__list-item--no-opt"
-                  >
-                    <i>There are no available options</i>
-                  </li>
-                )}
-              </ul>
+                  )}
+                </ul>
+                <div>"save""Close"</div>
+              </div>
             )}
           </div>
         </div>
@@ -451,7 +482,9 @@ GCMultiSelectFilter.propTypes = {
   handleInputValidation: PropTypes.func.isRequired,
   selectAll: PropTypes.bool,
   selectAllValue: PropTypes.array,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  label: PropTypes.string,
+  required: PropTypes.bool
 };
 
 GCMultiSelectFilter.defaultProps = {
