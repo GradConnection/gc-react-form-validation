@@ -15,6 +15,7 @@ import {
   GCDateRangePicker,
   GCRange,
   GCTimePicker,
+  GCSelectFilter,
   GCMultiSelectFilter
 } from './Variants';
 
@@ -55,8 +56,8 @@ const GCMappedInput = props => {
   // NOTE: From here on out the Input.props.type will be used for validation only
 
   if (isFilter && renderType === 'select') {
-    return (
-      props.multi && (
+    if (props.multi) {
+      return (
         <GCMultiSelectFilter
           name={xtra.name}
           value={xtra.value}
@@ -67,7 +68,19 @@ const GCMappedInput = props => {
           handleInputValidation={handleInputValidation}
           {...xtra}
         />
-      )
+      );
+    }
+    return (
+      <GCSelectFilter
+        name={xtra.name}
+        value={xtra.value}
+        options={xtra.options}
+        search={search}
+        placeholder={xtra.placeholder}
+        handleInputChange={handleInputChange}
+        handleInputValidation={handleInputValidation}
+        {...xtra}
+      />
     );
   }
 

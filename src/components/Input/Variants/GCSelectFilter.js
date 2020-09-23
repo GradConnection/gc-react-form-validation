@@ -7,7 +7,7 @@ import { isEmpty, getLabel, toArray } from 'utils';
 import { GCIcon, GCTag } from 'ui';
 import GCLabel from '../GCLabel';
 
-class GCMultiSelectFilter extends Component {
+class GCSelectFilter extends Component {
   constructor(props) {
     super(props);
 
@@ -43,7 +43,6 @@ class GCMultiSelectFilter extends Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleOnFocusEffect = this.handleOnFocusEffect.bind(this);
 
-    this.onTagCrossBtnClick = this.onTagCrossBtnClick.bind(this);
     this.onInputClick = this.onInputClick.bind(this);
     this.onContainerMouseDown = this.onContainerMouseDown.bind(this);
   }
@@ -188,12 +187,6 @@ class GCMultiSelectFilter extends Component {
     });
   }
 
-  onTagCrossBtnClick(e, value) {
-    e.preventDefault();
-    const newValueArray = this.removeItemFromValueArray(value);
-    this.props.handleInputChange(newValueArray);
-  }
-
   handleOnFocusEffect(e) {
     console.log(' handleOnFocusEffect clicked me');
     this.input.current.focus();
@@ -280,14 +273,18 @@ class GCMultiSelectFilter extends Component {
   handleInputChange(newValue) {
     const { value } = this.props;
 
-    let newValueArray = [];
-    if (value.includes(newValue)) {
-      newValueArray = this.removeItemFromValueArray(newValue);
-    } else {
-      newValueArray = this.addItemToValueArray(newValue);
-    }
+    // let newValueArray = [];
     this.setState({ index: 0 });
-    this.props.handleInputChange(newValueArray);
+    console.log('handleInputChange value', value);
+    console.log('handleInputChange newValue', newValue);
+    if (value === newValue) {
+      this.props.handleInputChange([]);
+    } else {
+      this.props.handleInputChange([newValue]);
+    }
+    // else {
+    //   newValueArray = this.addItemToValueArray(newValue);
+    // }
   }
 
   removeItemFromValueArray(item) {
@@ -305,17 +302,6 @@ class GCMultiSelectFilter extends Component {
       'gc-select__list-item--selected': selectV.includes(itemV),
       'gc-select__list-item--hovered': this.state.index === index
     });
-  }
-
-  renderTags(valueArray) {
-    return toArray(valueArray).map(value => (
-      <GCTag
-        key={value}
-        onCrossBtnClick={e => this.onTagCrossBtnClick(e, value)}
-      >
-        {getLabel(value, this.props.options)}
-      </GCTag>
-    ));
   }
 
   onContainerMouseDown(e) {
@@ -412,9 +398,7 @@ class GCMultiSelectFilter extends Component {
               required={required}
               activeShrink={isActive}
             />
-            {!isEmpty(value) && (
-              <div className="gc-filter-badge">{value.length}</div>
-            )}
+            {!isEmpty(value) && <div className="gc-filter-badge">1</div>}
 
             <GCIcon kind="infoIcon" extendedClassNames="gc-drop-down__info" />
             <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" />
@@ -438,13 +422,6 @@ class GCMultiSelectFilter extends Component {
             )}
             {isActive && (
               <div className="gc-drop-down__el gc-select__list">
-                <span
-                  className="gc-drop-down__value__text gc-drop-down__value__text--input"
-                  ref={this.selectContainer}
-                >
-                  Selected: {this.renderTags(value)}
-                </span>
-                <div className="dotted" />
                 <ul
                   role="listbox"
                   ref={this.optionList}
@@ -481,29 +458,6 @@ class GCMultiSelectFilter extends Component {
                     </li>
                   )}
                 </ul>
-                <div className="dotted" />
-                <div className="gc-filter__dropdown__controls">
-                  <button
-                    type="button"
-                    // className="gc-tag__btn gc-btn--icon-sml"
-                    className="btn btn--primary gc-filter-primary-button"
-                    // onClick={onCrossBtnClick}
-                    // onClick={this.handleOnBlurEffect}
-                    onClick={e => onSubmitClick(e)}
-                    aria-label="remove filter item"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    className="gc-tag__btn gc-btn--icon-sml underline"
-                    // onClick={onCrossBtnClick}
-                    onClick={() => onClearClick()}
-                    aria-label="remove filter item"
-                  >
-                    Clear
-                  </button>
-                </div>
               </div>
             )}
           </div>
@@ -513,7 +467,7 @@ class GCMultiSelectFilter extends Component {
   }
 }
 
-GCMultiSelectFilter.propTypes = {
+GCSelectFilter.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([
     PropTypes.string.isRequired,
@@ -531,9 +485,9 @@ GCMultiSelectFilter.propTypes = {
   required: PropTypes.bool
 };
 
-GCMultiSelectFilter.defaultProps = {
+GCSelectFilter.defaultProps = {
   selectAll: false,
   autoComplete: 'off'
 };
 
-export { GCMultiSelectFilter };
+export { GCSelectFilter };

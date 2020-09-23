@@ -3,6 +3,7 @@ export * from './GCSelect';
 export * from './GCSelectExternalSearch';
 export * from './GCMultiSelect';
 export * from './GCMultiSelectFilter';
+export * from './GCSelectFilter';
 export * from './GCRadio';
 export * from './GCCheckbox';
 export * from './GCPassword';
