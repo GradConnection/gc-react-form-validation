@@ -125,7 +125,6 @@ class Input extends Component {
       extendedClassNames,
       customComponent,
       description,
-      isVisible,
       disabled,
       hidden,
       required,
@@ -152,7 +151,7 @@ class Input extends Component {
     });
 
     const displayLabel =
-      this.props.displayLabel &&
+      !isFilter &&
       ((label && type !== 'checkbox') ||
         (label && type === 'checkbox' && options.length > 0));
 
@@ -294,14 +293,14 @@ Input.propTypes = {
   autoComplete: PropTypes.string,
   loading: PropTypes.bool,
   hidden: PropTypes.bool,
-  tooltip: PropTypes.string,
   formSubmitted: PropTypes.bool,
   customComponent: PropTypes.func,
   defaultAll: PropTypes.bool,
   defaultText: PropTypes.string,
   onInputValidationSuccess: PropTypes.func,
   onInputValidationFailure: PropTypes.func,
-  lastUpdateStamp: PropTypes.number
+  lastUpdateStamp: PropTypes.number,
+  isFilter: PropTypes.bool
 };
 
 Input.defaultProps = {
@@ -331,15 +330,12 @@ Input.defaultProps = {
   autoComplete: 'off',
   loading: false,
   hidden: false,
-  tooltip: '',
   formSubmitted: false,
   customComponent: () => false,
   defaultText: 'All Options',
   defaultAll: false,
-  allowAll: false,
   onInputValidationSuccess: () => ({}),
-  onInputValidationFailure: () => ({}),
-  displayLabel: true
+  onInputValidationFailure: () => ({})
 };
 
 export default Input;
