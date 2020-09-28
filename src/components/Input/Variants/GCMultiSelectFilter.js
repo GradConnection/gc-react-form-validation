@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
 
+import { GCTooltip } from '../GCTooltip';
 import { isEmpty, getLabel, toArray } from 'utils';
 import { GCIcon, GCTag } from 'ui';
 import GCLabel from '../GCLabel';
@@ -12,8 +13,7 @@ class GCMultiSelectFilter extends Component {
     super(props);
 
     this.searchActivate = {
-      isSearchActive: true,
-      placeholder: 'Start typing to search'
+      isSearchActive: true
     };
     this.searchReset = {
       searchTerm: '',
@@ -22,11 +22,15 @@ class GCMultiSelectFilter extends Component {
         ? props.placeholder
         : 'Start typing to search'
     };
-    this.state = {
+    this.stateReset = {
       isActive: false,
       isFocussed: false,
+      isInformationActive: false
+    };
+    this.state = {
       index: 0,
       options: props.options, // it's important not to put options in searchReset, otherwise SSR might not initially populate options
+      ...this.stateReset,
       ...this.searchReset
     };
 
@@ -74,10 +78,9 @@ class GCMultiSelectFilter extends Component {
     console.log('handleWindowClick');
     if (!this.select.current.contains(e.target) && this.state.isFocussed) {
       this.setState({
-        isActive: false,
-        isFocussed: false,
-        index: 0,
+        ...this.stateReset,
         ...this.searchReset,
+        index: 0,
         options: this.props.options
       });
       this.props.handleInputValidation(this.props.value);
@@ -95,11 +98,7 @@ class GCMultiSelectFilter extends Component {
         this.onDownKeyPress(e);
       } else if (e.keyCode === 9) {
         this.setState({
-          isFocussed: false,
-          isActive: false,
-          placeholder: this.props.placeholder
-            ? this.props.placeholder
-            : 'Start typing to search'
+          ...this.stateReset
         });
       }
     }
@@ -121,7 +120,6 @@ class GCMultiSelectFilter extends Component {
 
     if (this.props.search) {
       activeState.isSearchActive = true;
-      activeState.placeholder = 'Start typing to search';
     }
 
     this.setState(activeState);
@@ -261,7 +259,7 @@ class GCMultiSelectFilter extends Component {
         this.setState(this.searchActivate);
       }
     } else if (this.state.isActive) {
-      this.setState({ isActive: false });
+      this.setState({ ...this.stateReset });
     } else {
       this.setState({ isActive: true, isFocussed: true });
     }
@@ -324,13 +322,18 @@ class GCMultiSelectFilter extends Component {
 
   render() {
     const { value, name, autoComplete, label, required } = this.props;
-    const { isActive, isFocussed, options, placeholder } = this.state;
+    const {
+      isActive,
+      isFocussed,
+      isInformationActive,
+      options,
+      placeholder
+    } = this.state;
 
     const onClearClick = () => {
       console.log('Cancel click');
       this.setState({
-        isActive: false,
-        isFocussed: false,
+        ...this.stateReset,
         ...this.searchReset,
         options: this.props.options
       });
@@ -340,11 +343,19 @@ class GCMultiSelectFilter extends Component {
     const onSubmitClick = e => {
       console.log('submit click');
       this.setState({
-        isActive: false,
-        isFocussed: false
+        ...this.stateReset
       });
       this.props.handleInputValidation(this.props.value);
       console.log('submit click end2');
+    };
+
+    const onInformationClick = () => {
+      console.log('onInformationClick click');
+      this.setState({
+        isInformationActive: !this.state.isInformationActive
+      });
+
+      console.log('onInformationClick click end2');
     };
 
     const selectClasses = classNames(
@@ -415,8 +426,22 @@ class GCMultiSelectFilter extends Component {
             {!isEmpty(value) && (
               <div className="gc-filter-badge">{value.length}</div>
             )}
-
-            <GCIcon kind="infoIcon" extendedClassNames="gc-drop-down__info" />
+            {this.props.tooltip && (
+              <div role="button" onClick={() => onInformationClick()}>
+                <GCIcon
+                  kind="infoIcon"
+                  extendedClassNames="gc-drop-down__info"
+                />
+                {isActive && isInformationActive && this.props.tooltip && (
+                  <GCTooltip
+                    content={this.props.tooltip}
+                    name={`${name}tooltip`}
+                    active={isInformationActive}
+                    toggleTooltip={() => this.onInformationClick()}
+                  />
+                )}
+              </div>
+            )}
             <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" />
           </div>
 
@@ -528,6 +553,7 @@ GCMultiSelectFilter.propTypes = {
   selectAllValue: PropTypes.array,
   autoComplete: PropTypes.string,
   label: PropTypes.string,
+  tooltip: PropTypes.string,
   required: PropTypes.bool
 };
 

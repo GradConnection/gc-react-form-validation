@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
 
+import { GCTooltip } from '../GCTooltip';
 import { isEmpty, getLabel, toArray } from 'utils';
 import { GCIcon, GCTag } from 'ui';
 import GCLabel from '../GCLabel';
@@ -400,7 +401,23 @@ class GCSelectFilter extends Component {
             />
             {!isEmpty(value) && <div className="gc-filter-badge">1</div>}
 
-            <GCIcon kind="infoIcon" extendedClassNames="gc-drop-down__info" />
+            {/* {this.props.tooltip && (
+              <div role="button" onClick={() => onInformationClick()}>
+                <GCIcon
+                  kind="infoIcon"
+                  extendedClassNames="gc-drop-down__info"
+                />
+                {isActive && isInformationActive && this.props.tooltip && (
+                  <GCTooltip
+                    content={this.props.tooltip}
+                    name={`${name}tooltip`}
+                    active={isInformationActive}
+                    toggleTooltip={() => this.onInformationClick()}
+                  />
+                )}
+              </div>
+            )} */}
+
             <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" />
           </div>
 
