@@ -8,7 +8,6 @@ const GCLabel = ({
 }) => (
   <label
     className={`${activeShrink ? 'gc-label-active--shrink' : 'gc-label'}`}
-    // className={`${activeShrink ? 'gc-label-active--shrink' : 'gc-label'}`}
     htmlFor={htmlFor}
   >
     <span

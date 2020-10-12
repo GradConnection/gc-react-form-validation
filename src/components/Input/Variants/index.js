@@ -8,6 +8,7 @@ export * from './GCRadio';
 export * from './GCCheckbox';
 export * from './GCPassword';
 export * from './GCDatePicker';
+export * from './GCDatePickerFilter';
 export * from './GCDateTimePicker';
 export * from './GCDateRangePicker';
 export * from './GCRange';

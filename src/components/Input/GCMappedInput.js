@@ -11,6 +11,7 @@ import {
   GCSelect,
   GCSelectExternalSearch,
   GCDatePicker,
+  GCDatePickerFilter,
   GCDateTimePicker,
   GCDateRangePicker,
   GCRange,
@@ -59,9 +60,6 @@ const GCMappedInput = props => {
     if (props.multi) {
       return (
         <GCMultiSelectFilter
-          name={xtra.name}
-          value={xtra.value}
-          options={xtra.options}
           search={search}
           placeholder={xtra.placeholder}
           handleInputChange={handleInputChange}
@@ -72,12 +70,19 @@ const GCMappedInput = props => {
     }
     return (
       <GCSelectFilter
-        name={xtra.name}
-        value={xtra.value}
-        options={xtra.options}
         search={search}
         placeholder={xtra.placeholder}
         handleInputChange={handleInputChange}
+        handleInputValidation={handleInputValidation}
+        {...xtra}
+      />
+    );
+  }
+
+  if (isFilter && renderType === 'date') {
+    return (
+      <GCDatePickerFilter
+        onInputChange={handleInputChange}
         handleInputValidation={handleInputValidation}
         {...xtra}
       />

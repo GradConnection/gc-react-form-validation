@@ -1,102 +1,104 @@
 .filter {
-  &.gc-input--select {
-    .gc-input__el {  
-      border:none;
-      display: inline-block;
-      padding: 0px;
-      // padding-left: 22px;
-      //.gc-input__el .gc-drop-down__value
-      .gc-drop-down__el {
-        background-color: white;
-        // margin-top: 5px;
-      }
-      .gc-drop-down__value {
-        display: flex;
-        justify-content: normal; 
-        padding-top: 25px;
-        padding-left: 20px;
-      }
-      .gc-drop-down__value--shrink {
-        display: flex;
-        padding-top: 19px;
-        padding-left: 20px;
-        padding-bottom: 1px;
-        font-size: 1.2rem;
-      }
-      
-      .gc-filter-badge{
-        margin-top: -4px;
-        margin-left: 10px;
-        padding: 2px 6px;
-        font-size: 1em;
-        color: black;
-        font-weight: bold;
-        border: 2px solid black;
-        border-radius: 6px;
-      }
-      .filter-drop-down{
-        border:none;
-        position: relative;
-        max-height: 300px;
-        overflow: auto;
-      }  
-      // gc-drop-down__el gc-select__list
-      .gc-select__list {  
-        // padding-left: 20px;
-        border: solid 1px $gc-form-light-grey;
-        box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.3);
-        max-height: none;
-        overflow-y: hidden;
-        padding-top: 15px;
-        // .gc-input--select .gc-input__el .gc-select__list-item.gc-select__list-item--hovered, .gc-input--select .gc-input__el .gc-select__list-item:hover
-          /* margin-right: -10px; */
-          // .gc-input--select .gc-input__el .gc-select__list-item:hover
-        .gc-select__list-item {
-          border-bottom: none;
-        }
-        .gc-select__list-item--hovered {
-          // margin-right: 0px;
-          padding-right: 10px;
-        }
-        .gc-select__list-item:hover {
-          // margin-right: 0px;
-          padding-right: 10px;
-        }
-      }
-      .gc-select__list-container{
-        position: relative;
-        .gc-select__input {
-          padding-left: 20px;
-          // padding-bottom: 15px;
-          padding: 0.8rem 2rem;
-          border: none;
-        }
-      }
-      .gc-drop-down__caret{
-        z-index: 2;
-        right: 30px;
-        position: absolute;
-      }
-      .gc-drop-down__info{
-        z-index: 2;
-        right: 50px;
-        position: absolute;
-      }
-      .gc-filter__dropdown__controls{
-        display: flex;
-        flex-direction: row-reverse;
-        margin-top: 10px;
-        font-weight: bold;
-        margin-bottom: 10px;
-      }
-      
+  .gc-tooltip {
+    right: 50px;
+    bottom: 90%;
+  }
 
+  .gc-input__el {  
+    border: none;
+    display: inline-block;
+    padding: 0px;
+    // padding-left: 22px;
+    //.gc-input__el .gc-drop-down__value
+    .gc-drop-down__el {
+      background-color: white;
+      // margin-top: 5px;
     }
+    .gc-drop-down__value {
+      display: flex;
+      justify-content: normal; 
+      padding-top: 25px;
+      padding-left: 20px;
+    }
+    .gc-drop-down__value--shrink {
+      display: flex;
+      padding-top: 19px;
+      padding-left: 20px;
+      padding-bottom: 1px;
+      font-size: 1.2rem;
+    }
+    
+    .gc-filter-badge{
+      margin-top: -2px;
+      margin-left: 10px;
+      padding: 3px 6px;
+      font-size: 1rem;
+      color: $gc-form-black;
+      font-weight: bold;
+      border: 1px solid $gc-form-black;
+      border-radius: 6px;
+    }
+    .filter-drop-down{
+      border:none;
+      position: relative;
+      max-height: 300px;
+      overflow: auto;
+    }  
+    // gc-drop-down__el gc-select__list
+    .gc-select__list {  
+      // padding-left: 20px;
+      border: solid 1px $gc-form-light-grey;
+      box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.3);
+      max-height: none;
+      overflow-y: hidden;
+      padding-top: 15px;
+      // .gc-input--select .gc-input__el .gc-select__list-item.gc-select__list-item--hovered, .gc-input--select .gc-input__el .gc-select__list-item:hover
+        /* margin-right: -10px; */
+        // .gc-input--select .gc-input__el .gc-select__list-item:hover
+      .gc-select__list-item {
+        border-bottom: none;
+      }
+      .gc-select__list-item--hovered {
+        // margin-right: 0px;
+        padding-right: 10px;
+      }
+      .gc-select__list-item:hover {
+        // margin-right: 0px;
+        padding-right: 10px;
+      }
+    }
+    .gc-select__list-container{
+      position: relative;
+      .gc-select__input {
+        padding-left: 20px;
+        // padding-bottom: 15px;
+        padding: 0.8rem 2rem;
+        border: none;
+      }
+    }
+
+    .gc-drop-down__caret{
+      z-index: 2;
+      right: 20px;
+      position: absolute;
+    }
+    .gc-drop-down__info{
+      z-index: 2;
+      right: 40px;
+      position: absolute;
+    }
+    .gc-filter__dropdown__controls{
+      display: flex;
+      flex-direction: row-reverse;
+      margin-top: 10px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
     .gc-input__el--inactive{
       display:none;
     }
-
-   }
+  }
   
   .gc-label{
     margin:0;
@@ -120,5 +122,25 @@
     float: right;
   }
   
+  // Date picker
+  .gc-date-drop-down__value__text {
+    border: none;
+    padding-left: 20px;
+  }
+  .gc-icon {
+    &.input-icon {
+      z-index: 2;
+      right: 20px;
+      position: absolute;
+      svg {
+        width: 1.8rem;
+      }
+      &.input-icon--shrink {
+        svg {
+          width: 1.5rem;
+        }
+      }
+    }
+  }
 }
 
