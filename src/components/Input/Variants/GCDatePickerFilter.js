@@ -86,7 +86,7 @@ class GCDatePickerFilter extends Component {
             dateInputPlaceholder={placeholder}
             disabledDate={from || to ? disableDates : null}
             timePicker={showTime ? timePickerElement : null}
-            style={{ top: '36px' }}
+            style={{ top: '70px' }}
           />
         }
       >
@@ -95,9 +95,7 @@ class GCDatePickerFilter extends Component {
             <div
               role="button"
               className={`${
-                isActive || !!value
-                  ? 'gc-drop-down__value--shrink'
-                  : 'gc-drop-down__value'
+                value ? 'gc-drop-down__value--shrink' : 'gc-drop-down__value'
               }`}
               aria-label={`input ${name}`}
             >
@@ -105,14 +103,9 @@ class GCDatePickerFilter extends Component {
                 label={label}
                 htmlFor={name}
                 required={required}
-                activeShrink={isActive || !!value}
+                activeShrink={!!value}
               />
-              <GCIcon
-                kind="calendarIcon"
-                extendedClassNames={`input-icon ${
-                  isActive || !!value ? 'input-icon--shrink' : ''
-                }`}
-              />
+              <GCIcon kind="calendarIcon" extendedClassNames="input-icon" />
             </div>
             {!!value && (
               <input
