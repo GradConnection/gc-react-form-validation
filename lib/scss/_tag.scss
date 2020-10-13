@@ -1,11 +1,11 @@
 .gc-tag {
-  border-radius: 0.2rem;
-  display: inline-flex;
-  font-size: 0;
-  background-color: $gc-form-grey;
   box-sizing: border-box;
+  display: inline-flex;
+  border: 1px solid $gc-form-med-grey;
+  border-radius: 0.3rem;
+  font-size: 0;
   overflow: hidden;
-  margin-right: 0.5rem;
+  margin: 0.2rem;
 
   .gc-tag__label {
     display: inline-block;
@@ -17,11 +17,9 @@
   }
 
   .gc-tag__btn {
-    border: none;
-    background-color: $gc-form-med-grey;
-
       path {
         fill: $gc-form-black;
+        stroke: $gc-form-black;
       }
   }
 

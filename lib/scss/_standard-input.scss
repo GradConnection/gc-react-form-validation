@@ -79,14 +79,14 @@ input.gc-input__el,
 
 .gc-btn--icon-sml {
   box-sizing: border-box;
-  padding: 0.2rem 0.5rem 0.5rem 0.5rem;
+  padding: 0.5rem;
 
   svg {
-    width: 0.5rem;
+    width: 1rem;
 
     // IE 11
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      height: 0.5rem;
+      height: 1rem;
     }
   }
 }
