@@ -324,7 +324,7 @@ class GCSelectFilter extends Component {
   }
 
   render() {
-    const { value, name, autoComplete, label, required } = this.props;
+    const { value, name, autoComplete, label, required, disabled } = this.props;
     const {
       isActive,
       isFocussed,
@@ -332,25 +332,6 @@ class GCSelectFilter extends Component {
       options,
       placeholder
     } = this.state;
-
-    const onClearClick = () => {
-      console.log('Cancel click');
-      this.setState({
-        ...this.stateReset,
-        ...this.searchReset,
-        options: this.props.options
-      });
-      this.props.handleInputChange([]);
-      this.props.handleInputValidation([]);
-    };
-    const onSubmitClick = e => {
-      console.log('submit click');
-      this.setState({
-        ...this.stateReset
-      });
-      this.props.handleInputValidation(this.props.value);
-      console.log('submit click end2');
-    };
 
     const onInformationClick = () => {
       console.log('onInformationClick click');
@@ -393,11 +374,10 @@ class GCSelectFilter extends Component {
     return (
       <div
         className="gc-select__multi-container"
-        onFocus={this.handleOnFocusEffect}
-        onClick={this.onInputClick}
-        onMouseDown={this.onContainerMouseDown}
+        onFocus={!disabled && this.handleOnFocusEffect}
+        onClick={!disabled && this.onInputClick}
+        // onMouseDown={this.onContainerMouseDown}
         ref={this.select}
-        // onFocus={this.handleOnFocusEffect}
         // onBlur={this.handleOnBlurEffect}
       >
         <div
@@ -532,7 +512,8 @@ GCSelectFilter.propTypes = {
   autoComplete: PropTypes.string,
   label: PropTypes.string,
   tooltip: PropTypes.string,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 GCSelectFilter.defaultProps = {
