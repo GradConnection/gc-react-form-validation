@@ -11,6 +11,7 @@
     // padding-left: 22px;
     //.gc-input__el .gc-drop-down__value
     .gc-drop-down__el {
+      padding: 1em;
       background-color: white;
       // margin-top: 5px;
     }
@@ -22,22 +23,38 @@
     }
     .gc-drop-down__value--shrink {
       display: flex;
-      padding-top: 19px;
-      padding-left: 20px;
-      padding-bottom: 1px;
+      align-items: center;
+      padding: 20px 20px 0 20px;
       font-size: 1.2rem;
     }
     
-    .gc-filter-badge{
+    .gc-filter--badge{
       margin-top: -2px;
       margin-left: 10px;
-      padding: 3px 6px;
+      padding: 2px 5px;
       font-size: 1rem;
       color: $gc-form-black;
       font-weight: bold;
       border: 1px solid $gc-form-black;
       border-radius: 6px;
     }
+
+    .gc-filter--value {
+      font-size: 1.4rem;
+      color: $black;
+      white-space: nowrap;
+      width: 95%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      // For date value
+      padding: 5px 0 0 0;
+      border: none;
+    }
+
+    .gc-filter__label-wrapper {
+      width: 100%;
+    }
+
     .filter-drop-down{
       border:none;
       position: relative;
@@ -48,31 +65,33 @@
     .gc-select__list {  
       // padding-left: 20px;
       border: solid 1px $gc-form-light-grey;
-      box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.3);
+      box-shadow: 0.3em 0.3em 0.8em rgba(41, 43, 45, 0.2);
       max-height: none;
       overflow-y: hidden;
-      padding-top: 15px;
       // .gc-input--select .gc-input__el .gc-select__list-item.gc-select__list-item--hovered, .gc-input--select .gc-input__el .gc-select__list-item:hover
         /* margin-right: -10px; */
         // .gc-input--select .gc-input__el .gc-select__list-item:hover
       .gc-select__list-item {
         border-bottom: none;
-      }
-      .gc-select__list-item--hovered {
-        // margin-right: 0px;
+        padding-left: 10px;
         padding-right: 10px;
+        &.gc-select__list-item--hovered {
+          padding-left: 20px;
+          padding-right: 20px;
+          background-color: mix($gc-form-light-grey, white, 50%);
+        }
       }
       .gc-select__list-item:hover {
         // margin-right: 0px;
-        padding-right: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        background-color: mix($gc-form-light-grey, white, 50%);
       }
     }
     .gc-select__list-container{
       position: relative;
       .gc-select__input {
-        padding-left: 20px;
-        // padding-bottom: 15px;
-        padding: 0.8rem 2rem;
+        padding: 3px 20px 12px 20px;;
         border: none;
       }
     }
@@ -120,6 +139,9 @@
   .gc-filter-icon{
     // display: inline-block;
     float: right;
+    svg {
+      width: 1.5rem; 
+    }
   }
   
   // Date picker

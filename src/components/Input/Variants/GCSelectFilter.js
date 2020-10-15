@@ -64,6 +64,7 @@ class GCSelectFilter extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { isSearchActive, searchTerm, options } = this.state;
+
     if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
       if (searchTerm === '') {
         this.setState({
@@ -131,6 +132,7 @@ class GCSelectFilter extends Component {
 
     this.setState(
       {
+        isActive: false,
         ...this.searchReset,
         options: this.props.options
       },
@@ -256,7 +258,11 @@ class GCSelectFilter extends Component {
           isActive: true
         });
       } else {
-        this.setState(this.searchActivate);
+        this.setState({
+          isFocussed: true,
+          isActive: true,
+          ...this.searchActivate
+        });
       }
     } else if (this.state.isActive) {
       this.setState({ ...this.stateReset });
@@ -310,10 +316,7 @@ class GCSelectFilter extends Component {
 
   renderTags(valueArray) {
     return toArray(valueArray).map(value => (
-      <GCTag
-        key={value}
-        onCrossBtnClick={e => this.onTagCrossBtnClick(e, value)}
-      >
+      <GCTag key={value} onCrossBtnClick={e => this.onTagCrossBtnClick(e)}>
         {getLabel(value, this.props.options)}
       </GCTag>
     ));
@@ -394,19 +397,27 @@ class GCSelectFilter extends Component {
             aria-label={`input ${name}`}
             // className="gc-drop-down__value"
             className={`${
-              isActive ? 'gc-drop-down__value--shrink' : 'gc-drop-down__value'
+              isActive || !isEmpty(value)
+                ? 'gc-drop-down__value--shrink'
+                : 'gc-drop-down__value'
             }`}
-            // gc-drop-down__value--shrink
             // onFocus={this.handleOnFocusEffect}
             // onClick={this.onInputClick}
           >
-            <GCLabel
-              label={label}
-              htmlFor={name}
-              required={required}
-              activeShrink={isActive}
-            />
-            {!isEmpty(value) && <div className="gc-filter-badge">1</div>}
+            <div className="gc-filter__label-wrapper">
+              <GCLabel
+                label={label}
+                htmlFor={name}
+                required={required}
+                activeShrink={isActive || !isEmpty(value)}
+              />
+              {!isEmpty(value) && <span className="gc-filter--badge">1</span>}
+              {!isEmpty(value) && !isActive && (
+                <div className="gc-filter--value">
+                  {options.find(opt => value === opt.value)?.label}
+                </div>
+              )}
+            </div>
             {this.props.tooltip && (
               <div role="button" onClick={() => onInformationClick()}>
                 <GCIcon
@@ -454,7 +465,7 @@ class GCSelectFilter extends Component {
                 <ul
                   role="listbox"
                   ref={this.optionList}
-                  className="gc-drop-down__el filter-drop-down"
+                  className="filter-drop-down"
                 >
                   {options.length > 0 ? (
                     options.map((opt, i) => (
