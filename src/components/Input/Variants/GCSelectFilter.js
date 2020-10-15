@@ -66,6 +66,7 @@ class GCSelectFilter extends Component {
     const { isSearchActive, searchTerm, options } = this.state;
 
     if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
+      this.input.current.focus(); // Focus search input when clicked
       if (searchTerm === '') {
         this.setState({
           options: this.props.options,
