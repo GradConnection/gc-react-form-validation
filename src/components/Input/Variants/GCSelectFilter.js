@@ -188,10 +188,15 @@ class GCSelectFilter extends Component {
     });
   }
 
-  onTagCrossBtnClick(e, value) {
+  onTagCrossBtnClick(e) {
     e.preventDefault();
-    const newValueArray = this.removeItemFromValueArray(value);
-    this.props.handleInputChange(newValueArray);
+    this.setState({
+      ...this.stateReset,
+      ...this.searchReset,
+      options: this.props.options
+    });
+    this.props.handleInputChange([]);
+    // this.props.handleInputValidation([]);
   }
 
   handleOnFocusEffect(e) {
