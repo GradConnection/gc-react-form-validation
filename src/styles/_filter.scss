@@ -1,4 +1,9 @@
 .filter {
+  height:100%;
+
+  .gc-select__multi-container {
+    height:100%;
+  }
   .gc-tooltip {
     right: 50px;
     bottom: 90%;

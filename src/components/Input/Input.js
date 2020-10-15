@@ -143,7 +143,8 @@ class Input extends Component {
       showTooltip
     } = this.state;
 
-    const inputClasses = classnames('gc-input', `gc-input--${type}`, {
+    const inputClasses = classnames(`gc-input--${type}`, {
+      'gc-input': !isFilter,
       filter: isFilter,
       'gc-input--invalid': showValidationMessage,
       'gc-input--disabled': disabled,
