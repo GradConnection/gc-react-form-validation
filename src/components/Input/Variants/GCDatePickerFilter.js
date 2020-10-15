@@ -99,28 +99,32 @@ class GCDatePickerFilter extends Component {
               }`}
               aria-label={`input ${name}`}
             >
-              <GCLabel
-                label={label}
-                htmlFor={name}
-                required={required}
-                activeShrink={!!value}
-              />
+              <div className="gc-filter__label-wrapper">
+                <GCLabel
+                  label={label}
+                  htmlFor={name}
+                  required={required}
+                  activeShrink={!!value}
+                />
+                {!!value && (
+                  <input
+                    tabIndex={-1}
+                    id={name}
+                    placeholder={placeholder}
+                    disabled={disabled}
+                    readOnly
+                    type="text"
+                    value={
+                      value
+                        ? moment(new Date(value)).format(this.state.format)
+                        : ''
+                    }
+                    className="gc-filter--value"
+                  />
+                )}
+              </div>
               <GCIcon kind="calendarIcon" extendedClassNames="input-icon" />
             </div>
-            {!!value && (
-              <input
-                tabIndex={-1}
-                id={name}
-                placeholder={placeholder}
-                disabled={disabled}
-                readOnly
-                type="text"
-                value={
-                  value ? moment(new Date(value)).format(this.state.format) : ''
-                }
-                className="gc-date-drop-down__value__text"
-              />
-            )}
           </div>
         )}
       </DatePicker>
