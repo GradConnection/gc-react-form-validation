@@ -86,7 +86,7 @@ class GCDatePickerFilter extends Component {
             dateInputPlaceholder={placeholder}
             disabledDate={from || to ? disableDates : null}
             timePicker={showTime ? timePickerElement : null}
-            style={{ top: '70px' }}
+            style={{ top: '68px' }}
           />
         }
       >

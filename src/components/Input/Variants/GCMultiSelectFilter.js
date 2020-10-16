@@ -359,7 +359,7 @@ class GCMultiSelectFilter extends Component {
               activeShrink={isActive}
             />
             {!isEmpty(value) && (
-              <div className="gc-filter-badge">{value.length}</div>
+              <div className="gc-filter--badge">{value.length}</div>
             )}
             {this.props.tooltip && (
               <div role="button" onClick={() => this.onInformationClick()}>
