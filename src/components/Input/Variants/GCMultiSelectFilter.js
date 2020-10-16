@@ -43,26 +43,6 @@ class GCMultiSelectFilter extends Component {
     this.selectContainer = React.createRef();
     this.clearButton = React.createRef();
     this.saveButton = React.createRef();
-
-    // this.onSearchInputChange = this.onSearchInputChange.bind(this);
-
-    this.handleWindowClick = this.handleWindowClick.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    // this.handleOnFocusEffect = this.handleOnFocusEffect.bind(this);
-
-    // this.onTagCrossBtnClick = this.onTagCrossBtnClick.bind(this);
-    // this.onInputClick = this.onInputClick.bind(this);
-    // this.onContainerMouseDown = this.onContainerMouseDown.bind(this);
-  }
-
-  componentDidMount() {
-    document.addEventListener('click', this.handleWindowClick);
-    document.addEventListener('keydown', this.handleKeyPress);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('click', this.handleWindowClick);
-    document.removeEventListener('keydown', this.handleKeyPress);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -80,21 +60,9 @@ class GCMultiSelectFilter extends Component {
     }
   }
 
-  handleWindowClick(e) {
-    console.log('handleWindowClick');
-    if (!this.select.current.contains(e.target) && this.state.isFocussed) {
-      this.setState({
-        ...this.stateReset,
-        ...this.searchReset,
-        index: 0,
-        options: this.props.options
-      });
-      this.props.handleInputValidation(this.props.value);
-    }
-  }
-
   handleKeyPress(e) {
     const { options, index, isActive, isFocussed } = this.state;
+    console.log('handleKeyPress event called', e);
     console.log('handleKeyPress called', e.keyCode);
     if (isActive && isFocussed) {
       if (e.keyCode === 13) {
@@ -111,10 +79,6 @@ class GCMultiSelectFilter extends Component {
         this.onUpKeyPress(e);
       } else if (e.keyCode === 40 && options.length - 1 > index) {
         this.onDownKeyPress(e);
-      } else if (e.keyCode === 9) {
-        // this.setState({
-        //   ...this.stateReset
-        // });
       }
     }
 
@@ -127,7 +91,6 @@ class GCMultiSelectFilter extends Component {
 
   activateDropDown() {
     console.log('activateDropDown 5');
-
     const activeState = {
       isActive: true,
       isFocussed: true
@@ -208,42 +171,29 @@ class GCMultiSelectFilter extends Component {
     this.props.handleInputChange(newValueArray);
   }
 
-  handleOnFocusEffect(e) {
+  handleOnFocusEffect() {
     console.log(' handleOnFocusEffect clicked me');
-    // this.input.current.focus();
     this.setState({
       isActive: true,
       isFocussed: true,
       ...this.searchActivate
     });
-
-    // if (e.target === this.textInput.current && this.input.current) {
-    //   this.input.current.focus();
-    // } else if (this.props.search) {
-    //   this.setState({
-    //     isActive: true,
-    //     isFocussed: true,
-    //     ...this.searchActivate
-    //   });
-    // } else {
-    //   this.setState({
-    //     isActive: true,
-    //     isFocussed: true
-    //   });
-    // }
   }
 
   handleOnBlurEffect(e) {
-    console.log('handleOnBlurEffect called3');
-    this.setState({
-      // isActive: false,
-      // isFocussed: false,
-      ...this.stateReset,
-      ...this.searchReset,
-      index: 0,
-      options: this.props.options
-    });
-    this.props.handleInputValidation(this.props.value);
+    console.log('handleOnBlurEffect called3', e);
+    if (e.currentTarget.contains(e.relatedTarget)) {
+      console.log('This is a child clicked');
+    } else {
+      console.log('This is NOT a child clicked');
+      this.setState({
+        ...this.stateReset,
+        ...this.searchReset,
+        index: 0,
+        options: this.props.options
+      });
+      this.props.handleInputValidation(this.props.value);
+    }
   }
 
   onSearchInputChange(e) {
@@ -284,7 +234,6 @@ class GCMultiSelectFilter extends Component {
     } else {
       this.setState({ isActive: true, isFocussed: true });
     }
-    // this.activateDropDown();
   }
 
   onOptionMouseDown(e, value) {
@@ -337,8 +286,37 @@ class GCMultiSelectFilter extends Component {
     ));
   }
 
-  onContainerMouseDown(e) {
+  onContainerMouseDown() {
     this.input.current.focus();
+  }
+
+  onClearClick() {
+    console.log('Cancel click');
+    this.setState({
+      // ...this.stateReset,
+      ...this.searchReset,
+      options: this.props.options
+    });
+    this.props.handleInputChange([]);
+    // this.props.handleInputValidation([]);
+  }
+
+  onSubmitClick() {
+    console.log('submit click');
+    this.setState({
+      ...this.stateReset
+    });
+    this.props.handleInputValidation(this.props.value);
+    console.log('submit click end2');
+  }
+
+  onInformationClick() {
+    console.log('onInformationClick click');
+    this.setState({
+      isInformationActive: !this.state.isInformationActive
+    });
+
+    console.log('onInformationClick click end2');
   }
 
   render() {
@@ -351,43 +329,12 @@ class GCMultiSelectFilter extends Component {
       placeholder
     } = this.state;
 
-    const onClearClick = () => {
-      console.log('Cancel click');
-      this.setState({
-        // ...this.stateReset,
-        ...this.searchReset,
-        options: this.props.options
-      });
-      this.props.handleInputChange([]);
-      // this.props.handleInputValidation([]);
-    };
-    const onSubmitClick = e => {
-      console.log('submit click');
-      this.setState({
-        ...this.stateReset
-      });
-      this.props.handleInputValidation(this.props.value);
-      console.log('submit click end2');
-    };
-
-    const onInformationClick = () => {
-      console.log('onInformationClick click');
-      this.setState({
-        isInformationActive: !this.state.isInformationActive
-      });
-
-      console.log('onInformationClick click end2');
-    };
-
     const selectClasses = classNames(
       'gc-input__el',
       'gc-input__el--no-padding',
       {
         'gc-input__el--active': isActive || isFocussed
       }
-      // {
-      //   'gc-input__el--inactive': !(isActive || isFocussed)
-      // }
     );
 
     const containerClasses = classNames('gc-select__list-container', {
@@ -412,43 +359,25 @@ class GCMultiSelectFilter extends Component {
       <div
         className="gc-select__multi-container"
         onFocus={() => this.handleOnFocusEffect()}
-        onClick={() => this.onInputClick()}
-        onMouseDown={() => this.onContainerMouseDown()}
+        onClick={e => this.onInputClick(e)}
+        // onMouseDown={() => this.onContainerMouseDown()}
+        onBlur={e => this.handleOnBlurEffect(e)}
+        onKeyDown={e => this.handleKeyPress(e)}
         ref={this.select}
         role="button"
         tabIndex={0}
-        // onBlur={() => this.handleOnBlurEffect()}
       >
-        <div
-          id={`gc-drop-down_${name}`}
-          className={selectClasses}
-          // ref={this.select}
-          // onMouseDown={this.onContainerMouseDown}
-        >
+        <div id={`gc-drop-down_${name}`} className={selectClasses}>
           <div
             id={`gc-input-multi_${name}`}
             ref={this.textInput}
             role="button"
             aria-haspopup="listbox"
             aria-label={`input ${name}`}
-            // className="gc-drop-down__value"
             className={`${
               isActive ? 'gc-drop-down__value--shrink' : 'gc-drop-down__value'
             }`}
-            // gc-drop-down__value--shrink
-            // onFocus={this.handleOnFocusEffect}
-            // onClick={this.onInputClick}
           >
-            {/* {isEmpty(value) && (
-              <input
-                id={name}
-                className="gc-drop-down__value__text gc-drop-down__value__text--input"
-                value=""
-                placeholder="test"
-                readOnly
-                // onBlur={this.handleOnBlurEffect}
-              />
-            )} */}
             <GCLabel
               label={label}
               htmlFor={name}
@@ -459,7 +388,7 @@ class GCMultiSelectFilter extends Component {
               <div className="gc-filter-badge">{value.length}</div>
             )}
             {this.props.tooltip && (
-              <div role="button" onClick={() => onInformationClick()}>
+              <div role="button" onClick={() => this.onInformationClick()}>
                 <GCIcon
                   kind="infoIcon"
                   extendedClassNames="gc-drop-down__info"
@@ -486,11 +415,8 @@ class GCMultiSelectFilter extends Component {
                 type="text"
                 value={this.state.searchTerm}
                 onChange={e => this.onSearchInputChange(e)}
-                // onFocus={this.handleOnFocusEffect}
-                // onBlur={this.handleOnBlurEffect}
                 placeholder={placeholder}
                 autoComplete={autoComplete}
-                // onkeydown={this.handleKeyDown}
               />
             )}
             {isActive && (
@@ -544,7 +470,7 @@ class GCMultiSelectFilter extends Component {
                     type="button"
                     ref={this.saveButton}
                     className="btn btn--primary gc-filter-primary-button"
-                    onClick={e => onSubmitClick(e)}
+                    onClick={e => this.onSubmitClick(e)}
                     aria-label="submit filter item"
                   >
                     Save
@@ -553,7 +479,7 @@ class GCMultiSelectFilter extends Component {
                     type="button"
                     ref={this.clearButton}
                     className="gc-tag__btn gc-btn--icon-sml underline"
-                    onClick={() => onClearClick()}
+                    onClick={() => this.onClearClick()}
                     aria-label="remove filter item"
                   >
                     Clear
@@ -579,8 +505,6 @@ GCMultiSelectFilter.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   handleInputChange: PropTypes.func.isRequired,
   handleInputValidation: PropTypes.func.isRequired,
-  selectAll: PropTypes.bool,
-  selectAllValue: PropTypes.array,
   autoComplete: PropTypes.string,
   label: PropTypes.string,
   tooltip: PropTypes.string,
@@ -588,7 +512,6 @@ GCMultiSelectFilter.propTypes = {
 };
 
 GCMultiSelectFilter.defaultProps = {
-  selectAll: false,
   autoComplete: 'off'
 };
 
