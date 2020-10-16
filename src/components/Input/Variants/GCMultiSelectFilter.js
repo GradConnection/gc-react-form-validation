@@ -12,12 +12,8 @@ class GCMultiSelectFilter extends Component {
   constructor(props) {
     super(props);
 
-    this.searchActivate = {
-      isSearchActive: true
-    };
     this.searchReset = {
       searchTerm: '',
-      isSearchActive: false,
       placeholder: props.placeholder
         ? props.placeholder
         : 'Start typing to search'
@@ -46,15 +42,15 @@ class GCMultiSelectFilter extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { isSearchActive, searchTerm, options } = this.state;
-    if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
-      if (searchTerm === '') {
-        this.setState({
-          options: this.props.options,
-          index: 0
-        });
-      }
-    }
+    const { searchTerm, options } = this.state;
+    // if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
+    //   if (searchTerm === '') {
+    //     this.setState({
+    //       options: this.props.options,
+    //       index: 0
+    //     });
+    //   }
+    // }
     if (prevState.isFocussed === false && this.state.isFocussed === true) {
       this.input.current.focus();
     }
@@ -82,26 +78,26 @@ class GCMultiSelectFilter extends Component {
       }
     }
 
-    if (!isActive && isFocussed) {
-      if (e.keyCode === 40 || e.keyCode === 13) {
-        this.activateDropDown();
-      }
-    }
+    // if (!isActive && isFocussed) {
+    //   if (e.keyCode === 40 || e.keyCode === 13) {
+    //     this.activateDropDown();
+    //   }
+    // }
   }
 
-  activateDropDown() {
-    console.log('activateDropDown 5');
-    const activeState = {
-      isActive: true,
-      isFocussed: true
-    };
+  // activateDropDown() {
+  //   console.log('activateDropDown 5');
+  //   const activeState = {
+  //     isActive: true,
+  //     isFocussed: true
+  //   };
 
-    if (this.props.search) {
-      activeState.isSearchActive = true;
-    }
+  //   if (this.props.search) {
+  //     activeState.isSearchActive = true;
+  //   }
 
-    this.setState(activeState);
-  }
+  //   this.setState(activeState);
+  // }
 
   onEnterKeyPress(e) {
     console.log('onEnterKeyPress');
@@ -175,8 +171,7 @@ class GCMultiSelectFilter extends Component {
     console.log(' handleOnFocusEffect clicked me');
     this.setState({
       isActive: true,
-      isFocussed: true,
-      ...this.searchActivate
+      isFocussed: true
     });
   }
 
@@ -215,25 +210,6 @@ class GCMultiSelectFilter extends Component {
     }
 
     this.setState(newState);
-  }
-
-  onInputClick(e) {
-    console.log('onInputClick 4');
-    e.preventDefault();
-    if (this.props.search) {
-      if (!this.state.isActive) {
-        this.setState({
-          isFocussed: true,
-          isActive: true
-        });
-      } else {
-        this.setState(this.searchActivate);
-      }
-    } else if (this.state.isActive) {
-      this.setState({ ...this.stateReset });
-    } else {
-      this.setState({ isActive: true, isFocussed: true });
-    }
   }
 
   onOptionMouseDown(e, value) {
@@ -352,15 +328,13 @@ class GCMultiSelectFilter extends Component {
         'gc-input__el': isEmpty(value)
       }
     );
-    console.log('this.props', this.props);
-    console.log('this.state', this.state);
+    // console.log('this.props', this.props);
+    // console.log('this.state', this.state);
 
     return (
       <div
         className="gc-select__multi-container"
         onFocus={() => this.handleOnFocusEffect()}
-        onClick={e => this.onInputClick(e)}
-        // onMouseDown={() => this.onContainerMouseDown()}
         onBlur={e => this.handleOnBlurEffect(e)}
         onKeyDown={e => this.handleKeyPress(e)}
         ref={this.select}

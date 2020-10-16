@@ -77,7 +77,7 @@ class GCSelectFilter extends Component {
   }
 
   handleWindowClick(e) {
-    console.log('handleWindowClick');
+    // console.log('handleWindowClick');
     if (!this.select.current.contains(e.target) && this.state.isFocussed) {
       this.setState({
         ...this.stateReset,
@@ -378,8 +378,8 @@ class GCSelectFilter extends Component {
         'gc-input__el': isEmpty(value)
       }
     );
-    console.log('this.props', this.props);
-    console.log('this.state', this.state);
+    // console.log('this.props', this.props);
+    // console.log('this.state', this.state);
 
     return (
       <div
