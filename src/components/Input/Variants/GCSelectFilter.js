@@ -232,6 +232,7 @@ class GCSelectFilter extends Component {
       // newValueArray = this.removeItemFromValueArray(newValue);
     } else {
       this.props.handleInputChange(newValue);
+      this.props.handleInputValidation(newValue);
       this.setState({ isActive: false, isFocussed: false });
       // newValueArray = this.addItemToValueArray(newValue);
     }
