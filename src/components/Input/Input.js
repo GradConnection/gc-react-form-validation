@@ -168,8 +168,7 @@ class Input extends Component {
             )}
 
             {description && <GCDescription text={description} />}
-
-            {tooltip && (
+            {tooltip && !isFilter && (
               <span
                 className="gc-btn--icon gc-tooltip__icon"
                 onClick={this.onTooltipIconClick}
@@ -221,7 +220,6 @@ class Input extends Component {
           {showValidationMessage && <GCErrorMessage text={validationMessage} />}
 
           {helperText && <GCHelperText text={helperText} />}
-
           {showTooltip && (
             <GCTooltip
               content={this.props.tooltip}
