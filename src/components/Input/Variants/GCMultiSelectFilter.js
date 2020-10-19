@@ -67,8 +67,9 @@ class GCMultiSelectFilter extends Component {
         if (
           e.target !== this.clearButton.current &&
           e.target !== this.saveButton.current &&
-          (!this.infoIcon.current || !this.infoIcon.current.contains(e.target)) &&
-          !e.target.classList.contains('gc-tag__btn') 
+          (!this.infoIcon.current ||
+            !this.infoIcon.current.contains(e.target)) &&
+          !e.target.classList.contains('gc-tag__btn')
         ) {
           this.onEnterKeyPress(e);
         }
@@ -78,27 +79,7 @@ class GCMultiSelectFilter extends Component {
         this.onDownKeyPress(e);
       }
     }
-
-    // if (!isActive && isFocussed) {
-    //   if (e.keyCode === 40 || e.keyCode === 13) {
-    //     this.activateDropDown();
-    //   }
-    // }
   }
-
-  // activateDropDown() {
-  //   console.log('activateDropDown 5');
-  //   const activeState = {
-  //     isActive: true,
-  //     isFocussed: true
-  //   };
-
-  //   if (this.props.search) {
-  //     activeState.isSearchActive = true;
-  //   }
-
-  //   this.setState(activeState);
-  // }
 
   onEnterKeyPress(e) {
     console.log('onEnterKeyPress');
@@ -171,8 +152,8 @@ class GCMultiSelectFilter extends Component {
   handleOnFocusEffect() {
     console.log(' handleOnFocusEffect clicked me');
     this.setState({
-      isActive: true,
-    });    
+      isActive: true
+    });
   }
 
   handleOnBlurEffect(e) {
@@ -297,18 +278,13 @@ class GCMultiSelectFilter extends Component {
 
   render() {
     const { value, name, autoComplete, label, required } = this.props;
-    const {
-      isActive,
-      isInformationActive,
-      options,
-      placeholder
-    } = this.state;
+    const { isActive, isInformationActive, options, placeholder } = this.state;
 
     const selectClasses = classNames(
       'gc-input__el',
       'gc-input__el--no-padding',
       {
-        'gc-input__el--active': isActive 
+        'gc-input__el--active': isActive
       }
     );
 
@@ -361,17 +337,21 @@ class GCMultiSelectFilter extends Component {
               <div className="gc-filter--badge">{value.length}</div>
             )}
             {this.props.tooltip && (
-              <div 
-              role="button" 
-              ref={this.infoIcon}
-              onKeyDown={(e) => e.key === "Enter" && this.onInformationClick()} 
-              onClick={() => this.onInformationClick()}
+              <div
+                role="button"
+                ref={this.infoIcon}
+                onKeyDown={e => e.key === 'Enter' && this.onInformationClick()}
+                onClick={() => this.onInformationClick()}
               >
                 <GCIcon
                   kind="infoIcon"
                   extendedClassNames="gc-drop-down__info"
                   tabIndex={2}
-                  onKeyDown={(e) => e.key === "Tab" ? (e.preventDefault(),this.saveButton.current.focus()): ""}
+                  onKeyDown={e =>
+                    e.key === 'Tab'
+                      ? (e.preventDefault(), this.saveButton.current.focus())
+                      : ''
+                  }
                 />
                 {isActive && isInformationActive && this.props.tooltip && (
                   <GCTooltip
@@ -397,7 +377,7 @@ class GCMultiSelectFilter extends Component {
                 onChange={e => this.onSearchInputChange(e)}
                 placeholder={placeholder}
                 autoComplete={autoComplete}
-                tabIndex={this.props.tooltip? 1 : 0}
+                tabIndex={this.props.tooltip ? 1 : 0}
               />
             )}
             {isActive && (
