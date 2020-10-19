@@ -29,12 +29,12 @@
     .gc-drop-down__value--shrink {
       display: flex;
       align-items: center;
-      padding: 20px 20px 0 20px;
+      margin-bottom: 4px;
+      padding: 18px 20px 0 20px;
       font-size: 1.2rem;
     }
     
     .gc-filter--badge{
-      margin-top: -2px;
       margin-left: 10px;
       padding: 2px 5px;
       font-size: 1rem;
@@ -51,7 +51,6 @@
       width: 95%;
       overflow: hidden;
       text-overflow: ellipsis;
-      // For date value
       padding: 5px 0 0 0;
       border: none;
     }
@@ -96,7 +95,7 @@
     .gc-select__list-container{
       position: relative;
       .gc-select__input {
-        padding: 3px 20px 12px 20px;;
+        padding: 0 20px 10px 20px;;
         border: none;
       }
     }

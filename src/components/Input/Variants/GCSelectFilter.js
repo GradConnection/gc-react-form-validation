@@ -12,12 +12,8 @@ class GCSelectFilter extends Component {
   constructor(props) {
     super(props);
 
-    this.searchActivate = {
-      isSearchActive: true
-    };
     this.searchReset = {
       searchTerm: '',
-      isSearchActive: false,
       placeholder: props.placeholder
         ? props.placeholder
         : 'Start typing to search'
@@ -25,7 +21,8 @@ class GCSelectFilter extends Component {
     this.stateReset = {
       isActive: false,
       isFocussed: false,
-      isInformationActive: false
+      isInformationActive: false,
+      index: 0
     };
     this.state = {
       index: 0,
@@ -40,100 +37,75 @@ class GCSelectFilter extends Component {
     this.optionList = React.createRef();
     this.listContainer = React.createRef();
     this.selectContainer = React.createRef();
-
-    this.onSearchInputChange = this.onSearchInputChange.bind(this);
-
-    this.handleWindowClick = this.handleWindowClick.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.handleOnFocusEffect = this.handleOnFocusEffect.bind(this);
-
-    this.onTagCrossBtnClick = this.onTagCrossBtnClick.bind(this);
-    this.onInputClick = this.onInputClick.bind(this);
-    this.onContainerMouseDown = this.onContainerMouseDown.bind(this);
-  }
-
-  componentDidMount() {
-    document.addEventListener('click', this.handleWindowClick);
-    document.addEventListener('keydown', this.handleKeyPress);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('click', this.handleWindowClick);
-    document.removeEventListener('keydown', this.handleKeyPress);
+    this.clearButton = React.createRef();
+    this.saveButton = React.createRef();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { isSearchActive, searchTerm, options } = this.state;
-
-    if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
-      this.input.current.focus(); // Focus search input when clicked
-      if (searchTerm === '') {
-        this.setState({
-          options: this.props.options,
-          index: 0
-        });
-      }
-    }
-  }
-
-  handleWindowClick(e) {
-    // console.log('handleWindowClick');
-    if (!this.select.current.contains(e.target) && this.state.isFocussed) {
-      this.setState({
-        ...this.stateReset,
-        ...this.searchReset,
-        index: 0,
-        options: this.props.options
-      });
-      this.props.handleInputValidation(this.props.value);
+    const { searchTerm, options } = this.state;
+    // if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
+    //   if (searchTerm === '') {
+    //     this.setState({
+    //       options: this.props.options,
+    //       index: 0
+    //     });
+    //   }
+    // }
+    if (prevState.isFocussed === false && this.state.isFocussed === true) {
+      this.input.current.focus();
     }
   }
 
   handleKeyPress(e) {
     const { options, index, isActive, isFocussed } = this.state;
+    console.log('handleKeyPress event called', e);
+    console.log('handleKeyPress called', e.keyCode);
     if (isActive && isFocussed) {
       if (e.keyCode === 13) {
-        this.onEnterKeyPress(e);
+        // this.clearButton
+        console.log('e.target clicked ', e.target);
+        if (
+          e.target !== this.clearButton.current &&
+          e.target !== this.saveButton.current &&
+          !e.target.classList.contains('gc-tag__btn')
+        ) {
+          this.onEnterKeyPress(e);
+        }
       } else if (e.keyCode === 38 && index > -1) {
         this.onUpKeyPress(e);
       } else if (e.keyCode === 40 && options.length - 1 > index) {
         this.onDownKeyPress(e);
-      } else if (e.keyCode === 9) {
-        this.setState({
-          ...this.stateReset
-        });
       }
     }
 
-    if (!isActive && isFocussed) {
-      if (e.keyCode === 40 || e.keyCode === 13) {
-        this.activateDropDown();
-      }
-    }
+    // if (!isActive && isFocussed) {
+    //   if (e.keyCode === 40 || e.keyCode === 13) {
+    //     this.activateDropDown();
+    //   }
+    // }
   }
 
-  activateDropDown() {
-    console.log('activateDropDown 5');
+  // activateDropDown() {
+  //   console.log('activateDropDown 5');
+  //   const activeState = {
+  //     isActive: true,
+  //     isFocussed: true
+  //   };
 
-    const activeState = {
-      isActive: true,
-      isFocussed: true
-    };
+  //   if (this.props.search) {
+  //     activeState.isSearchActive = true;
+  //   }
 
-    if (this.props.search) {
-      activeState.isSearchActive = true;
-    }
-
-    this.setState(activeState);
-  }
+  //   this.setState(activeState);
+  // }
 
   onEnterKeyPress(e) {
+    console.log('onEnterKeyPress');
     e.preventDefault();
     const { options, index } = this.state;
 
     this.setState(
       {
-        isActive: false,
         ...this.searchReset,
         options: this.props.options
       },
@@ -189,52 +161,38 @@ class GCSelectFilter extends Component {
     });
   }
 
-  onTagCrossBtnClick(e) {
+  onTagCrossBtnClick(e, value) {
     e.preventDefault();
-    this.setState({
-      ...this.stateReset,
-      ...this.searchReset,
-      options: this.props.options
-    });
-    this.props.handleInputChange([]);
-    // this.props.handleInputValidation([]);
+    const newValueArray = this.removeItemFromValueArray(value);
+    this.props.handleInputChange(newValueArray);
   }
 
-  handleOnFocusEffect(e) {
+  handleOnFocusEffect() {
     console.log(' handleOnFocusEffect clicked me');
-    this.input.current.focus();
     this.setState({
       isActive: true,
-      isFocussed: true,
-      ...this.searchActivate
+      isFocussed: true
     });
-
-    // if (e.target === this.textInput.current && this.input.current) {
-    //   this.input.current.focus();
-    // } else if (this.props.search) {
-    //   this.setState({
-    //     isActive: true,
-    //     isFocussed: true,
-    //     ...this.searchActivate
-    //   });
-    // } else {
-    //   this.setState({
-    //     isActive: true,
-    //     isFocussed: true
-    //   });
-    // }
   }
 
-  // handleOnBlurEffect(e) {
-  //   console.log('handleOnBlurEffect called3');
-  //   this.setState({
-  //     isActive: false,
-  //     isFocussed: false
-  //   });
-  //   // this.props.handleInputValidation(this.props.value);
-  // }
+  handleOnBlurEffect(e) {
+    console.log('handleOnBlurEffect called3', e);
+    if (e.currentTarget.contains(e.relatedTarget)) {
+      console.log('This is a child clicked');
+    } else {
+      console.log('This is NOT a child clicked');
+      this.setState({
+        ...this.stateReset,
+        ...this.searchReset,
+        index: 0,
+        options: this.props.options
+      });
+      this.props.handleInputValidation(this.props.value);
+    }
+  }
 
   onSearchInputChange(e) {
+    console.log('onSearchInputChange 4');
     const searchTerm = e.target.value;
     const { options } = this.props;
 
@@ -252,30 +210,6 @@ class GCSelectFilter extends Component {
     }
 
     this.setState(newState);
-  }
-
-  onInputClick(e) {
-    console.log('onInputClick 4');
-    e.preventDefault();
-    if (this.props.search) {
-      if (!this.state.isActive) {
-        this.setState({
-          isFocussed: true,
-          isActive: true
-        });
-      } else {
-        this.setState({
-          isFocussed: true,
-          isActive: true,
-          ...this.searchActivate
-        });
-      }
-    } else if (this.state.isActive) {
-      this.setState({ ...this.stateReset });
-    } else {
-      this.setState({ isActive: true, isFocussed: true });
-    }
-    // this.activateDropDown();
   }
 
   onOptionMouseDown(e, value) {
@@ -322,18 +256,50 @@ class GCSelectFilter extends Component {
 
   renderTags(valueArray) {
     return toArray(valueArray).map(value => (
-      <GCTag key={value} onCrossBtnClick={e => this.onTagCrossBtnClick(e)}>
+      <GCTag
+        key={value}
+        onCrossBtnClick={e => this.onTagCrossBtnClick(e, value)}
+      >
         {getLabel(value, this.props.options)}
       </GCTag>
     ));
   }
 
-  onContainerMouseDown(e) {
+  onContainerMouseDown() {
     this.input.current.focus();
   }
 
+  onClearClick() {
+    console.log('Cancel click');
+    this.setState({
+      // ...this.stateReset,
+      ...this.searchReset,
+      options: this.props.options
+    });
+    this.props.handleInputChange([]);
+    // this.props.handleInputValidation([]);
+  }
+
+  onSubmitClick() {
+    console.log('submit click');
+    this.setState({
+      ...this.stateReset
+    });
+    this.props.handleInputValidation(this.props.value);
+    console.log('submit click end2');
+  }
+
+  onInformationClick() {
+    console.log('onInformationClick click');
+    this.setState({
+      isInformationActive: !this.state.isInformationActive
+    });
+
+    console.log('onInformationClick click end2');
+  }
+
   render() {
-    const { value, name, autoComplete, label, required, disabled } = this.props;
+    const { value, name, autoComplete, label, required } = this.props;
     const {
       isActive,
       isFocussed,
@@ -342,25 +308,12 @@ class GCSelectFilter extends Component {
       placeholder
     } = this.state;
 
-    const onInformationClick = () => {
-      console.log('onInformationClick click');
-      this.setState({
-        isInformationActive: !this.state.isInformationActive
-      });
-
-      console.log('onInformationClick click end2');
-    };
-
     const selectClasses = classNames(
       'gc-input__el',
       'gc-input__el--no-padding',
-      'gc-select__multi-container',
       {
         'gc-input__el--active': isActive || isFocussed
       }
-      // {
-      //   'gc-input__el--inactive': !(isActive || isFocussed)
-      // }
     );
 
     const containerClasses = classNames('gc-select__list-container', {
@@ -383,122 +336,113 @@ class GCSelectFilter extends Component {
 
     return (
       <div
-        id={`gc-drop-down_${name}`}
-        className={selectClasses}
-        // className="gc-select__multi-container"
-        onFocus={!disabled && this.handleOnFocusEffect}
-        onClick={!disabled && this.onInputClick}
-        role="button"
-        // onMouseDown={this.onContainerMouseDown}
+        className="gc-select__multi-container"
+        onFocus={() => this.handleOnFocusEffect()}
+        onBlur={e => this.handleOnBlurEffect(e)}
+        onKeyDown={e => this.handleKeyPress(e)}
         ref={this.select}
-        // onBlur={this.handleOnBlurEffect}
+        role="button"
+        tabIndex={0}
       >
-        <div
-          id={`gc-input-multi_${name}`}
-          ref={this.textInput}
-          role="button"
-          aria-haspopup="listbox"
-          aria-label={`input ${name}`}
-          // className="gc-drop-down__value"
-          className={`${
-            isActive || !isEmpty(value)
-              ? 'gc-drop-down__value--shrink'
-              : 'gc-drop-down__value'
-          }`}
-          // onFocus={this.handleOnFocusEffect}
-          // onClick={this.onInputClick}
-        >
-          <div className="gc-filter__label-wrapper">
+        <div id={`gc-drop-down_${name}`} className={selectClasses}>
+          <div
+            id={`gc-input-multi_${name}`}
+            ref={this.textInput}
+            role="button"
+            aria-haspopup="listbox"
+            aria-label={`input ${name}`}
+            className={`${
+              isActive ? 'gc-drop-down__value--shrink' : 'gc-drop-down__value'
+            }`}
+          >
             <GCLabel
               label={label}
               htmlFor={name}
               required={required}
-              activeShrink={isActive || !isEmpty(value)}
+              activeShrink={isActive}
             />
-            {!isEmpty(value) && <span className="gc-filter--badge">1</span>}
-            {!isEmpty(value) && !isActive && (
-              <div className="gc-filter--value">
-                {options.find(opt => value === opt.value)?.label}
+            {!isEmpty(value) && <div className="gc-filter--badge">1</div>}
+            {this.props.tooltip && (
+              <div role="button" onClick={() => this.onInformationClick()}>
+                <GCIcon
+                  kind="infoIcon"
+                  extendedClassNames="gc-drop-down__info"
+                />
+                {isActive && isInformationActive && this.props.tooltip && (
+                  <GCTooltip
+                    content={this.props.tooltip}
+                    name={`${name}tooltip`}
+                    active={isInformationActive}
+                    toggleTooltip={() => this.onInformationClick()}
+                  />
+                )}
+              </div>
+            )}
+            <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" />
+          </div>
+
+          <div className={containerClasses} ref={this.listContainer}>
+            {this.props.search && isFocussed && (
+              <input
+                id={name}
+                ref={this.input}
+                className={listInputClasses}
+                type="text"
+                value={this.state.searchTerm}
+                onChange={e => this.onSearchInputChange(e)}
+                placeholder={placeholder}
+                autoComplete={autoComplete}
+              />
+            )}
+            {isActive && (
+              <div className="gc-drop-down__el gc-select__list">
+                <span
+                  className="gc-drop-down__value__text gc-drop-down__value__text--input"
+                  ref={this.selectContainer}
+                >
+                  Selected: {this.renderTags(value)}
+                </span>
+                <div className="dotted" />
+                <ul
+                  role="listbox"
+                  ref={this.optionList}
+                  className="gc-drop-down__el filter-drop-down"
+                >
+                  {options.length > 0 ? (
+                    options.map((opt, i) => (
+                      <li
+                        role="option"
+                        id={`${this.props.name}_option_${i}`}
+                        key={`${this.props.name}_option_${i}`}
+                        className={this.computeItemClassList(
+                          value,
+                          opt.value,
+                          i
+                        )}
+                        onMouseDown={e => this.onOptionMouseDown(e, opt.value)}
+                      >
+                        {opt.label}
+                        {value.includes(opt.value) && (
+                          <GCIcon
+                            kind="tickIcon"
+                            extendedClassNames="gc-filter-icon"
+                          />
+                        )}
+                      </li>
+                    ))
+                  ) : (
+                    <li
+                      key={`$noOpt_select_${name}`}
+                      className="gc-select__list-item gc-select__list-item--no-opt"
+                    >
+                      <i>There are no available options</i>
+                    </li>
+                  )}
+                </ul>
               </div>
             )}
           </div>
-          {this.props.tooltip && (
-            <div role="button" onClick={() => onInformationClick()}>
-              <GCIcon kind="infoIcon" extendedClassNames="gc-drop-down__info" />
-              {isActive && isInformationActive && this.props.tooltip && (
-                <GCTooltip
-                  content={this.props.tooltip}
-                  name={`${name}tooltip`}
-                  active={isInformationActive}
-                  toggleTooltip={() => this.onInformationClick()}
-                />
-              )}
-            </div>
-          )}
-          <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" />
         </div>
-
-        <div className={containerClasses} ref={this.listContainer}>
-          {this.props.search && isActive && (
-            <input
-              id={name}
-              ref={this.input}
-              className={listInputClasses}
-              type="text"
-              value={this.state.searchTerm}
-              onChange={this.onSearchInputChange}
-              onFocus={this.handleOnFocusEffect}
-              // onBlur={this.handleOnBlurEffect}
-              placeholder={placeholder}
-              autoComplete={autoComplete}
-              // onkeydown={this.handleKeyDown}
-            />
-          )}
-          {isActive && (
-            <div className="gc-drop-down__el gc-select__list">
-              <span
-                className="gc-drop-down__value__text gc-drop-down__value__text--input"
-                ref={this.selectContainer}
-              >
-                Selected: {this.renderTags(value)}
-              </span>
-              <div className="dotted" />
-              <ul
-                role="listbox"
-                ref={this.optionList}
-                className="filter-drop-down"
-              >
-                {options.length > 0 ? (
-                  options.map((opt, i) => (
-                    <li
-                      role="option"
-                      id={`${this.props.name}_option_${i}`}
-                      key={`${this.props.name}_option_${i}`}
-                      className={this.computeItemClassList(value, opt.value, i)}
-                      onMouseDown={e => this.onOptionMouseDown(e, opt.value)}
-                    >
-                      {opt.label}
-                      {value.includes(opt.value) && (
-                        <GCIcon
-                          kind="tickIcon"
-                          extendedClassNames="gc-filter-icon"
-                        />
-                      )}
-                    </li>
-                  ))
-                ) : (
-                  <li
-                    key={`$noOpt_select_${name}`}
-                    className="gc-select__list-item gc-select__list-item--no-opt"
-                  >
-                    <i>There are no available options</i>
-                  </li>
-                )}
-              </ul>
-            </div>
-          )}
-        </div>
-        {/* </div> */}
       </div>
     );
   }
@@ -515,17 +459,13 @@ GCSelectFilter.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   handleInputChange: PropTypes.func.isRequired,
   handleInputValidation: PropTypes.func.isRequired,
-  selectAll: PropTypes.bool,
-  selectAllValue: PropTypes.array,
   autoComplete: PropTypes.string,
   label: PropTypes.string,
   tooltip: PropTypes.string,
-  required: PropTypes.bool,
-  disabled: PropTypes.bool
+  required: PropTypes.bool
 };
 
 GCSelectFilter.defaultProps = {
-  selectAll: false,
   autoComplete: 'off'
 };
 
