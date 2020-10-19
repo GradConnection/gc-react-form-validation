@@ -13,25 +13,27 @@
     border: none;
     display: inline-block;
     padding: 0px;
-    // padding-left: 22px;
-    //.gc-input__el .gc-drop-down__value
+
     .gc-drop-down__el {
       padding: 1em;
       background-color: white;
-      // margin-top: 5px;
     }
+
     .gc-drop-down__value {
       display: flex;
       justify-content: normal; 
       padding-top: 25px;
       padding-left: 20px;
+      padding-bottom: 25px;
     }
+
     .gc-drop-down__value--shrink {
       display: flex;
       align-items: center;
       margin-bottom: 4px;
       padding: 18px 20px 0 20px;
       font-size: 1.2rem;
+      cursor: pointer;
     }
     
     .gc-filter--badge{
@@ -65,33 +67,27 @@
       max-height: 300px;
       overflow: auto;
     }  
-    // gc-drop-down__el gc-select__list
-    .gc-select__list {  
-      // padding-left: 20px;
+
+    .gc-select__list {
       border: solid 1px $gc-form-light-grey;
       box-shadow: 0.3em 0.3em 0.8em rgba(41, 43, 45, 0.2);
       max-height: none;
       overflow-y: hidden;
-      // .gc-input--select .gc-input__el .gc-select__list-item.gc-select__list-item--hovered, .gc-input--select .gc-input__el .gc-select__list-item:hover
-        /* margin-right: -10px; */
-        // .gc-input--select .gc-input__el .gc-select__list-item:hover
+
       .gc-select__list-item {
         border-bottom: none;
         padding-left: 10px;
         padding-right: 10px;
+        
+        &:hover,
         &.gc-select__list-item--hovered {
           padding-left: 20px;
           padding-right: 20px;
           background-color: mix($gc-form-light-grey, white, 50%);
         }
       }
-      .gc-select__list-item:hover {
-        // margin-right: 0px;
-        padding-left: 20px;
-        padding-right: 20px;
-        background-color: mix($gc-form-light-grey, white, 50%);
-      }
     }
+
     .gc-select__list-container{
       position: relative;
       .gc-select__input {
@@ -123,11 +119,12 @@
     }
   }
   
-  .gc-label{
+  .gc-label {
     margin:0;
-    // padding: 25px 20px;
     display: inline-block;
+    cursor: pointer;
   } 
+
   .dotted{
     padding-top: 8px;
     margin-bottom: 8px;
@@ -141,7 +138,6 @@
     margin-left: 15px;
   }
   .gc-filter-icon{
-    // display: inline-block;
     float: right;
     svg {
       width: 1.5rem; 

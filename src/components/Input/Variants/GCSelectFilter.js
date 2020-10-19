@@ -161,10 +161,9 @@ class GCSelectFilter extends Component {
     });
   }
 
-  onTagCrossBtnClick(e, value) {
+  onTagCrossBtnClick(e) {
     e.preventDefault();
-    const newValueArray = this.removeItemFromValueArray(value);
-    this.props.handleInputChange(newValueArray);
+    this.props.handleInputChange();
   }
 
   handleOnFocusEffect() {
@@ -233,6 +232,7 @@ class GCSelectFilter extends Component {
       // newValueArray = this.removeItemFromValueArray(newValue);
     } else {
       this.props.handleInputChange(newValue);
+      this.setState({ isActive: false, isFocussed: false });
       // newValueArray = this.addItemToValueArray(newValue);
     }
     // this.setState({ index: 0 });
@@ -260,10 +260,7 @@ class GCSelectFilter extends Component {
 
   renderTags(valueArray) {
     return toArray(valueArray).map(value => (
-      <GCTag
-        key={value}
-        onCrossBtnClick={e => this.onTagCrossBtnClick(e, value)}
-      >
+      <GCTag key={value} onCrossBtnClick={e => this.onTagCrossBtnClick(e)}>
         {getLabel(value, this.props.options)}
       </GCTag>
     ));
@@ -280,7 +277,7 @@ class GCSelectFilter extends Component {
       ...this.searchReset,
       options: this.props.options
     });
-    this.props.handleInputChange([]);
+    this.props.handleInputChange();
     // this.props.handleInputValidation([]);
   }
 
