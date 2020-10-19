@@ -154,9 +154,16 @@ input.gc-input__el,
   background-color: lighten($gc-form-red, 40%);
 }
 
-.gc-input.gc-input--disabled {
+.gc-input--disabled {
   border-color: $gc-form-light-grey;
   color: $gc-form-med-grey;
+
+  .gc-input__el {
+    .gc-label,
+    .gc-drop-down__value {
+     cursor: default;
+    }
+  }
 
   .gc-input__el,
   .gc-input__el::placeholder,
