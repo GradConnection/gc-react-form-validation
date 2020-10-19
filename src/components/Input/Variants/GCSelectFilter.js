@@ -225,12 +225,14 @@ class GCSelectFilter extends Component {
     const { value } = this.props;
 
     // let newValueArray = [];
-    if (value === newValue) {
-      this.props.handleInputChange([]);
+    console.log('handleInputChange value', value);
+    console.log('newValue', newValue);
+    if (value === newValue || value === [newValue]) {
+      this.props.handleInputChange();
       // // if (value.includes(newValue)) {
       // newValueArray = this.removeItemFromValueArray(newValue);
     } else {
-      this.props.handleInputChange([newValue]);
+      this.props.handleInputChange(newValue);
       // newValueArray = this.addItemToValueArray(newValue);
     }
     // this.setState({ index: 0 });
@@ -248,8 +250,10 @@ class GCSelectFilter extends Component {
   }
 
   computeItemClassList(selectV, itemV, index) {
+    console.log('computeItemClassList selectV', selectV);
+    console.log('computeItemClassList itemV', itemV);
     return classNames('gc-select__list-item', {
-      'gc-select__list-item--selected': selectV.includes(itemV),
+      'gc-select__list-item--selected': selectV === itemV,
       'gc-select__list-item--hovered': this.state.index === index
     });
   }
@@ -422,7 +426,7 @@ class GCSelectFilter extends Component {
                         onMouseDown={e => this.onOptionMouseDown(e, opt.value)}
                       >
                         {opt.label}
-                        {value.includes(opt.value) && (
+                        {value === opt.value && (
                           <GCIcon
                             kind="tickIcon"
                             extendedClassNames="gc-filter-icon"
