@@ -288,7 +288,7 @@ class GCSelectFilter extends Component {
         onKeyDown={e => !disabled && this.handleKeyPress(e)}
         ref={this.select}
         role="button"
-        tabIndex={0}
+        tabIndex={disabled ? "-1" : "0"}
       >
         <div id={`gc-drop-down_${name}`} className={selectClasses}>
           <div
