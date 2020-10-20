@@ -17,6 +17,12 @@ const GCRadio = ({
     }
   };
 
+  const handleKeyPress = (e,newValue) => {
+      if(e.key === "Enter"){
+        onListItemClick(newValue)
+      }
+  }
+
   return (
     <ul className="gc-input__el gc-input--list">
       {options.map((opt, i) => (
@@ -37,7 +43,7 @@ const GCRadio = ({
             checked={value === opt.value}
             onChange={e => e.preventDefault()}
           />
-          <span className="gc-input__inline-icon gc-radio__icon" />
+          <span className="gc-input__inline-icon gc-radio__icon" tabIndex="0" onKeyPress={(e) => handleKeyPress(e, opt.value)}/>
           <label className="gc-input__inline-label">{opt.label}</label>
         </li>
       ))}
