@@ -58,12 +58,8 @@ class GCSelectFilter extends Component {
 
   handleKeyPress(e) {
     const { options, index, isActive } = this.state;
-    console.log('handleKeyPress event called', e);
-    console.log('handleKeyPress called', e.keyCode);
     if (isActive) {
       if (e.keyCode === 13) {
-        // this.clearButton
-        console.log('e.target clicked ', e.target);
         if (
           e.target !== this.clearButton.current &&
           e.target !== this.saveButton.current &&
@@ -175,11 +171,8 @@ class GCSelectFilter extends Component {
   }
 
   handleOnBlurEffect(e) {
-    console.log('handleOnBlurEffect called3', e);
-    if (e.currentTarget.contains(e.relatedTarget)) {
-      console.log('This is a child clicked');
-    } else {
-      console.log('This is NOT a child clicked');
+    // Only blur if click away is not on a child element
+    if (!e.currentTarget.contains(e.relatedTarget)) {
       this.setState({
         ...this.stateReset,
         ...this.searchReset,
@@ -191,7 +184,6 @@ class GCSelectFilter extends Component {
   }
 
   onSearchInputChange(e) {
-    console.log('onSearchInputChange 4');
     const searchTerm = e.target.value;
     const { options } = this.props;
 
@@ -223,18 +215,12 @@ class GCSelectFilter extends Component {
   handleInputChange(newValue) {
     const { value } = this.props;
 
-    // let newValueArray = [];
-    console.log('handleInputChange value', value);
-    console.log('newValue', newValue);
     if (value === newValue || value === [newValue]) {
       this.props.handleInputChange();
-      // // if (value.includes(newValue)) {
-      // newValueArray = this.removeItemFromValueArray(newValue);
     } else {
       this.props.handleInputChange(newValue);
       this.props.handleInputValidation(newValue);
       this.setState({ isActive: false });
-      // newValueArray = this.addItemToValueArray(newValue);
     }
     // this.setState({ index: 0 });
     // this.props.handleInputChange(newValueArray);
@@ -251,8 +237,6 @@ class GCSelectFilter extends Component {
   }
 
   computeItemClassList(selectV, itemV, index) {
-    console.log('computeItemClassList selectV', selectV);
-    console.log('computeItemClassList itemV', itemV);
     return classNames('gc-select__list-item', {
       'gc-select__list-item--selected': selectV === itemV,
       'gc-select__list-item--hovered': this.state.index === index
@@ -267,37 +251,10 @@ class GCSelectFilter extends Component {
     ));
   }
 
-  onContainerMouseDown() {
-    this.input.current.focus();
-  }
-
-  onClearClick() {
-    console.log('Cancel click');
-    this.setState({
-      // ...this.stateReset,
-      ...this.searchReset,
-      options: this.props.options
-    });
-    this.props.handleInputChange();
-    // this.props.handleInputValidation([]);
-  }
-
-  onSubmitClick() {
-    console.log('submit click');
-    this.setState({
-      ...this.stateReset
-    });
-    this.props.handleInputValidation(this.props.value);
-    console.log('submit click end2');
-  }
-
   onInformationClick() {
-    console.log('onInformationClick click');
     this.setState({
       isInformationActive: !this.state.isInformationActive
     });
-
-    console.log('onInformationClick click end2');
   }
 
   render() {
@@ -327,12 +284,10 @@ class GCSelectFilter extends Component {
         'gc-input__el': isEmpty(value)
       }
     );
-    // console.log('this.props', this.props);
-    // console.log('this.state', this.state);
 
     return (
       <div
-        className="gc-select__multi-container"
+        className="gc-select__single-container"
         onFocus={() => this.handleOnFocusEffect()}
         onBlur={e => this.handleOnBlurEffect(e)}
         onKeyDown={e => this.handleKeyPress(e)}
@@ -348,16 +303,17 @@ class GCSelectFilter extends Component {
             aria-haspopup="listbox"
             aria-label={`input ${name}`}
             className={`${
-              isActive ? 'gc-drop-down__value--shrink' : 'gc-drop-down__value'
+              !isEmpty(value) || isActive ? 'gc-drop-down__value--shrink' : 'gc-drop-down__value'
             }`}
           >
             <GCLabel
               label={label}
               htmlFor={name}
               required={required}
-              activeShrink={isActive}
+              activeShrink={!isEmpty(value) || isActive}
             />
             {!isEmpty(value) && <div className="gc-filter--badge">1</div>}
+            {(!isEmpty(value) && !isActive) && <div className="gc-filter--value">{options.find(opt => value === opt.value)?.label}</div>}
             {this.props.tooltip && (
               <div
                 role="button"
