@@ -42,9 +42,12 @@
       padding: 15px 20px 0 20px;
       font-size: 1.2rem;
       cursor: pointer;
+      .gc-filter--badge {
+        margin-bottom: -4px;
+      }
     }
     
-    .gc-filter--badge{
+    .gc-filter--badge {
       margin-left: 10px;
       padding: 2px 5px;
       font-size: 1rem;
@@ -100,14 +103,17 @@
     }
 
     .gc-drop-down__caret{
+      position: absolute;
       z-index: 2;
+      top: calc(50% - 10px);
       right: 20px;
-      position: absolute;
     }
+
     .gc-drop-down__info{
-      z-index: 2;
-      right: 40px;
       position: absolute;
+      z-index: 2;
+      top: calc(50% - 10px);
+      right: 40px;
     }
     .gc-filter__dropdown__controls{
       display: flex;
