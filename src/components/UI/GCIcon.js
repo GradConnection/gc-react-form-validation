@@ -234,16 +234,37 @@ class GCIcon extends React.Component {
             </g>
           </svg>
         );
+      case 'tickIcon':
+        return (
+          <svg
+            id="tick"
+            height={height || size}
+            width={width || size}
+            viewBox="0 0 50 50"
+            aria-labelledby={iconTitle}
+            className={this.props.extendedClassName}
+          >
+            <title id={iconTitle}>{iconTitle}</title>
+            <g id="tick">
+              <path
+                fill={mainFill}
+                d="M22.416,45c-0.322,0-0.637-0.105-0.896-0.302L0.575,28.694c-0.644-0.492-0.765-1.411-0.271-2.052  c0.495-0.641,1.417-0.761,2.062-0.27l19.728,15.073L47.325,5.624c0.466-0.662,1.383-0.823,2.048-0.359  c0.665,0.464,0.826,1.377,0.36,2.038L23.621,44.376c-0.23,0.327-0.585,0.546-0.981,0.606C22.565,44.994,22.491,45,22.416,45z"
+              />
+            </g>
+          </svg>
+        );
     }
   }
 
   render() {
-    const { kind, extendedClassNames } = this.props;
+    const { kind, extendedClassNames,tabIndex,onKeyDown } = this.props;
     return (
       <span
         className={
           extendedClassNames ? `gc-icon ${extendedClassNames}` : 'gc-icon'
         }
+        tabIndex={tabIndex || -1}
+        onKeyDown={onKeyDown}
       >
         {this.renderIcon(kind)}
       </span>

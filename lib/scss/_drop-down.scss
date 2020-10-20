@@ -5,10 +5,7 @@
     position: relative;
     display: flex;
     justify-content: space-between;
-
-    &:hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
 
   .gc-drop-down__value__text {

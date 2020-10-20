@@ -125,7 +125,6 @@ class Input extends Component {
       extendedClassNames,
       customComponent,
       description,
-      isVisible,
       disabled,
       hidden,
       required,
@@ -135,7 +134,8 @@ class Input extends Component {
       customUI = false,
       label = title,
       name,
-      options
+      options,
+      isFilter
     } = this.props;
     const {
       validationMessage,
@@ -143,15 +143,19 @@ class Input extends Component {
       showTooltip
     } = this.state;
 
-    const inputClasses = classnames('gc-input', `gc-input--${type}`, {
+    const inputClasses = classnames(`gc-input--${type}`, {
+      'gc-input': !isFilter,
+      filter: isFilter,
       'gc-input--invalid': showValidationMessage,
       'gc-input--disabled': disabled,
       [extendedClassNames]: extendedClassNames
     });
 
     const displayLabel =
-      (label && type !== 'checkbox') ||
-      (label && type === 'checkbox' && options.length > 0);
+      !isFilter &&
+      ((label && type !== 'checkbox') ||
+        (label && type === 'checkbox' && options.length > 0));
+
     if (!hidden || !customUI) {
       if (!customComponent()) {
         return (
@@ -164,8 +168,7 @@ class Input extends Component {
             )}
 
             {description && <GCDescription text={description} />}
-
-            {tooltip && (
+            {tooltip && !isFilter && (
               <span
                 className="gc-btn--icon gc-tooltip__icon"
                 onClick={this.onTooltipIconClick}
@@ -217,7 +220,6 @@ class Input extends Component {
           {showValidationMessage && <GCErrorMessage text={validationMessage} />}
 
           {helperText && <GCHelperText text={helperText} />}
-
           {showTooltip && (
             <GCTooltip
               content={this.props.tooltip}
@@ -290,14 +292,14 @@ Input.propTypes = {
   autoComplete: PropTypes.string,
   loading: PropTypes.bool,
   hidden: PropTypes.bool,
-  tooltip: PropTypes.string,
   formSubmitted: PropTypes.bool,
   customComponent: PropTypes.func,
   defaultAll: PropTypes.bool,
   defaultText: PropTypes.string,
   onInputValidationSuccess: PropTypes.func,
   onInputValidationFailure: PropTypes.func,
-  lastUpdateStamp: PropTypes.number
+  lastUpdateStamp: PropTypes.number,
+  isFilter: PropTypes.bool
 };
 
 Input.defaultProps = {
@@ -327,12 +329,10 @@ Input.defaultProps = {
   autoComplete: 'off',
   loading: false,
   hidden: false,
-  tooltip: '',
   formSubmitted: false,
   customComponent: () => false,
   defaultText: 'All Options',
   defaultAll: false,
-  allowAll: false,
   onInputValidationSuccess: () => ({}),
   onInputValidationFailure: () => ({})
 };

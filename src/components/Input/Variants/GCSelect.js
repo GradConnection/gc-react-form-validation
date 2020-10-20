@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import classNames from "classnames";
+import classNames from 'classnames';
 
-import { isEmpty, getLabel } from "utils";
-import { GCIcon } from "ui";
+import { isEmpty, getLabel } from 'utils';
+import { GCIcon } from 'ui';
 
 class GCSelect extends Component {
   constructor(props) {
     super(props);
 
     this.searchReset = {
-      searchTerm: "",
+      searchTerm: '',
       isSearchActive: false,
-      placeholder: props.placeholder || "Select an option",
+      placeholder: props.placeholder || 'Select an option'
     };
 
     this.state = {
@@ -21,7 +21,7 @@ class GCSelect extends Component {
       isFocussed: false,
       index: 0,
       options: props.options, // it's important not to put options in searchReset, otherwise SSR might not initially populate options
-      ...this.searchReset,
+      ...this.searchReset
     };
 
     this.textInput = React.createRef();
@@ -29,42 +29,23 @@ class GCSelect extends Component {
     this.optionList = React.createRef();
 
     this.onSearchInputChange = this.onSearchInputChange.bind(this);
-
-    this.handleWindowClick = this.handleWindowClick.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleOnBlurEffect = this.handleOnBlurEffect.bind(this);
     this.handleOnFocusEffect = this.handleOnFocusEffect.bind(this);
-
-    this.onInputMouseUp = this.onInputMouseUp.bind(this);
   }
 
   componentDidMount() {
-    document.addEventListener("click", this.handleWindowClick);
-    document.addEventListener("keydown", this.handleKeyPress);
+    document.addEventListener('keydown', this.handleKeyPress);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("click", this.handleWindowClick);
-    document.removeEventListener("keydown", this.handleKeyPress);
+    document.removeEventListener('keydown', this.handleKeyPress);
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { isSearchActive } = this.state;
     if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
       this.textInput.current.focus();
-    }
-  }
-
-  handleWindowClick(e) {
-    if (
-      !this.select.current.contains(e.target) &&
-      e.target !== this.textInput
-    ) {
-      this.setState({
-        isActive: false,
-        ...this.searchReset,
-        options: this.props.options,
-      });
     }
   }
 
@@ -95,12 +76,12 @@ class GCSelect extends Component {
 
   activateDropDown() {
     const activeState = {
-      isActive: true,
+      isActive: true
     };
 
     if (this.props.search) {
       activeState.isSearchActive = true;
-      activeState.placeholder = "Start typing to search";
+      activeState.placeholder = 'Start typing to search';
     }
 
     this.setState(activeState);
@@ -115,7 +96,7 @@ class GCSelect extends Component {
         isActive: false,
         index: 0,
         ...this.searchReset,
-        options: this.props.options,
+        options: this.props.options
       },
       () => {
         if (
@@ -127,13 +108,13 @@ class GCSelect extends Component {
           handleInputChange(options[index].value);
         } else {
           unselectable
-            ? handleInputChange("")
+            ? handleInputChange('')
             : handleInputChange(options[index].value);
           this.setState({
             isActive: false,
             index: 0,
             ...this.searchReset,
-            options: this.props.options,
+            options: this.props.options
           });
         }
       }
@@ -176,19 +157,19 @@ class GCSelect extends Component {
   handleOnFocusEffect(e) {
     e.preventDefault();
     this.setState({
-      options: this.props.options,
+      options: this.props.options
     });
     if (this.props.search) {
       this.setState({
         isActive: true,
         isFocussed: true,
         isSearchActive: true,
-        placeholder: "Start typing to search",
+        placeholder: 'Start typing to search'
       });
     } else {
       this.setState({
         isActive: true,
-        isFocussed: true,
+        isFocussed: true
       });
     }
   }
@@ -198,7 +179,7 @@ class GCSelect extends Component {
     this.setState({
       isActive: false,
       isFocussed: false,
-      ...this.resetSearch,
+      ...this.resetSearch
     });
     handleInputValidation(value);
   }
@@ -213,27 +194,8 @@ class GCSelect extends Component {
     this.setState({
       searchTerm: e.target.value,
       index: 0,
-      options: filteredOptions,
+      options: filteredOptions
     });
-  }
-
-  onInputMouseUp(e) {
-    const { isActive } = this.state;
-    if (this.props.search) {
-      if (!isActive) {
-        this.setState({
-          isActive: true,
-          isFocussed: true,
-        });
-      } else {
-        this.setState({
-          isSearchActive: true,
-          placeholder: "Start typing to search",
-        });
-      }
-    } else if (!isActive) {
-      this.setState({ isActive: true });
-    }
   }
 
   onOptionMouseDown(e, value) {
@@ -245,11 +207,11 @@ class GCSelect extends Component {
       {
         isActive: false,
         ...this.searchReset,
-        options: this.props.options,
+        options: this.props.options
       },
       () => {
         if (value === this.props.value && unselectable) {
-          handleInputChange("");
+          handleInputChange('');
         } else {
           handleInputChange(value);
         }
@@ -258,9 +220,9 @@ class GCSelect extends Component {
   }
 
   computeItemClassList(selectV, itemV, index) {
-    return classNames("gc-select__list-item", {
-      "gc-select__list-item--selected": selectV === itemV,
-      "gc-select__list-item--hovered": this.state.index === index,
+    return classNames('gc-select__list-item', {
+      'gc-select__list-item--selected': selectV === itemV,
+      'gc-select__list-item--hovered': this.state.index === index
     });
   }
 
@@ -268,7 +230,7 @@ class GCSelect extends Component {
     if (isSearchActive) {
       return searchTerm;
     }
-    return isEmpty(value) ? "" : getLabel(value, this.props.options);
+    return isEmpty(value) ? '' : getLabel(value, this.props.options);
   }
 
   render() {
@@ -279,17 +241,17 @@ class GCSelect extends Component {
       options,
       isSearchActive,
       searchTerm,
-      placeholder,
+      placeholder
     } = this.state;
     const selectClasses = classNames(
-      "gc-input__el",
-      "gc-input__el--no-padding",
+      'gc-input__el',
+      'gc-input__el--no-padding',
       {
-        "gc-input__el--active": isActive || isFocussed,
+        'gc-input__el--active': isActive || isFocussed
       }
     );
     const inputClasses =
-      "gc-drop-down__value__text gc-drop-down__value__text__autoselect gc-drop-down__value__text--input";
+      'gc-drop-down__value__text gc-drop-down__value__text__autoselect gc-drop-down__value__text--input';
 
     return (
       <div className={selectClasses} ref={this.select}>
@@ -297,15 +259,15 @@ class GCSelect extends Component {
           id={`gc-drop-down_${name}`}
           aria-label={name}
           aria-haspopup="listbox"
-          role='button'
-          className='gc-drop-down__value'
-          onMouseUp={this.onInputMouseUp}>
+          role="button"
+          className="gc-drop-down__value"
+        >
           <input
             id={name}
             ref={this.textInput}
             className={inputClasses}
             type="text"
-            tabIndex={disabled? "-1" : "0"}
+            tabIndex={disabled ? '-1' : '0'}
             value={this.computeInputValue(
               value,
               options,
@@ -323,7 +285,11 @@ class GCSelect extends Component {
         </div>
 
         {isActive && !this.props.disabled && (
-          <ul role="listbox" ref={this.optionList} className="gc-drop-down__el gc-select__list">
+          <ul
+            role="listbox"
+            ref={this.optionList}
+            className="gc-drop-down__el gc-select__list"
+          >
             {options.length > 0 ? (
               options.map((opt, i) => (
                 <li
@@ -337,13 +303,14 @@ class GCSelect extends Component {
                 </li>
               ))
             ) : (
-                <li
-                  id={`$noOpt_select_${name}`}
-                  key={`$noOpt_select_${name}`}
-                  className='gc-select__list-item gc-select__list-item--no-opt'>
-                  <i>There are no available options</i>
-                </li>
-              )}
+              <li
+                id={`$noOpt_select_${name}`}
+                key={`$noOpt_select_${name}`}
+                className="gc-select__list-item gc-select__list-item--no-opt"
+              >
+                <i>There are no available options</i>
+              </li>
+            )}
           </ul>
         )}
       </div>
@@ -353,7 +320,7 @@ class GCSelect extends Component {
 
 GCSelect.defaultProps = {
   unselectable: true,
-  autoComplete: "off"
+  autoComplete: 'off'
 };
 
 GCSelect.propTypes = {
@@ -367,7 +334,7 @@ GCSelect.propTypes = {
   handleInputValidation: PropTypes.func.isRequired,
   unselectable: PropTypes.bool,
   disabled: PropTypes.bool,
-  autoComplete:PropTypes.string
+  autoComplete: PropTypes.string
 };
 
 export { GCSelect };

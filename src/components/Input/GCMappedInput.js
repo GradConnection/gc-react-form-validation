@@ -11,10 +11,13 @@ import {
   GCSelect,
   GCSelectExternalSearch,
   GCDatePicker,
+  GCDatePickerFilter,
   GCDateTimePicker,
   GCDateRangePicker,
   GCRange,
-  GCTimePicker
+  GCTimePicker,
+  GCSelectFilter,
+  GCMultiSelectFilter
 } from './Variants';
 
 const GCMappedInput = props => {
@@ -47,10 +50,45 @@ const GCMappedInput = props => {
     onInputValidationSuccess,
     onInputValidationFailure,
     onChange,
+    isFilter,
     ...xtra
   } = props;
   const renderType = determineRenderType(type);
   // NOTE: From here on out the Input.props.type will be used for validation only
+
+  if (isFilter && renderType === 'select') {
+    if (props.multi) {
+      return (
+        <GCMultiSelectFilter
+          search={search}
+          placeholder={xtra.placeholder}
+          handleInputChange={handleInputChange}
+          handleInputValidation={handleInputValidation}
+          {...xtra}
+        />
+      );
+    }
+    return (
+      <GCSelectFilter
+        search={search}
+        placeholder={xtra.placeholder}
+        handleInputChange={handleInputChange}
+        handleInputValidation={handleInputValidation}
+        {...xtra}
+      />
+    );
+  }
+
+  if (isFilter && renderType === 'date') {
+    return (
+      <GCDatePickerFilter
+        onInputChange={handleInputChange}
+        handleInputValidation={handleInputValidation}
+        {...xtra}
+      />
+    );
+  }
+
   switch (renderType) {
     case 'textarea':
       return (

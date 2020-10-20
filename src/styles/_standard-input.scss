@@ -79,14 +79,14 @@ input.gc-input__el,
 
 .gc-btn--icon-sml {
   box-sizing: border-box;
-  padding: 0.2rem 0.5rem 0.5rem 0.5rem;
+  padding: 0.5rem;
 
   svg {
-    width: 0.5rem;
+    width: 1rem;
 
     // IE 11
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      height: 0.5rem;
+      height: 1rem;
     }
   }
 }
@@ -154,9 +154,16 @@ input.gc-input__el,
   background-color: lighten($gc-form-red, 40%);
 }
 
-.gc-input.gc-input--disabled {
+.gc-input--disabled {
   border-color: $gc-form-light-grey;
   color: $gc-form-med-grey;
+
+  .gc-input__el {
+    .gc-label,
+    .gc-drop-down__value {
+     cursor: default;
+    }
+  }
 
   .gc-input__el,
   .gc-input__el::placeholder,
