@@ -36,13 +36,11 @@ class GCSelectFilter extends Component {
     this.optionList = React.createRef();
     this.listContainer = React.createRef();
     this.selectContainer = React.createRef();
-    this.clearButton = React.createRef();
-    this.saveButton = React.createRef();
     this.infoIcon = React.createRef();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { searchTerm, options } = this.state;
+    // const { searchTerm, options } = this.state;
     // if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
     //   if (searchTerm === '') {
     //     this.setState({
@@ -61,8 +59,6 @@ class GCSelectFilter extends Component {
     if (isActive) {
       if (e.keyCode === 13) {
         if (
-          e.target !== this.clearButton.current &&
-          e.target !== this.saveButton.current &&
           (!this.infoIcon.current ||
             !this.infoIcon.current.contains(e.target)) &&
           !e.target.classList.contains('gc-tag__btn')
@@ -98,7 +94,6 @@ class GCSelectFilter extends Component {
   // }
 
   onEnterKeyPress(e) {
-    console.log('onEnterKeyPress');
     e.preventDefault();
     const { options, index } = this.state;
 
@@ -258,7 +253,7 @@ class GCSelectFilter extends Component {
   }
 
   render() {
-    const { value, name, autoComplete, label, required } = this.props;
+    const { value, name, autoComplete, label, required, disabled } = this.props;
     const { isActive, isInformationActive, options, placeholder } = this.state;
 
     const selectClasses = classNames(
@@ -288,9 +283,9 @@ class GCSelectFilter extends Component {
     return (
       <div
         className="gc-select__single-container"
-        onFocus={() => this.handleOnFocusEffect()}
-        onBlur={e => this.handleOnBlurEffect(e)}
-        onKeyDown={e => this.handleKeyPress(e)}
+        onFocus={() => !disabled && this.handleOnFocusEffect()}
+        onBlur={e => !disabled && this.handleOnBlurEffect(e)}
+        onKeyDown={e => !disabled && this.handleKeyPress(e)}
         ref={this.select}
         role="button"
         tabIndex={0}
@@ -327,7 +322,9 @@ class GCSelectFilter extends Component {
                   tabIndex={2}
                   onKeyDown={e =>
                     e.key === 'Tab'
-                      ? (e.preventDefault(), this.saveButton.current.focus())
+                      ? (e.preventDefault()
+                      // , this.selectContainer.current.focus()
+                      )
                       : ''
                   }
                 />
