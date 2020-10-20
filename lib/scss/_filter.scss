@@ -1,9 +1,17 @@
 .filter {
   height:100%;
 
-  .gc-select__multi-container {
-    height:100%;
+  .gc-select__multi-container,
+  .gc-select__single-container  {
+    .gc-select__list-container {
+      position: relative;
+      .gc-select__input {
+        padding: 0 20px 16px 20px;
+        border: none;
+      }
+    }
   }
+
   .gc-tooltip {
     right: 50px;
     bottom: 90%;
@@ -15,7 +23,6 @@
     padding: 0px;
 
     .gc-drop-down__el {
-      padding: 1em;
       background-color: white;
     }
 
@@ -29,14 +36,18 @@
 
     .gc-drop-down__value--shrink {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       margin-bottom: 4px;
-      padding: 18px 20px 0 20px;
+      padding: 15px 20px 0 20px;
       font-size: 1.2rem;
       cursor: pointer;
+      .gc-filter--badge {
+        margin-bottom: -4px;
+      }
     }
     
-    .gc-filter--badge{
+    .gc-filter--badge {
       margin-left: 10px;
       padding: 2px 5px;
       font-size: 1rem;
@@ -73,38 +84,36 @@
       box-shadow: 0.3em 0.3em 0.8em rgba(41, 43, 45, 0.2);
       max-height: none;
       overflow-y: hidden;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 10px;
 
       .gc-select__list-item {
         border-bottom: none;
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 0px;
+        padding-right: 0px;
         
         &:hover,
         &.gc-select__list-item--hovered {
-          padding-left: 20px;
-          padding-right: 20px;
+          padding-left: 10px;
+          padding-right: 10px;
           background-color: mix($gc-form-light-grey, white, 50%);
         }
       }
     }
 
-    .gc-select__list-container{
-      position: relative;
-      .gc-select__input {
-        padding: 0 20px 10px 20px;;
-        border: none;
-      }
+    .gc-drop-down__caret{
+      position: absolute;
+      z-index: 2;
+      top: calc(50% - 10px);
+      right: 20px;
     }
 
-    .gc-drop-down__caret{
-      z-index: 2;
-      right: 20px;
-      position: absolute;
-    }
     .gc-drop-down__info{
-      z-index: 2;
-      right: 40px;
       position: absolute;
+      z-index: 2;
+      top: calc(50% - 10px);
+      right: 40px;
     }
     .gc-filter__dropdown__controls{
       display: flex;
@@ -120,6 +129,9 @@
   }
   
   .gc-label {
+    &__text {
+      font-weight: 400;
+    }
     margin:0;
     display: inline-block;
     cursor: pointer;
