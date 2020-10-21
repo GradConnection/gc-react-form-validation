@@ -320,7 +320,7 @@ class GCSelect extends Component {
 
 GCSelect.defaultProps = {
   unselectable: true,
-  autoComplete: 'off'
+  autoComplete: 'chrome-off' // Autocomplete "off" does not work on chrome
 };
 
 GCSelect.propTypes = {

@@ -303,8 +303,6 @@ class GCMultiSelectFilter extends Component {
         'gc-input__el': isEmpty(value)
       }
     );
-    // console.log('this.props', this.props);
-    // console.log('this.state', this.state);
 
     return (
       <div
@@ -473,7 +471,7 @@ GCMultiSelectFilter.propTypes = {
 };
 
 GCMultiSelectFilter.defaultProps = {
-  autoComplete: 'off'
+  autoComplete: 'chrome-off' // Autocomplete "off" does not work on chrome
 };
 
 export { GCMultiSelectFilter };

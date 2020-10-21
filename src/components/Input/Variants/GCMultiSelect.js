@@ -448,7 +448,7 @@ GCMultiSelect.propTypes = {
 
 GCMultiSelect.defaultProps = {
   selectAll: false,
-  autoComplete: 'off'
+  autoComplete: 'chrome-off' // Autocomplete "off" does not work on chrome
 };
 
 export { GCMultiSelect };

@@ -427,7 +427,7 @@ GCSelectFilter.propTypes = {
 };
 
 GCSelectFilter.defaultProps = {
-  autoComplete: 'off'
+  autoComplete: 'chrome-off' // Autocomplete "off" does not work on chrome
 };
 
 export { GCSelectFilter };
