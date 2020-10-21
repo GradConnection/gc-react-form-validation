@@ -25,7 +25,8 @@ class GCMultiSelectFilter extends Component {
     };
     this.state = {
       index: 0,
-      options: props.options, // it's important not to put options in searchReset, otherwise SSR might not initially populate options
+      options: props.options,// it's important not to put options in searchReset, otherwise SSR might not initially populate options
+      shiftPressed: false, 
       ...this.stateReset,
       ...this.searchReset
     };
@@ -39,18 +40,13 @@ class GCMultiSelectFilter extends Component {
     this.clearButton = React.createRef();
     this.saveButton = React.createRef();
     this.infoIcon = React.createRef();
+
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { searchTerm, options } = this.state;
-    // if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
-    //   if (searchTerm === '') {
-    //     this.setState({
-    //       options: this.props.options,
-    //       index: 0
-    //     });
-    //   }
-    // }
     if (prevState.isActive === false && this.state.isActive === true) {
       this.input.current.focus();
     }
@@ -78,6 +74,16 @@ class GCMultiSelectFilter extends Component {
       } else if (e.keyCode === 40 && options.length - 1 > index) {
         this.onDownKeyPress(e);
       }
+      else if (e.keyCode === 16) {
+        this.setState({shiftPressed:true})
+      }
+    }
+
+  }
+
+  handleKeyUp(e){
+    if (e.keyCode === 16) {
+    this.setState({shiftPressed:false})
     }
   }
 
@@ -303,8 +309,6 @@ class GCMultiSelectFilter extends Component {
         'gc-input__el': isEmpty(value)
       }
     );
-    // console.log('this.props', this.props);
-    // console.log('this.state', this.state);
 
     return (
       <div
@@ -337,22 +341,24 @@ class GCMultiSelectFilter extends Component {
               <div className="gc-filter--badge">{value.length}</div>
             )}
             {this.props.tooltip && (
-              <div
-                role="button"
-                ref={this.infoIcon}
-                onKeyDown={e => e.key === 'Enter' && this.onInformationClick()}
-                onClick={() => this.onInformationClick()}
+              <div 
+              role="button" 
+              onKeyDown={(e) => e.key === "Enter"? this.onInformationClick() : e.key === "Tab" ? (e.preventDefault(), this.saveButton.current.focus())  : "" } 
+              onClick={() => this.onInformationClick()}
               >
+                <div>
                 <GCIcon
                   kind="infoIcon"
                   extendedClassNames="gc-drop-down__info"
-                  tabIndex={2}
                   onKeyDown={e =>
                     e.key === 'Tab'
                       ? (e.preventDefault(), this.saveButton.current.focus())
                       : ''
                   }
+                  forwardRef={this.infoIcon}
+                  tabIndex={0}
                 />
+                </div>
                 {isActive && isInformationActive && this.props.tooltip && (
                   <GCTooltip
                     content={this.props.tooltip}
@@ -378,6 +384,7 @@ class GCMultiSelectFilter extends Component {
                 placeholder={placeholder}
                 autoComplete={autoComplete}
                 tabIndex={this.props.tooltip ? 1 : 0}
+                onKeyDown={(e) => e.key === "Tab" && this.props.tooltip && !this.state.shiftPressed? (e.preventDefault(),this.infoIcon.current.focus()): ""}
               />
             )}
             {isActive && (
