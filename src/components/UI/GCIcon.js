@@ -257,13 +257,13 @@ class GCIcon extends React.Component {
   }
 
   render() {
-    const { kind, extendedClassNames,tabIndex,onKeyDown } = this.props;
+    const { kind, extendedClassNames, tabIndex, onKeyDown } = this.props;
     return (
       <span
         className={
           extendedClassNames ? `gc-icon ${extendedClassNames}` : 'gc-icon'
         }
-        tabIndex={tabIndex || -1}
+        tabIndex={typeof tabIndex === 'number' ? tabIndex : -1}
         onKeyDown={onKeyDown}
       >
         {this.renderIcon(kind)}

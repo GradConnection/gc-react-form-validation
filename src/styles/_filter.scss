@@ -109,12 +109,17 @@
       top: calc(50% - 10px);
       right: 20px;
     }
-
-    .gc-drop-down__info{
+    .filter_icon_div{
       position: absolute;
       z-index: 2;
-      top: calc(50% - 10px);
-      right: 40px;
+      top: calc(100% - 40px);
+      right: 40px; 
+    }
+    .gc-drop-down__info{
+      // position: absolute;
+      // z-index: 2;
+      // top: calc(50% - 10px);
+      // right: 40px;
     }
     .gc-filter__dropdown__controls{
       display: flex;
@@ -159,7 +164,7 @@
   
   // Date picker
   .gc-input__el:focus {
-    outline: -webkit-focus-ring-color auto 1px;
+    // outline: -webkit-focus-ring-color auto 1px;
   }
   .gc-date-drop-down__value__text {
     border: none;
