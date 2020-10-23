@@ -36,21 +36,10 @@ class GCSelectFilter extends Component {
     this.optionList = React.createRef();
     this.listContainer = React.createRef();
     this.selectContainer = React.createRef();
-    this.clearButton = React.createRef();
-    this.saveButton = React.createRef();
     this.infoIcon = React.createRef();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { searchTerm, options } = this.state;
-    // if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
-    //   if (searchTerm === '') {
-    //     this.setState({
-    //       options: this.props.options,
-    //       index: 0
-    //     });
-    //   }
-    // }
+  componentDidUpdate(prevState) {
     if (prevState.isActive === false && this.state.isActive === true) {
       this.input.current.focus();
     }
@@ -61,8 +50,6 @@ class GCSelectFilter extends Component {
     if (isActive) {
       if (e.keyCode === 13) {
         if (
-          e.target !== this.clearButton.current &&
-          e.target !== this.saveButton.current &&
           (!this.infoIcon.current ||
             !this.infoIcon.current.contains(e.target)) &&
           !e.target.classList.contains('gc-tag__btn')
@@ -75,30 +62,9 @@ class GCSelectFilter extends Component {
         this.onDownKeyPress(e);
       }
     }
-
-    // if (!isActive && isFocussed) {
-    //   if (e.keyCode === 40 || e.keyCode === 13) {
-    //     this.activateDropDown();
-    //   }
-    // }
   }
 
-  // activateDropDown() {
-  //   console.log('activateDropDown 5');
-  //   const activeState = {
-  //     isActive: true,
-  //     isFocussed: true
-  //   };
-
-  //   if (this.props.search) {
-  //     activeState.isSearchActive = true;
-  //   }
-
-  //   this.setState(activeState);
-  // }
-
   onEnterKeyPress(e) {
-    console.log('onEnterKeyPress');
     e.preventDefault();
     const { options, index } = this.state;
 
@@ -222,8 +188,6 @@ class GCSelectFilter extends Component {
       this.props.handleInputValidation(newValue);
       this.setState({ isActive: false });
     }
-    // this.setState({ index: 0 });
-    // this.props.handleInputChange(newValueArray);
   }
 
   removeItemFromValueArray(item) {
@@ -258,7 +222,7 @@ class GCSelectFilter extends Component {
   }
 
   render() {
-    const { value, name, autoComplete, label, required } = this.props;
+    const { value, name, autoComplete, label, required, disabled } = this.props;
     const { isActive, isInformationActive, options, placeholder } = this.state;
 
     const selectClasses = classNames(
@@ -288,12 +252,12 @@ class GCSelectFilter extends Component {
     return (
       <div
         className="gc-select__single-container"
-        onFocus={() => this.handleOnFocusEffect()}
-        onBlur={e => this.handleOnBlurEffect(e)}
-        onKeyDown={e => this.handleKeyPress(e)}
+        onFocus={() => !disabled && this.handleOnFocusEffect()}
+        onBlur={e => !disabled && this.handleOnBlurEffect(e)}
+        onKeyDown={e => !disabled && this.handleKeyPress(e)}
         ref={this.select}
         role="button"
-        tabIndex={0}
+        tabIndex={disabled ? '-1' : '0'}
       >
         <div id={`gc-drop-down_${name}`} className={selectClasses}>
           <div
@@ -303,7 +267,9 @@ class GCSelectFilter extends Component {
             aria-haspopup="listbox"
             aria-label={`input ${name}`}
             className={`${
-              !isEmpty(value) || isActive ? 'gc-drop-down__value--shrink' : 'gc-drop-down__value'
+              !isEmpty(value) || isActive
+                ? 'gc-drop-down__value--shrink'
+                : 'gc-drop-down__value'
             }`}
           >
             <GCLabel
@@ -313,35 +279,24 @@ class GCSelectFilter extends Component {
               activeShrink={!isEmpty(value) || isActive}
             />
             {!isEmpty(value) && <div className="gc-filter--badge">1</div>}
-            {(!isEmpty(value) && !isActive) && <div className="gc-filter--value">{options.find(opt => value === opt.value)?.label}</div>}
-            {this.props.tooltip && (
-              <div
-                role="button"
-                ref={this.infoIcon}
-                onKeyDown={e => e.key === 'Enter' && this.onInformationClick()}
-                onClick={() => this.onInformationClick()}
-              >
-                <GCIcon
-                  kind="infoIcon"
-                  extendedClassNames="gc-drop-down__info"
-                  tabIndex={2}
-                  onKeyDown={e =>
-                    e.key === 'Tab'
-                      ? (e.preventDefault(), this.saveButton.current.focus())
-                      : ''
-                  }
-                />
-                {isActive && isInformationActive && this.props.tooltip && (
-                  <GCTooltip
-                    content={this.props.tooltip}
-                    name={`${name}tooltip`}
-                    active={isInformationActive}
-                    toggleTooltip={() => this.onInformationClick()}
-                  />
-                )}
+            {!isEmpty(value) && !isActive && (
+              <div className="gc-filter--value">
+                {options.find(opt => value === opt.value)?.label}
               </div>
             )}
+
             <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" />
+            {this.props.tooltip &&
+              isActive &&
+              isInformationActive &&
+              this.props.tooltip && (
+                <GCTooltip
+                  content={this.props.tooltip}
+                  name={`${name}tooltip`}
+                  active={isInformationActive}
+                  toggleTooltip={() => this.onInformationClick()}
+                />
+              )}
           </div>
 
           <div className={containerClasses} ref={this.listContainer}>
@@ -355,9 +310,24 @@ class GCSelectFilter extends Component {
                 onChange={e => this.onSearchInputChange(e)}
                 placeholder={placeholder}
                 autoComplete={autoComplete}
-                tabIndex={this.props.tooltip ? 1 : 0}
               />
             )}
+            {this.props.tooltip && (
+              <div
+                role="button"
+                ref={this.infoIcon}
+                className="filter_icon_div"
+                onKeyDown={e => e.key === 'Enter' && this.onInformationClick()}
+                tabIndex={0}
+                onClick={() => this.onInformationClick()}
+              >
+                <GCIcon
+                  kind="infoIcon"
+                  extendedClassNames="gc-drop-down__info"
+                />
+              </div>
+            )}
+
             {isActive && (
               <div className="gc-drop-down__el gc-select__list">
                 <span
@@ -430,7 +400,7 @@ GCSelectFilter.propTypes = {
 };
 
 GCSelectFilter.defaultProps = {
-  autoComplete: 'off'
+  autoComplete: 'chrome-off' // Autocomplete "off" does not work on chrome
 };
 
 export { GCSelectFilter };

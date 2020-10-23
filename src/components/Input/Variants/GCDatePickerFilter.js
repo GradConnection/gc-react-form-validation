@@ -35,14 +35,9 @@ class GCDatePickerFilter extends Component {
     const sanitisedFrom = from && new Date(new Date(from).setHours(0, 0, 0, 0));
     const sanitisedTo = to && new Date(new Date(to).setHours(23, 59, 59, 59));
 
-    const dateClasses = classNames(
-      'filter',
-      'gc-input__el',
-      'gc-input__el--no-padding',
-      {
-        'gc-input__el--active': isActive
-      }
-    );
+    const dateClasses = classNames('gc-input__el', {
+      'gc-input__el--active': isActive
+    });
 
     const timePickerElement = (
       <TimePickerPanel
@@ -93,7 +88,6 @@ class GCDatePickerFilter extends Component {
         {({ value }) => (
           <div className={dateClasses} tabIndex={0}>
             <div
-              role="button"
               className={`${
                 value ? 'gc-drop-down__value--shrink' : 'gc-drop-down__value'
               }`}
