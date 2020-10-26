@@ -215,6 +215,14 @@ class GCSelectFilter extends Component {
     ));
   }
 
+  onInputClick() {
+    // this is needed for when the user selects an item, the dropdown closes, but they still have focus.
+    // if they click again, it should open up.
+    if (!this.state.isActive) {
+      this.setState({ isActive: true });
+    }
+  }
+
   onInformationClick() {
     this.setState({
       isInformationActive: !this.state.isInformationActive
@@ -248,13 +256,13 @@ class GCSelectFilter extends Component {
         'gc-input__el': isEmpty(value)
       }
     );
-
     return (
       <div
         className="gc-select__single-container"
         onFocus={() => !disabled && this.handleOnFocusEffect()}
         onBlur={e => !disabled && this.handleOnBlurEffect(e)}
         onKeyDown={e => !disabled && this.handleKeyPress(e)}
+        onClick={e => !disabled && this.onInputClick(e)}
         ref={this.select}
         role="button"
         tabIndex={disabled ? '-1' : '0'}
