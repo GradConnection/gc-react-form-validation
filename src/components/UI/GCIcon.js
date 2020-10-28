@@ -39,6 +39,22 @@ class GCIcon extends React.Component {
             </g>
           </svg>
         );
+      case 'chevronIconBold':
+        return (
+          <svg
+            id="layer_chevronIconBold"
+            height={height || size}
+            width={width || size}
+            viewBox="0 0 50 50"
+            aria-labelledby={iconTitle}
+          >
+            <title id={iconTitle}>{iconTitle}</title>
+
+            <g id="chevronIconBold">
+              <path d="m 24.999909,39.250734 c -0.896088,0 -1.792101,-0.342047 -2.475288,-1.025008 L 1.0257173,16.726599 c -1.36762296,-1.367623 -1.36762296,-3.584958 0,-4.952014 1.3670551,-1.367093 3.5839369,-1.367093 4.9516733,0 L 24.999909,30.7982 44.022542,11.775228 c 1.367622,-1.367055 3.584315,-1.367055 4.951257,0 1.368268,1.367056 1.368268,3.584428 0,4.952014 L 27.475197,38.226407 c -0.683527,0.68296 -1.579502,1.024327 -2.475288,1.024327 z" />
+            </g>
+          </svg>
+        );
       case 'caretIcon':
         return (
           <svg

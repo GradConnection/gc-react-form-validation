@@ -252,13 +252,9 @@ class GCMultiSelectFilter extends Component {
     const { value, name, autoComplete, label, required } = this.props;
     const { isActive, isInformationActive, options, placeholder } = this.state;
 
-    const selectClasses = classNames(
-      'gc-input__el',
-      'gc-input__el--no-padding',
-      {
-        'gc-input__el--active': isActive
-      }
-    );
+    const selectClasses = classNames('gc-input__el', {
+      'gc-input__el--active': isActive
+    });
 
     const containerClasses = classNames('gc-select__list-container', {
       'gc-select__list-container__empty': isEmpty(value)
@@ -286,6 +282,17 @@ class GCMultiSelectFilter extends Component {
         role="button"
         tabIndex={0}
       >
+        {this.props.tooltip &&
+          isActive &&
+          isInformationActive &&
+          this.props.tooltip && (
+            <GCTooltip
+              content={this.props.tooltip}
+              name={`${name}tooltip`}
+              active={isInformationActive}
+              toggleTooltip={() => this.onInformationClick()}
+            />
+          )}
         <div id={`gc-drop-down_${name}`} className={selectClasses}>
           <div
             id={`gc-input-multi_${name}`}
@@ -307,19 +314,12 @@ class GCMultiSelectFilter extends Component {
               <div className="gc-filter--badge">{value.length}</div>
             )}
 
-            {this.props.tooltip &&
-              isActive &&
-              isInformationActive &&
-              this.props.tooltip && (
-                <GCTooltip
-                  content={this.props.tooltip}
-                  name={`${name}tooltip`}
-                  active={isInformationActive}
-                  toggleTooltip={() => this.onInformationClick()}
-                />
-              )}
-
-            <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" />
+            <GCIcon
+              kind="chevronIconBold"
+              extendedClassNames={`gc-drop-down__chevron ${
+                isActive ? 'active' : ''
+              }`}
+            />
           </div>
 
           <div className={containerClasses} ref={this.listContainer}>
@@ -335,6 +335,7 @@ class GCMultiSelectFilter extends Component {
                 autoComplete={autoComplete}
               />
             )}
+
             {this.props.tooltip && (
               <div
                 role="button"
@@ -351,7 +352,7 @@ class GCMultiSelectFilter extends Component {
               </div>
             )}
             {isActive && (
-              <div className="gc-drop-down__el gc-select__list">
+              <div className="filter-drop-down ">
                 <span
                   className="gc-drop-down__value__text gc-drop-down__value__text--input"
                   ref={this.selectContainer}
@@ -362,7 +363,7 @@ class GCMultiSelectFilter extends Component {
                 <ul
                   role="listbox"
                   ref={this.optionList}
-                  className="gc-drop-down__el filter-drop-down"
+                  className="gc-drop-down__el gc-select__list"
                 >
                   {options.length > 0 ? (
                     options.map((opt, i) => (

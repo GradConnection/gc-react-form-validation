@@ -233,13 +233,9 @@ class GCSelectFilter extends Component {
     const { value, name, autoComplete, label, required, disabled } = this.props;
     const { isActive, isInformationActive, options, placeholder } = this.state;
 
-    const selectClasses = classNames(
-      'gc-input__el',
-      'gc-input__el--no-padding',
-      {
-        'gc-input__el--active': isActive
-      }
-    );
+    const selectClasses = classNames('gc-input__el', {
+      'gc-input__el--active': isActive
+    });
 
     const containerClasses = classNames('gc-select__list-container', {
       'gc-select__list-container__empty': isEmpty(value)
@@ -267,6 +263,17 @@ class GCSelectFilter extends Component {
         role="button"
         tabIndex={disabled ? '-1' : '0'}
       >
+         {this.props.tooltip &&
+              isActive &&
+              isInformationActive &&
+              this.props.tooltip && (
+                <GCTooltip
+                  content={this.props.tooltip}
+                  name={`${name}tooltip`}
+                  active={isInformationActive}
+                  toggleTooltip={() => this.onInformationClick()}
+                />
+              )}
         <div id={`gc-drop-down_${name}`} className={selectClasses}>
           <div
             id={`gc-input-multi_${name}`}
@@ -293,18 +300,7 @@ class GCSelectFilter extends Component {
               </div>
             )}
 
-            <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" />
-            {this.props.tooltip &&
-              isActive &&
-              isInformationActive &&
-              this.props.tooltip && (
-                <GCTooltip
-                  content={this.props.tooltip}
-                  name={`${name}tooltip`}
-                  active={isInformationActive}
-                  toggleTooltip={() => this.onInformationClick()}
-                />
-              )}
+            <GCIcon kind="chevronIconBold" extendedClassNames={`gc-drop-down__chevron ${isActive ? 'active' : ''}`} />
           </div>
 
           <div className={containerClasses} ref={this.listContainer}>
@@ -337,51 +333,47 @@ class GCSelectFilter extends Component {
             )}
 
             {isActive && (
-              <div className="gc-drop-down__el gc-select__list">
-                <span
-                  className="gc-drop-down__value__text gc-drop-down__value__text--input"
-                  ref={this.selectContainer}
-                >
-                  Selected: {this.renderTags(value)}
-                </span>
-                <div className="dotted" />
-                <ul
-                  role="listbox"
-                  ref={this.optionList}
-                  className="gc-drop-down__el filter-drop-down"
-                >
-                  {options.length > 0 ? (
-                    options.map((opt, i) => (
-                      <li
-                        role="option"
-                        id={`${this.props.name}_option_${i}`}
-                        key={`${this.props.name}_option_${i}`}
-                        className={this.computeItemClassList(
-                          value,
-                          opt.value,
-                          i
-                        )}
-                        onMouseDown={e => this.onOptionMouseDown(e, opt.value)}
-                      >
-                        {opt.label}
-                        {value === opt.value && (
-                          <GCIcon
-                            kind="tickIcon"
-                            extendedClassNames="gc-filter-icon"
-                          />
-                        )}
-                      </li>
-                    ))
-                  ) : (
+            <div className="filter-drop-down">
+              <span
+                className="gc-drop-down__value__text gc-drop-down__value__text--input"
+                ref={this.selectContainer}
+              >
+                Selected: {this.renderTags(value)}
+              </span>
+              <div className="dotted" />
+              <ul
+                role="listbox"
+                ref={this.optionList}
+                className="gc-drop-down__el gc-select__list"
+              >
+                {options.length > 0 ? (
+                  options.map((opt, i) => (
                     <li
-                      key={`$noOpt_select_${name}`}
-                      className="gc-select__list-item gc-select__list-item--no-opt"
+                      role="option"
+                      id={`${this.props.name}_option_${i}`}
+                      key={`${this.props.name}_option_${i}`}
+                      className={this.computeItemClassList(value, opt.value, i)}
+                      onMouseDown={e => this.onOptionMouseDown(e, opt.value)}
                     >
-                      <i>There are no available options</i>
+                      {opt.label}
+                      {value === opt.value && (
+                        <GCIcon
+                          kind="tickIcon"
+                          extendedClassNames="gc-filter-icon"
+                        />
+                      )}
                     </li>
-                  )}
-                </ul>
-              </div>
+                  ))
+                ) : (
+                  <li
+                    key={`$noOpt_select_${name}`}
+                    className="gc-select__list-item gc-select__list-item--no-opt"
+                  >
+                    <i>There are no available options</i>
+                  </li>
+                )}
+              </ul>
+            </div>
             )}
           </div>
         </div>
