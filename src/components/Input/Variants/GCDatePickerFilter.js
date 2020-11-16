@@ -116,10 +116,6 @@ class GCDatePickerFilter extends Component {
 GCDatePickerFilter.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   value: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
-  defaultValue: PropTypes.oneOfType([
-    PropTypes.instanceOf(Date),
-    PropTypes.string
-  ]),
   handleInputValidation: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
   name: PropTypes.string,
@@ -129,10 +125,6 @@ GCDatePickerFilter.propTypes = {
   to: PropTypes.string,
   label: PropTypes.string,
   required: PropTypes.bool
-};
-
-GCDatePickerFilter.defaultProps = {
-  defaultValue: ''
 };
 
 export { GCDatePickerFilter };

@@ -26,6 +26,12 @@
     bottom: 100%;
   }
 
+  &.gc-input--disabled {
+    .gc-input__el :hover{
+      background-color: white;
+    }
+  }
+
   .gc-input__el {
     padding: 0;
     border: none;

@@ -248,7 +248,7 @@ class GCMultiSelectFilter extends Component {
   }
 
   render() {
-    const { value, name, autoComplete, label, required } = this.props;
+    const { value, name, autoComplete, label, required, disabled } = this.props;
     const { isActive, isInformationActive, options, placeholder } = this.state;
 
     const selectClasses = classNames('gc-input__el', {
@@ -258,12 +258,12 @@ class GCMultiSelectFilter extends Component {
     return (
       <div
         className="gc-select__multi-container"
-        onFocus={() => this.handleOnFocusEffect()}
-        onBlur={e => this.handleOnBlurEffect(e)}
-        onKeyDown={e => this.handleKeyPress(e)}
+        onFocus={() => !disabled && this.handleOnFocusEffect()}
+        onBlur={e => !disabled && this.handleOnBlurEffect(e)}
+        onKeyDown={e => !disabled && this.handleKeyPress(e)}
         ref={this.select}
         role="button"
-        tabIndex={0}
+        tabIndex={disabled ? '-1' : '0'}
       >
         {this.props.tooltip &&
           isActive &&
@@ -416,7 +416,8 @@ GCMultiSelectFilter.propTypes = {
   autoComplete: PropTypes.string,
   label: PropTypes.string,
   tooltip: PropTypes.string,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 GCMultiSelectFilter.defaultProps = {
