@@ -40,7 +40,7 @@ class GCMultiSelectFilter extends Component {
     this.infoIcon = React.createRef();
   }
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevState.isActive === false && this.state.isActive === true) {
       this.input.current.focus();
     }
