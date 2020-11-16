@@ -34,7 +34,6 @@ class GCMultiSelectFilter extends Component {
     this.select = React.createRef();
     this.input = React.createRef();
     this.optionList = React.createRef();
-    this.listContainer = React.createRef();
     this.selectContainer = React.createRef();
     this.clearButton = React.createRef();
     this.saveButton = React.createRef();
@@ -256,22 +255,6 @@ class GCMultiSelectFilter extends Component {
       'gc-input__el--active': isActive
     });
 
-    const containerClasses = classNames('gc-select__list-container', {
-      'gc-select__list-container__empty': isEmpty(value)
-    });
-
-    const listInputClasses = classNames(
-      'gc-drop-down__value__text',
-      'gc-select__input',
-      'gc-drop-down__value__text__autoselect',
-      {
-        'gc-drop-down__value__text--input gc-drop-down__value__text--input-inline': !isEmpty(
-          value
-        ),
-        'gc-input__el': isEmpty(value)
-      }
-    );
-
     return (
       <div
         className="gc-select__multi-container"
@@ -313,21 +296,11 @@ class GCMultiSelectFilter extends Component {
             {!isEmpty(value) && (
               <div className="gc-filter--badge">{value.length}</div>
             )}
-
-            <GCIcon
-              kind="chevronIconBold"
-              extendedClassNames={`gc-drop-down__chevron ${
-                isActive ? 'active' : ''
-              }`}
-            />
-          </div>
-
-          <div className={containerClasses} ref={this.listContainer}>
             {this.props.search && isActive && (
               <input
                 id={name}
                 ref={this.input}
-                className={listInputClasses}
+                className={`gc-search__input ${isActive ? 'active' : ''}`}
                 type="text"
                 value={this.state.searchTerm}
                 onChange={e => this.onSearchInputChange(e)}
@@ -336,6 +309,12 @@ class GCMultiSelectFilter extends Component {
               />
             )}
 
+            <GCIcon
+              kind="chevronIconBold"
+              extendedClassNames={`gc-drop-down__chevron ${
+                isActive ? 'active' : ''
+              }`}
+            />
             {this.props.tooltip && (
               <div
                 role="button"
@@ -351,75 +330,72 @@ class GCMultiSelectFilter extends Component {
                 />
               </div>
             )}
-            {isActive && (
-              <div className="filter-drop-down ">
-                <span
-                  className="gc-drop-down__value__text gc-drop-down__value__text--input"
-                  ref={this.selectContainer}
-                >
-                  Selected: {this.renderTags(value)}
-                </span>
-                <div className="dotted" />
-                <ul
-                  role="listbox"
-                  ref={this.optionList}
-                  className="gc-drop-down__el gc-select__list"
-                >
-                  {options.length > 0 ? (
-                    options.map((opt, i) => (
-                      <li
-                        role="option"
-                        id={`${this.props.name}_option_${i}`}
-                        key={`${this.props.name}_option_${i}`}
-                        className={this.computeItemClassList(
-                          value,
-                          opt.value,
-                          i
-                        )}
-                        onMouseDown={e => this.onOptionMouseDown(e, opt.value)}
-                      >
-                        {opt.label}
-                        {value.includes(opt.value) && (
-                          <GCIcon
-                            kind="tickIcon"
-                            extendedClassNames="gc-filter-icon"
-                          />
-                        )}
-                      </li>
-                    ))
-                  ) : (
-                    <li
-                      key={`$noOpt_select_${name}`}
-                      className="gc-select__list-item gc-select__list-item--no-opt"
-                    >
-                      <i>There are no available options</i>
-                    </li>
-                  )}
-                </ul>
-                <div className="dotted" />
-                <div className="gc-filter__dropdown__controls">
-                  <button
-                    type="button"
-                    ref={this.saveButton}
-                    className="btn btn--primary gc-filter-primary-button"
-                    onClick={e => this.onSubmitClick(e)}
-                    aria-label="submit filter item"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    ref={this.clearButton}
-                    className="gc-tag__btn gc-btn--icon-sml underline"
-                    onClick={() => this.onClearClick()}
-                    aria-label="remove filter item"
-                  >
-                    Clear
-                  </button>
-                </div>
-              </div>
-            )}
           </div>
+
+          {isActive && (
+            <div className="filter-drop-down">
+              <span
+                className="gc-drop-down__value__text gc-drop-down__value__text--input"
+                ref={this.selectContainer}
+              >
+                Selected: {this.renderTags(value)}
+              </span>
+              <div className="dotted" />
+              <ul
+                role="listbox"
+                ref={this.optionList}
+                className="gc-drop-down__el gc-select__list"
+              >
+                {options.length > 0 ? (
+                  options.map((opt, i) => (
+                    <li
+                      role="option"
+                      id={`${this.props.name}_option_${i}`}
+                      key={`${this.props.name}_option_${i}`}
+                      className={this.computeItemClassList(value, opt.value, i)}
+                      onMouseDown={e => this.onOptionMouseDown(e, opt.value)}
+                    >
+                      {opt.label}
+                      {value.includes(opt.value) && (
+                        <GCIcon
+                          kind="tickIcon"
+                          extendedClassNames="gc-filter-icon"
+                        />
+                      )}
+                    </li>
+                  ))
+                ) : (
+                  <li
+                    key={`$noOpt_select_${name}`}
+                    className="gc-select__list-item gc-select__list-item--no-opt"
+                  >
+                    <i>There are no available options</i>
+                  </li>
+                )}
+              </ul>
+              <div className="dotted" />
+              <div className="gc-filter__dropdown__controls">
+                <button
+                  type="button"
+                  ref={this.saveButton}
+                  className="btn btn--primary gc-filter-primary-button"
+                  onClick={e => this.onSubmitClick(e)}
+                  aria-label="submit filter item"
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  ref={this.clearButton}
+                  className="gc-tag__btn gc-btn--icon-sml underline"
+                  onClick={() => this.onClearClick()}
+                  aria-label="remove filter item"
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );

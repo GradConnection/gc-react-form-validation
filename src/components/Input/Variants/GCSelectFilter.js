@@ -34,7 +34,6 @@ class GCSelectFilter extends Component {
     this.select = React.createRef();
     this.input = React.createRef();
     this.optionList = React.createRef();
-    this.listContainer = React.createRef();
     this.selectContainer = React.createRef();
     this.infoIcon = React.createRef();
   }
@@ -237,21 +236,6 @@ class GCSelectFilter extends Component {
       'gc-input__el--active': isActive
     });
 
-    const containerClasses = classNames('gc-select__list-container', {
-      'gc-select__list-container__empty': isEmpty(value)
-    });
-
-    const listInputClasses = classNames(
-      'gc-drop-down__value__text',
-      'gc-select__input',
-      'gc-drop-down__value__text__autoselect',
-      {
-        'gc-drop-down__value__text--input gc-drop-down__value__text--input-inline': !isEmpty(
-          value
-        ),
-        'gc-input__el': isEmpty(value)
-      }
-    );
     return (
       <div
         className="gc-select__single-container"
@@ -263,17 +247,17 @@ class GCSelectFilter extends Component {
         role="button"
         tabIndex={disabled ? '-1' : '0'}
       >
-         {this.props.tooltip &&
-              isActive &&
-              isInformationActive &&
-              this.props.tooltip && (
-                <GCTooltip
-                  content={this.props.tooltip}
-                  name={`${name}tooltip`}
-                  active={isInformationActive}
-                  toggleTooltip={() => this.onInformationClick()}
-                />
-              )}
+        {this.props.tooltip &&
+          isActive &&
+          isInformationActive &&
+          this.props.tooltip && (
+            <GCTooltip
+              content={this.props.tooltip}
+              name={`${name}tooltip`}
+              active={isInformationActive}
+              toggleTooltip={() => this.onInformationClick()}
+            />
+          )}
         <div id={`gc-drop-down_${name}`} className={selectClasses}>
           <div
             id={`gc-input-multi_${name}`}
@@ -295,20 +279,15 @@ class GCSelectFilter extends Component {
             />
             {!isEmpty(value) && <div className="gc-filter--badge">1</div>}
             {!isEmpty(value) && !isActive && (
-              <div className="gc-filter--value">
+              <p className="gc-filter--value">
                 {options.find(opt => value === opt.value)?.label}
-              </div>
+              </p>
             )}
-
-            <GCIcon kind="chevronIconBold" extendedClassNames={`gc-drop-down__chevron ${isActive ? 'active' : ''}`} />
-          </div>
-
-          <div className={containerClasses} ref={this.listContainer}>
             {this.props.search && isActive && (
               <input
                 id={name}
                 ref={this.input}
-                className={listInputClasses}
+                className={'gc-search__input'}
                 type="text"
                 value={this.state.searchTerm}
                 onChange={e => this.onSearchInputChange(e)}
@@ -316,6 +295,14 @@ class GCSelectFilter extends Component {
                 autoComplete={autoComplete}
               />
             )}
+
+            <GCIcon
+              kind="chevronIconBold"
+              extendedClassNames={`gc-drop-down__chevron ${
+                isActive ? 'active' : ''
+              }`}
+            />
+
             {this.props.tooltip && (
               <div
                 role="button"
@@ -331,9 +318,10 @@ class GCSelectFilter extends Component {
                 />
               </div>
             )}
+          </div>
 
-            {isActive && (
-            <div className="filter-drop-down">
+          {isActive && (
+            <div className={`filter-drop-down`}>
               <span
                 className="gc-drop-down__value__text gc-drop-down__value__text--input"
                 ref={this.selectContainer}
@@ -374,8 +362,7 @@ class GCSelectFilter extends Component {
                 )}
               </ul>
             </div>
-            )}
-          </div>
+          )}
         </div>
       </div>
     );

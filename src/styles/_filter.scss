@@ -3,13 +3,20 @@
 
   .gc-select__multi-container,
   .gc-select__single-container  {
-    .gc-select__list-container {
-      position: relative;
-      .gc-select__input {
-        padding: 0 20px 16px 20px;
+      .gc-search__input {
+        width: 80%;
+        padding: 0;
         border: none;
+        background-color: transparent;
+        font-size: 1.4rem;
+        color: $black;
+        line-height: 2rem;
+        z-index: 1;
+
+        &:focus {
+          outline: none;
+        }
       }
-    }
   }
 
   .gc-tooltip {
@@ -19,38 +26,54 @@
     bottom: 100%;
   }
 
-  .gc-input__el {  
-    height: 100%;
+  .gc-input__el {
+    padding: 0;
     border: none;
-    display: inline-block;
-    padding: 0px;
+    height: 100%;
+    background-color: $white;
+    transition: background-color 300ms ease-in-out; 
+
+    :hover {
+      background-color: $grey-tertiary;
+      transition: background-color 300ms ease-in-out; 
+    }
+
+    &.gc-input__el--active {
+      :hover {
+        background-color: $white;
+      }
+    }
 
     .gc-drop-down__el {
-      background-color: transparent;
+      background-color: $white;
     }
 
     .gc-drop-down__value {
+      height: 68px;
       display: flex;
-      justify-content: normal; 
-      padding-top: 25px;
-      padding-left: 20px;
-      padding-bottom: 25px;
+      align-items: center;
+      justify-content: normal;
+      align-items: center;
+      padding: 23px 20px;
+      transition: all 300ms ease-in-out; 
     }
 
     .gc-drop-down__value--shrink {
+      height: 68px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      margin-bottom: 4px;
-      padding: 15px 20px 0 20px;
+      padding: 15px 20px;
       font-size: 1.2rem;
       cursor: pointer;
-      .gc-filter--badge {
-        margin-bottom: -4px;
-      }
+      transition: all 300ms ease-in-out; 
     }
     
     .gc-filter--badge {
+      display: flex;
+      align-items: center;
+      line-height: 0;
+      height: 1.8em;
       margin-left: 10px;
       padding: 2px 5px;
       font-size: 1rem;
@@ -61,14 +84,14 @@
     }
 
     .gc-filter--value {
-      font-size: 1.4rem;
-      color: $black;
-      white-space: nowrap;
-      width: 95%;
+      width: 90%;
       overflow: hidden;
       text-overflow: ellipsis;
-      padding: 5px 0 0 0;
-      border: none;
+      white-space: nowrap;
+      margin: 0;
+      font-size: 1.4rem;
+      color: $black;
+      line-height: 2rem;
     }
 
     .gc-filter__label-wrapper {
@@ -82,6 +105,7 @@
       box-shadow: 0.3em 0.3em 0.8em rgba(41, 43, 45, 0.2);
       padding: 10px;
       z-index: 10;
+      margin-top: -1px;
       margin-left: 30px;
     } 
     
@@ -107,7 +131,7 @@
         &.gc-select__list-item--hovered {
           padding-left: 10px;
           padding-right: 10px;
-          background-color: mix($gc-form-light-grey, white, 50%);
+          background-color: $gc-form-lighter-grey;
         }
       }
     }
@@ -116,8 +140,7 @@
       position: absolute;
       z-index: 2;
       right: 20px;
-      // TODO uncomment for transition on filter dropdown arrow
-      // transition: all 300ms ease-in-out;
+      transition: all 300ms ease-in-out;
 
       svg {
         width: 1rem;
@@ -126,19 +149,26 @@
       &:focus {outline: 0;}
 
       &.active {
-        transform: rotate(180deg);
-        // TODO uncomment for transition on filter dropdown arrow
-        // transition: all 300ms ease-in-out;
+        transform: scaleY(-1);
+        transition: all 300ms ease-in-out;
       }
     }
 
     .filter_icon_div{
       position: absolute;
       z-index: 2;
-      margin-top: -42px;
+      top: 25px;
       right: 40px; 
+      line-height: 0;
+
+      &:hover {
+        background-color: $white;
+      }
+
       :focus {
-        outline: 0;
+        outline: none;
+        border: 1px solid $gc-form-grey;
+        border-radius: 50%;
       }
     }
 
@@ -156,12 +186,12 @@
   }
   
   .gc-label {
+    margin-bottom: 0;
+    cursor: pointer;
     &__text {
+      line-height: 2rem;
       font-weight: 400;
     }
-    margin:0;
-    display: inline-block;
-    cursor: pointer;
   } 
 
   .dotted{
