@@ -229,7 +229,7 @@ class GCSelectFilter extends Component {
   }
 
   render() {
-    const { value, name, autoComplete, label, required, disabled } = this.props;
+    const { value, name, label, required, disabled } = this.props;
     const { isActive, isInformationActive, options, placeholder } = this.state;
 
     const selectClasses = classNames('gc-input__el', {
@@ -292,7 +292,7 @@ class GCSelectFilter extends Component {
                 value={this.state.searchTerm}
                 onChange={e => this.onSearchInputChange(e)}
                 placeholder={placeholder}
-                autoComplete={autoComplete}
+                autoComplete="chrome-off"
               />
             )}
 
@@ -321,7 +321,7 @@ class GCSelectFilter extends Component {
           </div>
 
           {isActive && (
-            <div className={`filter-drop-down`}>
+            <div className="filter-drop-down">
               <span
                 className="gc-drop-down__value__text gc-drop-down__value__text--input"
                 ref={this.selectContainer}
@@ -380,7 +380,7 @@ GCSelectFilter.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   handleInputChange: PropTypes.func.isRequired,
   handleInputValidation: PropTypes.func.isRequired,
-  autoComplete: PropTypes.string,
+  disabled: PropTypes.bool,
   label: PropTypes.string,
   tooltip: PropTypes.string,
   required: PropTypes.bool

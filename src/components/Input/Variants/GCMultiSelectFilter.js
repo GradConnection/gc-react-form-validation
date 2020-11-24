@@ -248,7 +248,7 @@ class GCMultiSelectFilter extends Component {
   }
 
   render() {
-    const { value, name, autoComplete, label, required, disabled } = this.props;
+    const { value, name, label, required, disabled } = this.props;
     const { isActive, isInformationActive, options, placeholder } = this.state;
 
     const selectClasses = classNames('gc-input__el', {
@@ -305,7 +305,7 @@ class GCMultiSelectFilter extends Component {
                 value={this.state.searchTerm}
                 onChange={e => this.onSearchInputChange(e)}
                 placeholder={placeholder}
-                autoComplete={autoComplete}
+                autoComplete="chrome-off"
               />
             )}
 
@@ -413,7 +413,6 @@ GCMultiSelectFilter.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   handleInputChange: PropTypes.func.isRequired,
   handleInputValidation: PropTypes.func.isRequired,
-  autoComplete: PropTypes.string,
   label: PropTypes.string,
   tooltip: PropTypes.string,
   required: PropTypes.bool,
