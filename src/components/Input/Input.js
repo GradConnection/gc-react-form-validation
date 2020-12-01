@@ -145,7 +145,7 @@ class Input extends Component {
 
     const inputClasses = classnames(`gc-input--${type}`, {
       'gc-input': !isFilter,
-      filter: isFilter,
+      'gc-filter': isFilter,
       'gc-input--invalid': showValidationMessage,
       'gc-input--disabled': disabled,
       [extendedClassNames]: extendedClassNames

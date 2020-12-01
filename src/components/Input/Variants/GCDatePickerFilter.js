@@ -15,7 +15,6 @@ class GCDatePickerFilter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      format: props.showTime ? 'YYYY-MM-DD HH:mm Z' : 'YYYY-MM-DD',
       isActive: false
     };
   }
@@ -31,6 +30,7 @@ class GCDatePickerFilter extends Component {
       label,
       required
     } = this.props;
+    const format = showTime ? 'YYYY-MM-DD HH:mm Z' : 'YYYY-MM-DD'
     const { isActive } = this.state;
     const sanitisedFrom = from && new Date(new Date(from).setHours(0, 0, 0, 0));
     const sanitisedTo = to && new Date(new Date(to).setHours(23, 59, 59, 59));
@@ -47,7 +47,7 @@ class GCDatePickerFilter extends Component {
     );
 
     const onChange = value => {
-      const val = value ? value.format(this.state.format) : '';
+      const val = value ? value.format(format) : '';
       this.props.handleInputValidation(val);
       this.props.onInputChange(val);
     };
@@ -77,7 +77,7 @@ class GCDatePickerFilter extends Component {
         disabled={disabled}
         calendar={
           <Calendar
-            format={this.state.format}
+            format={format}
             dateInputPlaceholder={placeholder}
             disabledDate={from || to ? disableDates : null}
             timePicker={showTime ? timePickerElement : null}
@@ -101,20 +101,7 @@ class GCDatePickerFilter extends Component {
                   activeShrink={!!value}
                 />
                 {!!value && (
-                  <input
-                    tabIndex={-1}
-                    id={name}
-                    placeholder={placeholder}
-                    disabled={disabled}
-                    readOnly
-                    type="text"
-                    value={
-                      value
-                        ? moment(new Date(value)).format(this.state.format)
-                        : ''
-                    }
-                    className="gc-filter--value"
-                  />
+                  <p className="gc-filter--value">{moment(new Date(value)).format(format)}</p>
                 )}
               </div>
               <GCIcon kind="calendarIcon" extendedClassNames="input-icon" />
@@ -129,10 +116,6 @@ class GCDatePickerFilter extends Component {
 GCDatePickerFilter.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   value: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
-  defaultValue: PropTypes.oneOfType([
-    PropTypes.instanceOf(Date),
-    PropTypes.string
-  ]),
   handleInputValidation: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
   name: PropTypes.string,
@@ -142,10 +125,6 @@ GCDatePickerFilter.propTypes = {
   to: PropTypes.string,
   label: PropTypes.string,
   required: PropTypes.bool
-};
-
-GCDatePickerFilter.defaultProps = {
-  defaultValue: ''
 };
 
 export { GCDatePickerFilter };

@@ -34,12 +34,11 @@ class GCSelectFilter extends Component {
     this.select = React.createRef();
     this.input = React.createRef();
     this.optionList = React.createRef();
-    this.listContainer = React.createRef();
     this.selectContainer = React.createRef();
     this.infoIcon = React.createRef();
   }
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevState.isActive === false && this.state.isActive === true) {
       this.input.current.focus();
     }
@@ -230,28 +229,13 @@ class GCSelectFilter extends Component {
   }
 
   render() {
-    const { value, name, autoComplete, label, required, disabled } = this.props;
+    const { value, name, label, required, disabled } = this.props;
     const { isActive, isInformationActive, options, placeholder } = this.state;
 
     const selectClasses = classNames('gc-input__el', {
       'gc-input__el--active': isActive
     });
 
-    const containerClasses = classNames('gc-select__list-container', {
-      'gc-select__list-container__empty': isEmpty(value)
-    });
-
-    const listInputClasses = classNames(
-      'gc-drop-down__value__text',
-      'gc-select__input',
-      'gc-drop-down__value__text__autoselect',
-      {
-        'gc-drop-down__value__text--input gc-drop-down__value__text--input-inline': !isEmpty(
-          value
-        ),
-        'gc-input__el': isEmpty(value)
-      }
-    );
     return (
       <div
         className="gc-select__single-container"
@@ -263,17 +247,17 @@ class GCSelectFilter extends Component {
         role="button"
         tabIndex={disabled ? '-1' : '0'}
       >
-         {this.props.tooltip &&
-              isActive &&
-              isInformationActive &&
-              this.props.tooltip && (
-                <GCTooltip
-                  content={this.props.tooltip}
-                  name={`${name}tooltip`}
-                  active={isInformationActive}
-                  toggleTooltip={() => this.onInformationClick()}
-                />
-              )}
+        {this.props.tooltip &&
+          isActive &&
+          isInformationActive &&
+          this.props.tooltip && (
+            <GCTooltip
+              content={this.props.tooltip}
+              name={`${name}tooltip`}
+              active={isInformationActive}
+              toggleTooltip={() => this.onInformationClick()}
+            />
+          )}
         <div id={`gc-drop-down_${name}`} className={selectClasses}>
           <div
             id={`gc-input-multi_${name}`}
@@ -295,27 +279,30 @@ class GCSelectFilter extends Component {
             />
             {!isEmpty(value) && <div className="gc-filter--badge">1</div>}
             {!isEmpty(value) && !isActive && (
-              <div className="gc-filter--value">
+              <p className="gc-filter--value">
                 {options.find(opt => value === opt.value)?.label}
-              </div>
+              </p>
             )}
-
-            <GCIcon kind="chevronIconBold" extendedClassNames={`gc-drop-down__chevron ${isActive ? 'active' : ''}`} />
-          </div>
-
-          <div className={containerClasses} ref={this.listContainer}>
             {this.props.search && isActive && (
               <input
                 id={name}
                 ref={this.input}
-                className={listInputClasses}
+                className={'gc-search__input'}
                 type="text"
                 value={this.state.searchTerm}
                 onChange={e => this.onSearchInputChange(e)}
                 placeholder={placeholder}
-                autoComplete={autoComplete}
+                autoComplete="chrome-off"
               />
             )}
+
+            <GCIcon
+              kind="chevronIconBold"
+              extendedClassNames={`gc-drop-down__chevron ${
+                isActive ? 'active' : ''
+              }`}
+            />
+
             {this.props.tooltip && (
               <div
                 role="button"
@@ -331,8 +318,9 @@ class GCSelectFilter extends Component {
                 />
               </div>
             )}
+          </div>
 
-            {isActive && (
+          {isActive && (
             <div className="filter-drop-down">
               <span
                 className="gc-drop-down__value__text gc-drop-down__value__text--input"
@@ -374,8 +362,7 @@ class GCSelectFilter extends Component {
                 )}
               </ul>
             </div>
-            )}
-          </div>
+          )}
         </div>
       </div>
     );
@@ -393,7 +380,7 @@ GCSelectFilter.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   handleInputChange: PropTypes.func.isRequired,
   handleInputValidation: PropTypes.func.isRequired,
-  autoComplete: PropTypes.string,
+  disabled: PropTypes.bool,
   label: PropTypes.string,
   tooltip: PropTypes.string,
   required: PropTypes.bool
