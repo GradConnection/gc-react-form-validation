@@ -131,6 +131,10 @@ class GCMultiSelectFilter extends Component {
   onTagCrossBtnClick(e, value) {
     e.preventDefault();
     const newValueArray = this.removeItemFromValueArray(value);
+    if (isEmpty(newValueArray)) {
+      // Need to focus on input if no value is selected, otherwise blur wont work
+      this.input.current.focus();
+    }
     this.props.handleInputChange(newValueArray);
   }
 

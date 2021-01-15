@@ -126,6 +126,8 @@ class GCSelectFilter extends Component {
 
   onTagCrossBtnClick(e) {
     e.preventDefault();
+    // Need to focus on input if no value is selected, otherwise blur wont work
+    this.input.current.focus();
     this.props.handleInputChange();
   }
 
@@ -287,7 +289,7 @@ class GCSelectFilter extends Component {
               <input
                 id={name}
                 ref={this.input}
-                className={'gc-search__input'}
+                className="gc-search__input"
                 type="text"
                 value={this.state.searchTerm}
                 onChange={e => this.onSearchInputChange(e)}
