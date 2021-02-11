@@ -233,7 +233,8 @@ class GCMultiSelectFilter extends Component {
   onClearClick() {
     this.setState({
       ...this.searchReset,
-      options: this.props.options
+      options: this.props.options,
+      isActive: false
     });
     this.props.handleInputChange([]);
   }
