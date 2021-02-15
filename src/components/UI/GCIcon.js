@@ -273,7 +273,7 @@ class GCIcon extends React.Component {
   }
 
   render() {
-    const { kind, extendedClassNames, tabIndex, onKeyDown } = this.props;
+    const { kind, extendedClassNames, tabIndex, onKeyDown, onClick, passedRef } = this.props;
     return (
       <span
         className={
@@ -281,6 +281,8 @@ class GCIcon extends React.Component {
         }
         tabIndex={typeof tabIndex === 'number' ? tabIndex : -1}
         onKeyDown={onKeyDown}
+        onClick={onClick}
+        ref = {passedRef}
       >
         {this.renderIcon(kind)}
       </span>

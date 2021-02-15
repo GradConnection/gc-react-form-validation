@@ -38,6 +38,7 @@ class GCMultiSelectFilter extends Component {
     this.clearButton = React.createRef();
     this.saveButton = React.createRef();
     this.infoIcon = React.createRef();
+    this.toggleIcon = React.createRef();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -128,6 +129,11 @@ class GCMultiSelectFilter extends Component {
     });
   }
 
+  onToggleIconClick(){
+    this.setState(state => ({isActive: !state.isActive}));
+    this.props.handleInputValidation(this.props.value);
+  }
+
   onTagCrossBtnClick(e, value) {
     e.preventDefault();
     const newValueArray = this.removeItemFromValueArray(value);
@@ -138,10 +144,12 @@ class GCMultiSelectFilter extends Component {
     this.props.handleInputChange(newValueArray);
   }
 
-  handleOnFocusEffect() {
-    this.setState({
-      isActive: true
-    });
+  handleOnFocusEffect(e) {
+    if(!(this.toggleIcon.current.contains(e.target) || this.toggleIcon.current === e.target)){
+      this.setState({
+        isActive: true
+      });
+    }
   }
 
   handleOnBlurEffect(e) {
@@ -263,7 +271,7 @@ class GCMultiSelectFilter extends Component {
     return (
       <div
         className="gc-select__multi-container"
-        onFocus={() => !disabled && this.handleOnFocusEffect()}
+        onFocus={(e) => !disabled && this.handleOnFocusEffect(e)}
         onBlur={e => !disabled && this.handleOnBlurEffect(e)}
         onKeyDown={e => !disabled && this.handleKeyPress(e)}
         ref={this.select}
@@ -319,6 +327,8 @@ class GCMultiSelectFilter extends Component {
               extendedClassNames={`gc-drop-down__chevron ${
                 isActive ? 'active' : ''
               }`}
+              onClick={() => this.onToggleIconClick()}
+              passedRef={this.toggleIcon}
             />
             {this.props.tooltip && (
               <div

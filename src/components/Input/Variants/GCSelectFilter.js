@@ -36,6 +36,7 @@ class GCSelectFilter extends Component {
     this.optionList = React.createRef();
     this.selectContainer = React.createRef();
     this.infoIcon = React.createRef();
+    this.toggleIcon = React.createRef();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -131,10 +132,12 @@ class GCSelectFilter extends Component {
     this.props.handleInputChange();
   }
 
-  handleOnFocusEffect() {
-    this.setState({
-      isActive: true
-    });
+  handleOnFocusEffect(e) {
+    if(!(this.toggleIcon.current.contains(e.target) || e.target == this.toggleIcon.current)){
+      this.setState({
+        isActive: true
+      });
+    }
   }
 
   handleOnBlurEffect(e) {
@@ -230,6 +233,11 @@ class GCSelectFilter extends Component {
     });
   }
 
+  onToggleIconClick(){
+      this.setState(state => ({isActive: !state.isActive}));
+      this.props.handleInputValidation(this.props.value);
+  }
+
   render() {
     const { value, name, label, required, disabled } = this.props;
     const { isActive, isInformationActive, options, placeholder } = this.state;
@@ -241,7 +249,7 @@ class GCSelectFilter extends Component {
     return (
       <div
         className="gc-select__single-container"
-        onFocus={() => !disabled && this.handleOnFocusEffect()}
+        onFocus={(e) => !disabled && this.handleOnFocusEffect(e)}
         onBlur={e => !disabled && this.handleOnBlurEffect(e)}
         onKeyDown={e => !disabled && this.handleKeyPress(e)}
         onClick={e => !disabled && this.onInputClick(e)}
@@ -303,6 +311,8 @@ class GCSelectFilter extends Component {
               extendedClassNames={`gc-drop-down__chevron ${
                 isActive ? 'active' : ''
               }`}
+              passedRef={this.toggleIcon}
+              onClick={() => this.onToggleIconClick()}
             />
 
             {this.props.tooltip && (
