@@ -172,7 +172,8 @@ class Input extends Component {
               <span
                 className="gc-btn--icon gc-tooltip__icon"
                 onClick={this.onTooltipIconClick}
-                tabIndex={-1}
+                tabIndex={0}
+                onKeyPress={e=>e.key==="Enter" && this.onTooltipIconClick(e)}
               >
                 <GCIcon kind="infoIcon" />
               </span>

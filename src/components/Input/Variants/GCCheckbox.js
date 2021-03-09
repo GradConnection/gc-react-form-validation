@@ -79,7 +79,7 @@ class GCCheckbox extends Component {
           name={name}
           title={label}
           checked={!!value}
-          aria-checked={!!value}
+          aria-checked={!!value}      
           role="checkbox"
           onChange={(e) => e.preventDefault()}
           aria-label={label}
@@ -87,7 +87,7 @@ class GCCheckbox extends Component {
         <span
           className="gc-input__inline-icon gc-checkbox__icon"
           onClick={!disabled ? this.onSingleCheckboxClick : undefined}
-          tabIndex={0}
+          tabIndex={disabled? -1 : 0}
           onKeyPress={!disabled ? this.handleKeyPress : undefined}
         />
         <label

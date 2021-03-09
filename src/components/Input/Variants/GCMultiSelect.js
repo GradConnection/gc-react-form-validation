@@ -286,7 +286,7 @@ class GCMultiSelect extends Component {
   }
 
   removeItemFromValueArray(item) {
-    return this.props.value.filter(v => v !== item);
+    return Array.isArray(this.props.value)? this.props.value.filter(v => v !== item) : this.props.value;
   }
 
   addItemToValueArray(item) {
