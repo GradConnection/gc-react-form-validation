@@ -127,28 +127,18 @@ class GCMultiSelect extends Component {
   onEnterKeyPress(e) {
     e.preventDefault();
     const { options, index } = this.state;
-
-    this.setState(
-      {
-        ...this.searchReset,
-        options: this.props.options
-      },
-      () => {
-        if (index > -1 && options[index] && options[index].value) {
-          this.handleInputChange(options[index].value);
-        } else if (
-          index > -1 &&
-          index + 1 > options.length &&
-          options.length >= 1 &&
-          options[0] &&
-          options[0].value
-        ) {
-          this.handleInputChange(options[0].value);
-        } else {
-          this.setState({ index: 0 });
-        }
-      }
-    );
+    
+    if (index > -1 && options[index] && options[index].value) {
+      this.handleInputChange(options[index].value);
+    } else if (
+      index > -1 &&
+      index + 1 > options.length &&
+      options.length >= 1 &&
+      options[0] &&
+      options[0].value
+    ) {
+      this.handleInputChange(options[0].value);
+    }
   }
 
   onUpKeyPress(e) {
@@ -266,10 +256,6 @@ class GCMultiSelect extends Component {
   onOptionMouseDown(e, value) {
     e.preventDefault();
     this.handleInputChange(value);
-    this.setState({
-      ...this.searchReset,
-      options: this.props.options
-    });
   }
 
   handleInputChange(newValue) {
@@ -281,7 +267,6 @@ class GCMultiSelect extends Component {
     } else {
       newValueArray = this.addItemToValueArray(newValue);
     }
-    this.setState({ index: 0 });
     this.props.handleInputChange(newValueArray);
   }
 
