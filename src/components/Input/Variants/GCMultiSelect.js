@@ -127,18 +127,28 @@ class GCMultiSelect extends Component {
   onEnterKeyPress(e) {
     e.preventDefault();
     const { options, index } = this.state;
-    
-    if (index > -1 && options[index] && options[index].value) {
-      this.handleInputChange(options[index].value);
-    } else if (
-      index > -1 &&
-      index + 1 > options.length &&
-      options.length >= 1 &&
-      options[0] &&
-      options[0].value
-    ) {
-      this.handleInputChange(options[0].value);
-    }
+
+    this.setState(this.props.persistSearch?
+      {
+        ...this.searchReset,
+        options: this.props.options
+      } : {},
+      () => {
+        if (index > -1 && options[index] && options[index].value) {
+          this.handleInputChange(options[index].value);
+        } else if (
+          index > -1 &&
+          index + 1 > options.length &&
+          options.length >= 1 &&
+          options[0] &&
+          options[0].value
+        ) {
+          this.handleInputChange(options[0].value);
+        } else if(!this.props.persistSearch) {
+          this.setState({ index: 0 });
+        }
+      }
+    );
   }
 
   onUpKeyPress(e) {
@@ -256,16 +266,25 @@ class GCMultiSelect extends Component {
   onOptionMouseDown(e, value) {
     e.preventDefault();
     this.handleInputChange(value);
+    if(!this.props.persistSearch){
+      this.setState({
+        ...this.searchReset,
+        options: this.props.options
+      });
+    }
   }
 
   handleInputChange(newValue) {
-    const { value } = this.props;
+    const { value, persistSearch } = this.props;
 
     let newValueArray = [];
     if (value.includes(newValue)) {
       newValueArray = this.removeItemFromValueArray(newValue);
     } else {
       newValueArray = this.addItemToValueArray(newValue);
+    }
+    if(!persistSearch){
+      this.setState({ index: 0 });
     }
     this.props.handleInputChange(newValueArray);
   }
@@ -427,7 +446,8 @@ GCMultiSelect.propTypes = {
   handleInputValidation: PropTypes.func.isRequired,
   selectAll: PropTypes.bool,
   selectAllValue: PropTypes.array,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  persistSearch: PropTypes.bool
 };
 
 GCMultiSelect.defaultProps = {
