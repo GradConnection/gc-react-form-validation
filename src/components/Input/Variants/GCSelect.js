@@ -27,6 +27,7 @@ class GCSelect extends Component {
     this.textInput = React.createRef();
     this.select = React.createRef();
     this.optionList = React.createRef();
+    this.toggleIcon = React.createRef();
 
     this.onSearchInputChange = this.onSearchInputChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -125,7 +126,7 @@ class GCSelect extends Component {
     const { index } = this.state;
 
     e.preventDefault();
-    if (index === 0) this.input.current.focus();
+    if (index === 0) this.textInput.current.focus();
     this.optionList.current.scrollTo({
       left: 0,
       top:
@@ -233,6 +234,16 @@ class GCSelect extends Component {
     return isEmpty(value) ? '' : getLabel(value, this.props.options);
   }
 
+  handleOuterBoxClick(e){
+    e.preventDefault()
+    if(!this.state.isActive){
+      this.textInput.current.focus()
+    }
+    else{
+      this.toggleIcon.current.focus()
+    }
+  }
+
   render() {
     const { value, name, disabled, autoComplete } = this.props;
     const {
@@ -254,7 +265,8 @@ class GCSelect extends Component {
       'gc-drop-down__value__text gc-drop-down__value__text__autoselect gc-drop-down__value__text--input';
 
     return (
-      <div className={selectClasses} ref={this.select}>
+      // On mousedown event is used instead of onclick to fire before and prevent input onfocus from firing
+      <div className={selectClasses} ref={this.select} onMouseDown={(e) => this.handleOuterBoxClick(e)}> 
         <div
           id={`gc-drop-down_${name}`}
           aria-label={name}
@@ -281,7 +293,7 @@ class GCSelect extends Component {
             readOnly={!isSearchActive}
             autoComplete={autoComplete}
           />
-          <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" />
+          <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" passedRef={this.toggleIcon}/>
         </div>
 
         {isActive && !this.props.disabled && (
