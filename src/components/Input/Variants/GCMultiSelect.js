@@ -32,6 +32,7 @@ class GCMultiSelect extends Component {
     this.input = React.createRef();
     this.optionList = React.createRef();
     this.listContainer = React.createRef();
+    this.toggleIcon = React.createRef();
 
     this.onSearchInputChange = this.onSearchInputChange.bind(this);
 
@@ -42,7 +43,6 @@ class GCMultiSelect extends Component {
 
     this.onTagCrossBtnClick = this.onTagCrossBtnClick.bind(this);
     this.onInputClick = this.onInputClick.bind(this);
-    this.onContainerMouseDown = this.onContainerMouseDown.bind(this);
   }
 
   componentDidMount() {
@@ -73,7 +73,7 @@ class GCMultiSelect extends Component {
   }
 
   handleWindowClick(e) {
-    if (!this.select.current.contains(e.target) && this.state.isFocussed) {
+    if (!this.props.search && !this.select.current.contains(e.target) && this.state.isFocussed) {
       this.setState({
         isActive: false,
         isFocussed: false,
@@ -102,12 +102,6 @@ class GCMultiSelect extends Component {
         });
       }
     }
-
-    if (!isActive && isFocussed) {
-      if (e.keyCode === 40 || e.keyCode === 13) {
-        this.activateDropDown();
-      }
-    }
   }
 
   activateDropDown() {
@@ -125,14 +119,18 @@ class GCMultiSelect extends Component {
   }
 
   onEnterKeyPress(e) {
+    const focusedEl = document.activeElement
+    if(focusedEl.classList.contains('gc-tag__btn')){
+      return;
+    }
     e.preventDefault();
     const { options, index } = this.state;
 
-    this.setState(
+    this.setState(!this.props.persistSearch?
       {
         ...this.searchReset,
         options: this.props.options
-      },
+      } : {},
       () => {
         if (index > -1 && options[index] && options[index].value) {
           this.handleInputChange(options[index].value);
@@ -144,7 +142,7 @@ class GCMultiSelect extends Component {
           options[0].value
         ) {
           this.handleInputChange(options[0].value);
-        } else {
+        } else if(!this.props.persistSearch) {
           this.setState({ index: 0 });
         }
       }
@@ -251,13 +249,14 @@ class GCMultiSelect extends Component {
       if (!this.state.isActive) {
         this.setState({
           isFocussed: true,
-          isActive: true
+          isActive: true,
+          ...this.searchActivate
         });
       } else {
-        this.setState(this.searchActivate);
+        this.toggleIcon.current.focus()
       }
     } else if (this.state.isActive) {
-      this.setState({ isActive: false });
+      this.setState({ isActive: false, isFocussed: false });
     } else {
       this.setState({ isActive: true, isFocussed: true });
     }
@@ -266,14 +265,16 @@ class GCMultiSelect extends Component {
   onOptionMouseDown(e, value) {
     e.preventDefault();
     this.handleInputChange(value);
-    this.setState({
-      ...this.searchReset,
-      options: this.props.options
-    });
+    if(!this.props.persistSearch){
+      this.setState({
+        ...this.searchReset,
+        options: this.props.options
+      });
+    }
   }
 
   handleInputChange(newValue) {
-    const { value } = this.props;
+    const { value, persistSearch } = this.props;
 
     let newValueArray = [];
     if (value.includes(newValue)) {
@@ -281,7 +282,9 @@ class GCMultiSelect extends Component {
     } else {
       newValueArray = this.addItemToValueArray(newValue);
     }
-    this.setState({ index: 0 });
+    if(!persistSearch){
+      this.setState({ index: 0 });
+    }
     this.props.handleInputChange(newValueArray);
   }
 
@@ -311,10 +314,6 @@ class GCMultiSelect extends Component {
         {getLabel(value, this.props.options)}
       </GCTag>
     ));
-  }
-
-  onContainerMouseDown(e) {
-    this.textInput.current.focus();
   }
 
   render() {
@@ -351,7 +350,6 @@ class GCMultiSelect extends Component {
           id={`gc-drop-down_${name}`}
           className={selectClasses}
           ref={this.select}
-          onMouseDown={this.onContainerMouseDown}
         >
           <div
             id={`gc-input-multi_${name}`}
@@ -360,8 +358,8 @@ class GCMultiSelect extends Component {
             aria-haspopup="listbox"
             aria-label={`input ${name}`}
             className="gc-drop-down__value"
-            onFocus={this.handleOnFocusEffect}
-            onClick={this.onInputClick}
+            onMouseDown={this.onInputClick}
+            onFocus={()=>{!this.state.isActive? this.activateDropDown() : null}}
           >
             {isEmpty(value) && (
               <input
@@ -370,13 +368,12 @@ class GCMultiSelect extends Component {
                 value=""
                 placeholder={placeholder}
                 readOnly
-                onBlur={this.handleOnBlurEffect}
               />
             )}
             <span className="gc-drop-down__value__text gc-drop-down__value__text--input">
               {this.renderTags(value)}
             </span>
-            <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" />
+            <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" passedRef={this.toggleIcon}/>
           </div>
 
           <div className={containerClasses} ref={this.listContainer}>
@@ -392,7 +389,6 @@ class GCMultiSelect extends Component {
                 onBlur={this.handleOnBlurEffect}
                 placeholder={placeholder}
                 autoComplete={autoComplete}
-                // onkeydown={this.handleKeyDown}
               />
             )}
             {isActive && (
@@ -443,7 +439,8 @@ GCMultiSelect.propTypes = {
   handleInputValidation: PropTypes.func.isRequired,
   selectAll: PropTypes.bool,
   selectAllValue: PropTypes.array,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  persistSearch: PropTypes.bool
 };
 
 GCMultiSelect.defaultProps = {
