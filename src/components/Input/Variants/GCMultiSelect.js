@@ -126,7 +126,7 @@ class GCMultiSelect extends Component {
     e.preventDefault();
     const { options, index } = this.state;
 
-    this.setState(this.props.persistSearch?
+    this.setState(!this.props.persistSearch?
       {
         ...this.searchReset,
         options: this.props.options

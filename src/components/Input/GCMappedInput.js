@@ -159,6 +159,7 @@ const GCMappedInput = props => {
           placeholder={xtra.placeholder}
           handleInputChange={handleInputChange}
           handleInputValidation={handleInputValidation}
+          persistSearch={xtra.persistSearch}
           {...xtra}
         />
       ) : typeof onSearchInputFunction === 'function' ? (
