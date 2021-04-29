@@ -180,7 +180,7 @@ class GCSelect extends Component {
     this.setState({
       isActive: false,
       isFocussed: false,
-      ...this.resetSearch
+      ...this.searchReset
     });
     handleInputValidation(value);
   }
