@@ -200,7 +200,7 @@ class GCSelect extends Component {
   }
 
   onOptionMouseDown(e, value) {
-    e.preventDefault();
+    e.stopPropagation();
 
     const { handleInputChange, unselectable } = this.props;
 
