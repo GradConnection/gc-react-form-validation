@@ -198,6 +198,7 @@ const GCMappedInput = props => {
           max={xtra.max}
           handleInputChange={handleInputChange}
           defaultValue={defaultValue}
+          disabled={xtra.disabled}
         />
       );
     case 'time':
