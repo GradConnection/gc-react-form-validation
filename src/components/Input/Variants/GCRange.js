@@ -2,12 +2,13 @@ import React from 'react';
 import Slider from 'rc-slider';
 import PropTypes from 'prop-types';
 
-const GCRange = ({ min, max, handleInputChange, defaultValue, disabled }) => {
+const GCRange = ({ min, max, handleInputChange, defaultValue, disabled, onClick }) => {
   const { createSliderWithTooltip } = Slider;
   const Range = createSliderWithTooltip(Slider.Range);
   const defaultRange = Array.isArray(defaultValue) ? defaultValue : [min, max];
 
   return (
+    <span onClick={onClick}>
     <Range
       min={min}
       max={max}
@@ -19,6 +20,7 @@ const GCRange = ({ min, max, handleInputChange, defaultValue, disabled }) => {
       pushable
       disabled={disabled}
     />
+    </span>
   );
 };
 
