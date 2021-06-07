@@ -95,7 +95,7 @@ class GCCheckbox extends Component {
             required ? "gc-label__text--required" : ""
           }`}
         >
-          {ReactHtmlParser(label)}
+          {typeof label === 'object' ? label :ReactHtmlParser(label)}
         </label>
       </div>
     );
