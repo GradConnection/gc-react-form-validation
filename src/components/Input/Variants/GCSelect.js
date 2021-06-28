@@ -175,7 +175,13 @@ class GCSelect extends Component {
     }
   }
 
-  handleOnBlurEffect() {
+  onToggleIconClick() {
+    this.setState(state => ({ isActive: !state.isActive }));
+    this.props.handleInputValidation(this.props.value);
+    this.toggleIcon.current.focus();
+  }
+
+  handleOnBlurEffect(e) {
     const { handleInputValidation, value } = this.props;
     this.setState({
       isActive: false,
@@ -200,8 +206,6 @@ class GCSelect extends Component {
   }
 
   onOptionMouseDown(e, value) {
-    e.stopPropagation();
-
     const { handleInputChange, unselectable } = this.props;
 
     this.setState(
@@ -234,13 +238,10 @@ class GCSelect extends Component {
     return isEmpty(value) ? '' : getLabel(value, this.props.options);
   }
 
-  handleOuterBoxClick(e){
-    e.preventDefault()
-    if(!this.state.isActive){
-      this.textInput.current.focus()
-    }
-    else{
-      this.toggleIcon.current.focus()
+  handleOuterBoxClick(e) {
+    e.preventDefault();
+    if (!this.state.isActive) {
+      this.textInput.current.focus();
     }
   }
 
@@ -279,7 +280,7 @@ class GCSelect extends Component {
             ref={this.textInput}
             className={inputClasses}
             type="text"
-            tabIndex={disabled ? '-1' : '0'}
+            tabIndex={disabled ? -1 : 0}
             value={this.computeInputValue(
               value,
               options,
@@ -293,7 +294,12 @@ class GCSelect extends Component {
             readOnly={!isSearchActive}
             autoComplete={autoComplete}
           />
-          <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" passedRef={this.toggleIcon}/>
+          <GCIcon
+            kind="caretIcon"
+            extendedClassNames="gc-drop-down__caret"
+            passedRef={this.toggleIcon}
+            onClick={() => this.onToggleIconClick()}
+          />
         </div>
 
         {isActive && !this.props.disabled && (

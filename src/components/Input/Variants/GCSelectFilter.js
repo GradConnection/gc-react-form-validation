@@ -255,7 +255,7 @@ class GCSelectFilter extends Component {
         onClick={e => !disabled && this.onInputClick(e)}
         ref={this.select}
         role="button"
-        tabIndex={disabled ? '-1' : '0'}
+        tabIndex={disabled ? -1 : 0}
       >
         {this.props.tooltip &&
           isActive &&

@@ -276,7 +276,7 @@ class GCMultiSelectFilter extends Component {
         onKeyDown={e => !disabled && this.handleKeyPress(e)}
         ref={this.select}
         role="button"
-        tabIndex={disabled ? '-1' : '0'}
+        tabIndex={disabled ? -1 : 0}
       >
         {this.props.tooltip &&
           isActive &&

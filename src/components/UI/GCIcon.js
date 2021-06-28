@@ -281,8 +281,9 @@ class GCIcon extends React.Component {
         }
         tabIndex={typeof tabIndex === 'number' ? tabIndex : -1}
         onKeyDown={onKeyDown}
-        onClick={onClick}
-        ref = {passedRef}
+        onMouseDownCapture={onClick}
+        ref={passedRef}
+        role="button"
       >
         {this.renderIcon(kind)}
       </span>
