@@ -37,16 +37,28 @@ class GCSelect extends Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyPress);
+    document.addEventListener('onClick', this.handleKeyPress);
+
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyPress);
+    document.removeEventListener('onClick', this.handleKeyPress);
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { isSearchActive } = this.state;
     if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
       this.textInput.current.focus();
+    }
+    if(prevProps.value !== this.props.value){
+      this.handleOnBlurEffect();
+    }
+  }
+
+  handleOutsideClick(e) {
+    if (!this.select.current.contains(e.target)){
+      this.handleOnBlurEffect();
     }
   }
 
@@ -90,7 +102,7 @@ class GCSelect extends Component {
 
   onEnterKeyPress(e) {
     e.preventDefault();
-    const { value, handleInputChange, unselectable } = this.props;
+    const { value, handleInputChange,handleInputValidation, unselectable } = this.props;
     const { options, index } = this.state;
     this.setState(
       {
@@ -105,18 +117,17 @@ class GCSelect extends Component {
           index > -1 &&
           options[index] &&
           options[index].value !== value
+          
         ) {
           handleInputChange(options[index].value);
-        } else {
-          unselectable
-            ? handleInputChange('')
-            : handleInputChange(options[index].value);
-          this.setState({
-            isActive: false,
-            index: 0,
-            ...this.searchReset,
-            options: this.props.options
-          });
+          handleInputValidation(options[index].value);
+        } else if(unselectable){
+            handleInputChange('');
+            handleInputValidation('');
+        }
+        else{
+          handleInputChange(options[index].value);
+          handleInputValidation(options[index].value);
         }
       }
     );
@@ -156,6 +167,7 @@ class GCSelect extends Component {
   }
 
   handleOnFocusEffect(e) {
+    console.log('handleOnFocusEffect')
     e.preventDefault();
     this.setState({
       options: this.props.options
@@ -176,19 +188,21 @@ class GCSelect extends Component {
   }
 
   onToggleIconClick() {
+    console.log('onToggleIconClick');
     this.setState(state => ({ isActive: !state.isActive }));
-    this.props.handleInputValidation(this.props.value);
+    // this.props.handleInputValidation(this.props.value);
     this.toggleIcon.current.focus();
   }
 
-  handleOnBlurEffect(e) {
+  handleOnBlurEffect() {
+    console.log('handleOnBlurEffect');
     const { handleInputValidation, value } = this.props;
     this.setState({
       isActive: false,
       isFocussed: false,
       ...this.searchReset
     });
-    handleInputValidation(value);
+    // handleInputValidation(value);
   }
 
   onSearchInputChange(e) {
@@ -203,10 +217,11 @@ class GCSelect extends Component {
       index: 0,
       options: filteredOptions
     });
+    this.toggleIcon.current.focus();
   }
 
   onOptionMouseDown(e, value) {
-    const { handleInputChange, unselectable } = this.props;
+    const { handleInputChange,handleInputValidation, unselectable } = this.props;
 
     this.setState(
       {
@@ -217,8 +232,12 @@ class GCSelect extends Component {
       () => {
         if (value === this.props.value && unselectable) {
           handleInputChange('');
-        } else {
+          handleInputValidation('');
+        }
+        // Having this fixes active box not opening on click but causes error message delay
+        else {
           handleInputChange(value);
+          handleInputValidation(value);
         }
       }
     );
@@ -239,9 +258,12 @@ class GCSelect extends Component {
   }
 
   handleOuterBoxClick(e) {
+    console.log('handleOuterBoxClick');
     e.preventDefault();
     if (!this.state.isActive) {
       this.textInput.current.focus();
+    } else {
+      this.toggleIcon.current.focus();
     }
   }
 
