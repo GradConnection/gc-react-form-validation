@@ -48,6 +48,9 @@ class GCSelect extends Component {
     if (prevState.isSearchActive !== isSearchActive && isSearchActive) {
       this.textInput.current.focus();
     }
+    if (this.props.value !== prevProps.value) {
+      this.props.handleInputValidation(this.props.value);
+    }
   }
 
   handleKeyPress(e) {
@@ -182,13 +185,11 @@ class GCSelect extends Component {
   }
 
   handleOnBlurEffect(e) {
-    const { handleInputValidation, value } = this.props;
     this.setState({
       isActive: false,
       isFocussed: false,
       ...this.searchReset
     });
-    handleInputValidation(value);
   }
 
   onSearchInputChange(e) {
@@ -222,6 +223,7 @@ class GCSelect extends Component {
         }
       }
     );
+    this.textInput.current.blur();
   }
 
   computeItemClassList(selectV, itemV, index) {
@@ -267,7 +269,11 @@ class GCSelect extends Component {
 
     return (
       // On mousedown event is used instead of onclick to fire before and prevent input onfocus from firing
-      <div className={selectClasses} ref={this.select} onMouseDown={(e) => this.handleOuterBoxClick(e)}> 
+      <div
+        className={selectClasses}
+        ref={this.select}
+        onMouseDown={e => this.handleOuterBoxClick(e)}
+      >
         <div
           id={`gc-drop-down_${name}`}
           aria-label={name}
