@@ -45,7 +45,8 @@ class GCPassword extends Component {
       name,
       handleInputValidation,
       handleInputChange,
-      label
+      label,
+      autoFocus
     } = this.props;
 
     return (
@@ -60,6 +61,7 @@ class GCPassword extends Component {
           autoComplete="current-password"
           onBlur={e => handleInputValidation(e.target.value)}
           onChange={e => handleInputChange(e.target.value)}
+          autoFocus={autoFocus}
         />
 
         <div
