@@ -223,7 +223,7 @@ class GCSelect extends Component {
         }
       }
     );
-    this.textInput.current.blur();
+    this.toggleIcon.current.focus();
   }
 
   computeItemClassList(selectV, itemV, index) {
