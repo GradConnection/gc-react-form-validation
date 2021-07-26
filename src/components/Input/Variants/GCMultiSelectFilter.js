@@ -245,6 +245,7 @@ class GCMultiSelectFilter extends Component {
       isActive: false
     });
     this.props.handleInputChange([]);
+    this.props.handleInputValidation();
   }
 
   onSubmitClick() {
