@@ -140,6 +140,14 @@
           padding-right: 10px;
           background-color: $gc-form-lighter-grey;
         }
+
+        .gc-option__job-count{
+          float:right;
+          margin-right: 5px;
+          margin-left: 5px;
+          display:flex;
+          align-items: flex-start;
+        }
       }
     }
 

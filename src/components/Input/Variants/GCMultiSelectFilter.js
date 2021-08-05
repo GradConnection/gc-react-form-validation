@@ -371,7 +371,10 @@ class GCMultiSelectFilter extends Component {
                       className={this.computeItemClassList(value, opt.value, i)}
                       onMouseDown={e => this.onOptionMouseDown(e, opt.value)}
                     >
-                      {opt.label}
+                      <span>
+                        {opt.label}
+                        {opt.job_count && <span> ({opt.job_count})</span>}
+                     </span>
                       {value.includes(opt.value) && (
                         <GCIcon
                           kind="tickIcon"
