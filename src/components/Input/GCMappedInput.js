@@ -212,6 +212,10 @@ const GCMappedInput = props => {
           defaultValue={xtra.defaultValue}
           disabled={xtra.disabled}
           format={xtra.format}
+          disabledHours={xtra.disabledHours}
+          disabledMinutes={xtra.disabledMinutes}
+          minuteStep={xtra.minuteStep}
+          {...xtra}
         />
       );
     default:
