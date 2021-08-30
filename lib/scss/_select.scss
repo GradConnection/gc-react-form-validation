@@ -50,8 +50,6 @@
       color: $gc-form-black;
       border-bottom: solid 1px $gc-form-dark-grey;
       padding: 0.8rem 0;
-      display:flex;
-      justify-content: space-between;
 
       &.gc-select__list-item--hovered,
       &:hover {
