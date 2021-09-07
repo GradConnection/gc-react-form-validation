@@ -56,7 +56,7 @@ const GCMappedInput = props => {
   const renderType = determineRenderType(type);
   // NOTE: From here on out the Input.props.type will be used for validation only
 
-  if (isFilter && renderType === 'select') {
+  if ((isFilter || xtra.isFrontPageFilter) && renderType === 'select') {
     if (props.multi) {
       return (
         <GCMultiSelectFilter
