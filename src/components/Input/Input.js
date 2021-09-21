@@ -135,24 +135,25 @@ class Input extends Component {
       label = title,
       name,
       options,
-      isFilter
+      isFilter,
+      isFrontPageFilter
     } = this.props;
     const {
       validationMessage,
       showValidationMessage,
       showTooltip
     } = this.state;
-
     const inputClasses = classnames(`gc-input--${type}`, {
-      'gc-input': !isFilter,
-      'gc-filter': isFilter,
+      'gc-input': !(isFilter || isFrontPageFilter),
+      'gc-filter': isFilter && !isFrontPageFilter,
+      'gc-front-page-filter': isFrontPageFilter,
       'gc-input--invalid': showValidationMessage,
       'gc-input--disabled': disabled,
       [extendedClassNames]: extendedClassNames
     });
 
     const displayLabel =
-      !isFilter &&
+      (!isFilter || isFrontPageFilter) &&
       ((label && type !== 'checkbox') ||
         (label && type === 'checkbox' && options.length > 0));
 
@@ -173,7 +174,10 @@ class Input extends Component {
                 className="gc-btn--icon gc-tooltip__icon"
                 onClick={this.onTooltipIconClick}
                 tabIndex={0}
-                onKeyPress={e=>e.key==="Enter" && this.onTooltipIconClick(e)}
+                role="button"
+                onKeyPress={e =>
+                  e.key === 'Enter' && this.onTooltipIconClick(e)
+                }
               >
                 <GCIcon kind="infoIcon" />
               </span>
@@ -299,7 +303,8 @@ Input.propTypes = {
   onInputValidationSuccess: PropTypes.func,
   onInputValidationFailure: PropTypes.func,
   lastUpdateStamp: PropTypes.number,
-  isFilter: PropTypes.bool
+  isFilter: PropTypes.bool,
+  isFrontPageFilter: PropTypes.bool
 };
 
 Input.defaultProps = {
