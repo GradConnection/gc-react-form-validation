@@ -45,9 +45,6 @@ class GCMultiSelectFilter extends Component {
     if (prevState.isActive === false && this.state.isActive === true) {
       this.input.current.focus();
     }
-    if (this.props.options.length !== this.state.options.length) {
-      this.setState({ options: this.props.options });
-    }
   }
 
   handleKeyPress(e) {
