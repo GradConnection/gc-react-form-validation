@@ -133,7 +133,12 @@ class GCSelectFilter extends Component {
   }
 
   handleOnFocusEffect(e) {
-    if(!(this.toggleIcon.current.contains(e.target) || e.target == this.toggleIcon.current)){
+    if (
+      !(
+        this.toggleIcon.current.contains(e.target) ||
+        e.target === this.toggleIcon.current
+      )
+    ) {
       this.setState({
         isActive: true
       });
@@ -233,13 +238,20 @@ class GCSelectFilter extends Component {
     });
   }
 
-  onToggleIconClick(){
-      this.setState(state => ({isActive: !state.isActive}));
-      this.props.handleInputValidation(this.props.value);
+  onToggleIconClick() {
+    this.setState(state => ({ isActive: !state.isActive }));
+    this.props.handleInputValidation(this.props.value);
   }
 
   render() {
-    const { value, name, label, required, disabled } = this.props;
+    const {
+      value,
+      name,
+      label,
+      required,
+      disabled,
+      isFrontPageFilter
+    } = this.props;
     const { isActive, isInformationActive, options, placeholder } = this.state;
 
     const selectClasses = classNames('gc-input__el', {
@@ -282,7 +294,7 @@ class GCSelectFilter extends Component {
             }`}
           >
             <GCLabel
-              label={label}
+              label={isFrontPageFilter ? placeholder : label}
               htmlFor={name}
               required={required}
               activeShrink={!isEmpty(value) || isActive}
@@ -301,7 +313,9 @@ class GCSelectFilter extends Component {
                 type="text"
                 value={this.state.searchTerm}
                 onChange={e => this.onSearchInputChange(e)}
-                placeholder={placeholder}
+                placeholder={
+                  isFrontPageFilter ? 'Start typing to search' : placeholder
+                }
                 autoComplete="chrome-off"
               />
             )}
@@ -395,7 +409,8 @@ GCSelectFilter.propTypes = {
   disabled: PropTypes.bool,
   label: PropTypes.string,
   tooltip: PropTypes.string,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  isFrontPageFilter: PropTypes.bool
 };
 
 GCSelectFilter.defaultProps = {

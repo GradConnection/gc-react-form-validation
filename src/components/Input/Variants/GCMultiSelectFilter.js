@@ -129,8 +129,8 @@ class GCMultiSelectFilter extends Component {
     });
   }
 
-  onToggleIconClick(){
-    this.setState(state => ({isActive: !state.isActive}));
+  onToggleIconClick() {
+    this.setState(state => ({ isActive: !state.isActive }));
     this.props.handleInputValidation(this.props.value);
   }
 
@@ -145,7 +145,12 @@ class GCMultiSelectFilter extends Component {
   }
 
   handleOnFocusEffect(e) {
-    if(!(this.toggleIcon.current.contains(e.target) || this.toggleIcon.current === e.target)){
+    if (
+      !(
+        this.toggleIcon.current.contains(e.target) ||
+        this.toggleIcon.current === e.target
+      )
+    ) {
       this.setState({
         isActive: true
       });
@@ -262,9 +267,15 @@ class GCMultiSelectFilter extends Component {
   }
 
   render() {
-    const { value, name, label, required, disabled } = this.props;
+    const {
+      value,
+      name,
+      label,
+      required,
+      disabled,
+      isFrontPageFilter
+    } = this.props;
     const { isActive, isInformationActive, options, placeholder } = this.state;
-
     const selectClasses = classNames('gc-input__el', {
       'gc-input__el--active': isActive
     });
@@ -272,7 +283,7 @@ class GCMultiSelectFilter extends Component {
     return (
       <div
         className="gc-select__multi-container"
-        onFocus={(e) => !disabled && this.handleOnFocusEffect(e)}
+        onFocus={e => !disabled && this.handleOnFocusEffect(e)}
         onBlur={e => !disabled && this.handleOnBlurEffect(e)}
         onKeyDown={e => !disabled && this.handleKeyPress(e)}
         ref={this.select}
@@ -302,13 +313,19 @@ class GCMultiSelectFilter extends Component {
             }`}
           >
             <GCLabel
-              label={label}
+              label={isFrontPageFilter ? placeholder : label}
               htmlFor={name}
               required={required}
               activeShrink={isActive}
             />
             {!isEmpty(value) && (
-              <div className="gc-filter--badge">{value.length}</div>
+              <div
+                className={`gc-filter--badge ${
+                  isActive ? 'gc-filter--badge--active' : ''
+                }`}
+              >
+                {value.length}
+              </div>
             )}
             {this.props.search && isActive && (
               <input
@@ -318,7 +335,9 @@ class GCMultiSelectFilter extends Component {
                 type="text"
                 value={this.state.searchTerm}
                 onChange={e => this.onSearchInputChange(e)}
-                placeholder={placeholder}
+                placeholder={
+                  isFrontPageFilter ? 'Start typing to search' : placeholder
+                }
                 autoComplete="chrome-off"
               />
             )}
@@ -374,7 +393,7 @@ class GCMultiSelectFilter extends Component {
                       <span>
                         {opt.label}
                         {opt.job_count && <span> ({opt.job_count})</span>}
-                     </span>
+                      </span>
                       {value.includes(opt.value) && (
                         <GCIcon
                           kind="tickIcon"
@@ -435,7 +454,8 @@ GCMultiSelectFilter.propTypes = {
   label: PropTypes.string,
   tooltip: PropTypes.string,
   required: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  isFrontPageFilter: PropTypes.bool
 };
 
 GCMultiSelectFilter.defaultProps = {
