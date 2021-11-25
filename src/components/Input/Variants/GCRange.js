@@ -2,7 +2,7 @@ import React from 'react';
 import Slider from 'rc-slider';
 import PropTypes from 'prop-types';
 
-const GCRange = ({ min, max, handleInputChange, defaultValue, disabled, onClick }) => {
+const GCRange = ({ min, max, handleInputChange, defaultValue, disabled, onClick, allowCross = false, pushable = true }) => {
   const { createSliderWithTooltip } = Slider;
   const Range = createSliderWithTooltip(Slider.Range);
   const defaultRange = Array.isArray(defaultValue) ? defaultValue : [min, max];
@@ -17,8 +17,9 @@ const GCRange = ({ min, max, handleInputChange, defaultValue, disabled, onClick 
       tipFormatter={v => `${v}`}
       marks={{ [min]: min, [max]: max }}
       dots
-      pushable
       disabled={disabled}
+      allowCross={allowCross}
+      pushable={pushable}
     />
     </span>
   );

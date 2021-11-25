@@ -200,6 +200,8 @@ const GCMappedInput = props => {
           defaultValue={defaultValue}
           disabled={xtra.disabled}
           onClick={xtra.handleInputClick}
+          allowCross={xtra.allowCross}
+          pushable={xtra.pushable}
         />
       );
     case 'time':
@@ -212,6 +214,10 @@ const GCMappedInput = props => {
           defaultValue={xtra.defaultValue}
           disabled={xtra.disabled}
           format={xtra.format}
+          disabledHours={xtra.disabledHours}
+          disabledMinutes={xtra.disabledMinutes}
+          minuteStep={xtra.minuteStep}
+          {...xtra}
         />
       );
     default:
