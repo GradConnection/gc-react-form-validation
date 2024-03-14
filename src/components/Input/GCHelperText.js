@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ReactHtmlParser from 'react-html-parser';
+import parse from 'html-react-parser';
 
 const GCHelperText = ({ text }) => (
-  <p className="gc-helper-text">{ReactHtmlParser(text)} </p>
+  <p className="gc-helper-text">{parse(text)} </p>
 );
 
 GCHelperText.propTypes = {
