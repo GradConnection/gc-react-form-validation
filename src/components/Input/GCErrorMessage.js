@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import parse from 'html-react-parser';
+import ReactHtmlParser from 'react-html-parser';
 
-const GCErrorMessage = ({ text }) => <p className="gc-error">{parse(text)} </p>;
+const GCErrorMessage = ({ text }) => (
+  <p className="gc-error">{ReactHtmlParser(text)} </p>
+);
 
 GCErrorMessage.propTypes = {
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired

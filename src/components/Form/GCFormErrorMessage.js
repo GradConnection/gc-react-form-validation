@@ -1,6 +1,6 @@
 import React from 'react';
 
-import parse from 'html-react-parser';
+import ReactHtmlParser from 'react-html-parser';
 
 const GCFormErrorMessage = ({ error }) => {
   if (Array.isArray(error) && error.length > 1) {
@@ -17,7 +17,7 @@ const GCFormErrorMessage = ({ error }) => {
   if (Array.isArray(error) && error.length === 1) {
     return (
       <div className="gc-form-error">
-        <p>{parse(error[0])}</p>
+        <p>{ReactHtmlParser(error[0])}</p>
       </div>
     );
   }
