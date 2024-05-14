@@ -47,7 +47,7 @@ class GCDatePickerFilter extends Component {
     );
 
     const onChange = value => {
-      const val = value ? value.format(format) : '';
+      const val = value ? value.format(format) : null;
       this.props.handleInputValidation(val);
       this.props.onInputChange(val);
     };
@@ -69,7 +69,7 @@ class GCDatePickerFilter extends Component {
     return (
       <DatePicker
         animation="slide-up"
-        value={this.props.value ? moment(this.props.value) : ''}
+        value={this.props.value ? moment(this.props.value) : null}
         onChange={onChange}
         onOpenChange={openstate => {
           this.setState({ isActive: openstate });

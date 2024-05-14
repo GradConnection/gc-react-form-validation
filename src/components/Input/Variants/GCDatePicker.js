@@ -44,7 +44,7 @@ class GCDatePicker extends Component {
     );
 
     const onChange = value => {
-      const val = value ? value.format(this.state.format) : '';
+      const val = value ? value.format(this.state.format) : null;
       this.props.handleInputValidation(val);
       this.props.onInputChange(val);
     };
@@ -66,7 +66,7 @@ class GCDatePicker extends Component {
     return (
       <DatePicker
         animation="slide-up"
-        value={this.props.value ? moment(this.props.value) : ''}
+        value={this.props.value ? moment(this.props.value) : null}
         onChange={onChange}
         onOpenChange={openstate => {
           this.setState({ open: openstate });
@@ -96,7 +96,7 @@ class GCDatePicker extends Component {
                 readOnly
                 type="text"
                 value={
-                  value ? moment(new Date(value)).format(this.state.format) : ''
+                  value ? moment(new Date(value)).format(this.state.format) : null
                 }
                 className="gc-drop-down__value__text gc-drop-down__value__text--input"
               />
