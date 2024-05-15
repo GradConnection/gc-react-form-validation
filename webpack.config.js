@@ -30,24 +30,30 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             sourceMap: true,
-            presets: ['@babel/react', '@babel/preset-env'],
-            plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-optional-chaining', '@babel/plugin-transform-runtime']
+            // TODO investigate using @babel/preset-react instead of @babel/react 
+            presets: ['@babel/react', '@babel/preset-env'], 
+            plugins: [
+              '@babel/plugin-transform-optional-chaining',
+              '@babel/plugin-transform-runtime'
+            ]
           }
         }
       },
       {
         test: /\.(sc|c)ss$/,
-        use: [{
-          loader: 'css-loader',
-          options: {
-            sourceMap: true
+        use: [
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
           }
-        }, {
-          loader: 'sass-loader',
-          options: {
-            sourceMap: true
-          }
-        }
         ]
       }
     ]
