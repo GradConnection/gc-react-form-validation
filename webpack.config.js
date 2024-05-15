@@ -9,10 +9,11 @@ module.exports = {
     path: path.resolve(__dirname, 'lib'),
     filename: 'index.js',
     publicPath: 'lib',
-    globalObject: "typeof self !== 'undefined' ? self : this"
+    globalObject: 'typeof self !== "undefined" ? self : this'
   },
+  target: 'node', // https://github.com/markdalgleish/static-site-generator-webpack-plugin/issues/130#issuecomment-639233255
   devtool: 'source-map',
-  mode: 'none',
+  mode: 'none', // "production" | "development" | "none"
   resolve: {
     alias: {
       utils: path.resolve(__dirname, 'src/utils.js'),

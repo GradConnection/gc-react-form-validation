@@ -1,8 +1,7 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import ReactHtmlParser from "react-html-parser";
-
-import { toArray } from "utils";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import parse from 'html-react-parser';
+import { toArray } from 'utils';
 
 class GCCheckbox extends Component {
   constructor(props) {
@@ -79,7 +78,7 @@ class GCCheckbox extends Component {
           name={name}
           title={label}
           checked={!!value}
-          aria-checked={!!value}      
+          aria-checked={!!value}
           role="checkbox"
           onChange={(e) => e.preventDefault()}
           aria-label={label}
@@ -95,7 +94,7 @@ class GCCheckbox extends Component {
             required ? "gc-label__text--required" : ""
           }`}
         >
-          {typeof label === 'object' ? label :ReactHtmlParser(label)}
+          {typeof label === 'object' ? label : parse(label)}
         </label>
       </div>
     );
