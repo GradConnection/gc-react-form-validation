@@ -267,14 +267,8 @@ class GCMultiSelectFilter extends Component {
   }
 
   render() {
-    const {
-      value,
-      name,
-      label,
-      required,
-      disabled,
-      isFrontPageFilter
-    } = this.props;
+    const { value, name, label, required, disabled, isFrontPageFilter } =
+      this.props;
     const { isActive, isInformationActive, options, placeholder } = this.state;
     const selectClasses = classNames('gc-input__el', {
       'gc-input__el--active': isActive

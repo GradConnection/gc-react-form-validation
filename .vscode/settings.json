@@ -1,12 +1,12 @@
 {
   "eslint.format.enable": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "files.exclude": {
     "**/.DS_Store": true,
-    "**/node_modules": true,
-    "**/dist": true,
+    "**/node_modules/**": true,
+    "**/lib/**": true,
     "**/build/**": true,
   },
   "files.autoSave": "onFocusChange"

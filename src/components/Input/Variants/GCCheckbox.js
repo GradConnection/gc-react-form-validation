@@ -7,7 +7,7 @@ class GCCheckbox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isFocussed: false,
+      isFocussed: false
     };
     this.checkbox = React.createRef();
     this.handleBlur = this.handleBlur.bind(this);
@@ -16,11 +16,11 @@ class GCCheckbox extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener("click", this.handleBlur);
+    document.addEventListener('click', this.handleBlur);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("click", this.handleBlur);
+    document.removeEventListener('click', this.handleBlur);
   }
 
   handleBlur(e) {
@@ -28,7 +28,7 @@ class GCCheckbox extends Component {
     if (!this.checkbox.current.contains(e.target) && isFocussed) {
       this.setState(
         {
-          isFocussed: false,
+          isFocussed: false
         },
         () => {
           this.props.handleInputValidation(this.props.value);
@@ -36,7 +36,7 @@ class GCCheckbox extends Component {
       );
     } else if (this.checkbox.current.contains(e.target) && !isFocussed) {
       this.setState({
-        isFocussed: true,
+        isFocussed: true
       });
     }
   }
@@ -46,9 +46,9 @@ class GCCheckbox extends Component {
     this.props.handleInputValidation(!this.props.value);
   }
 
-  handleKeyPress(e){
-    if(e.key === "Enter"){
-      this.onSingleCheckboxClick()
+  handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.onSingleCheckboxClick();
     }
   }
 
@@ -60,7 +60,7 @@ class GCCheckbox extends Component {
     if (!valueArray.includes(newValue)) {
       newArray = [...valueArray, newValue];
     } else {
-      newArray = valueArray.filter((v) => v !== newValue);
+      newArray = valueArray.filter(v => v !== newValue);
     }
 
     onInputChange(newArray);
@@ -73,25 +73,25 @@ class GCCheckbox extends Component {
       <div className="gc-input__el gc-input__el--no-deco" ref={this.checkbox}>
         <input
           id={`gc-input-checkbox_${name}`}
-          className='gc-input__btn-hidden'
-          type='checkbox'
+          className="gc-input__btn-hidden"
+          type="checkbox"
           name={name}
           title={label}
           checked={!!value}
           aria-checked={!!value}
           role="checkbox"
-          onChange={(e) => e.preventDefault()}
+          onChange={e => e.preventDefault()}
           aria-label={label}
         />
         <span
           className="gc-input__inline-icon gc-checkbox__icon"
           onClick={!disabled ? this.onSingleCheckboxClick : undefined}
-          tabIndex={disabled? -1 : 0}
+          tabIndex={disabled ? -1 : 0}
           onKeyPress={!disabled ? this.handleKeyPress : undefined}
         />
         <label
           className={`gc-input__inline-label ${
-            required ? "gc-label__text--required" : ""
+            required ? 'gc-label__text--required' : ''
           }`}
         >
           {typeof label === 'object' ? label : parse(label)}
@@ -119,7 +119,7 @@ class GCCheckbox extends Component {
               checked={toArray(value).includes(opt.value)}
               aria-checked={toArray(value).includes(opt.value)}
               role="checkbox"
-              onChange={(e) => e.preventDefault()}
+              onChange={e => e.preventDefault()}
             />
             <span className="gc-input__inline-icon gc-checkbox__icon" />
             <label className="gc-input__inline-label">{opt.label}</label>
@@ -144,12 +144,12 @@ GCCheckbox.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.string,
-    PropTypes.bool,
+    PropTypes.bool
   ]),
   label: PropTypes.node.isRequired,
   options: PropTypes.array,
   onInputChange: PropTypes.func.isRequired,
-  handleInputValidation: PropTypes.func.isRequired,
+  handleInputValidation: PropTypes.func.isRequired
 };
 
 export { GCCheckbox };

@@ -73,7 +73,11 @@ class GCMultiSelect extends Component {
   }
 
   handleWindowClick(e) {
-    if (!this.props.search && !this.select.current.contains(e.target) && this.state.isFocussed) {
+    if (
+      !this.props.search &&
+      !this.select.current.contains(e.target) &&
+      this.state.isFocussed
+    ) {
       this.setState({
         isActive: false,
         isFocussed: false,
@@ -119,18 +123,20 @@ class GCMultiSelect extends Component {
   }
 
   onEnterKeyPress(e) {
-    const focusedEl = document.activeElement
-    if(focusedEl.classList.contains('gc-tag__btn')){
+    const focusedEl = document.activeElement;
+    if (focusedEl.classList.contains('gc-tag__btn')) {
       return;
     }
     e.preventDefault();
     const { options, index } = this.state;
 
-    this.setState(!this.props.persistSearch?
-      {
-        ...this.searchReset,
-        options: this.props.options
-      } : {},
+    this.setState(
+      !this.props.persistSearch
+        ? {
+            ...this.searchReset,
+            options: this.props.options
+          }
+        : {},
       () => {
         if (index > -1 && options[index] && options[index].value) {
           this.handleInputChange(options[index].value);
@@ -142,7 +148,7 @@ class GCMultiSelect extends Component {
           options[0].value
         ) {
           this.handleInputChange(options[0].value);
-        } else if(!this.props.persistSearch) {
+        } else if (!this.props.persistSearch) {
           this.setState({ index: 0 });
         }
       }
@@ -253,7 +259,7 @@ class GCMultiSelect extends Component {
           ...this.searchActivate
         });
       } else {
-        this.toggleIcon.current.focus()
+        this.toggleIcon.current.focus();
       }
     } else if (this.state.isActive) {
       this.setState({ isActive: false, isFocussed: false });
@@ -265,7 +271,7 @@ class GCMultiSelect extends Component {
   onOptionMouseDown(e, value) {
     e.preventDefault();
     this.handleInputChange(value);
-    if(!this.props.persistSearch){
+    if (!this.props.persistSearch) {
       this.setState({
         ...this.searchReset,
         options: this.props.options
@@ -282,14 +288,16 @@ class GCMultiSelect extends Component {
     } else {
       newValueArray = this.addItemToValueArray(newValue);
     }
-    if(!persistSearch){
+    if (!persistSearch) {
       this.setState({ index: 0 });
     }
     this.props.handleInputChange(newValueArray);
   }
 
   removeItemFromValueArray(item) {
-    return Array.isArray(this.props.value)? this.props.value.filter(v => v !== item) : this.props.value;
+    return Array.isArray(this.props.value)
+      ? this.props.value.filter(v => v !== item)
+      : this.props.value;
   }
 
   addItemToValueArray(item) {
@@ -337,9 +345,8 @@ class GCMultiSelect extends Component {
       'gc-select__input',
       'gc-drop-down__value__text__autoselect',
       {
-        'gc-drop-down__value__text--input gc-drop-down__value__text--input-inline': !isEmpty(
-          value
-        ),
+        'gc-drop-down__value__text--input gc-drop-down__value__text--input-inline':
+          !isEmpty(value),
         'gc-input__el': isEmpty(value)
       }
     );
@@ -359,7 +366,9 @@ class GCMultiSelect extends Component {
             aria-label={`input ${name}`}
             className="gc-drop-down__value"
             onMouseDown={this.onInputClick}
-            onFocus={()=>{!this.state.isActive? this.activateDropDown() : null}}
+            onFocus={() => {
+              !this.state.isActive ? this.activateDropDown() : null;
+            }}
           >
             {isEmpty(value) && (
               <input
@@ -373,7 +382,11 @@ class GCMultiSelect extends Component {
             <span className="gc-drop-down__value__text gc-drop-down__value__text--input">
               {this.renderTags(value)}
             </span>
-            <GCIcon kind="caretIcon" extendedClassNames="gc-drop-down__caret" passedRef={this.toggleIcon}/>
+            <GCIcon
+              kind="caretIcon"
+              extendedClassNames="gc-drop-down__caret"
+              passedRef={this.toggleIcon}
+            />
           </div>
 
           <div className={containerClasses} ref={this.listContainer}>

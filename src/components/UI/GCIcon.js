@@ -273,7 +273,14 @@ class GCIcon extends React.Component {
   }
 
   render() {
-    const { kind, extendedClassNames, tabIndex, onKeyDown, onClick, passedRef } = this.props;
+    const {
+      kind,
+      extendedClassNames,
+      tabIndex,
+      onKeyDown,
+      onClick,
+      passedRef
+    } = this.props;
     return (
       <span
         className={

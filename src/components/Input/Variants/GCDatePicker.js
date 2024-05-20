@@ -96,7 +96,9 @@ class GCDatePicker extends Component {
                 readOnly
                 type="text"
                 value={
-                  value ? moment(new Date(value)).format(this.state.format) : null
+                  value
+                    ? moment(new Date(value)).format(this.state.format)
+                    : null
                 }
                 className="gc-drop-down__value__text gc-drop-down__value__text--input"
               />

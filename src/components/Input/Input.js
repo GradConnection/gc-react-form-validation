@@ -138,11 +138,8 @@ class Input extends Component {
       isFilter,
       isFrontPageFilter
     } = this.props;
-    const {
-      validationMessage,
-      showValidationMessage,
-      showTooltip
-    } = this.state;
+    const { validationMessage, showValidationMessage, showTooltip } =
+      this.state;
     const inputClasses = classnames(`gc-input--${type}`, {
       'gc-input': !(isFilter || isFrontPageFilter),
       'gc-filter': isFilter && !isFrontPageFilter,

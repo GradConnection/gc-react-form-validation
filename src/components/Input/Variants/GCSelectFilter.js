@@ -244,14 +244,8 @@ class GCSelectFilter extends Component {
   }
 
   render() {
-    const {
-      value,
-      name,
-      label,
-      required,
-      disabled,
-      isFrontPageFilter
-    } = this.props;
+    const { value, name, label, required, disabled, isFrontPageFilter } =
+      this.props;
     const { isActive, isInformationActive, options, placeholder } = this.state;
 
     const selectClasses = classNames('gc-input__el', {
@@ -261,7 +255,7 @@ class GCSelectFilter extends Component {
     return (
       <div
         className="gc-select__single-container"
-        onFocus={(e) => !disabled && this.handleOnFocusEffect(e)}
+        onFocus={e => !disabled && this.handleOnFocusEffect(e)}
         onBlur={e => !disabled && this.handleOnBlurEffect(e)}
         onKeyDown={e => !disabled && this.handleKeyPress(e)}
         onClick={e => !disabled && this.onInputClick(e)}
