@@ -17,11 +17,11 @@ const GCRadio = ({
     }
   };
 
-  const handleKeyPress = (e,newValue) => {
-      if(e.key === "Enter"){
-        onListItemClick(newValue)
-      }
-  }
+  const handleKeyPress = (e, newValue) => {
+    if (e.key === 'Enter') {
+      onListItemClick(newValue);
+    }
+  };
 
   return (
     <ul className="gc-input__el gc-input--list">
@@ -34,8 +34,8 @@ const GCRadio = ({
         >
           <input
             id={`gc-input-radio_${name}`}
-            className='gc-input__btn-hidden'
-            type='radio'
+            className="gc-input__btn-hidden"
+            type="radio"
             value={opt.value}
             name={name}
             title={title}
@@ -43,7 +43,11 @@ const GCRadio = ({
             checked={value === opt.value}
             onChange={e => e.preventDefault()}
           />
-          <span className="gc-input__inline-icon gc-radio__icon" tabIndex="0" onKeyPress={(e) => handleKeyPress(e, opt.value)}/>
+          <span
+            className="gc-input__inline-icon gc-radio__icon"
+            tabIndex="0"
+            onKeyPress={e => handleKeyPress(e, opt.value)}
+          />
           <label className="gc-input__inline-label">{opt.label}</label>
         </li>
       ))}

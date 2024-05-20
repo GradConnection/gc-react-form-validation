@@ -8,7 +8,7 @@ const GCFormErrorMessage = ({ error }) => {
       <ul className="gc-form-error">
         {error.map(error => (
           <li>
-            <p>{ReactHtmlParser(error)}</p>
+            <p>{parse(error)}</p>
           </li>
         ))}
       </ul>
@@ -23,7 +23,7 @@ const GCFormErrorMessage = ({ error }) => {
   }
   return (
     <div className="gc-form-error">
-      <p>{ReactHtmlParser(error)}</p>
+      <p>{parse(error)}</p>
     </div>
   );
 };

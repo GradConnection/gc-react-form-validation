@@ -30,7 +30,7 @@ class GCDatePickerFilter extends Component {
       label,
       required
     } = this.props;
-    const format = showTime ? 'YYYY-MM-DD HH:mm Z' : 'YYYY-MM-DD'
+    const format = showTime ? 'YYYY-MM-DD HH:mm Z' : 'YYYY-MM-DD';
     const { isActive } = this.state;
     const sanitisedFrom = from && new Date(new Date(from).setHours(0, 0, 0, 0));
     const sanitisedTo = to && new Date(new Date(to).setHours(23, 59, 59, 59));
@@ -47,7 +47,7 @@ class GCDatePickerFilter extends Component {
     );
 
     const onChange = value => {
-      const val = value ? value.format(format) : '';
+      const val = value ? value.format(format) : null;
       this.props.handleInputValidation(val);
       this.props.onInputChange(val);
     };
@@ -69,7 +69,7 @@ class GCDatePickerFilter extends Component {
     return (
       <DatePicker
         animation="slide-up"
-        value={this.props.value ? moment(this.props.value) : ''}
+        value={this.props.value ? moment(this.props.value) : null}
         onChange={onChange}
         onOpenChange={openstate => {
           this.setState({ isActive: openstate });
@@ -101,7 +101,9 @@ class GCDatePickerFilter extends Component {
                   activeShrink={!!value}
                 />
                 {!!value && (
-                  <p className="gc-filter--value">{moment(new Date(value)).format(format)}</p>
+                  <p className="gc-filter--value">
+                    {moment(new Date(value)).format(format)}
+                  </p>
                 )}
               </div>
               <GCIcon kind="calendarIcon" extendedClassNames="input-icon" />

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
-
 import { toArray } from 'utils';
 
 class GCCheckbox extends Component {

@@ -15,11 +15,11 @@ class GCPassword extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyPress);
+    document.addEventListener('keydown', this.handleKeyPress);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyPress);
+    document.removeEventListener('keydown', this.handleKeyPress);
   }
 
   onIconBtnClick(e) {
@@ -32,10 +32,14 @@ class GCPassword extends Component {
       }
     });
   }
+
   handleKeyPress(e) {
-      if (e.keyCode === 13 && this.passwordToggle.current === document.activeElement) {
-        this.onIconBtnClick(e);
-      } 
+    if (
+      e.keyCode === 13 &&
+      this.passwordToggle.current === document.activeElement
+    ) {
+      this.onIconBtnClick(e);
+    }
   }
 
   render() {
@@ -53,7 +57,7 @@ class GCPassword extends Component {
       <div>
         <input
           id={name}
-          className='gc-input__el'
+          className="gc-input__el"
           type={mode}
           ref={this.input}
           value={value}

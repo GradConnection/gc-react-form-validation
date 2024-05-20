@@ -15,8 +15,6 @@
     "mocha": true
   },
   "rules": {
-    "eol-last": 0,
-    "import/no-useless-path-segments": "off",
     "prettier/prettier": "error",
     "react/jsx-filename-extension": [
       1,
@@ -28,23 +26,6 @@
       }
     ],
     "jsx-a11y/media-has-caption": 0,
-    "jsx-a11y/anchor-is-valid": [
-      "error",
-      {
-        "components": [
-          "Link",
-          "NavLink"
-        ],
-        "specialLink": [
-          "to"
-        ],
-        "aspects": [
-          "noHref",
-          "invalidHref",
-          "preferButton"
-        ]
-      }
-    ],
     "jsx-a11y/click-events-have-key-events": 0,
     "no-underscore-dangle": 0,
     "import/no-extraneous-dependencies": 0,

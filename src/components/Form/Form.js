@@ -175,14 +175,8 @@ class Form extends Component {
   }
 
   render() {
-    const {
-      extendedClassNames,
-      formRef,
-      id,
-      description,
-      children,
-      data
-    } = this.props;
+    const { extendedClassNames, formRef, id, description, children, data } =
+      this.props;
 
     const formClasses = classnames('gc-form', {
       [extendedClassNames]: extendedClassNames
