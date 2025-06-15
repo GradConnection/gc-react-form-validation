@@ -28,7 +28,7 @@
     "@babel/runtime": "^7.9.2",
     "classnames": "^2.2.6",
     "html-react-parser": "^1.2.3",
-    "moment-timezone": "^0.5.28",
+    "moment-timezone": "^0.6.0",
     "prop-types": "^15.7.2",
     "rc-calendar": "^9.15.11",
     "rc-slider": "^8.7.1",
